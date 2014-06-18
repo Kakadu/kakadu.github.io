@@ -74,6 +74,106 @@ var zulu = { nation: "Зулусы", tech1: tech.agr, tech2: tech.hunt,
              building: "Икханда", unit: "Импи" };
 testdata.push($.extend({ trait1: tr.Agg, trait2: tr.Exp, leader: "Шака" }, zulu));
 
+var zulu = { nation: "Союз индейских племён", tech1: tech.agr, tech2: tech.fish,
+             building: "Тотемный столб", unit: "Пёс-воин" };
+testdata.push($.extend({ trait1: tr.Pro, trait2: tr.Phi, leader: "Сидящий Бык" }, zulu));
+
+var india  = { nation: "Индийцы", tech1: tech.mis, tech2: tech.mines,
+               building: "Мавзолей", unit: "Индийский рабочий" };
+testdata.push($.extend({ trait1: tr.Org, trait2: tr.Spi, leader: "Ашока" }, india));
+testdata.push($.extend({ trait1: tr.Phi, trait2: tr.Spi, leader: "Ганди" }, india));
+
+var inca = { nation: "Инки", tech1: tech.agr, tech2: tech.mis,
+             building: "Терраса", unit: "Кечуа" };
+testdata.push($.extend({ trait1: tr.Fin, trait2: tr.Ind, leader: "Уайна Капак" }, inca));
+
+var esp = { nation: "Испанцы", tech1: tech.fish, tech2: tech.mis,
+             building: "Цитадель", unit: "Конкистадор" };
+testdata.push($.extend({ trait1: tr.Exp, trait2: tr.Spi, leader: "Изабелла" }, esp));
+
+var carthage = { nation: "Карфаген", tech1: tech.fish, tech2: tech.mines,
+                 building: "Котон", unit: "Нумидийский всадник" };
+testdata.push($.extend({ trait1: tr.Cha, trait2: tr.Fin, leader: "Ганнибал" }, carthage));
+
+var celts    = { nation: "Карфаген", tech1: tech.hunt, tech2: tech.mis,
+                 building: "Дан", unit: "Гальский мечник" };
+testdata.push($.extend({ trait1: tr.Cha, trait2: tr.Spi, leader: "Бренн" }, celts));
+testdata.push($.extend({ trait1: tr.Cha, trait2: tr.Agg, leader: "Боудика" }, celts));
+
+var china     = { nation: "Китай", tech1: tech.agr, tech2: tech.mines,
+                 building: "Павильон", unit: "Чу ко ну" };
+testdata.push($.extend({ trait1: tr.Ind, trait2: tr.Pro, leader: "Цинь Шихуан" }, china));
+testdata.push($.extend({ trait1: tr.Exp, trait2: tr.Pro, leader: "Мао" }, china));
+
+var kor      = { nation: "Корея", tech1: tech.mis, tech2: tech.mines,
+                 building: "Сеовон", unit: "Хвача" };
+testdata.push($.extend({ trait1: tr.Fin, trait2: tr.Pro, leader: "Ван Гон" }, kor));
+
+var khm      = { nation: "Кхмеры", tech1: tech.hunt, tech2: tech.mines,
+                 building: "Бассейн", unit: "Слон с баллистой" };
+testdata.push($.extend({ trait1: tr.Exp, trait2: tr.Cre, leader: "Сурьяварман" }, khm));
+
+var maya      = { nation: "Майя", tech1: tech.mis, tech2: tech.mines,
+                 building: "Игровое поле", unit: "Холькан" };
+testdata.push($.extend({ trait1: tr.Exp, trait2: tr.Fin, leader: "Пакаль" }, maya));
+
+var mali      = { nation: "Малийцы", tech1: tech.wheel, tech2: tech.mines,
+                 building: "Монетный двор", unit: "Застрельщик" };
+testdata.push($.extend({ trait1: tr.Spi, trait2: tr.Fin, leader: "Манса Мунса" }, mali));
+
+var mong     = { nation: "Монголы", tech1: tech.wheel, tech2: tech.hunt,
+                 building: "Юрта", unit: "Кешик" };
+testdata.push($.extend({ trait1: tr.Agg, trait2: tr.Imp, leader: "Чингизхан" }, mong));
+testdata.push($.extend({ trait1: tr.Agg, trait2: tr.Cre, leader: "Хубилай" }, mong));
+
+var persia   = { nation: "Персы", tech1: tech.hunt, tech2: tech.agr,
+                 building: "Аптека", unit: "Бессмертный" };
+testdata.push($.extend({ trait1: tr.Cha, trait2: tr.Imp, leader: "Кир" }, persia));
+testdata.push($.extend({ trait1: tr.Fin, trait2: tr.Org, leader: "Дарий I" }, persia));
+
+var porto     = { nation: "Португалия", tech1: tech.fish, tech2: tech.mines,
+                 building: "Фактория", unit: "Каррака" };
+testdata.push($.extend({ trait1: tr.Exp, trait2: tr.Imp, leader: "Жуан" }, porto));
+
+var rome     = { nation: "Римляне", tech1: tech.fish, tech2: tech.mines,
+                 building: "Форум", unit: "Преторианец" };
+testdata.push($.extend({ trait1: tr.Org, trait2: tr.Imp, leader: "Гай Юлий Цезарь" }, rome));
+testdata.push($.extend({ trait1: tr.Ind, trait2: tr.Imp, leader: "Октавиан Август" }, rome));
+
+var russia   = { nation: "Русские", tech1: tech.hunt, tech2: tech.mines,
+                 building: "НИИ", unit: "Казак" };
+testdata.push($.extend({ trait1: tr.Exp, trait2: tr.Phi, leader: "Пётр I" }, russia));
+testdata.push($.extend({ trait1: tr.Cre, trait2: tr.Imp, leader: "Екатерина II" }, russia));
+testdata.push($.extend({ trait1: tr.Agg, trait2: tr.Ind, leader: "Сталин" }, russia));
+
+var charleman = { nation: "Священная Римская Империя", tech1: tech.hunt, tech2: tech.mis,
+                 building: "Ратуша", unit: "Ландскнехт" };
+testdata.push($.extend({ trait1: tr.Imp, trait2: tr.Pro, leader: "Карл Великий" }, charleman));
+
+var turkey = { nation: "Турки", tech1: tech.agr, tech2: tech.wheel,
+                 building: "Хаммам", unit: "Янычар" };
+testdata.push($.extend({ trait1: tr.Exp, trait2: tr.Org, leader: "Мехмед II" }, turkey));
+testdata.push($.extend({ trait1: tr.Imp, trait2: tr.Phi, leader: "Сулейман" }, turkey));
+
+var france = { nation: "Французы", tech1: tech.agr, tech2: tech.wheel,
+                 building: "Cалон", unit: "Мушкетёр короля" };
+testdata.push($.extend({ trait1: tr.Cre, trait2: tr.Ind, leader: "Людовик IV" }, france));
+testdata.push($.extend({ trait1: tr.Cha, trait2: tr.Org, leader: "Наполеон Бонапарт" }, france));
+testdata.push($.extend({ trait1: tr.Cha, trait2: tr.Ind, leader: "Шарль де Голль" }, france));
+
+var shum = { nation: "Шумеры", tech1: tech.agr, tech2: tech.wheel,
+                 building: "Зиккурат", unit: "Воин коршуна" };
+testdata.push($.extend({ trait1: tr.Cre, trait2: tr.Pro, leader: "Гильгамеш" }, shum));
+
+var abis = { nation: "Шумеры", tech1: tech.hunt, tech2: tech.mines,
+                 building: "Стела", unit: "Воин оромо" };
+testdata.push($.extend({ trait1: tr.Cre, trait2: tr.Org, leader: "Зара Якоб" }, abis));
+
+var jap = { nation: "Японцы", tech1: tech.fish, tech2: tech.wheel,
+            building: "Сланцевая электростанция", unit: "Самурай" };
+testdata.push($.extend({ trait1: tr.Agg, trait2: tr.Pro, leader: "Токугава Иэясу" }, jap));
+
+
 $(document).ready(function() {
   $('#example').dataTable({
     "aaData": testdata,
