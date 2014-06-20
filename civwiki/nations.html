@@ -10,7 +10,8 @@ var tr = { Cha: "Харизма",  Ind: "Промышленник", Phi: "Фил
            Pro: "Защитник", Fin: "Финансисит",   Spi: "Мистик",  Agg: "Полководец",
            Imp: "Империалист", Cre: "Меценат", Exp: "Экспансионист"
          };
-var tech = { fish: "Рыбная ловля", wheel: "Колесо", agr: "Земледелие", hunt: "Охота", mis: "Мистицизм", mines: "Горное дело" };
+var tech = { fish: "Рыбная ловля", wheel: "Колесо", agr: "Земледелие", hunt: "Охота", 
+             mis: "Мистицизм", mines: "Горное дело" };
 var testdata = [];
 
 var usa = { nation: "Aмерика", tech1: tech.agr, tech2: tech.fish,
@@ -52,12 +53,12 @@ var byzantium = { nation: "Византийцы", tech1: tech.mis, tech2: tech.w
 testdata.push($.extend({ trait1: tr.Imp, trait2: tr.Spi, leader: "Юстиниан" }, byzantium));
 
 var germany = { nation: "Немцы", tech1: tech.hunt, tech2: tech.mines,
-                 building: "Сборочный цех", unit: "Танк Панцер" };
+                building: "Сборочный цех", unit: "Танк Панцер" };
 testdata.push($.extend({ trait1: tr.Org, trait2: tr.Phi, leader: "Фридрих II" }, germany));
 testdata.push($.extend({ trait1: tr.Ind, trait2: tr.Exp, leader: "Бисмарк" }, germany));
 
 var nether = { nation: "Голландцы", tech1: tech.agr, tech2: tech.fish,
-                 building: "Дамба", unit: "Ост-индиец" };
+               building: "Дамба", unit: "Ост-индиец" };
 testdata.push($.extend({ trait1: tr.Cre, trait2: tr.Fin, leader: "Вильгельм Оранский" }, nether));
 
 var greece = { nation: "Греки", tech1: tech.hunt, tech2: tech.fish,
@@ -95,13 +96,13 @@ var carthage = { nation: "Карфаген", tech1: tech.fish, tech2: tech.mines
                  building: "Котон", unit: "Нумидийский всадник" };
 testdata.push($.extend({ trait1: tr.Cha, trait2: tr.Fin, leader: "Ганнибал" }, carthage));
 
-var celts    = { nation: "Культы", tech1: tech.hunt, tech2: tech.mis,
+var celts    = { nation: "Кельты", tech1: tech.hunt, tech2: tech.mis,
                  building: "Дан", unit: "Гальский мечник" };
 testdata.push($.extend({ trait1: tr.Cha, trait2: tr.Spi, leader: "Бренн" }, celts));
 testdata.push($.extend({ trait1: tr.Cha, trait2: tr.Agg, leader: "Боудика" }, celts));
 
 var china     = { nation: "Китай", tech1: tech.agr, tech2: tech.mines,
-                 building: "Павильон", unit: "Чу ко ну" };
+                 building: "Павильон", unit: "Чу-ко-ну" };
 testdata.push($.extend({ trait1: tr.Ind, trait2: tr.Pro, leader: "Цинь Шихуан" }, china));
 testdata.push($.extend({ trait1: tr.Exp, trait2: tr.Pro, leader: "Мао" }, china));
 
