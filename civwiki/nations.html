@@ -21,7 +21,7 @@ var tr = { Cha: "Харизма",  Ind: "Промышленник", Phi: "Фил
          };
 var tech = { fish: "Рыбная ловля", wheel: "Колесо", agr: "Земледелие", hunt: "Охота",
              mis: "Мистицизм", mines: "Горное дело" };
-var units = 
+var units =
   { navyseal: {title: "Морской котик", desc: "<b>Navy SEAL (24/1/160)</b><br>1-2 first strikes, +50% attack vs machine guns; +50% attack vs artillery; starts with amphibious and march promotions<br>Replaces Marine (24/1/160) - which doesn\'t have the first strikes or march promotion" }
   , immortal: {title: "Бессмертный", desc: "Immortal (4/2/25)</b><br>30% chance to withdraw from combat; +50% vs archery units; upgradeable to horse archer or knight<br>Replaces Chariot (4/2/25) - which has a 20% withdraw chance, does not receive defense bonuses, and does not have a bonus vs archery units" }
   , warchariot: {title: "Боевая колесница", desc: "<b>War Chariot (5/2/25)</b><br>Immune to first strikes; doesn\'t receive defensive bonuses; 20% chance to withdraw from combat; upgradeable to horse archer or knight<br>Replaces Chariot (4/2/25) - which doesn\'t have first strike immunity" }
@@ -38,6 +38,24 @@ var units =
   , keshik: { title: "Кешик", desc: "<b>Keshik (6/2/50)</b><br>1 first strike; doesn\'t receive defensive bonuses; ignores terrain movement costs; +50% vs catapults; upgradeable to cavalry<br>Replaces Horse Archer (6/2/50) - which doesn\'t have a first strike and doesn\'t have the terrain/movement bonus" }
   , jaguar: { title: "Ягуар", desc: "<b>Jaguar (5/1/40)</b><br>+10% city attack; +25% jungle defense; upgradeable to maceman; no resource req<br>Replaces Swordsman (6/1/40) - which doesn\'t have the jungle defense bonus and requires iron" }
   , fastworker: { title: "Быстрый рабочий", desc: "<b>Fast Worker (0/3/60)</b><br>Movement rate of 3<br>Replaces Worker (0/2/60) - which has a move of 2" }
+  , skirmisher: { title: "Застрельщик", desc: "<b>Skirmisher (4/1/25)</b><br>1-2 first strikes; +50% city defense; +25% hill defense; upgradeable to longbowman or crossbowman<br>Replaces Archer (3/1/25) - which has 1 first strike" }
+  , camelarcher: { title: "Лучник на верблюде", desc: "<b>Camel Archer (10/2/90)</b><br>Immune to first strikes; doesn\'t receive defensive bonuses; 25% chance to withdraw from combat; upgradeable to cavalry; no resource req<br>Replaces Knight (10/2/90) - which doesn\'t have the withdraw chance and requires iron" }
+  , berserker: "Берсеркер"
+  , carrack: "Каррака"
+  , hvachha: "Хвачха"
+  , babarcher: "Вавилонский лучник"
+  , catafract: "Катафракт"
+  , ostindian: "Ост-Индиец"
+  , impi: "Impi"
+  , dogwarrior: "Пёс-воин"
+  , vulture: "Воин коршуна"
+  , numid: "Numid"
+  , gaalswordsman: "Гаальский мечник"
+  , ballistaelephant: "Ballista elephant"
+  , holkan: "Холькан"
+  , oromo: "Воин оромо"
+  , janussar: "Янычар"
+  , landskneht: "Ландскнехт"
   };
 var testdata = [];
 
@@ -60,7 +78,7 @@ var churchill = $.extend({ trait1: tr.Cha, trait2: tr.Pro, leader: "Черчил
 testdata.push(churchill);
 
 var arab   = { nation: "Арабы", tech1: tech.mis, tech2: tech.wheel,
-               building: "Медресе", unit: "Лучник на верлюде" };
+               building: "Медресе", unit: units.camelarcher };
 testdata.push($.extend({ trait1: tr.Spi, trait2: tr.Pro, leader: "Саладин" }, arab));
 
 var aztec    = { nation: "Ацтеки", tech1: tech.mis, tech2: tech.hunt,
@@ -68,15 +86,15 @@ var aztec    = { nation: "Ацтеки", tech1: tech.mis, tech2: tech.hunt,
 testdata.push($.extend({ trait1: tr.Spi, trait2: tr.Agg, leader: "Монтесума" }, aztec));
 
 var vikings  = { nation: "Викинги", tech1: tech.fish, tech2: tech.hunt,
-               building: "Торговый пост", unit: "Берсеркер" };
+               building: "Торговый пост", unit: units.berserker };
 testdata.push($.extend({ trait1: tr.Fin, trait2: tr.Agg, leader: "Рагнар" }, vikings));
 
 var babilon = { nation: "Вавалоняне", tech1: tech.agr, tech2: tech.wheel,
-               building: "Сады", unit: "Вавилонский лучник" };
+               building: "Сады", unit: units.babarcher };
 testdata.push($.extend({ trait1: tr.Org, trait2: tr.Agg, leader: "Хаммураппи" }, babilon));
 
 var byzantium = { nation: "Византийцы", tech1: tech.mis, tech2: tech.wheel,
-                 building: "Ипподром", unit: "Катафракт" };
+                 building: "Ипподром", unit: units.catafract };
 testdata.push($.extend({ trait1: tr.Imp, trait2: tr.Spi, leader: "Юстиниан" }, byzantium));
 
 var germany = { nation: "Немцы", tech1: tech.hunt, tech2: tech.mines,
@@ -85,7 +103,7 @@ testdata.push($.extend({ trait1: tr.Org, trait2: tr.Phi, leader: "Фридрих
 testdata.push($.extend({ trait1: tr.Ind, trait2: tr.Exp, leader: "Бисмарк" }, germany));
 
 var nether = { nation: "Голландцы", tech1: tech.agr, tech2: tech.fish,
-               building: "Дамба", unit: "Ост-индиец" };
+               building: "Дамба", unit: units.ostindian };
 testdata.push($.extend({ trait1: tr.Cre, trait2: tr.Fin, leader: "Вильгельм Оранский" }, nether));
 
 var greece = { nation: "Греки", tech1: tech.hunt, tech2: tech.fish,
@@ -99,11 +117,11 @@ testdata.push($.extend({ trait1: tr.Spi, trait2: tr.Cre, leader: "Хатшепс
 testdata.push($.extend({ trait1: tr.Spi, trait2: tr.Ind, leader: "Рамзес II" }, egypt));
 
 var zulu = { nation: "Зулусы", tech1: tech.agr, tech2: tech.hunt,
-             building: "Икханда", unit: "Импи" };
+             building: "Икханда", unit: units.impi };
 testdata.push($.extend({ trait1: tr.Agg, trait2: tr.Exp, leader: "Шака" }, zulu));
 
 var zulu = { nation: "Союз индейских племён", tech1: tech.agr, tech2: tech.fish,
-             building: "Тотемный столб", unit: "Пёс-воин" };
+             building: "Тотемный столб", unit: units.dogwarrior };
 testdata.push($.extend({ trait1: tr.Pro, trait2: tr.Phi, leader: "Сидящий Бык" }, zulu));
 
 var india  = { nation: "Индийцы", tech1: tech.mis, tech2: tech.mines,
@@ -120,11 +138,11 @@ var esp = { nation: "Испанцы", tech1: tech.fish, tech2: tech.mis,
 testdata.push($.extend({ trait1: tr.Exp, trait2: tr.Spi, leader: "Изабелла" }, esp));
 
 var carthage = { nation: "Карфаген", tech1: tech.fish, tech2: tech.mines,
-                 building: "Котон", unit: "Нумидийский всадник" };
+                 building: "Котон", unit: units.numid };
 testdata.push($.extend({ trait1: tr.Cha, trait2: tr.Fin, leader: "Ганнибал" }, carthage));
 
 var celts    = { nation: "Кельты", tech1: tech.hunt, tech2: tech.mis,
-                 building: "Дан", unit: "Гальский мечник" };
+                 building: "Дан", unit: units.gaalswordsman };
 testdata.push($.extend({ trait1: tr.Cha, trait2: tr.Spi, leader: "Бренн" }, celts));
 testdata.push($.extend({ trait1: tr.Cha, trait2: tr.Agg, leader: "Боудика" }, celts));
 
@@ -134,19 +152,19 @@ testdata.push($.extend({ trait1: tr.Ind, trait2: tr.Pro, leader: "Цинь Ши�
 testdata.push($.extend({ trait1: tr.Exp, trait2: tr.Pro, leader: "Мао" }, china));
 
 var kor      = { nation: "Корея", tech1: tech.mis, tech2: tech.mines,
-                 building: "Сеовон", unit: "Хвача" };
+                 building: "Сеовон", unit: units.hvachha };
 testdata.push($.extend({ trait1: tr.Fin, trait2: tr.Pro, leader: "Ван Гон" }, kor));
 
 var khm      = { nation: "Кхмеры", tech1: tech.hunt, tech2: tech.mines,
-                 building: "Бассейн", unit: "Слон с баллистой" };
+                 building: "Бассейн", unit: units.ballistaelephant };
 testdata.push($.extend({ trait1: tr.Exp, trait2: tr.Cre, leader: "Сурьяварман" }, khm));
 
 var maya      = { nation: "Майя", tech1: tech.mis, tech2: tech.mines,
-                 building: "Игровое поле", unit: "Холькан" };
+                 building: "Игровое поле", unit: units.holkan };
 testdata.push($.extend({ trait1: tr.Exp, trait2: tr.Fin, leader: "Пакаль" }, maya));
 
 var mali      = { nation: "Малийцы", tech1: tech.wheel, tech2: tech.mines,
-                 building: "Монетный двор", unit: "Застрельщик" };
+                 building: "Монетный двор", unit: units.skirmisher };
 testdata.push($.extend({ trait1: tr.Spi, trait2: tr.Fin, leader: "Манса Мунса" }, mali));
 
 var mong     = { nation: "Монголы", tech1: tech.wheel, tech2: tech.hunt,
@@ -160,7 +178,7 @@ testdata.push($.extend({ trait1: tr.Cha, trait2: tr.Imp, leader: "Кир" }, per
 testdata.push($.extend({ trait1: tr.Fin, trait2: tr.Org, leader: "Дарий I" }, persia));
 
 var porto     = { nation: "Португалия", tech1: tech.fish, tech2: tech.mines,
-                 building: "Фактория", unit: "Каррака" };
+                 building: "Фактория", unit: units.carrack };
 testdata.push($.extend({ trait1: tr.Exp, trait2: tr.Imp, leader: "Жуан" }, porto));
 
 var rome     = { nation: "Римляне", tech1: tech.fish, tech2: tech.mines,
@@ -175,11 +193,11 @@ testdata.push($.extend({ trait1: tr.Cre, trait2: tr.Imp, leader: "Екатери
 testdata.push($.extend({ trait1: tr.Agg, trait2: tr.Ind, leader: "Сталин" }, russia));
 
 var charleman = { nation: "Священная Римская Империя", tech1: tech.hunt, tech2: tech.mis,
-                 building: "Ратуша", unit: "Ландскнехт" };
+                 building: "Ратуша", unit: units.landskneht };
 testdata.push($.extend({ trait1: tr.Imp, trait2: tr.Pro, leader: "Карл Великий" }, charleman));
 
 var turkey = { nation: "Турки", tech1: tech.agr, tech2: tech.wheel,
-                 building: "Хаммам", unit: "Янычар" };
+                 building: "Хаммам", unit: units.janussar };
 testdata.push($.extend({ trait1: tr.Exp, trait2: tr.Org, leader: "Мехмед II" }, turkey));
 testdata.push($.extend({ trait1: tr.Imp, trait2: tr.Phi, leader: "Сулейман" }, turkey));
 
@@ -190,11 +208,11 @@ testdata.push($.extend({ trait1: tr.Cha, trait2: tr.Org, leader: "Наполео
 testdata.push($.extend({ trait1: tr.Cha, trait2: tr.Ind, leader: "Шарль де Голль" }, france));
 
 var shum = { nation: "Шумеры", tech1: tech.agr, tech2: tech.wheel,
-                 building: "Зиккурат", unit: "Воин коршуна" };
+                 building: "Зиккурат", unit: units.vulture };
 testdata.push($.extend({ trait1: tr.Cre, trait2: tr.Pro, leader: "Гильгамеш" }, shum));
 
 var abis = { nation: "Эфиопы", tech1: tech.hunt, tech2: tech.mines,
-                 building: "Стела", unit: "Воин оромо" };
+                 building: "Стела", unit: units.oromo };
 testdata.push($.extend({ trait1: tr.Cre, trait2: tr.Org, leader: "Зара Якоб" }, abis));
 
 var jap = { nation: "Японцы", tech1: tech.fish, tech2: tech.wheel,
@@ -210,7 +228,7 @@ $(document).ready(function() {
        { "targets": 7,
          "sType": "html",
          "render": function(data,type,row) {
-                   //console.log(data);
+                     console.log(data);
                    if (typeof(data) == "string")
                      return data;
                    return data.title
@@ -240,18 +258,6 @@ $(document).ready(function() {
         my: "left top-20",
         at: "left bottom"
       }
-
-
-/*
-        using: function( position, feedback ) {
-          $( this ).css( position );
-          $( "<div>" )
-            .addClass( "arrow" )
-            .addClass( feedback.vertical )
-            .addClass( feedback.horizontal )
-            .appendTo( this );
-        }
-*/
     } );
 
 } );
