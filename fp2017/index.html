@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="generator" content="AsciiDoc 8.6.9, bootstrap backend 4.5.0">
+    <title>Функциональное Программирование (матмех, осень 2017)</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Dmitrii Kosarev aka Kakadu">
+    <!-- AsciiDoc Bootstrap styles -->
+    <link rel="stylesheet" type="text/css" id="bootstrapTheme" href="./stylesheets/asciidoc-bootstrap.readable.min.css">
+    <!-- source highlighter -->
+    <link rel="stylesheet" type="text/css" href="./stylesheets/pygments.monokai.css">
+    <!-- Back to top (jquery plugin) -->
+    <link rel="stylesheet" type="text/css" href="./stylesheets/ui.totop.css">
+
+    <!--[if (lt IE 9) & (!IEMobile)]>
+        <script src="./javascripts/html5shiv.min.js"></script>
+        <script src="./javascripts/respond.min.js"></script>
+    <![endif]-->
+
+  </head>
+  <body id="toc-top">
+    <div id="page">
+
+
+  <div id="content" class="container">
+
+    <div class="row">
+
+
+
+        <div class="col-md-12" role="main">
+
+<div class="exampleblock col-md-4">
+<div class="content">
+<div class="panel panel-primary">
+<div class="panel-heading"><h3 class="panel-title">
+Table of Contents
+</h3></div>
+<div class="panel-body">
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="#about">Пролог</a>
+</p>
+</li>
+<li>
+<p>
+<a href="#week1">Первая неделя</a>
+</p>
+</li>
+<li>
+<p>
+<a href="#week2">Вторая неделя</a>
+
+
+
+
+
+
+
+</p>
+</li>
+</ul></div>
+</div>
+</div>
+</div></div>
+<div class="section">
+    <h1 class="page-header" id="about">Пролог</h1>
+<div class="paragraph"><p><a href="http://ocsigen.org/js_of_ocaml/2.8.4/files/toplevel/index.html">OCaml прямо в браузере</a>. Может для Haskell'я тоже такое есть&#8230;</p></div>
+<div class="paragraph"><p>GHC и WinHugs и как ими пользоваться:</p></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Самая распостраненый способ уставновить Haskell - это Haskell Platform (<a href="http://www.haskell.org/platform">http://www.haskell.org/platform</a>).
+  Работает для Windows, Linux и Mac. Для курса будет достаточно минимального варианта установки.
+</p>
+</li>
+<li>
+<p>
+В Haskell Platorm есть простые среды разработки GHCi и WinGHCi. Вот краткая инструкция о том, как начать с ними работать.
+</p>
+</li>
+</ul></div>
+<h2 id="ссылки">Ссылки</h2>
+<div class="paragraph"><p><a href="http://learnyouahaskell.com/">Learn You a Haskell for Freat Good</a></p></div>
+</div>
+<div class="section">
+    <h1 class="page-header" id="week1">Неделя 1</h1>
+<div class="paragraph"><p>Введение. Рекурсивные функции над числами</p></div>
+<h2 id="пачка_задач_со_спойлерами">Пачка задач со спойлерами</h2>
+<div class="ulist"><ul>
+<li>
+<p>
+Сложение чисел путём уменьшения слагаемого на 1, пока не превратится в ноль.
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="nf">add&#39;</span> <span class="mi">0</span> <span class="ow">=</span> <span class="n">id</span>
+<span class="nf">add&#39;</span> <span class="n">x</span> <span class="o">|</span> <span class="n">x</span> <span class="o">&gt;</span> <span class="mi">0</span> <span class="ow">=</span> <span class="n">add&#39;</span> <span class="p">(</span><span class="n">x</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span> <span class="o">.</span> <span class="p">(</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+       <span class="o">|</span> <span class="n">x</span> <span class="o">&lt;</span> <span class="mi">0</span> <span class="ow">=</span> <span class="n">add&#39;</span> <span class="p">(</span><span class="n">x</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span> <span class="o">.</span> <span class="p">(</span><span class="n">subtract</span> <span class="mi">1</span><span class="p">)</span>
+</pre></div></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+Аналогично для умножения
+</p>
+</li>
+<li>
+<p>
+Реализовать вычитание через сложение
+</p>
+</li>
+<li>
+<p>
+Частное двух чисел
+</p>
+</li>
+<li>
+<p>
+Остаток от деления
+</p>
+</li>
+<li>
+<p>
+Количество делителей числа, сумма делителей числа
+</p>
+</li>
+</ul></div>
+<div class="listingblock">
+<div class="content"><div class="highlight"><pre><span></span><span class="nf">isPrime</span> <span class="n">n</span> <span class="ow">=</span> <span class="n">iterate</span> <span class="mi">2</span> <span class="kr">where</span>
+  <span class="n">n&#39;</span> <span class="ow">=</span> <span class="n">abs</span> <span class="n">n</span>
+  <span class="n">iterate</span> <span class="n">i</span> <span class="o">|</span> <span class="n">i</span><span class="o">*</span><span class="n">i</span> <span class="o">&gt;</span> <span class="n">n&#39;</span>  <span class="ow">=</span> <span class="kt">True</span>
+            <span class="o">|</span> <span class="n">otherwise</span> <span class="ow">=</span> <span class="n">rem&#39;</span> <span class="n">n&#39;</span> <span class="n">i</span> <span class="o">/=</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">iterate</span> <span class="p">(</span><span class="n">i</span><span class="o">+</span><span class="mi">1</span><span class="p">)</span>
+</pre></div></div></div>
+<div class="ulist"><ul>
+<li>
+<p>
+<a href="https://en.wikipedia.org/wiki/Coprime_integers">Coprime numbers</a>
+</p>
+</li>
+<li>
+<p>
+<a href="https://en.wikipedia.org/wiki/Euler%27s_totient_function">Функция Эйлера</a>
+</p>
+</li>
+</ul></div>
+<h2 id="задачи_от_м_симуни">Задачи от М.Симуни</h2>
+<div class="paragraph"><p>Составлены М.Симуни (<a href="mailto:simuni@mail.ru">simuni@mail.ru</a>). Вы можете свободно копировать и воспроизводить эти задачи, при условии сохранения ссылки на составителя.</p></div>
+<ol>
+<li>
+Описать функцию <code>f n</code>, которая вычисляет <code>1+1/(1+1/(1+ ...+1/1))</code> - n дробей
+<div class="ulist"><ul>
+<li>
+<p>
+Пример вызова: <code>f 3</code>
+ <br>
+    Должно получиться <code>1+1/(1+1/(1+1/1))</code>, то есть <code>1.6666..</code>.
+ <br>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+Описать функцию <code>b n</code>, которая вычисляет <code>0+1/(1+1/(2+1/(3+ ...+1/n)))</code> - n дробей
+<div class="ulist"><ul>
+<li>
+<p>
+Пример вызова: <code>b 3</code>
+ <br>
+  Должно получиться <code>0+1/(1+1/(2+1/3))</code>, то есть <code>0.7</code>
+ <br>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+Описать функцию <code>sumsin n = sin(1+2+...+n)/(sin 1+sin 2+...+sin n))</code>
+  В решении желательно (но не обязательно) использовать хвостовую рекурсию и накапливающие параметры.
+<div class="ulist"><ul>
+<li>
+<p>
+Пример вызова: <code>sumsin 2</code>
+ <br>
+  Должно получиться <code>sin(1+2)/(sin 1+sin 2)</code>; это равно примерно 0.08
+ <br>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+Описать функцию <code>sumfact n</code>:  <code>sumfact n = 1!+2!+...+n!`</code>
+  В решении желательно (но не обязательно) использовать хвостовую рекурсию и накапливающие параметры.
+<div class="ulist"><ul>
+<li>
+<p>
+Пример вызова: <code>sumfact 3</code>
+ <br>
+  Результат должен быть равен 9.
+ <br>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+Сколько существует строго возрастающих последовательностей положительных целых чисел, сумма которых равна данному числу n?
+  Например, для n = 9 существуют такие последовательности:
+ <br>
+    <code>1 2 6</code>, <code>1 3 5</code>, <code>1 8</code>, <code>2 3 4</code>, <code>2 7</code>, <code>3 6</code>, <code>4 5</code>, <code>9</code>
+ <br>
+  , то есть ответ на вопрос равен 8
+ <br>
+  Опишите функцию nseq n, которая вычисляет количество таких последовательностей.
+<div class="ulist"><ul>
+<li>
+<p>
+Пример вызова: <code>nseq 9</code>
+ <br>
+  Результат должен быть равен 8.
+ <br>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<strong>Дополнительная задача</strong>
+  Опишите функцию g, которая для данного целого числа, проверяет, можно ли его представить в виде суммы двух различных простых чисел, и возвращает True или False.
+ <br>
+  Замечание: О похожей (но не совсем такой же)задаче написан целый роман см. например: <a href="http://royallib.ru/book/doksiadis_apostolos/dyadyushka_petros_i_problema_goldbaha.html">http://royallib.ru/book/doksiadis_apostolos/dyadyushka_petros_i_problema_goldbaha.html</a>
+ <br>
+  Примеры вызова:
+<div class="ulist"><ul>
+<li>
+<p>
+g 6 должно быть равно False
+</p>
+</li>
+<li>
+<p>
+g 7 должно быть равно True (так как 7 = 2 + 5).
+ <br>
+</p>
+</li>
+</ul></div>
+</li>
+<li>
+<strong>Дополнительная задача</strong>
+  Опишите функцию <code>c n</code>, которая для данного целого числа <code>n</code> вычисляет, сколько есть способов представить данное число, как сумму нескольких различных положительных чисел, причем все числа должны быть попарно взаимно простыми.
+ <br>
+  Замечание: Эту задачу можно решать используя списки, а можно придумывать формулу.
+<div class="ulist"><ul>
+<li>
+<p>
+Пример вызова:
+ <br>
+     <code>с 10</code> - должно получиться 6, потому что есть 6 таких последовательностей (<code>1 2 7</code>, <code>1 4 5</code>, <code>1 9</code>, <code>2 3 5</code>, <code>3 7</code>, <code>10</code>).
+ <br>
+</p>
+</li>
+</ul></div>
+</li>
+</ol>
+</div>
+<div class="section">
+    <h1 class="page-header" id="week2">Неделя 2 (11 сентября)</h1>
+<div class="paragraph"><p>Списки и всё с ними связанное.</p></div>
+</div>
+        </div>  <!-- /.col-md-12 -->
+    </div>  <!-- /.row -->
+
+  </div>  <!-- /.container -->
+
+<div class="container">
+    <footer id="footer" role="contentinfo">
+        <div class="container">
+<div class="row"><div id="footnotes"></div></div>
+<div id="footer-text">
+Last updated
+ 2017-09-04 01:43:01 MSK
+<br>Built with <a href="https://github.com/llaville/asciidoc-bootstrap-backend">AsciiDoc-Bootstrap backend</a> 4.5.0
+</div>
+        </div>
+    </footer>
+</div>
+
+    <script src="./javascripts/jquery.min.js"></script>
+    <script src="./bootstrap/js/bootstrap.min.js"></script>
+    <script src="./javascripts/asciidoc.js"></script>
+    <!-- Install TOC and/or footnotes (if necessary) -->
+    <script type="text/javascript">asciidoc.install(2);</script>
+
+    <script src="./javascripts/jquery.ui.totop.min.js"></script>
+
+
+
+    <!-- Remove footnotes if empty block -->
+    <script type="text/javascript">$(function(){ if ($("#footnotes div").length == 0) $("#footnotes").parent().remove(); });</script>
+
+    <script type="text/javascript">$(function(){ if ($("#dropdown-menu-versions")) $("#dropdown-menu-versions").parent().remove(); });</script>
+
+    <script type="text/javascript">$(function(){ $().UItoTop(); });</script>
+    </div> <!-- page -->
+  </body>
+</html>
