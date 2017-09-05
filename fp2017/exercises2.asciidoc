@@ -1,0 +1,13 @@
+:source-highlighter: pygments
+:pygments-style: monokai
+:local-css-style: pastie
+
+Задачи второй недели
+====================
+:Author: Dmitrii Kosarev aka Kakadu
+:email:  Dmitrii.Kosarev@protonmail.ch
+
+[[week2]]
+Неделя 2
+--------
+Упражнений пока нет
