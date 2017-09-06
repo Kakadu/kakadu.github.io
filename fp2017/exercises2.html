@@ -1,74 +1,307 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <meta name="generator" content="AsciiDoc 8.6.9, bootstrap backend 4.5.0">
-    <title>Задачи второй недели</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="author" content="Dmitrii Kosarev aka Kakadu">
-    <!-- AsciiDoc Bootstrap styles -->
-    <link rel="stylesheet" type="text/css" id="bootstrapTheme" href="./stylesheets/asciidoc-bootstrap.readable.min.css">
-    <!-- source highlighter -->
-    <link rel="stylesheet" type="text/css" href="./stylesheets/pygments.monokai.css">
-    <!-- Back to top (jquery plugin) -->
-    <link rel="stylesheet" type="text/css" href="./stylesheets/ui.totop.css">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="author" content="Dmitrii Kosarev aka Kakadu">
+<title>Задачи второй недели</title>
+<style>
+/* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 
-    <!--[if (lt IE 9) & (!IEMobile)]>
-        <script src="./javascripts/html5shiv.min.js"></script>
-        <script src="./javascripts/respond.min.js"></script>
-    <![endif]-->
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans);
+@import "asciidoctor.css"; /* Default asciidoc style framework - important */
 
-  </head>
-  <body id="toc-top">
-    <div id="page">
+/* CUSTOMISATIONS */
+/* Change the values in root for quick customisation. If you want even more fine grain... venture further. */
 
+:root{
+--maincolor:#FFFFFF;
+--primarycolor:#009688; /* Teal 500 */
+--secondarycolor:#ba3925;
+--tertiarycolor: #186d7a;
+--sidebarbackground:#004d40; /* Teal 900 */
+--linkcolor:#80cbc4; /* Teal 200 */
+--linkcoloralternate:#f44336;
+--white:#FFFFFF;
+--black:#000000;
+}
 
-  <div id="content" class="container">
+body{font-family: "Noto Sans",sans-serif;}
 
-    <div class="row">
+#header{background-color:var(--primarycolor); padding:25px;max-width: none;}
+#footer{background-color: var(--sidebarbackground);}
+h1,h2,h3{background-color:var(--primarycolor);color:var(--white) !important;font-family:"Noto Sans",sans-serif;text-decoration:none;padding:10px;}
+h4,h5,h6{color:var(--primarycolor);}
+.title{color:var(--sidebarbackground) !important;font-family:"Noto Sans",sans-serif;font-style: normal; font-weight: normal;}
+p{font-family: "Noto Sans",sans-serif ! important}
+#toc.toc2 a:link{color:white;}
 
+a {
+  text-decoration: none;
+  color: var(--linkcolor);
+}
+a:hover {
+  color: var(--sidebarbackground);
+}
+.quoteblock blockquote::before {
+  color: var(--linkcolor);
+}
+mark {
+  color: var(--white);
+  background-color: #80cbc4;
+}
 
+/* Card styling */
+.sect1{border-bottom:1px solid grey;border-radius:8px;}
 
-        <div class="col-md-12" role="main">
+/* Table styles */
+th{background-color: #80cbc4;color:#FFFFFF;}
 
-<div class="section">
-    <h1 class="page-header" id="week2">Неделя 2</h1>
-<div class="paragraph"><p>Упражнений пока нет</p></div>
+#toc.toc2{background-color:var(--sidebarbackground);color:white !important;}
+#toc.toc2.a{color:var(--white);}
+#toc.toc2.a:active{color:var(--white) !important;}
+#toc.toc2.a:visited{color:var(--white) !important;}
+#toctitle{color:white;font-size: 16px;}
+
+/* Responsiveness fixes */
+video {
+  max-width: 100%;
+}
+
+@media all and (max-width: 600px) {
+table {
+  width: 55vw!important;
+  font-size: 3vw;
+}
+
+</style>
+<style>
+/* Pygments styles disabled. Pygments is not available. */
+</style>
+</head>
+<body class="article">
+<div id="header">
+<h1>Задачи второй недели</h1>
+<div class="details">
+<span id="author" class="author">Dmitrii Kosarev aka Kakadu</span><br>
+<span id="email" class="email"><a href="mailto:Dmitrii.Kosarev@protonmail.ch">Dmitrii.Kosarev@protonmail.ch</a></span><br>
 </div>
-        </div>  <!-- /.col-md-12 -->
-    </div>  <!-- /.row -->
-
-  </div>  <!-- /.container -->
-
-<div class="container">
-    <footer id="footer" role="contentinfo">
-        <div class="container">
-<div class="row"><div id="footnotes"></div></div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="week2">Неделя 2</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_Задачи_от_М_Симуни">Задачи от М.Симуни</h3>
+<div class="paragraph">
+<p>Составлены М.Симуни (<a href="mailto:simuni@mail.ru">simuni@mail.ru</a>). Вы можете свободно копировать и воспроизводить эти задачи, при условии сохранения ссылки на составителя.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="1">
+<li>
+<p>List item 7.</p>
+<div class="olist arabic">
+<ol class="arabic" start="1">
+<li>
+<p>Описать функцию minlist, которая ищет минимальный элемент в данном списке.</p>
+<div class="paragraph">
+<p>Пример вызова: <code>minlist [3,2,7]</code>
+Ответ должен быть равен 2.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+На самом деле, конечно, в Хаскеле есть такая стандартная функция (называется minimum), но, пожалуйста, в этой задаче вы ее не используйте.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Описать функцию sumprod, которая для списка <code>[x1,x2,x3,x4,...,xn]</code> ищет значение <code>x1*x2+x2*x3+x3*x4+...</code>. То есть, сумму произведений всех пар стоящих рядом элементов.</p>
+<div class="paragraph">
+<p>Пример вызова: <code>sumprod [1,3,2,7]</code></p>
+</div>
+<div class="paragraph">
+<p>Ответ должен быть равен 1*3+3*2+2*7 = 23.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Можно считать, что мы точно знаем, что в списке есть хотя бы два элемента.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Описать функцию <code>check cond xs</code>, которая для данного списка xs и логической функции cond проверяет, верно ли, что в списке есть элемент, для которого cond возвращает True. Результат должен быть равен True, если такой элемент есть, и False, если его нет.</p>
+<div class="paragraph">
+<p>Примеры вызова: <code>check (\x-&gt;x&gt;5) [3,2,7,4]</code>
+Ответ должен быть равен True, потому что в списке есть число, большее 5 (это число 7).</p>
+</div>
+<div class="paragraph">
+<p><code>check (\x-&gt;x&lt;1) [3,2,7,4]</code>
+Ответ должен быть равен False, потому что в списке нет чисел, меньших 1.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Эта задача, конечно, очень похожа на checkPos, которая была на занятии. Но только тут надо проверять не конкретное условие, а условие, которое передается, как параметр.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+В Хаскеле есть такая стандартная функция (называется any). Но, пожалуйста, в этой задаче вы ее не используйте.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Описать функцию sameDigits, которая возвращает True, если в списке есть два элемента, у которых совпадают последние цифры.</p>
+<div class="paragraph">
+<p>Примеры вызова: <code>sameDigits [13,2,73]</code>. Ответ должен быть равен True, потому что у 13 и 73 одинаковые последние цифры.</p>
+</div>
+<div class="paragraph">
+<p><code>sameDigits [13,2,79,5]</code>. Ответ должен быть равен False.</p>
+</div>
+</li>
+<li>
+<p>Описать функцию <code>upDown</code>, которая проверяет, верно ли, что в данном списке сначала строго возрастают, а потом, с какого-то момента, строго убывают.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="openblock">
+<div class="content">
+<div class="paragraph">
+<p>+
+Примеры вызова:</p>
+</div>
+<div class="paragraph">
+<p>+
+  . upDown [2, 6, 9, 7, 3, 1] - должна вернуть True
+  . upDown [2, 6, 9, 7, 3, 1, 8] - должна вернуть False, потому что числа возрастают, убывают и потом снова возрастают.
+  . upDown [2, 6, 9] - должна вернуть False, потому что числа только возрастают</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+М.б. лучше четко сформулировать, что это значит "сначала возрастают, потом убывают". Имеется в виду, что, если взять все пары стоящих рядом чисел и сравнить числа в парах, то сначала насколько раз (по крайней мере один раз) первое число будет меньше, а потом несколько раз (тоже по крайней мере один раз) первое число будет больше.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>+</p>
+</div>
+</div>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Написать функцию parts, которая для данного списка проверяет, можно ли его разбить на несколько строго возрастающих кусков одинаковой длины. Длина кусков должна быть не меньше 2. Кусок может быть и только один.</p>
+<div class="paragraph">
+<p>Примеры вызова:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>parts [1, 2, 8, 2, 5, 6]</p>
+</li>
+<li>
+<p>parts [1, 2, 3, 4, 5]</p>
+</li>
+<li>
+<p>parts [1, 2, 1, 2, 3, 4]</p>
+</li>
+<li>
+<p>Во всех этих случаях ответ должен быть равен True.</p>
+</li>
+<li>
+<p>parts [4, 6, 3, 5, 7]</p>
+</li>
+<li>
+<p>Тут ответ должен быть равен False.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+В этой задаче есть более эффективные решения и менее эффективные. Если у вас будет менее эффективное, то я попрошу вас написать более эффективное (и немного подскажу, как).
+..  Написать функцию parts2, которая проверяет, можно ли в данном списке выбрать ровно половину элементов, чтобы
+- они строго возрастали
+- в оставшейся половине элементы тоже строго возрастали.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>+
+В этой задаче элементы не обязательно брать подряд.</p>
+</div>
+<div class="paragraph">
+<p>+
+Примеры вызова:
+- parts2 [1, 3, 2, 4, 8, 9]. Ответ должен быть True (разбивается, например, на [1, 3, 4] и [2, 8, 9])
+- parts2 [2, 3, 4, 6, 1, 8, 9, 7]. Ответ должен быть False.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Желательно более-менее эффективное решение
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
 <div id="footer-text">
-Last updated
- 2017-09-05 19:45:51 MSK
-<br>Built with <a href="https://github.com/llaville/asciidoc-bootstrap-backend">AsciiDoc-Bootstrap backend</a> 4.5.0
+Last updated 2017-09-06 20:08:36 MSK
 </div>
-        </div>
-    </footer>
 </div>
-
-    <script src="./javascripts/jquery.min.js"></script>
-    <script src="./bootstrap/js/bootstrap.min.js"></script>
-    <script src="./javascripts/asciidoc.js"></script>
-    <!-- Install TOC and/or footnotes (if necessary) -->
-    <script type="text/javascript">asciidoc.install(2);</script>
-
-    <script src="./javascripts/jquery.ui.totop.min.js"></script>
-
-
-
-    <!-- Remove footnotes if empty block -->
-    <script type="text/javascript">$(function(){ if ($("#footnotes div").length == 0) $("#footnotes").parent().remove(); });</script>
-
-    <script type="text/javascript">$(function(){ if ($("#dropdown-menu-versions")) $("#dropdown-menu-versions").parent().remove(); });</script>
-
-    <script type="text/javascript">$(function(){ $().UItoTop(); });</script>
-    </div> <!-- page -->
-  </body>
+</body>
 </html>

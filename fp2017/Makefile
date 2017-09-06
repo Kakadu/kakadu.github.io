@@ -6,16 +6,17 @@
 
 FILES_IN=$(shell ls *.asciidoc)
 FILES_OUT=$(patsubst %.asciidoc,%.html,$(FILES_IN))
-#$(info $(FILES_OUT))
+BACKEND=html5
+#BACKEND=bootstrap
 OPTS=theme=readable totop=ui linkcss sidebar=left icons iconsfont=font-awesome # iconsfont=glyphicon
 
 all: $(FILES_OUT)
 
 index.html: index.asciidoc
-	asciidoc -b bootstrap $(addprefix -a ,$(OPTS)) $<
+	asciidoctor -b $(BACKEND) $(addprefix -a ,$(OPTS)) $<
 
 exercises%.html: exercises%.asciidoc
-	asciidoc -b bootstrap $(addprefix -a ,$(OPTS)) $<
+	asciidoctor -b $(BACKEND)  $<
 
 celan: clean
 
