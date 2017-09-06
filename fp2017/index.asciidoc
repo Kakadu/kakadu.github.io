@@ -7,24 +7,16 @@
 :Author: Dmitrii Kosarev aka Kakadu
 :email:  Dmitrii.Kosarev@protonmail.ch
 
-[role="col-md-4"]
-====
-[panel,primary]
-.{toc-title}
---
-* xref:about[Пролог]
-* xref:week1[Первая неделя]
-* xref:week2[Вторая неделя]
-// * xref:metamodel[Qt objects' metamodel]
-// * xref:properties[Adding properties]
-// * xref:signals[Adding signals]
-// * xref:types[Supported types]
-// * xref:building[Build system]
-// * xref:no_moc[Using `lablqml` without code generation]
-// * xref:conclusion[Conclusion]
-// * xref:qt5[P.S. Installing Qt5]
---
-====
+// [role="col-md-4"]
+// ====
+// [panel,primary]
+// .{toc-title}
+// --
+// * xref:about[Пролог]
+// * xref:week1[Первая неделя]
+// * xref:week2[Вторая неделя]
+// --
+// ====
 
 [[about]]
 Пролог
@@ -55,6 +47,12 @@ link:exercises1.html[Упражнения]
 Списки и всё с ними связанное.
 
 link:exercises2.html[Упражнения]
+
+[[week3]]
+Неделя 3
+--------
+Типы данных
+
 
 ////
 [glossary]

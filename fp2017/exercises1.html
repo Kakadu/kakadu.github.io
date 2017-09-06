@@ -1,3 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="author" content="Dmitrii Kosarev aka Kakadu">
+<title>Задачи первой недели</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<style>
 /* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
 /* Remove comment around @import statement below when using as a custom stylesheet */
 /*@import "https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700";*/
@@ -405,3 +416,214 @@ body.book #toc,body.book #preamble,body.book h1.sect0,body.book .sect1>h2{page-b
 .print-only{display:block!important}
 .hide-for-print{display:none!important}
 .show-for-print{display:inherit!important}}
+</style>
+<style>
+/* Pygments styles disabled. Pygments is not available. */
+</style>
+</head>
+<body class="article">
+<div id="header">
+<h1>Задачи первой недели</h1>
+<div class="details">
+<span id="author" class="author">Dmitrii Kosarev aka Kakadu</span><br>
+<span id="email" class="email"><a href="mailto:Dmitrii.Kosarev@protonmail.ch">Dmitrii.Kosarev@protonmail.ch</a></span><br>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="week1">Неделя 1</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Введение. Рекурсивные функции над числами</p>
+</div>
+<div class="sect2">
+<h3 id="_Пачка_задач_со_спойлерами">Пачка задач со спойлерами</h3>
+<div class="ulist">
+<ul>
+<li>
+<p>Сложение чисел путём уменьшения слагаемого на 1, пока не превратится в ноль.</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>add' 0 = id
+add' x | x &gt; 0 = add' (x-1) . (+1)
+       | x &lt; 0 = add' (x+1) . (subtract 1)</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Аналогично для умножения</p>
+</li>
+<li>
+<p>Реализовать вычитание через сложение</p>
+</li>
+<li>
+<p>Частное двух чисел</p>
+</li>
+<li>
+<p>Остаток от деления</p>
+</li>
+<li>
+<p>Количество делителей числа, сумма делителей числа</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>isPrime n = iterate 2 where
+  n' = abs n
+  iterate i | i*i &gt; n'  = True
+            | otherwise = rem' n' i /= 0 &amp;&amp; iterate (i+1)</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Coprime_integers">Coprime numbers</a></p>
+</li>
+<li>
+<p><a href="https://en.wikipedia.org/wiki/Euler%27s_totient_function">Функция Эйлера</a></p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_Задачи_от_М_Симуни">Задачи от М.Симуни</h3>
+<div class="paragraph">
+<p>Составлены М.Симуни (<a href="mailto:simuni@mail.ru">simuni@mail.ru</a>). Вы можете свободно копировать и воспроизводить эти задачи, при условии сохранения ссылки на составителя.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Описать функцию <code>f n</code>, которая вычисляет <code>1+1/(1+1/(1+ ...+1/1))</code> - n дробей</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Пример вызова: <code>f 3</code>
++
+  Должно получиться <code>1+1/(1+1/(1+1/1))</code>, то есть <code>1.6666..</code>.
++</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Описать функцию <code>b n</code>, которая вычисляет <code>0+1/(1+1/(2+1/(3+ ...+1/n)))</code> - n дробей</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Пример вызова: <code>b 3</code>
++
+Должно получиться <code>0+1/(1+1/(2+1/3))</code>, то есть <code>0.7</code>
++</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Описать функцию <code>sumsin n = sin(1+2+...+n)/(sin 1+sin 2+...+sin n))</code>
+В решении желательно (но не обязательно) использовать хвостовую рекурсию и накапливающие параметры.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Пример вызова: <code>sumsin 2</code>
++
+Должно получиться <code>sin(1+2)/(sin 1+sin 2)</code>; это равно примерно 0.08
++</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Описать функцию <code>sumfact n</code>:  <code>sumfact n = 1!+2!+...+n!`</code>
+В решении желательно (но не обязательно) использовать хвостовую рекурсию и накапливающие параметры.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Пример вызова: <code>sumfact 3</code>
++
+Результат должен быть равен 9.
++</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Сколько существует строго возрастающих последовательностей положительных целых чисел, сумма которых равна данному числу n?
+Например, для n = 9 существуют такие последовательности:
++
+  <code>1 2 6</code>, <code>1 3 5</code>, <code>1 8</code>, <code>2 3 4</code>, <code>2 7</code>, <code>3 6</code>, <code>4 5</code>, <code>9</code>
++
+, то есть ответ на вопрос равен 8
++
+Опишите функцию nseq n, которая вычисляет количество таких последовательностей.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Пример вызова: <code>nseq 9</code>
++
+Результат должен быть равен 8.
++</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Дополнительная задача</strong>
+Опишите функцию g, которая для данного целого числа, проверяет, можно ли его представить в виде суммы двух различных простых чисел, и возвращает True или False.
++
+Замечание: О похожей (но не совсем такой же)задаче написан целый роман см. например: <a href="http://royallib.ru/book/doksiadis_apostolos/dyadyushka_petros_i_problema_goldbaha.html" class="bare">http://royallib.ru/book/doksiadis_apostolos/dyadyushka_petros_i_problema_goldbaha.html</a>
++
+Примеры вызова:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>g 6 должно быть равно False</p>
+</li>
+<li>
+<p>g 7 должно быть равно True (так как 7 = 2 + 5).
++</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Дополнительная задача</strong>
+Опишите функцию <code>c n</code>, которая для данного целого числа <code>n</code> вычисляет, сколько есть способов представить данное число, как сумму нескольких различных положительных чисел, причем все числа должны быть попарно взаимно простыми.
++
+Замечание: Эту задачу можно решать используя списки, а можно придумывать формулу.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Пример вызова:
++
+   <code>с 10</code> - должно получиться 6, потому что есть 6 таких последовательностей (<code>1 2 7</code>, <code>1 4 5</code>, <code>1 9</code>, <code>2 3 5</code>, <code>3 7</code>, <code>10</code>).
++</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="week2">Неделя 2 (11 сентября)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Списки и всё с ними связанное.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-09-05 19:37:37 MSK
+</div>
+</div>
+</body>
+</html>
