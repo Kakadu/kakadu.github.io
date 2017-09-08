@@ -592,37 +592,117 @@ add' x | x &gt; 0 = add' (x-1) . (+1)
 </li>
 <li>
 <p><strong>Дополнительная задача</strong>
-Опишите функцию <code>c n</code>, которая для данного целого числа <code>n</code> вычисляет, сколько есть способов представить данное число, как сумму нескольких различных положительных чисел, причем все числа должны быть попарно взаимно простыми.
+Опишите функцию <code>c n</code>, которая для данного целого числа <code>n</code> вычисляет, сколько есть способов представить данное число, как сумму нескольких различных положительных чисел, причем все числа должны быть попарно взаимно простыми.</p>
+<div class="literalblock">
+<div class="content">
+<pre>NOTE: Эту задачу можно решать используя списки, а можно придумывать формулу.</pre>
+</div>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>Пример вызова:
 +
-Замечание: Эту задачу можно решать используя списки, а можно придумывать формулу.</p>
-<div class="ulist">
-<ul>
-<li>
-<p>Пример вызова:
-+
-   <code>с 10</code> - должно получиться 6, потому что есть 6 таких последовательностей (<code>1 2 7</code>, <code>1 4 5</code>, <code>1 9</code>, <code>2 3 5</code>, <code>3 7</code>, <code>10</code>).
-+</p>
-</li>
-</ul>
+`с 10` - должно получиться 6, потому что есть 6 таких последовательностей (`1 2 7`, `1 4 5`, `1 9`, `2 3 5`, `3 7`, `10`).
++</pre>
+</div>
 </div>
 </li>
 </ol>
 </div>
 </div>
-</div>
-</div>
-<div class="sect1">
-<h2 id="week2">Неделя 2 (11 сентября)</h2>
-<div class="sectionbody">
+<div class="sect2">
+<h3 id="_Задачи_про_зависимые_типы_вернее_про_их_отсутствие">Задачи про зависимые типы (вернее про их отсутствие)</h3>
 <div class="paragraph">
-<p>Списки и всё с ними связанное.</p>
+<p>Для решeния необходимо знать, что такое кортеж (англ. <strong>tuple</strong>)</p>
+</div>
+<div class="paragraph">
+<p>Также используется понятие вложенных пар&#8201;&#8212;&#8201;это когда в паре один из элементов тоже пара, а в нём один из элементов снова пара, и т.д. Например, бывают проавориентированные вложенные пары <code>(a,(b,(c,d)))</code> и левоориентированные&#8201;&#8212;&#8201;<code>(((a,b),c),d)</code>.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Научиться описывать функции, которые делают из некаррированной функции каррированную:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>un    :: (a -&gt; b) -&gt; (a -&gt; b)
+deux  :: ((a,b) -&gt; c) -&gt; (a -&gt; b -&gt; c)
+trois :: ((a,(b,c)) -&gt; d) -&gt; (a -&gt; b -&gt; c -&gt; d)</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>И т.д. до бесконечности.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Из каррированной&#8201;&#8212;&#8201;в некаррированную</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>un    :: (a -&gt; b) -&gt; (a -&gt; b)
+deux  :: (a -&gt; b -&gt; c) -&gt; (a,b) -&gt; c
+trois :: (a -&gt; b -&gt; c -&gt; d) -&gt; (a,(b,c)) -&gt; d</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Извлечение самого глубокого элемента</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>deux  :: (a,b) -&gt; (b,a)
+trois :: (a,(b,c)) -&gt; c,(a,b)</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Применение вложенных пар функций в одному значению</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>un    :: a -&gt; (a-&gt;b) -&gt; b
+deux  :: a -&gt; (a-&gt;b, a-&gt;c) -&gt; (b,c)
+trois :: a -&gt; (a-&gt;b, (a-&gt;c, a-&gt;d)) -&gt; (b,(c,d))</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Реализация от трех и дальше должна получиться синтаксически одинаковой для всех задач выше</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Задача от Олега (посложнее)</p>
+<div class="paragraph">
+<p>Научиться описывать функции, которые принимают произвольное количество аргументов и складывают их в список.</p>
+</div>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>smth1 un    1     -- [1]
+smth2 deux  1 2   -- [1,2]
+smth3 trois 1 2 3 -- [1,2,3]</pre>
+</div>
+</div>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-05 19:37:37 MSK
+Last updated 2017-09-08 16:55:18 MSK
 </div>
 </div>
 </body>
