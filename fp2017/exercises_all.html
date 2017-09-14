@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="author" content="Dmitrii Kosarev aka Kakadu">
+<title>Задачи неразобранные по темам</title>
+<style>
+/* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
+
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans);
+@import "asciidoctor.css"; /* Default asciidoc style framework - important */
+
+/* CUSTOMISATIONS */
+/* Change the values in root for quick customisation. If you want even more fine grain... venture further. */
+
+:root{
+--maincolor:#FFFFFF;
+--primarycolor:#009688; /* Teal 500 */
+--secondarycolor:#ba3925;
+--tertiarycolor: #186d7a;
+--sidebarbackground:#004d40; /* Teal 900 */
+--linkcolor:#80cbc4; /* Teal 200 */
+--linkcoloralternate:#f44336;
+--white:#FFFFFF;
+--black:#000000;
+}
+
+body{font-family: "Noto Sans",sans-serif;}
+
+#header{background-color:var(--primarycolor); padding:25px;max-width: none;}
+#footer{background-color: var(--sidebarbackground);}
+h1,h2,h3{background-color:var(--primarycolor);color:var(--white) !important;font-family:"Noto Sans",sans-serif;text-decoration:none;padding:10px;}
+h4,h5,h6{color:var(--primarycolor);}
+.title{color:var(--sidebarbackground) !important;font-family:"Noto Sans",sans-serif;font-style: normal; font-weight: normal;}
+p{font-family: "Noto Sans",sans-serif ! important}
+#toc.toc2 a:link{color:white;}
+
+a {
+  text-decoration: none;
+  color: var(--linkcolor);
+}
+a:hover {
+  color: var(--sidebarbackground);
+}
+.quoteblock blockquote::before {
+  color: var(--linkcolor);
+}
+mark {
+  color: var(--white);
+  background-color: #80cbc4;
+}
+
+/* Card styling */
+.sect1{border-bottom:1px solid grey;border-radius:8px;}
+
+/* Table styles */
+th{background-color: #80cbc4;color:#FFFFFF;}
+
+#toc.toc2{background-color:var(--sidebarbackground);color:white !important;}
+#toc.toc2.a{color:var(--white);}
+#toc.toc2.a:active{color:var(--white) !important;}
+#toc.toc2.a:visited{color:var(--white) !important;}
+#toctitle{color:white;font-size: 16px;}
+
+/* Responsiveness fixes */
+video {
+  max-width: 100%;
+}
+
+@media all and (max-width: 600px) {
+table {
+  width: 55vw!important;
+  font-size: 3vw;
+}
+
+</style>
+<style>
+/* Pygments styles disabled. Pygments is not available. */
+</style>
+</head>
+<body class="article">
+<div id="header">
+<h1>Задачи неразобранные по темам</h1>
+<div class="details">
+<span id="author" class="author">Dmitrii Kosarev aka Kakadu</span><br>
+<span id="email" class="email"><a href="mailto:Dmitrii.Kosarev@protonmail.ch">Dmitrii.Kosarev@protonmail.ch</a></span><br>
+</div>
+</div>
+<div id="content">
+<div class="sect2">
+<h3 id="_Задачи_от_М_Симуни">Задачи от М.Симуни</h3>
+<div class="paragraph">
+<p>Составлены М.Симуни (<a href="mailto:simuni@mail.ru">simuni@mail.ru</a>). Вы можете свободно копировать и воспроизводить эти задачи, при условии сохранения ссылки на составителя.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic" start="1">
+<li>
+<p>Написать функцию parts2, которая проверяет, можно ли в данном списке выбрать ровно половину элементов, чтобы</p>
+<div class="ulist">
+<ul>
+<li>
+<p>они строго возрастали</p>
+</li>
+<li>
+<p>в оставшейся половине элементы тоже строго возрастали.</p>
+<div class="paragraph">
+<p>В этой задаче элементы не обязательно брать подряд.</p>
+</div>
+<div class="paragraph">
+<p>Примеры вызова:<br></p>
+</div>
+</li>
+<li>
+<p><code>parts2 [1, 3, 2, 4, 8, 9]</code>. Ответ должен быть <code>True</code> (разбивается, например, на <code>[1, 3, 4]</code> и <code>[2, 8, 9]</code>)</p>
+</li>
+<li>
+<p><code>parts2 [2, 3, 4, 6, 1, 8, 9, 7]</code>. Oтвет должен быть <code>False</code>.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+На самом деле, конечно, в Хаскеле есть такая стандартная функция (называется <code>minimum</code>), но, пожалуйста, в этой задаче ее не используйте.
+</td>
+</tr>
+</table>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Опишите функцию <code>isosc</code> (от слова <code>isosceles</code> - равнобедренный), у которой три параметра - пары целых чисел, и которая возвращает <code>True</code>, если соответствующие точки на плоскости задают равнобедренный треугольник, а иначе <code>False</code>.</p>
+<div class="paragraph">
+<p>Примеры вызова:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>isosc (0, 2) (2, 0) (2,2)</code>  должен быть равен True</p>
+</li>
+<li>
+<p><code>isosc (-3, 2) (2, 0) (2,2)</code> должен быть равен False</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Определить функцию sumprod, которая вычисляет сумму произведений всех пар стоящих рядом элементов.</p>
+<div class="paragraph">
+<p>Пример вызова: <code>sumprod [1,3,2,7]</code></p>
+</div>
+<div class="paragraph">
+<p>Ответ должен быть равен 1*3+3*2+2*7 = 23.</p>
+</div>
+<div class="paragraph">
+<p>Дополнительное условие: Задачу надо написать, используя стандартные функции, без рекурсии.</p>
+</div>
+</li>
+<li>
+<p>Описать функцию <code>height</code>, которая ищет высоту данного дерева.</p>
+<div class="paragraph">
+<p>Примеры вызова:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>height (Node 1 Empty Empty)</code> Ответ должен быть 0</p>
+</li>
+<li>
+<p><code>height (Node 1 (Node 1 Empty Empty) Empty)</code> Ответ должен быть 1</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+С чего начинать считать, чему равна высота дерева, в котором только одна вершина, у которой нет потомков? Иногда считают, что у такого дерева высота 1, иногда считают, что 0. Давайте для определенности считать, что у такого дерева высота 0.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Пусть в нашей программе мы хотим хранить информацию о товарах в кондитерском магазине.
+Товары могут быть:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>или тортами, и тогда мы храним их название, и цену (Например, "Санчо" 321)</p>
+</li>
+<li>
+<p>или упаковками конфет, и тогда мы храним их название, цену за килограмм, и вес упаковки в кг. (например, "Белочка" 771 0.25).</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Опишите тип данных <code>Candy</code>, позволяющий хранить такую информацию.</p>
+</div>
+<div class="paragraph">
+<p>Опишите функцию <code>totalPrice</code>, которая для данного списка товаров возвращает общую цену всех товаров в списке.</p>
+</div>
+<div class="paragraph">
+<p>Чтобы было хоть какое-то тестирование, пожалуйста, включите в решение пример вызова <code>totalPrice</code>, который в результате дает 1000. И назовите его test. Т.е. что-то вроде:
+ <code>test = totalPrice ...какой-то список из товаров разных видов...</code>
+и результат должен быть равен 1000.</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Обратите, пожалуйста внимание, цена для тортов и упаковок конфет вычисляется по разному. Для конфет она зависит еще и от веса.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Определите функцию <code>repeatFunc</code> с двумя параметрами <code>f</code> и <code>n</code>, которая возвращает функцию <code>f.f. ... .f</code>(т.е. композицию функции с самой собой n раз).</p>
+<div class="paragraph">
+<p>Пример вызова: <code>f = repeatFunc sin 3</code> должно определить <code>f x = sin (sin (sin x))</code>
+и после этого можно написать, например, <code>f 2</code> и получить <code>sin (sin (sin 2))</code> - это примерно 0.7097.</p>
+</div>
+</li>
+<li>
+<p>Пусть у нас есть лист в клетку. Вертикали и горизонтали в нем перенумерованы. Фигуру из клеток мы задаем, как список из пар целых чисел, например, <code>[(3,5),(3,6),(4,5),(4,6)]</code> задает квадрат 2 на 2. Клетки могут задаваться в любом порядке, например <code>[(3,5),(4,6),(4,5),(3,6)]</code> описывает тот же квадрат.</p>
+<div class="paragraph">
+<p>Описать функцию <code>getPerimeter</code>, которая для данной фигуры возвращает ее периметр.</p>
+</div>
+<div class="paragraph">
+<p>Примеры вызова:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>getPerimeter [(1,2)]</code> - должно получиться 4</p>
+</li>
+<li>
+<p><code>getPerimeter [(1,2),(2,3)]</code> - должно получиться 8</p>
+</li>
+<li>
+<p><code>getPerimeter [(3,5),(4,6),(4,5),(3,6)]</code> - должно получиться 8</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Как и в задаче 7-1, мы описываем фигуры на листе в клетку с помощью списка пар целых чисел.</p>
+<div class="paragraph">
+<p>Описать функцию <code>areEqual</code>, которая проверяет, являются ли две фигуры равными. То есть, можно ли одну получить из другой с помощью сдвигов, поворотов, зеркального отражения, ну и, конечно, изменения порядка элементов в списке.</p>
+</div>
+<div class="paragraph">
+<p>Примеры вызова:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>areEqual [(1,2),(1,3),(1,4)] [(4,0),(3,0),(5,0)]</code></p>
+</li>
+<li>
+<p><code>areEqual [(1,2),(1,3),(1,4),(2,4)] [(2,2),(1,2),(1,3),(1,4)]</code></p>
+</li>
+<li>
+<p><code>areEqual [(1,2),(1,6)] [(10,6),(10,2)]</code></p>
+</li>
+<li>
+<p>во всех этих вызовах ответ должен быть равен True</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Описать функцию <code>multTable</code>, которая для данного числа n возвращает список списков, представляющий таблицу умножения чисел от 1 до n.</p>
+<div class="paragraph">
+<p>Пример вызова: <code>multTable 4</code>. Результат должен быть равен:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="haskell"> [[1,2,3,4],
+ [2,4,6,8],
+ [3,6,9,12],
+ [4,8,12,16]]</code></pre>
+</div>
+</div>
+</li>
+<li>
+<p>Опишите две функции, <code>countEven</code> и <code>countEven1</code>, которые для данного списка вычисляют количество четных чисел в этом списке. (Т.е. надо написать две версии одной функции).</p>
+<div class="paragraph">
+<p>Дополнительные условия:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>В функции <code>countEven</code> можно использовать <em>только</em> стандартную функцию foldr. Точнее, можно, конечно, использовать функцию <code>mod</code>, но нельзя использовать <code>map</code>, <code>filter</code> и т.д. Можно (но особо не нужно) задавать свои нерекурсивные функции. Можно, конечно, использовать лямбда-выражения.</p>
+</li>
+<li>
+<p>В функции <code>countEven1</code> можно использовать любые стандартные функции, кроме <code>foldr</code> и <code>foldl</code> (в частности <code>map</code> и <code>filter</code>), и тоже, если надо, можно использовать свои нерекурсивные функции и лямбда-выражения. Но <em>нельзя</em> определять свои рекурсивные функции.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Примеры вызова:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>countEven [4, 3, 14, 8, 5, 33, 6]</p>
+</li>
+<li>
+<p>countEven1 [4, 3, 14, 8, 5, 33, 6]
+Ответ должен быть равен 4</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Опишите функцию myfoldl, которая делает точно то же, что и стандартная функция foldl (т.е. сворачивает все элементы слева направо).</p>
+<div class="paragraph">
+<p>Пример вызова: <code>myfoldl (+) 0 [1,2,3]</code></p>
+</div>
+<div class="paragraph">
+<p>Функция должна вычислить ((0+1)+2)+3, причем вычисления должны происходить именно в таком порядке.</p>
+</div>
+<div class="paragraph">
+<p>Замечания:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>нельзя, конечно, использовать стандартный <code>foldl</code></p>
+</li>
+<li>
+<p>можно посмотреть определение <code>foldl</code> и переписать, но, конечно, я бы советовал попробовать придумать самостоятельно, это интереснее.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Определите функцию repeatFunc с двумя параметрами <code>f</code> и <code>n</code>, которая возвращает функцию f.f. &#8230;&#8203; .f (т.е. композицию функции с самой собой n раз).</p>
+<div class="paragraph">
+<p>Пример вызова: <code>f = repeatFunc sin 3</code> должно определить <code>f x = sin (sin (sin x))</code>
+и после этого можно написать, например, f 2 и получить sin (sin (sin 2))- это примерно 0.7097.</p>
+</div>
+<div class="paragraph">
+<p>Дополнительные условия:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>задачу надо написать, используя стандартные функции, без рекурсии.</p>
+</li>
+<li>
+<p>можно определять свои функции, но они должны быть не рекурсивными</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Пусть мы представляем матрицы, как списки списков. Например, список xss = [[1,2,3],[4,5,6],[7,8,9]] описывает матрицу 3 на 3, у который первая строка состоит из чисел 1 2 3 и т.д.</p>
+<div class="paragraph">
+<p>Описать функцию diagonalSums, которая возвращает список из сумм элементов на всех диагоналях матрицы, параллельных главной диагонали.
+Например, для описанного выше списка xss ответ должен состоять из чисел 7, 4+8, 1+5+9, 2+6, 3</p>
+</div>
+<div class="paragraph">
+<p>Замечания:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Суммы в ответе должны идти именно в таком порядке - начиная с диагонали из одного элемента в левом нижнем углу, и заканчивая диагональю из одного элемента в правом верхнем углу.</p>
+</li>
+<li>
+<p>Можно считать, что мы точно знаем, что данные описывают квадратную матрицу. То есть, количество чисел в каждой строке равно количеству строк. Это можно не проверять.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Пример вызова: <code>diagonalSums [[1,2,3],[4,5,6],[7,8,9]]</code> Должно получиться <code>[7,12,15,8,3]</code></p>
+</div>
+</li>
+<li>
+<p>Описать функцию dioph, параметры которой - два списка из 4 целых чисел <code>[a, b, c, d]</code> и <code>[k, l, m, n]</code>, и которая возвращает список из 3 целых чисел [x, y, z] таких, что:
+a*x+b*y+c*z=d
+k*x+l*y+m*z=n</p>
+<div class="paragraph">
+<p>Замечания:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Что делать, если таких чисел нет - на ваше усмотрение. Можно выдать ошибку, можно вернуть (0, 0, 0) и т.д. В тестах таких случаев не будет.</p>
+</li>
+<li>
+<p>Числа в тестах могут быть достаточно большими для того, чтобы эту задачу не было смысла решать простым перебором, надо придумать что-то более эффективное.</p>
+</li>
+<li>
+<p>Эта задача более-менее сложная. Решение, которое я (Симуни) знаю - довольно громоздкое, в нем надо рассматривать разные вырожденные случаи и т.д.. Т.е. это для тех, кому интересно решить что-то немного посложнее.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Понятия не имею как это решать :) Косарев
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>"Крестик"
+Описать функцию cross, которая для данного числа n возвращает список списков, представляющий матрицу, в которой на главной и побочной диагоналях стоят 1, а все остальные элементы равны 0.</p>
+<div class="paragraph">
+<p>asdfasd</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Для <code>cross 4</code> pезультат должен быть равен:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[[1,0,0,1],
+[0,1,1,0],
+[0,1,1,0],
+[1,0,0,1]]</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>cross 5</code> Результат должен быть равен:</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>[[1,0,0,0,1],
+[0,1,0,1,0],
+[0,0,1,0,0],
+[0,1,0,1,0],
+[1,0,0,0,1]]</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Перечислить все способы выдать данную сумму n монетами по 2, 3 и 5 коп. Результат должен быть списком списков целых чисел, каждый внутренний список - это список из трех элементов [k,l,m], где k - двухкопеечных монет, l - количество трехкопеечных, m - количество пятикопеечных монет.</p>
+<div class="paragraph">
+<p>Пример вызова: <code>coins 10</code></p>
+</div>
+<div class="paragraph">
+<p>Должно получиться: <code>[[5,0,0],[2,2,0],[0,0,2],[1,1,1]]</code> (порядок троек в ответе может быть и другим).</p>
+</div>
+<div class="paragraph">
+<p>Замечания:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Вообще это упражнение на list comprehension. Но, если хотите, вы можете решить задачу и без list comprehension, как хотите.</p>
+</li>
+<li>
+<p>Большинство людей эту задачу пишут не совсем эффективно, точнее, не замечают возможность немного изменить программу, чтобы она стала гораздо эффективнее.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Опишите функцию foldTree, которая для дерева делает что-то аналогичное foldr или foldl для списков. Она должна вызываться так:</p>
+<div class="paragraph">
+<p><code>foldTree (+) 0 t</code> — ищет сумму всех элементов в дереве</p>
+</div>
+<div class="paragraph">
+<p><code>foldTree (*) 1 t</code> — ищет произведение всех элементов в дереве</p>
+</div>
+</li>
+<li>
+<p>Можно ли в предыдущей задаче придумать что-то более общее? Например, придумать такой вариант foldTree, который позволяет реализовывать более сложные функции (например, искать высоту дерева и т.д.). Если придумаете, предложите какой-нибудь такой вариант.</p>
+<div class="paragraph">
+<p>Замечания: Условие, естественно, не совсем строгое (но так и в жизни часто бывает..).</p>
+</div>
+</li>
+<li>
+<p>Пусть мы хотим описывать в программе на Хаскеле электрические схемы. Мы считаем, что электрическая схема - это:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>или сопротивление, тогда известно его величина в омах</p>
+</li>
+<li>
+<p>или две схемы, соединенных параллельно - или две схемы, соединенных последовательно (На самом деле есть схемы, которые таким способом не описать, ну и ладно..)</p>
+<div class="paragraph">
+<p>Опишите</p>
+</div>
+</li>
+<li>
+<p>тип (data) Scheme, который позволяет описывать такие схемы.</p>
+</li>
+<li>
+<p>функцию totalResistance, у которой один параметр - схема, и которая возвращает значение общего сопротивления для этой схемы. Например, для двух сопротивлений 4 Ом, соединенных последовательно, функция должна возвращать 8, а для двух сопротивлений 4 Ом, соединенных параллельно, функция должна возвращать 2.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Описать функцию <code>zipWithTree</code>, которая соединяет, так же, как zip, дерево и список. В результате должно получиться дерево пар. Если в дереве больше элементов, чем в списке, то лишние надо удалить из дерева.</p>
+<div class="paragraph">
+<p>Примеры вызова:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>zipWithTree (Node 35 (Node 12 Empty Empty) (Node 70 Empty Empty)) [1,2,3]</code>
+Результат должен быть равен <code>Node (35,1) (Node (12,2) Empty Empty) (Node (70,3) Empty Empty)</code></p>
+</li>
+<li>
+<p><code>zipWithTree (Node 35 (Node 12 Empty Empty) (Node 70 Empty Empty)) [1,2]</code>
+Результат должен быть равен <code>Node (35,1) (Node (12,2) Empty Empty) Empty</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-09-14 21:08:22 MSK
+</div>
+</div>
+</body>
+</html>

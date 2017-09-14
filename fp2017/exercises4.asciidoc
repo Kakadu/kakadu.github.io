@@ -1,0 +1,19 @@
+:source-highlighter: pygments
+:pygments-style: monokai
+:local-css-style: pastie
+:stylesheet: ./stylesheets/material-teal.css
+
+Задачи второй недели
+====================
+:Author: Dmitrii Kosarev aka Kakadu
+:email:  Dmitrii.Kosarev@protonmail.ch
+
+Про списки
+----------
+
+Задачи от М.Симуни
+~~~~~~~~~~~~~~~~~~
+Составлены М.Симуни (simuni@mail.ru). Вы можете свободно копировать и воспроизводить эти задачи, при условии сохранения ссылки на составителя.
+
+[arabic, start=1]
+.. 111
