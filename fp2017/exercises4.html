@@ -91,19 +91,43 @@ table {
 </div>
 <div id="content">
 <div class="sect1">
-<h2 id="_Про_списки">Про списки</h2>
+<h2 id="_Про_типы_данных">Про типы данных</h2>
 <div class="sectionbody">
 <div class="sect2">
-<h3 id="_Задачи_от_М_Симуни">Задачи от М.Симуни</h3>
-<div class="paragraph">
-<p>Составлены М.Симуни (<a href="mailto:simuni@mail.ru">simuni@mail.ru</a>). Вы можете свободно копировать и воспроизводить эти задачи, при условии сохранения ссылки на составителя.</p>
-</div>
-<div class="olist arabic">
-<ol class="arabic" start="1">
+<h3 id="_Про_a_href_https_hackage_haskell_org_package_base_4_10_0_0_docs_data_maybe_html_code_maybe_code_a">Про <a href="https://hackage.haskell.org/package/base-4.10.0.0/docs/Data-Maybe.html"><code>Maybe</code></a></h3>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
 <li>
-<p>111</p>
+<p>Описать функцию которая принимает функцию <code>f</code> несколько (пусть 3 или 4) значения типа <code>Maybe _</code> и возвращает</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Nothing</code> если хотя бы один из них <code>Nothing</code></p>
+</li>
+<li>
+<p>Применяет <code>f</code>  от данных, которые спрятаные внутри <code>Maybe</code></p>
+<div class="paragraph">
+<p>Решение должно быть лаконичное.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Та же задача, но вместо нескольких аргументов&#8201;&#8212;&#8201;список из <code>Maybe _</code>.</p>
 </li>
 </ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_Про_двоичные_деревья">Про двоичные деревья</h3>
+<div class="paragraph">
+<p>Опишем тип дерева</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="haskell">data Tree a = Leaf | Node a (Tree a) (Tree a)</code></pre>
+</div>
 </div>
 </div>
 </div>
@@ -111,7 +135,7 @@ table {
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-14 21:08:52 MSK
+Last updated 2017-09-14 21:40:35 MSK
 </div>
 </div>
 </body>
