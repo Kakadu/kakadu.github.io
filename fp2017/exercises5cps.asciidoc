@@ -1,0 +1,20 @@
+:source-highlighter: pygments
+:pygments-style: monokai
+:local-css-style: pastie
+:stylesheet: ./stylesheets/material-teal.css
+
+Задачи к третьей неделе
+=======================
+:Author: Dmitrii Kosarev aka Kakadu
+:email:  Dmitrii.Kosarev@protonmail.ch
+
+Про типы данных
+---------------
+
+=== Про Continuation-passing style
+
+. Реализуйте foldr через foldl и примитивы λ-исчисления (т.е. не используя других функций). Всё очень просто, если предположить, что передаваемая функция коммутативна.
+
+. Аналогично предыдущему, fold через foldr.
+
+. Опишите ADT для арифметики: там должны быть константы-числа и бинарные операции сложения и вычитания. Реализуйте функцию `eval`, которая вычисляет выражение в число, так, чтобы не расходовался стек.

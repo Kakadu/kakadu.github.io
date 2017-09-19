@@ -34,7 +34,7 @@ GHC и WinHugs и как ими пользоваться:
 ~~~~~
 http://learnyouahaskell.com/[Learn You a Haskell for Freat Good]
 
-Можно также найти Р.Душкина "ФП на языке Haskell"
+Можно также найти Р.Душкина "ФП на языке Haskell". https://wiki.haskell.org/Books[Ещё список на HaskellWiki] (в том числе и на русском).
 
 А также некоторые задачи поможет решить "Purely Functional Data Structures" от Chris Okasaki (есть русское издание).
 
@@ -66,7 +66,11 @@ link:exercises3.html[Упражнения 3 (Про IO)]
 [[week3]]
 Неделя 3 (18 сентября)
 ----------------------
-link:exercises4.html[Упражнения 4 (Про типы данных)]
+link:exercises4.html[Упражнения 4 (Про (алгебраические) типы данных)]
+
+Умная http://chris-taylor.github.io/blog/2013/02/10/the-algebra-of-algebraic-data-types[ссылка] про алгебру в алгебраических типах данных (Algebraic Data Types)
+
+
 [[week4]]
 Неделя 4 (25 сентября)
 ----------------------
@@ -76,6 +80,13 @@ link:exercises4.html[Упражнения 4 (Про типы данных)]
 [[week5]]
 Неделя 5 (2 октября)
 --------------------
+
+Задачи "на потом"
+--------------------
+
+Если официальные упражения сделаны, можете поискать интересного среди link:exercises_all.html[упражнений, неотсортированных по темам]. И ещё тут планируются упраженеия посортированные, но официально необъявленные.
+
+link:exercises5cps.html[Упражнения 4 (Про Continuation-passing style)]
 
 ////
 [glossary]
