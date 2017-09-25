@@ -655,20 +655,29 @@ trois :: (a -&gt; b -&gt; c -&gt; d) -&gt; (a,(b,c)) -&gt; d</pre>
 <div class="ulist">
 <ul>
 <li>
-<p>Извлечение самого глубокого элемента</p>
+<p>Удаление самого глубокого элемента и приписывание его слева от пары.</p>
 </li>
 </ul>
 </div>
 <div class="listingblock">
 <div class="content">
-<pre>deux  :: (a,b) -&gt; (b,a)
-trois :: (a,(b,c)) -&gt; c,(a,b)</pre>
+<pre class="pygments highlight"><code data-lang="haskell">deux  :: (a,b) -&gt; (b,a)
+trois :: (a,(b,c)) -&gt; c,(a,b)</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Упрощенный вариант: извлечения самого глубокого элемента и отбрасывание остальных. Получается композицией <code>fst</code> и решения предыдущей задачи.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="haskell">deux  :: (a,b) -&gt; b
+trois :: (a,(b,c)) -&gt; c</code></pre>
 </div>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>Применение вложенных пар функций в одному значению</p>
+<p>Применение вложенных пар функций в одному значению.</p>
 </li>
 </ul>
 </div>
@@ -705,7 +714,7 @@ smth3 trois 1 2 3 -- [1,2,3]</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-14 21:29:10 MSK
+Last updated 2017-09-25 15:25:52 MSK
 </div>
 </div>
 </body>
