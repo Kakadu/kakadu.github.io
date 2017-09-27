@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.4">
+<meta name="author" content="Dmitrii Kosarev aka Kakadu">
+<title>Задачи к третьей неделе</title>
+<style>
+/* Asciidoctor default stylesheet | MIT License | http://asciidoctor.org */
+
+@import url(https://fonts.googleapis.com/css?family=Noto+Sans);
+@import "asciidoctor.css"; /* Default asciidoc style framework - important */
+
+/* CUSTOMISATIONS */
+/* Change the values in root for quick customisation. If you want even more fine grain... venture further. */
+
+:root{
+--maincolor:#FFFFFF;
+--primarycolor:#009688; /* Teal 500 */
+--secondarycolor:#ba3925;
+--tertiarycolor: #186d7a;
+--sidebarbackground:#004d40; /* Teal 900 */
+--linkcolor:#80cbc4; /* Teal 200 */
+--linkcoloralternate:#f44336;
+--white:#FFFFFF;
+--black:#000000;
+}
+
+body{font-family: "Noto Sans",sans-serif;}
+
+#header{background-color:var(--primarycolor); padding:25px;max-width: none;}
+#footer{background-color: var(--sidebarbackground);}
+h1,h2,h3{background-color:var(--primarycolor);color:var(--white) !important;font-family:"Noto Sans",sans-serif;text-decoration:none;padding:10px;}
+h4,h5,h6{color:var(--primarycolor);}
+.title{color:var(--sidebarbackground) !important;font-family:"Noto Sans",sans-serif;font-style: normal; font-weight: normal;}
+p{font-family: "Noto Sans",sans-serif ! important}
+#toc.toc2 a:link{color:white;}
+
+a {
+  text-decoration: none;
+  color: var(--linkcolor);
+}
+a:hover {
+  color: var(--sidebarbackground);
+}
+.quoteblock blockquote::before {
+  color: var(--linkcolor);
+}
+mark {
+  color: var(--white);
+  background-color: #80cbc4;
+}
+
+/* Card styling */
+.sect1{border-bottom:1px solid grey;border-radius:8px;}
+
+/* Table styles */
+th{background-color: #80cbc4;color:#FFFFFF;}
+
+#toc.toc2{background-color:var(--sidebarbackground);color:white !important;}
+#toc.toc2.a{color:var(--white);}
+#toc.toc2.a:active{color:var(--white) !important;}
+#toc.toc2.a:visited{color:var(--white) !important;}
+#toctitle{color:white;font-size: 16px;}
+
+/* Responsiveness fixes */
+video {
+  max-width: 100%;
+}
+
+@media all and (max-width: 600px) {
+table {
+  width: 55vw!important;
+  font-size: 3vw;
+}
+
+</style>
+</head>
+<body class="article">
+<div id="header">
+<h1>Задачи к третьей неделе</h1>
+<div class="details">
+<span id="author" class="author">Dmitrii Kosarev aka Kakadu</span><br>
+<span id="email" class="email"><a href="mailto:Dmitrii.Kosarev@protonmail.ch">Dmitrii.Kosarev@protonmail.ch</a></span><br>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="_Про_типы_данных">Про типы данных</h2>
+<div class="sectionbody">
+<div class="sect2">
+<h3 id="_Про_a_href_https_hackage_haskell_org_package_base_4_10_0_0_docs_data_maybe_html_code_maybe_code_a">Про <a href="https://hackage.haskell.org/package/base-4.10.0.0/docs/Data-Maybe.html"><code>Maybe</code></a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Описать функцию которая принимает функцию <code>f</code> несколько (пусть 3 или 4) значения типа <code>Maybe _</code> и возвращает</p>
+<div class="ulist">
+<ul>
+<li>
+<p><code>Nothing</code> если хотя бы один из них <code>Nothing</code></p>
+</li>
+<li>
+<p>Применяет <code>f</code>  от данных, которые спрятаные внутри <code>Maybe</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+OK google, billion-dollar mistake.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>+
+Решение должно быть лаконичное.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Та же задача, но вместо нескольких аргументов&#8201;&#8212;&#8201;список из <code>Maybe _</code>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_Числа_Пеано">Числа Пеано</h3>
+<div class="paragraph">
+<p>На первом занятии у нас были очень странные функции сложения и умножения, адаптированные для чисел Пеано. Реализуйте для таких чисел арифметические операции.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-haskell" data-lang="haskell">data Peano = Zero | Succ Peano</code></pre>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="__a_href_https_hackage_haskell_org_package_listzipper_1_2_0_2_docs_data_list_zipper_html_code_zipper_code_a_для_списков"><a href="https://hackage.haskell.org/package/ListZipper-1.2.0.2/docs/Data-List-Zipper.html"><code>Zipper</code></a> для списков</h3>
+<div class="paragraph">
+<p>Есть структура данных, которая инкапсулирует в себе список и позволяет пройти по нему, например, до половины, потом пойти назад, а потом снова вперед. Реализуйте её.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_Про_двоичные_деревья">Про двоичные деревья</h3>
+<div class="paragraph">
+<p>Опишем тип дерева</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="highlight"><code class="language-haskell" data-lang="haskell">data Tree a = Leaf | Node a (Tree a) (Tree a)</code></pre>
+</div>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Описать стандартные функции для деревьев:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>поиск наличия элемента в дереве. Какова сложность этой процедуры?</p>
+</li>
+<li>
+<p><code>map</code> для дерева</p>
+</li>
+<li>
+<p><code>fold</code> для дерева. Тут могут возникнуть сложности такого рода: очень легко при реализации <code>fold</code> "прибить гвоздями" метод обхода (например, влево-узел-вправо) и столкнуться с невозможностью использования написанного <code>fold</code> в тех случаях, когда нужен иной вид обхода. Пока обмозгуйте проблему, к ней мы вернемся на следующих занятиях.</p>
+</li>
+<li>
+<p>Реализуйте дерево поиска. Сложность процедуры поиска должна быть поменьше чем у произвольных деревьев</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Опишите тип деревьев, в которых данные могут храниться и в листовых узлах. Опишите функции выше и для них.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_Балансировка_деревьев">Балансировка деревьев</h3>
+<div class="paragraph">
+<p>Наиболее известные сбалансированные деревья&#8201;&#8212;&#8201;красно-черные. Считается, что процедуру балансировки очень сложно реализовать правильно. Сделайте это на Haskell и на "нормальном" языке (С++/Java/C## или что-нибудь, где нужно руками редактировать поля в структурах)</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Есть хорошая книжка на русском "Чисто функциональные структуры данных" Криса Окасаки.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_Лямбда_исчисление">Лямбда-исчисление</h3>
+<div class="paragraph">
+<p>В (бестиповом) лямбда исчислении есть три вида термов: переменная с именем (<code>var</code>), лямбда-абстракция (<code>\ var -&gt; term</code>) и применение терма к терму.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Опишите тип данных с тремя конструкторами.</p>
+</li>
+<li>
+<p>Опишите функцию поиска свободных переменных в терме.</p>
+</li>
+<li>
+<p>Опишите функцию подстановки <code>subst where var term</code>, которая заменяет все вхождения свободной перменной <code>var</code> в терме <code>where</code> на терм <code>term</code>.</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<div class="title">Note</div>
+</td>
+<td class="content">
+Тут есть грабли.
+</td>
+</tr>
+</table>
+</div>
+</li>
+<li>
+<p>Опишите функцию <a href="https://en.wikipedia.org/wiki/Evaluation_strategy">редукции</a> (вычисления) лямбда-терма. Правильное решение не одно, опишите какие-нибудь.</p>
+</li>
+<li>
+<p>Непростое упражнение. Научитесь описывать правила редукции, переисползую предыдущие правила редукции. Например, заменяя в предыдущем только правило обработки применения терма к терму.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2017-09-27 20:34:48 MSK
+</div>
+</div>
+</body>
+</html>
