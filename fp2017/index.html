@@ -36,17 +36,17 @@
 Работает для Windows, Linux и Mac. Для курса будет достаточно минимального варианта установки.</p>
 </li>
 <li>
-<p>В Haskell Platorm есть простые среды разработки GHCi и WinGHCi. Вот краткая инструкция о том, как начать с ними работать.</p>
+<p>В Haskell Platform есть простые среды разработки GHCi и WinGHCi. <a href="http://msimuni.wdfiles.com/local&#8212;&#8203;files/fp4/StartingWithGHC.pdf">Вот</a> краткая инструкция о том, как начать с ними работать.</p>
 </li>
 </ul>
 </div>
 <div class="sect2">
 <h3 id="_Книги">Книги</h3>
 <div class="paragraph">
-<p><a href="http://learnyouahaskell.com/">Learn You a Haskell for Freat Good</a></p>
+<p><a href="http://learnyouahaskell.com/">Learn You a Haskell for Great Good</a></p>
 </div>
 <div class="paragraph">
-<p>Можно также найти Р.Душкина "ФП на языке Haskell". <a href="https://wiki.haskell.org/Books">Ещё список на HaskellWiki</a> (в том числе и на русском).</p>
+<p>Можно также найти Р.Душкина "ФП на языке Haskell". <a href="https://wiki.haskell.org/Books">Ещё список на Haskell Wiki</a> (в том числе и на русском).</p>
 </div>
 <div class="paragraph">
 <p>А также некоторые задачи поможет решить "Purely Functional Data Structures" от Chris Okasaki (есть русское издание).</p>
@@ -116,6 +116,26 @@
 <div class="paragraph">
 <p>Что-то Вы забуксовали с решением домашних задач, не успев дойти до интересной темы (типы данных). Соберитесь (◑‿◐), свалить всё на сессию нельзя ещё 2 месяца.</p>
 </div>
+<div class="paragraph">
+<p>Тем временем у меня есть несколько замечаний как писать нормальные функции на Haskell.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Если Вам хочется использовать функции <code>head</code> и <code>tail</code>&#8201;&#8212;&#8201;попробуйте переписать через pattern matching. В стандартной библиотеке эти функции могут кидать исключения, в то время как pattern matching должен отчасти решать эту проблему.</p>
+</li>
+<li>
+<p>В Haskell нет сокращенного <code>if</code> потому, что его функцию может выполнять обычный <code>if</code>. Конструкция <code>cond ? a : b</code> появилась в языке
+С только потому что там присутствует разделение понятий expression(выражение) и statement(утверждение). Statement&#8217;ы нельзя писать внутри выражений.</p>
+</li>
+<li>
+<p>Если вам хочется использовать <code>if</code>, то стоит попробовать переписать свой код используя фишку pattern-matching, которая называется guards. <a href="https://en.wikibooks.org/wiki/Haskell/Control_structures#if_and_guards_revisited">Умная ссылка</a>.</p>
+</li>
+<li>
+<p>Для ваших алгебраических типов (а также для встроенных в язык списков) Наskell умеет указывать на неразобранные при pattern-matching случаи. Так что рекомендую запускать REPL с помощью команды <code>ghci -fwarn-incomplete-patterns -Werror</code></p>
+</li>
+</ul>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -132,7 +152,7 @@
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2017-09-29 20:12:20 MSK
+Last updated 2017-09-29 20:54:42 MSK
 </div>
 </div>
 </body>
