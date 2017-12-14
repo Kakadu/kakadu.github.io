@@ -1,0 +1,742 @@
+\documentclass[10pt, mathserif]{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amssymb, amsmath}
+\usepackage[all]{xy}
+\usepackage{alltt}
+\usepackage{pslatex}
+\usepackage{epigraph}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usepackage{latexsym}
+\usepackage{array}
+\usepackage{changepage} % for adjustwidth
+%\usepackage{courier}
+\usepackage{pstricks}
+\usepackage{tikz}
+\usepackage{pdfpages}
+\usepackage{fontawesome}
+%\usepackage{inconsolata}
+
+%\usepackage{lmodern}
+\usepackage[scaled]{DejaVuSansMono}
+\usepackage[T1]{fontenc}
+
+
+\makeatletter
+\newcolumntype{e}[1]{%--- Enumerated cells ---
+   >{\minipage[t]{\linewidth}%
+     \NoHyper%                Hyperref adds a vertical space
+     \let\\\tabularnewline
+     \enumerate
+        \addtolength{\rightskip}{0pt plus 50pt}% for raggedright
+        \setlength{\itemsep}{-\parsep}}%
+   p{#1}%
+   <{\@finalstrut\@arstrutbox\endenumerate
+     \endNoHyper
+     \endminipage}}
+
+\newcolumntype{i}[1]{%--- Itemized cells ---
+   >{\minipage[t]{\linewidth}%
+        \let\\\tabularnewline
+        \itemize
+           \addtolength{\rightskip}{0pt plus 50pt}%
+           \setlength{\itemsep}{-\parsep}}%
+   p{#1}%
+   <{\@finalstrut\@arstrutbox\enditemize\endminipage}}
+
+\AtBeginDocument{%
+    \@ifpackageloaded{hyperref}{}%
+        {\let\NoHyper\relax\let\endNoHyper\relax}}
+\makeatother
+
+\definecolor{shadecolor}{gray}{1.00}
+\definecolor{darkgray}{gray}{0.30}
+
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\angled}[1]{\langle {#1} \rangle}
+\newcommand{\fib}{\rightarrow_{\mathit{fib}}}
+\newcommand{\fibm}{\Rightarrow_{\mathit{fib}}}
+\newcommand{\oo}[1]{{#1}^o}
+\newcommand{\inml}[1]{\mbox{\lstinline{#1}}}
+
+\setlength{\epigraphwidth}{.55\textwidth}
+
+\definecolor{light-gray}{gray}{0.90}
+\newcommand{\graybox}[1]{\colorbox{light-gray}{#1}}
+
+\newcommand{\nredrule}[3]{
+  \begin{array}{cl}
+    \textsf{[{#1}]}&
+    \begin{array}{c}
+      #2 \\
+      \hline
+      \raisebox{-1pt}{\ensuremath{#3}}
+    \end{array}
+  \end{array}}
+
+\newcommand{\naxiom}[2]{
+  \begin{array}{cl}
+    \textsf{[{#1}]} & \raisebox{-1pt}{\ensuremath{#2}}
+  \end{array}}
+
+
+\newcommand\Wider[2][3em]{%
+\makebox[\linewidth][c]{%
+  \begin{minipage}{\dimexpr\textwidth+#1\relax}
+  \raggedright#2
+  \end{minipage}
+  }%
+}
+
+\lstdefinelanguage{ocaml}{
+keywords={let, begin, end, in, match, type, and, fun,
+function, try, with, class, object, method, of, rec, repeat, until,
+while, not, do, done, as, val, inherit, module, sig, @type, struct,
+if, then, else, open, virtual, new, fresh},
+sensitive=true,
+basicstyle=\small\ttfamily,
+commentstyle=\scriptsize\rmfamily,
+keywordstyle=\ttfamily\bfseries,
+identifierstyle=\ttfamily,
+basewidth={0.5em,0.5em},
+columns=fixed,
+fontadjust=true,
+literate={->}{{$\to$}}1
+         {===}{{$\equiv$}}1
+}
+
+\lstdefinelanguage{scheme}{
+keywords={define, conde, fresh},
+sensitive=true,
+basicstyle=\small,
+commentstyle=\scriptsize\rmfamily,
+keywordstyle=\ttfamily\bfseries,
+identifierstyle=\ttfamily,
+basewidth={0.5em,0.5em},
+columns=fixed,
+fontadjust=true,
+literate={==}{{$\equiv$}}1
+}
+
+\lstset{
+basicstyle=\small,
+identifierstyle=\ttfamily,
+keywordstyle=\bfseries,
+commentstyle=\scriptsize\rmfamily,
+basewidth={0.5em,0.5em},
+% fontadjust=true,
+escapechar=!,
+language=ocaml
+}
+
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\beamertemplateballitem
+
+\mode<presentation>{
+  \usetheme{default}
+}
+
+\theoremstyle{definition}
+
+\title{Уменьшение цены абстракции при встраивании реляционного DSL в OCaml}
+
+\author{Дмитрий Косарев}
+
+\institute[]{
+\small{
+\textbf{Санкт-Петербургский Государтсвенный Университет} \\
+\textbf{JetBrains Research}
+}
+}
+
+\date{
+  \vskip 2cm
+  \small{
+  \textbf{16 декабря, 2017}
+  }
+}
+
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}{Реляционное программирование на miniKanren}
+ % \vskip1cm
+ \begin{center}
+ От программ-\emph{функций} к программам-\emph{отношениям}:
+ \end{center}
+
+ $$
+ f \colon X \to Y\;\leadsto\;\oo{f} \subseteq X\times Y
+ $$
+ \vskip5mm
+ \begin{tabular}{m{4cm}m{6cm}}
+    \includegraphics[scale=0.3]{trs.jpg} &
+    \begin{itemize}
+       \item Изначально DSL для Scheme/Racket с довольно минималистичной реализацией
+       \item Семейство языков ($\mu$Kanren, $\alpha$-Kanren, cKanren, и т.д.)
+       \item Встраивается как DSL в широкий набор языков (включая OCaml, Haskell, Scala, и т.д.)
+       \item Daniel P. Friedman, William Byrd and   Oleg Kiselyov. \emph{The Reasoned Schemer},
+       The MIT Press, Cambridge, MA, 2005
+    \end{itemize}
+ \end{tabular}
+ \vskip 3cm
+\end{frame}
+
+\begin{frame}[fragile]{Пример: реляционное слияние списков (OCaml/OCanren/miniKanren)}
+%\vskip5mm
+\begin{adjustwidth}{-1.5em}{-1.5em}
+\begin{tabular}{m{6cm}m{6cm}}
+ \graybox{$\inml{append} \colon \alpha\:\inml{list} \to \alpha\:\inml{list} \to \alpha\:\inml{list}$} &
+ \graybox{$\oo{\inml{append}}\subseteq\alpha\:\inml{list}\times\alpha\:\inml{list}\times\alpha\:\inml{list}$}\\
+ \begin{lstlisting}[language=ocaml,keywordstyle=\bfseries]
+let rec append xs ys =
+  match xs with
+  | []      -> ys
+  | h :: tl ->
+      h :: (append tl ys)!\pause!
+ \end{lstlisting} &
+ \begin{lstlisting}[mathescape=true,language=ocaml]
+let rec append$^o$ xs ys xys =!\pause!
+  ((xs === nil) &&& (xys === ys))!\pause!
+  |||
+  (fresh (h t tys)!\pause!
+     (xs  === h % t)!\pause!
+     (xys === h % tys)!\pause!
+     (append$^o$ t ys tys) )
+ \end{lstlisting}
+\end{tabular}\pause
+\begin{center}
+\begin{minipage}{6cm}
+\centering{\small\bf В оригинальной реализации:}
+\begin{lstlisting}[mathescape=true,language=scheme]
+(define (append$^o$ xs ys xys)
+   (conde
+      [(== '() xs) (== ys xys)]
+      [(fresh (h t tys)
+         (== `(,h . ,t) xs)
+         (== `(,h . ,tys) xys)
+         (append$^o$ t ys tys))]))
+\end{lstlisting}
+\end{minipage}
+\end{center}
+
+\end{adjustwidth}
+\vskip5mm
+\end{frame}
+
+% \begin{frame}[fragile]{Набросок минимальной реализации}
+% Jason Hemann, Daniel P. Friedman. \emph{$\mu$Kanren: A Minimal Functional
+% Core for Relational Programming} // Scheme'13:
+% \vskip5mm
+% \small
+% \pause
+% \begin{tabular}{p{5cm}c}
+% Логические переменные  & $X=\{x_1,x_2,\dots\}$ \vspace*{-\baselineskip} \\
+% Символы (конструкторы) & $S=\{s_1,s_2,\dots\}$ \vspace*{-\baselineskip} \\
+% Термы                  & $T=X\cup\{s\;(t_1,\dots,t_k)\mid s\in S,\; t_i \in T\}$ \vspace*{-\baselineskip} \\
+% Подстановки            & $\Sigma=T^X$ \vspace*{-\baselineskip} \\
+% \\\pause
+% Унификация & $(\equiv)\colon\Sigma\to T\to T\to\Sigma_\perp$ \vspace*{-\baselineskip}\\
+% \\\pause
+% State (подстановка + как создавать новые логические переменные) & $\sigma$ \vspace*{-\baselineskip}\\
+% Goal (функция из состояния в ленивый список состояний) & $g : \sigma\to\sigma\;\inml{stream}$ \vspace*{-\baselineskip} \\
+% Конъюнкция $g \wedge g$ & ``bind''  \vspace*{-\baselineskip} \\
+% Дизъюнкция $g \vee   g$ & ``mplus'' \vspace*{-\baselineskip} \\
+% 
+% Refinement: извлечение посчитанных ответов & $\inml{refine} \colon \sigma\to X\to T$ \vspace*{-\baselineskip}
+% \end{tabular}
+% 
+% \end{frame}
+
+\begin{frame}[fragile]{miniKanren vs. Prologs}
+\begin{itemize}
+  \item Стратегия поиска
+      \begin{itemize}
+	\item DFS быстрее при конечном переборе
+	\item Чтобы DFS заершался в пролог введлены дополнительные синтаксические конструкции (cuts)
+      \end{itemize}
+  \item miniKanren реализован как DSL -- встраивается в другие языки.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Цель работы}
+OCanren -- DSL для типобезопасного встраивания miniKanren в OCaml.
+\end{frame}
+
+\begin{frame}[fragile]{Изначальные ожидания}
+\begin{itemize}
+ \item Меньше ``глупых'' ошибок
+ \item Сходная производительность, или даже лучше.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Предыдущие типобезопасные встраивания}
+\begin{itemize}
+ \item HaskellKanren    \href{https://github.com/JaimieMurdock/HK}{\faGithub}
+ \item ukanren          \href{https://github.com/rntz/ukanren}{\faGithub}
+ \item miniKanren-ocaml \href{https://github.com/lightyang/minikanren-ocaml}{\faGithub}
+ \item Molog            \href{https://github.com/acfoltzer/Molog}{\faGithub}
+ \item MiniKanrenT      \href{https://github.com/jvranish/MiniKanrenT}{\faGithub}
+\end{itemize}
+\pause
+\vspace{1in}
+Различия могу быть в следущем:
+\begin{itemize}
+ \item Как именно используются типы?
+ \item Как производится унификация?
+\end{itemize}
+
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Как используются типы?}
+\begin{itemize}
+\item Один заранее созданный тип, на котором унификация разрешена.
+
+    \faTimes \hspace{1em} Нет поддержки пользовательских типов.
+
+    \faCheck \hspace{1em} ``Универсальная'' функция унификации.
+    \vspace{1em}
+    
+    ukanren, miniKanren-ocaml, HaskellKanren
+    
+\pause
+\item О размещении логических переменных беспокоится пользователь.
+
+    \faTimes \hspace{1em} Неудобно.
+    
+    \faTimes \hspace{1em} Функция унификации для каждлго типа своя.
+    
+    \faCheck \hspace{1em} Поддержка произвольных типов данных.
+    \vspace{1em}
+    
+    miniKanrenT, Molog
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Как сделано в OCanren?}
+
+\begin{itemize}
+ \item Примитивный тип для представления логических переменных.
+ \item Который используется в пользовательских типах.
+ \item Пользователь должен следовать рекомендациям поп описанию типов.
+ \pause
+ \item \emph{Одна} функция унификации для всех типов.
+ % Почему-то курсив не работает
+    \vspace{1em}
+    \begin{itemize}
+    \item[\faTimes] Подход специфичен для OCaml.
+    \item[\faTimes] Написано в типонебезопасном стиле...
+    \item[\faCheck] ... но это скрыто от пользователя.
+    \item[\faCheck] Идеалогически как в первоисточнике.
+    \end{itemize}
+  
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Промежуточные результаты}
+Были представлены на ML Workshop 2016 (совмещённым с ICFP 2016)
+\begin{itemize}
+\item Типобезопасное встраивание miniKanren в OCaml.
+\item Полиморфная унификация.
+\item Подход для описания типов.
+\end{itemize}
+
+\vspace{2em}
+\begin{enumerate}
+ \item[\faCheck] Типы помогают выявить некоторые ошибки.
+ \pause
+ \item[\faTimes] Выигрыша в скорости нет.
+ \item[\faTimes] Даже наоборот.
+\end{enumerate}
+
+\end{frame}
+
+
+
+% \begin{frame}[fragile]{Dealing with Typed Terms}
+% \pause
+% \begin{itemize}
+%   \item Non-solution:
+%      \begin{itemize}
+%         \item implement unification for a fixed term representation;
+%         \item convert user-type data to- and from that universal representation.
+%       \end{itemize}\pause
+%       {\small\bf\textcolor{red}{Does not help in detecting the mistakes statically}}\pause
+%   \item Bad solution: generate boilerplate unification code for each user type
+%       (there is no direct support for $ad-hoc$ polymorphism in OCaml yet).\pause
+%
+%       {\small\textcolor{red}{\bf Boilerplatish}}\pause
+%
+%       {\small\textcolor{red}{\bf Users would need to adjust their types to represent logical variables}}\pause
+%   \item Polymorphic unification:
+%
+%     $$
+%      \equiv\;\colon \Sigma\to\alpha\to\alpha\to\Sigma_{\perp}
+%     $$\pause
+%     \small
+%     {\bf\textcolor{red}{Has to be implemented in an untyped manner}}
+%     \pause
+%
+%     {\bf\textcolor{green}{Might be a good solution (lightweight, efficient), if
+%     type safety is justified}}
+% \end{itemize}
+%
+% \end{frame}
+
+\begin{frame}[fragile]{Полиморфная унификация}
+
+Работает для всех \emph{логических} типов $\alpha\; logic$ (он же $\oo{\alpha}$):
+
+$$
+\equiv\;\colon \Sigma\to\oo{\alpha}\to\oo{\alpha}\to\Sigma_{\perp}
+$$
+\pause
+
+Реализована как сравнение представлений значений в памяти.
+% \pause
+% \begin{figure}
+% \centering
+% \includegraphics[width=0.5\textwidth]{img0.eps}
+% \end{figure}
+
+% \begin{lstlisting}[mathescape=true]
+% type 'a logic = Var of int | Value of 'a
+% ...
+% val x : 'a logic
+% val s : string logic
+% ...!\pause!
+% (x === s)
+% ...
+% !\pause!
+% val n : int logic
+% ... (x === n) ...
+%
+% Error: This expression has type int logic
+%        but an expression was expected of type string logic
+%        Type int is not compatible with type string
+% \end{lstlisting}
+
+%\vskip3mm
+% Pitfalls:
+%
+% \begin{itemize}
+% \item compiler loses the track of types after the results of unification
+% are stored in a substitution $\leadsto$ refinement has to be implemented untyped as well;\pause
+% \item the safety of unification/refinement implementation has to be justified separately;\pause
+% \item states must not escape their scope (otherwise the coherence between variable
+% types and terms, stored in states, can be lost).
+% \end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Систематическое конструирование логических типов}
+  % mathescape=true,
+  \begin{lstlisting}[mathescape=true]
+  type $\alpha$ logic = Var of int | Value of $\alpha$
+  ...!\pause!
+  type ($\alpha$, $\beta$) glist = Nil | Cons of $\alpha$ * $\beta$ !\pause!
+
+  type $\alpha$  list = ($\alpha$, $\alpha$ list) glist !\pause!
+
+  type $\alpha$ llist = ($\alpha$, $\alpha$ llist) glist logic !\pause!
+
+  ...
+  # Value Nil
+  -: $\alpha$ llist
+  # Value (Cons (Value 1), Value Nil)
+  -: int logic llist
+  # Value (Cons (Var 101), Value Nil)
+  -: int logic llist
+  \end{lstlisting}
+\end{frame}
+% \begin{frame}[fragile]{Properties of Polymorphic Unification}
+% It can be shown, that for our concrete implementation:
+%
+% \begin{itemize}
+% \item variables in a substitution are always associated with the terms of the same type;
+% \item all variables preserve their types, assigned by the compiler;
+% \item all variables occur in terms only in a ``type-safe'' positions:
+%
+% $$
+% t[x] \iff \mbox{the type of }x\mbox{ corresponds to the type of the hole of }t
+% $$
+% \end{itemize}\pause
+%
+% $$\leadsto$$
+%
+% the refinement is type-safe, if a variable is refined in a state, which is an inheritor
+% of the state that variable was created in.
+% \end{frame}
+
+% \begin{frame}[fragile]{Capturing the States}
+% States and refinement function are hidden and can not be accessed directly.\pause
+% \vskip3mm
+% The refinement is performed transparently as the top-level running primitive
+% is invoked:\pause
+% \vskip3mm
+% \begin{lstlisting}[mathescape=true]
+%     run $\bar{n}$ (fun $q_1\;q_2\;\dots\;q_n\;$ -> $\;\;$g) (fun $a_1\;a_2\;\dots\;a_n\;$ -> $\;\;$h)
+% \end{lstlisting}\pause
+%
+% Here:
+% {\small
+% \begin{itemize}
+% \item \lstinline{run}~--- the only way to run goals;
+% \item $\bar{n}$~--- a \emph{numeral}, describing the number of fresh variables,
+% available for running the goal \lstinline{g}; numerals can be manufactured
+% \emph{quantum satis} using the successor function, which is provided as well;
+% \item $q_1, q_2\dots q_n$~--- these fresh variables;
+% \item $a_1, a_2\dots a_n$~--- the streams of \emph{refined} answers for the variables
+% $q_1, q_2\dots q_n$ respectively;
+% \item \lstinline{h}~--- a \emph{handler}, which can make use of refined answers.
+% \end{itemize}
+% }
+%
+% The framework guarantees, that variables are refined only in correct states.
+%
+% \end{frame}
+
+% \begin{frame}[fragile]{Converting from- and to User Types}
+%
+% \small
+% Injecting a user-type into logic domain and projecting the
+% logical results back:
+%
+% $$
+% \begin{array}{rcl}
+% \uparrow_t&\colon &t \to \oo{t}\\
+% \downarrow_t&\colon& \oo{t} \to t
+% \end{array}
+% $$
+% \pause
+% Can be done systematically using generic programming:
+%
+% \begin{itemize}
+% \item ``$\uparrow_\forall$'', ``$\downarrow_\forall$'' are polymorphic shallow injection/projection;
+% \item for the deep case, make the type a functor and use $fmap$.
+% \end{itemize}
+% \pause
+% \begin{lstlisting}[mathescape=true]
+% type tree = Leaf of int | Node of tree * tree!\pause!
+% $\leadsto$
+% type ('int, 'tree) tree$_f$ = Leaf of 'int | Node of 'tree * 'tree!\pause!
+% type tree  = (int, tree) tree$_f$!\pause!
+% type tree$^o$ = ((int$^o$, tree$^o$) tree$_f$)$^o$!\pause!
+%
+% let rec ($\uparrow_{\mbox{\small\ttfamily tree}}$) t = $\uparrow_\forall$ (!\graybox{$fmap_{\mbox{\small\ttfamily tree}_f}$}! ($\uparrow_\forall$) ($\uparrow_{\mbox{\small\ttfamily tree}}$) t)!\pause!
+% let rec ($\downarrow_{\mbox{\small\ttfamily tree}}$) l = !\graybox{$fmap_{\mbox{\small\ttfamily tree}_f}$}! ($\downarrow_\forall$) ($\downarrow_{\mbox{\small\ttfamily tree}}$) ($\downarrow_\forall$ l)
+%
+% \end{lstlisting}
+% \end{frame}
+
+\begin{frame}[fragile]{Промежуточные результаты}
+Были представлены на ML Workshop 2016 (совмещённым с ICFP 2016)
+\begin{itemize}
+\item Типобезопасное встраивание miniKanren в OCaml
+\item Полиморфная унификация
+\item Регулярный подход для описания типов
+\end{itemize}
+
+\end{frame}
+
+%{
+%\setbeamercolor{background canvas}{bg=}
+% \includepdf[pages={1}]{histo1.pdf}
+%}
+\begin{frame}{Результаты сравнения производительности}
+\centering
+\includegraphics[scale=0.85]{histo1.pdf}
+\end{frame}
+
+\begin{frame}[fragile]{Дальнейшие задачи}
+  \begin{itemize}
+  \item Найти причину замедления
+  \item Ускорить
+  \item Подход должен остаться типобезопасным
+  \end{itemize}
+
+\end{frame}
+
+
+% \begin{frame}[fragile]{Полиморфная унификация 2 из 7}
+%   %\begin{figure}
+%   \centering
+%   %\includegraphics[width=0.6\textwidth]{img0.pdf}
+%   \includegraphics[scale=0.5]{img0.png}
+%   %\end{figure}
+% \end{frame}
+
+\begin{frame}[fragile]{Представление термов}
+  \centering
+  \includegraphics[width=0.9\textwidth]{img1.png}
+  %\end{figure}
+\end{frame}
+
+% \begin{frame}[fragile]{Тегированное представление логических значений}
+%   \begin{figure}
+%   \centering
+%   \includegraphics[width=0.9\textwidth]{img2.png}
+%   \end{figure}
+% \end{frame}
+
+\begin{frame}[fragile]{Тегированное представление логических значений}
+  \begin{figure}
+  \centering
+  \includegraphics[width=0.9\textwidth]{img3.png}
+  \end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Рост размера термов из-за тегирования}
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{img4.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{План улучшения реализации}
+  \begin{itemize}
+  \item Новое представление деревьев
+    \begin{itemize}
+      \item{Значению нельзя присвоить конкретный тип, нужен абстрактный тип значений.}
+      \item{Предоставить интерфейс для конструирования логических значений}
+      \item{Дополнительные действия по преобразованию абстрактного логического значения в типизируемое}
+    \end{itemize}
+  \item Модернизировать подход по описанию типов логических значений
+  \item Не потерять типовую безопасность
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Основная идея}
+\begin{itemize}
+ \item Унифицировать нетипизированнные термы
+ \item Преобразовывать к типизируемому представлению при refine
+ \item Запоминать формальные типы значений при каждом преобразовании к логическому значению
+\end{itemize}
+
+\begin{figure}
+\centering
+\includegraphics[width=0.9\textwidth]{img5.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Тип injected}
+  \begin{lstlisting}[language=ml]
+  type ('a, 'b) injected!
+  \end{lstlisting}
+
+\vskip 1cm
+  Тип \verb='a= -- это исходный тип, а тип \verb='b= -- его логическое представление
+  
+  Представление ground-типов совпадает с представлением \verb='a=.
+\end{frame}
+
+\begin{frame}[fragile]{Конструирование логических значений для простых типов}
+  \begin{lstlisting}[language=ml]
+  type ('a, 'b) injected!\pause!
+
+  val lift: 'a -> ('a,'a) injected
+  val inj : ('a,'b) injected -> ('a,'b logic) injected
+  \end{lstlisting}
+  \pause
+  Например для чисел
+  \begin{lstlisting}[language=ml]
+  # inj (lift 5)
+  -: (int, int logic) injected
+  \end{lstlisting}
+  \pause
+  Оба введенных примитива оставляют переданное значение как есть (identity)
+\end{frame}
+
+\begin{frame}[fragile]{Конструирование логических значений для сложных типов}
+  \begin{lstlisting}[language=ml,mathescape=true]
+  module Option = struct
+    type $\alpha$ option = None | Some of $\alpha$
+    let fmap = ....
+  end!\pause!
+
+  # Make1(Option).distrib
+  ...!\pause!
+  # let some x  = inj @@ distrib (Some x)
+  -: ($\alpha$, $\beta$) injected -> $\qquad$($\alpha$ option, $\beta$ option logic) injected
+  \end{lstlisting}
+  \pause
+
+  Здесь \emph{fmap} нужен для доказательства того, что тип является функтором, т.е.
+  чтобы можно было описать примимитив \emph{distrib}, который позволяет ``снять'' 
+  тип со значения, ничего не делая со значением (он тоже identity).
+
+\end{frame}
+
+\begin{frame}[fragile]{Восстановление посчитанных значений}
+  Необходимо, так как значения в типе \emph{(\_,\_) injected} хранятся в
+  нетипизированном виде.
+
+  \begin{lstlisting}[language=ml,mathescape=true]
+  module Option = struct
+    type $\alpha$ option = None | Some of $\alpha$
+    let fmap = ....
+  end!\pause!
+
+    # Make1(Option).reify
+    -: ( ($\alpha$, $\beta$) injected -> $\qquad\beta$) -> !\pause!
+       ($\alpha$ option, $\beta$ option logic) injected -> $\qquad\beta$ option logic
+
+  \end{lstlisting}
+
+  При построении \emph{reify} функция \emph{fmap} используется по существу.
+\end{frame}
+
+\begin{frame}[fragile]{Текущая реализация}
+\begin{itemize}
+\item Репозиторий: \url{https://github.com/dboulytchev/OCanren}
+\item Реализация $\mu$Kanren с неравенствами (disequality constraints)
+\item Работает на большинстве оригинальных примеров
+\item Быстрее $\mu$Kanren (\url{https://github.com/Kakadu/ocanren-perf})
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Поиск в глубину (dfs)}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{dfs.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Поиск в ширину (bfs)}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{bfs.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Interleaving поиск}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{interleave.png}
+\end{figure}
+\end{frame}
+
+
+% \begin{frame}[fragile]{}
+% 
+% \centering
+% \begin{center}
+% \Huge Вопросы?
+% \end{center}
+% 
+% \end{frame}
+
+\end{document}

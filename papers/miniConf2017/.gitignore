@@ -1,0 +1,12 @@
+*.tex.backup
+*.dvi
+*.bak
+*.aux
+*.log
+*.out
+*.nav
+*.toc
+*.vrb
+*.dia.autosave
+*eps-converted-to.pdf
+*.snm
