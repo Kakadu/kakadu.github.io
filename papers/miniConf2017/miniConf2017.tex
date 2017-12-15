@@ -178,7 +178,7 @@ language=ocaml
     \includegraphics[scale=0.3]{trs.jpg} &
     \begin{itemize}
        \item Изначально DSL для Scheme/Racket с довольно минималистичной реализацией
-       \item Семейство языков ($\mu$Kanren, $\alpha$-Kanren, cKanren, и т.д.)
+       \item Семейство языков ($\mu$Kanren, $\alpha$  Kanren, cKanren, и т.д.)
        \item Встраивается как DSL в широкий набор языков (включая OCaml, Haskell, Scala, и т.д.)
        \item Daniel P. Friedman, William Byrd and   Oleg Kiselyov. \emph{The Reasoned Schemer},
        The MIT Press, Cambridge, MA, 2005
@@ -361,7 +361,7 @@ OCanren -- DSL для типобезопасного встраивания mini
  \item Который используется в пользовательских типах.
 
  \pause
- \item \emph{Одна} функция унификации для всех типов.
+ \item Полиморфная унификация -- \emph{одна} для всех типов.
  % Почему-то курсив не работает
     \vspace{1em}
     \begin{itemize}
@@ -375,7 +375,7 @@ OCanren -- DSL для типобезопасного встраивания mini
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Систематическое конструирование логических типов}
+\begin{frame}[fragile]{Систематическое конструирование логических типов (на примере списка)}
   % mathescape=true,
   \begin{lstlisting}[mathescape=true]
   type $\alpha$ logic = Var of int | Value of $\alpha$
@@ -571,15 +571,10 @@ OCanren -- DSL для типобезопасного встраивания mini
 % \end{lstlisting}
 % \end{frame}
 
-
-%{
-%\setbeamercolor{background canvas}{bg=}
-% \includepdf[pages={1}]{histo1.pdf}
-%}
-\begin{frame}{Результаты сравнения производительности}
-\centering
-\includegraphics[scale=0.85]{histo1.pdf}
-\end{frame}
+% \begin{frame}{Результаты сравнения производительности}
+% \centering
+% \includegraphics[scale=0.85]{histo1.pdf}
+% \end{frame}
 
 \begin{frame}[fragile]{Дальнейшие задачи}
   \begin{itemize}
@@ -592,7 +587,7 @@ OCanren -- DSL для типобезопасного встраивания mini
 
 \begin{frame}[fragile]{Полиморфная унификация в OCanren}
 
-Работает для всех логиеских типов \emph{logic} $\oo{\alpha}$:
+Работает для всех логических типов  $\oo{\alpha}$:
 
 $$
 (\equiv)\;\colon \Sigma\to\oo{\alpha}\to\oo{\alpha}\to\Sigma_{\perp}
@@ -660,19 +655,6 @@ $$
 \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{План улучшения реализации}
-  \begin{itemize}
-  \item Новое представление деревьев
-    \begin{itemize}
-      \item{Значению нельзя присвоить конкретный тип, нужен абстрактный тип значений.}
-      \item{Предоставить интерфейс для конструирования логических значений}
-      \item{Дополнительные действия по преобразованию абстрактного логического значения в типизируемое}
-    \end{itemize}
-  \item Модернизировать подход по описанию типов логических значений
-  \item Не потерять типовую безопасность
-  \end{itemize}
-\end{frame}
-
 \begin{frame}[fragile]{Основная идея}
 \begin{itemize}
  \item Унифицировать нетипизируемые термы.
@@ -686,6 +668,20 @@ $$
 \end{figure}
 \end{frame}
 
+\begin{frame}[fragile]{План улучшения реализации}
+  \begin{itemize}
+  \item Новое представление деревьев
+    \begin{itemize}
+      \item Значению нельзя присвоить конкретный тип.
+      \item Нужен абстрактный тип значений.
+      \item Предоставить интерфейс для конструирования логических значений.
+      \item Преобразование абстрактного логического значения в типизируемое (во время refinement).
+    \end{itemize}
+  \item Модернизировать подход по описанию типов логических значений.
+  \item Не потерять типовую безопасность.
+  \end{itemize}
+\end{frame}
+
 \begin{frame}[fragile]{Тип injected}
   \begin{lstlisting}[mathescape=true]
   type ($\alpha$, $\beta$) injected!
@@ -693,13 +689,13 @@ $$
 
 \vskip 1cm
   Тип $\alpha$ -- это исходный тип, а тип $\beta$ -- его логическое представление
-\vskip 1cm
-  Представление ground-типов совпадает с представлением $\alpha$.
+% \vskip 1cm
+%   Представление ground-типов совпадает с представлением $\alpha$.
 \end{frame}
 
 \begin{frame}[fragile]{Конструирование логических значений для простых типов}
   \begin{lstlisting}[mathescape=true]
-  type ($\alpha$, $\beta$) injected!\pause!
+  type ($\alpha$, $\beta$) injected
 
   val lift: $\alpha$ ->   ($\alpha$,$\alpha$) injected
   val inj : ($\alpha$, $\beta$) injected -> $\thinspace$  ($\alpha$, $\beta$ logic) injected
@@ -718,7 +714,7 @@ $$
   \begin{lstlisting}[mathescape=true]
   module Option = struct
     type $\alpha$ option = None | Some of $\alpha$
-    let fmap = ....
+    let fmap = ...
   end!\pause!
 
   # Make1(Option).distrib
@@ -728,9 +724,13 @@ $$
   \end{lstlisting}
   \pause
 
-  Здесь \emph{fmap} нужен для доказательства того, что тип является функтором, т.е.
-  чтобы можно было описать примимитив \emph{distrib}, который позволяет ``снять'' 
-  тип со значения, ничего не делая со значением (он тоже identity).
+  Примитив \lstinline{distrib}, который позволяет конструировать из значений типа \lstinline{(_, _) injected} 
+  другие значния типа \lstinline{(_, _) injected}.
+  \vskip 1cm
+  Он ничего не делает со значением (identity).
+  
+%   Здесь \emph{fmap} нужен для доказательства того, что тип является функтором, т.е.
+%   что \emph{distrib} можно приминить.
 
 \end{frame}
 
