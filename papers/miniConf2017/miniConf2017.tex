@@ -15,14 +15,10 @@
 \usepackage{latexsym}
 \usepackage{array}
 \usepackage{changepage} % for adjustwidth
-%\usepackage{courier}
 \usepackage{pstricks}
 \usepackage{tikz}
 \usepackage{pdfpages}
 \usepackage{fontawesome}
-%\usepackage{inconsolata}
-
-%\usepackage{lmodern}
 \usepackage[scaled]{DejaVuSansMono}
 \usepackage[T1]{fontenc}
 
@@ -94,9 +90,9 @@
 }
 
 \lstdefinelanguage{ocaml}{
-keywords={let, begin, end, in, match, type, and, fun,
+keywords={let, begin, end, in, match, type, and, fun, module,
 function, try, with, class, object, method, of, rec, repeat, until,
-while, not, do, done, as, val, inherit, module, sig, @type, struct,
+while, not, do, done, as, val, inherit, module, sig, @ type, struct,
 if, then, else, open, virtual, new, fresh},
 sensitive=true,
 basicstyle=\small\ttfamily,
@@ -108,6 +104,7 @@ columns=fixed,
 fontadjust=true,
 literate={->}{{$\to$}}1
          {===}{{$\equiv$}}1
+         {=/=}{{$\not\equiv$}}1
 }
 
 \lstdefinelanguage{scheme}{
@@ -151,8 +148,7 @@ language=ocaml
 
 \institute[]{
 \small{
-\textbf{Санкт-Петербургский Государтсвенный Университет} \\
-\textbf{JetBrains Research}
+\textbf{Лаборатория языковых инструментов}
 }
 }
 
@@ -257,12 +253,44 @@ let rec append$^o$ xs ys xys =!\pause!
 % 
 % \end{frame}
 
-\begin{frame}[fragile]{miniKanren vs. Prologs}
+\begin{frame}[fragile]{miniKanren vs. Prologs (1)}
 \begin{itemize}
-  \item Стратегия поиска
+  \item Стратегия поиска: interleaving.
+%       \begin{itemize}
+% 	\item Поиск в глубину (DFS) быстрее при конечном переборе.
+% 	\item Чтобы DFS завершался в Prolog введены дополнительные синтаксические конструкции (cuts).
+%       \end{itemize}
+%   \item miniKanren реализован как DSL -- встраивается в другие языки.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Поиск в глубину (dfs)}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{dfs.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Поиск в ширину (bfs)}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{bfs.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Interleaving поиск}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{interleave.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{miniKanren vs. Prologs (2)}
+\begin{itemize}
+  \item Стратегия поиска: interleaving search.
       \begin{itemize}
-	\item DFS быстрее при конечном переборе
-	\item Чтобы DFS заершался в пролог введлены дополнительные синтаксические конструкции (cuts)
+	\item Поиск в глубину (DFS) быстрее при конечном переборе.
+	\item Чтобы DFS завершался в Prolog введены дополнительные синтаксические конструкции (cuts).
       \end{itemize}
   \item miniKanren реализован как DSL -- встраивается в другие языки.
 \end{itemize}
@@ -274,7 +302,7 @@ OCanren -- DSL для типобезопасного встраивания mini
 
 \begin{frame}[fragile]{Изначальные ожидания}
 \begin{itemize}
- \item Меньше ``глупых'' ошибок
+ \item Меньше ошибок при разработке.
  \item Сходная производительность, или даже лучше.
 \end{itemize}
 
@@ -296,7 +324,6 @@ OCanren -- DSL для типобезопасного встраивания mini
  \item Как производится унификация?
 \end{itemize}
 
-
 \end{frame}
 
 
@@ -304,34 +331,35 @@ OCanren -- DSL для типобезопасного встраивания mini
 \begin{frame}[fragile]{Как используются типы?}
 \begin{itemize}
 \item Один заранее созданный тип, на котором унификация разрешена.
+  \begin{itemize}
+    \item[\faTimes] Нет поддержки пользовательских типов.
 
-    \faTimes \hspace{1em} Нет поддержки пользовательских типов.
-
-    \faCheck \hspace{1em} ``Универсальная'' функция унификации.
+    \item[\faCheck] ``Универсальная'' функция унификации.
+  \end{itemize}
     \vspace{1em}
-    
     ukanren, miniKanren-ocaml, HaskellKanren
-    
+    \vspace{1em}
 \pause
 \item О размещении логических переменных беспокоится пользователь.
-
-    \faTimes \hspace{1em} Неудобно.
-    
-    \faTimes \hspace{1em} Функция унификации для каждлго типа своя.
-    
-    \faCheck \hspace{1em} Поддержка произвольных типов данных.
-    \vspace{1em}
-    
-    miniKanrenT, Molog
+  \begin{itemize}
+    \item[\faTimes] Неудобно.
+    \item[\faTimes] Функция унификации для каждого типа своя.
+    \item[\faCheck] Поддержка произвольных типов данных.
+  \end{itemize}
+  \vspace{1em}
+  miniKanrenT, Molog
 \end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Как сделано в OCanren?}
 
 \begin{itemize}
- \item Примитивный тип для представления логических переменных.
+ \item Один тип для разделения логических переменных от конкретных термов.
+    \begin{lstlisting}[mathescape=true]
+      type $\alpha$ logic = Var of int | Value of $\alpha$
+    \end{lstlisting}
  \item Который используется в пользовательских типах.
- \item Пользователь должен следовать рекомендациям поп описанию типов.
+
  \pause
  \item \emph{Одна} функция унификации для всех типов.
  % Почему-то курсив не работает
@@ -342,8 +370,30 @@ OCanren -- DSL для типобезопасного встраивания mini
     \item[\faCheck] ... но это скрыто от пользователя.
     \item[\faCheck] Идеалогически как в первоисточнике.
     \end{itemize}
-  
+  \pause
+  \item Пользователь должен следовать рекомендациям по описанию типов.
 \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Систематическое конструирование логических типов}
+  % mathescape=true,
+  \begin{lstlisting}[mathescape=true]
+  type $\alpha$ logic = Var of int | Value of $\alpha$
+  ...!\pause!
+  type ($\alpha$, $\beta$) glist = Nil | Cons of $\alpha$ * $\beta$ !\pause!
+
+  type $\alpha$  list = ($\alpha$, $\alpha$ list) glist !\pause!
+
+  type $\alpha$ llist = ($\alpha$, $\alpha$ llist) glist logic !\pause!
+
+  ...
+  # Value Nil
+  -: $\alpha$ llist
+  # Value (Cons (Value 1), Value Nil)
+  -: int logic llist
+  # Value (Cons (Var 101), Value Nil)
+  -: int logic llist
+  \end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]{Промежуточные результаты}
@@ -355,6 +405,7 @@ OCanren -- DSL для типобезопасного встраивания mini
 \end{itemize}
 
 \vspace{2em}
+\pause
 \begin{enumerate}
  \item[\faCheck] Типы помогают выявить некоторые ошибки.
  \pause
@@ -363,8 +414,6 @@ OCanren -- DSL для типобезопасного встраивания mini
 \end{enumerate}
 
 \end{frame}
-
-
 
 % \begin{frame}[fragile]{Dealing with Typed Terms}
 % \pause
@@ -396,22 +445,22 @@ OCanren -- DSL для типобезопасного встраивания mini
 %
 % \end{frame}
 
-\begin{frame}[fragile]{Полиморфная унификация}
-
-Работает для всех \emph{логических} типов $\alpha\; logic$ (он же $\oo{\alpha}$):
-
-$$
-\equiv\;\colon \Sigma\to\oo{\alpha}\to\oo{\alpha}\to\Sigma_{\perp}
-$$
-\pause
-
-Реализована как сравнение представлений значений в памяти.
+% \begin{frame}[fragile]{Полиморфная унификация}
+% 
+% Работает для всех \emph{логических} типов $\alpha\; logic$ (он же $\oo{\alpha}$):
+% 
+% $$
+% \equiv\;\colon \Sigma\to\oo{\alpha}\to\oo{\alpha}\to\Sigma_{\perp}
+% $$
 % \pause
-% \begin{figure}
-% \centering
-% \includegraphics[width=0.5\textwidth]{img0.eps}
-% \end{figure}
-
+% 
+% Реализована как сравнение представлений значений в памяти.
+% \pause
+% % % \begin{figure}
+% % % \centering
+% % % \includegraphics[width=0.5\textwidth]{img0.eps}
+% % % \end{figure}
+% 
 % \begin{lstlisting}[mathescape=true]
 % type 'a logic = Var of int | Value of 'a
 % ...
@@ -423,15 +472,15 @@ $$
 % !\pause!
 % val n : int logic
 % ... (x === n) ...
-%
+% 
 % Error: This expression has type int logic
 %        but an expression was expected of type string logic
 %        Type int is not compatible with type string
 % \end{lstlisting}
-
-%\vskip3mm
+% 
+% \vskip3mm
 % Pitfalls:
-%
+% 
 % \begin{itemize}
 % \item compiler loses the track of types after the results of unification
 % are stored in a substitution $\leadsto$ refinement has to be implemented untyped as well;\pause
@@ -439,29 +488,9 @@ $$
 % \item states must not escape their scope (otherwise the coherence between variable
 % types and terms, stored in states, can be lost).
 % \end{itemize}
-\end{frame}
+% \end{frame}
 
 
-\begin{frame}[fragile]{Систематическое конструирование логических типов}
-  % mathescape=true,
-  \begin{lstlisting}[mathescape=true]
-  type $\alpha$ logic = Var of int | Value of $\alpha$
-  ...!\pause!
-  type ($\alpha$, $\beta$) glist = Nil | Cons of $\alpha$ * $\beta$ !\pause!
-
-  type $\alpha$  list = ($\alpha$, $\alpha$ list) glist !\pause!
-
-  type $\alpha$ llist = ($\alpha$, $\alpha$ llist) glist logic !\pause!
-
-  ...
-  # Value Nil
-  -: $\alpha$ llist
-  # Value (Cons (Value 1), Value Nil)
-  -: int logic llist
-  # Value (Cons (Var 101), Value Nil)
-  -: int logic llist
-  \end{lstlisting}
-\end{frame}
 % \begin{frame}[fragile]{Properties of Polymorphic Unification}
 % It can be shown, that for our concrete implementation:
 %
@@ -542,15 +571,6 @@ $$
 % \end{lstlisting}
 % \end{frame}
 
-\begin{frame}[fragile]{Промежуточные результаты}
-Были представлены на ML Workshop 2016 (совмещённым с ICFP 2016)
-\begin{itemize}
-\item Типобезопасное встраивание miniKanren в OCaml
-\item Полиморфная унификация
-\item Регулярный подход для описания типов
-\end{itemize}
-
-\end{frame}
 
 %{
 %\setbeamercolor{background canvas}{bg=}
@@ -563,13 +583,32 @@ $$
 
 \begin{frame}[fragile]{Дальнейшие задачи}
   \begin{itemize}
-  \item Найти причину замедления
-  \item Ускорить
-  \item Подход должен остаться типобезопасным
+  \item Найти причину замедления.
+  \item Ускорить.
+  \item Подход должен остаться типобезопасным.
   \end{itemize}
 
 \end{frame}
 
+\begin{frame}[fragile]{Полиморфная унификация в OCanren}
+
+Работает для всех логиеских типов \emph{logic} $\oo{\alpha}$:
+
+$$
+(\equiv)\;\colon \Sigma\to\oo{\alpha}\to\oo{\alpha}\to\Sigma_{\perp}
+$$
+\pause
+
+Стандартный алгоритм с треугольной подстановкой и \textit{occurs check}, использующий типонебезопасный интерфейс  \lstinline{Obj}.
+\pause
+
+\vspace{3em}
+Тонкости:
+\begin{itemize}
+\item Типонебезопасный стиль -- компилятор теряет информацию о типах.
+\item Дополнительная стадия восстановления типов (refinement).
+\end{itemize}
+\end{frame}
 
 % \begin{frame}[fragile]{Полиморфная унификация 2 из 7}
 %   %\begin{figure}
@@ -579,10 +618,25 @@ $$
 %   %\end{figure}
 % \end{frame}
 
-\begin{frame}[fragile]{Представление термов}
+\begin{frame}[fragile]{Алгебраические типы данных в памяти}
+  \centering
+  \begin{lstlisting}[mathescape=true]
+    type ($\alpha, \beta, ...$) typ =   
+    | $C_1$ of $t_{11}$ * ... * $t_{1m}$  
+    | ...
+    | $C_n$ of $t_{n1}$ * ... * $t_{nm}$  
+  \end{lstlisting}
+  \pause
+  \vspace{3em}
+  \includegraphics[width=0.5\textwidth]{algebraic.png}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Представление термов в памяти (пример для списка)}
   \centering
   \includegraphics[width=0.9\textwidth]{img1.png}
-  %\end{figure}
+
 \end{frame}
 
 % \begin{frame}[fragile]{Тегированное представление логических значений}
@@ -621,9 +675,9 @@ $$
 
 \begin{frame}[fragile]{Основная идея}
 \begin{itemize}
- \item Унифицировать нетипизированнные термы
- \item Преобразовывать к типизируемому представлению при refine
- \item Запоминать формальные типы значений при каждом преобразовании к логическому значению
+ \item Унифицировать нетипизируемые термы.
+ \item Преобразовывать к типизируемому представлению в самом конце (стадия refinement).
+ \item Запоминать формальные типы значений при каждом преобразовании к логическому значению.
 \end{itemize}
 
 \begin{figure}
@@ -633,26 +687,26 @@ $$
 \end{frame}
 
 \begin{frame}[fragile]{Тип injected}
-  \begin{lstlisting}[language=ml]
-  type ('a, 'b) injected!
+  \begin{lstlisting}[mathescape=true]
+  type ($\alpha$, $\beta$) injected!
   \end{lstlisting}
 
 \vskip 1cm
-  Тип \verb='a= -- это исходный тип, а тип \verb='b= -- его логическое представление
-  
-  Представление ground-типов совпадает с представлением \verb='a=.
+  Тип $\alpha$ -- это исходный тип, а тип $\beta$ -- его логическое представление
+\vskip 1cm
+  Представление ground-типов совпадает с представлением $\alpha$.
 \end{frame}
 
 \begin{frame}[fragile]{Конструирование логических значений для простых типов}
-  \begin{lstlisting}[language=ml]
-  type ('a, 'b) injected!\pause!
+  \begin{lstlisting}[mathescape=true]
+  type ($\alpha$, $\beta$) injected!\pause!
 
-  val lift: 'a -> ('a,'a) injected
-  val inj : ('a,'b) injected -> ('a,'b logic) injected
+  val lift: $\alpha$ ->   ($\alpha$,$\alpha$) injected
+  val inj : ($\alpha$, $\beta$) injected -> $\thinspace$  ($\alpha$, $\beta$ logic) injected
   \end{lstlisting}
-  \pause
-  Например для чисел
-  \begin{lstlisting}[language=ml]
+  \pause\vskip 1cm
+  Например, для чисел:
+  \begin{lstlisting}[mathescape=true]
   # inj (lift 5)
   -: (int, int logic) injected
   \end{lstlisting}
@@ -661,7 +715,7 @@ $$
 \end{frame}
 
 \begin{frame}[fragile]{Конструирование логических значений для сложных типов}
-  \begin{lstlisting}[language=ml,mathescape=true]
+  \begin{lstlisting}[mathescape=true]
   module Option = struct
     type $\alpha$ option = None | Some of $\alpha$
     let fmap = ....
@@ -669,8 +723,8 @@ $$
 
   # Make1(Option).distrib
   ...!\pause!
-  # let some x  = inj @@ distrib (Some x)
-  -: ($\alpha$, $\beta$) injected -> $\qquad$($\alpha$ option, $\beta$ option logic) injected
+  # let some x  = inj (distrib (Some x))
+  -: ($\alpha$, $\beta$) injected -> $\thinspace$ ($\alpha$ option, $\beta$ option logic) injected
   \end{lstlisting}
   \pause
 
@@ -680,63 +734,42 @@ $$
 
 \end{frame}
 
-\begin{frame}[fragile]{Восстановление посчитанных значений}
-  Необходимо, так как значения в типе \emph{(\_,\_) injected} хранятся в
+\begin{frame}[fragile]{Восстановление посчитанных значений (refinement)}
+  Необходимо, так как значения в типе \lstinline[mathescape=true]{($\alpha$, $\beta$) injected} хранятся в
   нетипизированном виде.
 
-  \begin{lstlisting}[language=ml,mathescape=true]
+  \begin{lstlisting}[mathescape=true]
   module Option = struct
     type $\alpha$ option = None | Some of $\alpha$
-    let fmap = ....
-  end!\pause!
+    let fmap = ...
+  end!
 
-    # Make1(Option).reify
-    -: ( ($\alpha$, $\beta$) injected -> $\qquad\beta$) -> !\pause!
-       ($\alpha$ option, $\beta$ option logic) injected -> $\qquad\beta$ option logic
+  \pause!
+
+  # Make1(Option).reify
+    : (($\alpha$, $\beta$) injected -> $\enspace \beta$) -> !\pause!
+      ($\alpha$ option, $\beta$ option logic) injected -> 
+      $\beta$ option logic
 
   \end{lstlisting}
 
   При построении \emph{reify} функция \emph{fmap} используется по существу.
 \end{frame}
 
-\begin{frame}[fragile]{Текущая реализация}
+\begin{frame}[fragile]{Итоговые результаты}
+
 \begin{itemize}
-\item Репозиторий: \url{https://github.com/dboulytchev/OCanren}
-\item Реализация $\mu$Kanren с неравенствами (disequality constraints)
-\item Работает на большинстве оригинальных примеров
-\item Быстрее $\mu$Kanren (\url{https://github.com/Kakadu/ocanren-perf})
+ \item Типобезопасная реализация.
+ \item C поддержкой неравенств термов (disequality constraints) и occurs check.
+ \item Сравнима по скорости с \href{https://github.com/michaelballantyne/faster-miniKanren/}{faster-miniKanren \faGithub}.
+ \item Типы выявляют простые ошибки.
+ \item Типобезопасность могут заменить некоторые проверки во время выполнения (abstento, numero, symbolo)...
+ \item ... сокращая количество примитивов с 8 до 5 
+ (\lstinline{===}, \lstinline{=/=}, конъюнкция, дизъюнкция, fresh).
 \end{itemize}
+
+\vskip 2cm
+Репозиторий \href{https://github.com/dboulytchev/OCanren}{\faGithub}
 \end{frame}
-
-\begin{frame}[fragile]{Поиск в глубину (dfs)}
-\begin{figure}
-\centering
-\includegraphics[width=0.7\textwidth]{dfs.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Поиск в ширину (bfs)}
-\begin{figure}
-\centering
-\includegraphics[width=0.7\textwidth]{bfs.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Interleaving поиск}
-\begin{figure}
-\centering
-\includegraphics[width=0.7\textwidth]{interleave.png}
-\end{figure}
-\end{frame}
-
-
-% \begin{frame}[fragile]{}
-% 
-% \centering
-% \begin{center}
-% \Huge Вопросы?
-% \end{center}
-% 
-% \end{frame}
 
 \end{document}
