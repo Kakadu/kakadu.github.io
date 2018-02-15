@@ -140,29 +140,122 @@ language=ocaml
   \usetheme{default}
 }
 
+\AtBeginSection[]
+{
+\begin{frame}{Table of Contents}
+\tableofcontents[currentsection]
+\end{frame}
+}
 \theoremstyle{definition}
 
-\title{Уменьшение цены абстракции при встраивании реляционного DSL в OCaml}
-
+\title{Copattern matching and first-class observations in OCaml, with a macro}
 \author{Дмитрий Косарев}
-
-\institute[]{
-\small{
-\textbf{Лаборатория языковых инструментов}
-}
-}
 
 \date{
   \vskip 2cm
   \small{
-  \textbf{16 декабря, 2017}
+    \textbf{19 февраля, 2018}
   }
 }
 
+
+% some slides https://www.cl.cam.ac.uk/events/metaprog2016/codata-types-and-copattern-matching.pdf
+% original paper https://hal.inria.fr/hal-01653261/document
 \begin{document}
 \begin{frame}
   \titlepage
 \end{frame}
+
+
+\section{Мотивация}
+
+\begin{frame}{Спойлер?}
+\begin{itemize}
+ \item Расширим OCaml копаттернами, кофункциями и т.д.
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}{Мотивация}
+ 
+\begin{itemize}
+  \item Конечные
+  \begin{itemize}
+    \item Например: список, дерево, ...
+    \item Индуктивные типы и pattern matching
+  \end{itemize}
+  \item Бесконечные
+  \begin{itemize}
+    \item Например: stream, бесконечное дерево, ...
+    \item Коиндуктивные типы и copattern matching
+  \end{itemize}
+  \vspace{1in}
+  \pause
+  Copatterns: Programming Infinite Structures by Observations
+  Abel, Pientka, Thibodeau and Setzer (POPL – 2013)
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Data types and Pattern matching}
+A data type is defined by its Constructors :
+
+\begin{lstlisting}[language=ocaml,mathescape=true]
+type 'a list = Nil | Cons of 'a * 'a list
+
+let ns: int list = Cons(1, Cons(2,Nil))
+\end{lstlisting}
+Deconstruct with pattern matching:
+\begin{lstlisting}[language=ocaml,mathescape=true]
+let rec map f xs =
+  match xs with
+  | Nil -> Nil
+  | Cons (x,xs) -> Cons(f x, map f xs)
+
+map succ ns;;
+
+$-$ : int list = Cons(2, Cons(3, Nil))
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Мотивация}
+\begin{itemize}
+ \item Call-by-value is an evaluation strategy in which the arguments are evaluated before being passed to the functions.
+\begin{lstlisting}
+let rec zeros = Cons (0, zeros )
+\end{lstlisting}
+Вычисление расходится
+\item Решение - ?
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Мотивация}
+Call-by-value $\Rightarrow$ раходимость.
+
+Решение : сэмулировать call-by-name (à la Haskell). 
+
+
+\begin{lstlisting}[language=ocaml,mathescape=true]
+type 'a list = Nil | Cons of 'a * (unit -> 'a list)
+
+let rec zeros = Cons (0, fun () -> zeros)
+\end{lstlisting}
+
+\begin{lstlisting}[language=ocaml,mathescape=true]
+let rec map f xs =
+  match xs with
+  | Nil -> Nil
+  | Cons (x,th) -> Cons(f x, map f (th ()))
+
+map ((+)1) zeros;;
+
+$-$ : int list = Cons(1, <fun>)
+\end{lstlisting}
+\end{frame}
+
+
+\section{GADT}
+
 
 \begin{frame}{Реляционное программирование на miniKanren}
  % \vskip1cm
