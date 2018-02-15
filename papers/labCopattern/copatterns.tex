@@ -101,6 +101,7 @@ keywordstyle=\ttfamily\bfseries,
 identifierstyle=\ttfamily,
 basewidth={0.5em,0.5em},
 columns=fixed,
+moredelim=**[is][\only<+>{\color{black}\lstset{style=highlight}}]{@}{@},
 fontadjust=true,
 literate={->}{{$\to$}}1
          {===}{{$\equiv$}}1
@@ -128,6 +129,7 @@ commentstyle=\scriptsize\rmfamily,
 basewidth={0.5em,0.5em},
 % fontadjust=true,
 escapechar=!,
+% escapeinside={(*@}{@*),
 language=ocaml
 }
 
@@ -255,6 +257,105 @@ $-$ : int list = Cons(1, <fun>)
 
 
 \section{GADT}
+
+\begin{frame}[fragile]{GADT}
+Они же
+\begin{itemize}
+\item Generalized Algebraic Data Type
+\item first-class phantom type (James \& Hinze, 2003)
+\item guarded recursive datatype (Xi\&Chen,2003)
+\item equality-qualified type (Sheard \& Pasalic, \textit{tile here}, 2004)
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Синтаксис GADT}
+\begin{lstlisting}[language=ocaml,mathescape=true]
+type ($\alpha$,$\beta$, ... ) typ =
+  | $C_1$ of $\tau_{11}$ * ... * $\tau_{1m_1}$
+  | ...
+  | $C_n$ of $\tau_{n1}$ * ... * $\tau_{nm_n}$
+
+!\pause!
+
+type ($\alpha$,$\beta$, ... ) typ =
+  | $C_1$ !\colorbox{yellow}{:}! $\tau_{11}$ * ... * $\tau_{1m_1}$ !\colorbox{yellow}{$\rightarrow$ ($t_{11}$, $t_{12}$, ...) typ}!
+  | ...
+  | $C_n$ !\colorbox{yellow}{:}! $\tau_{n1}$ * ... * $\tau_{nm_n}$ !\colorbox{yellow}{$\rightarrow$ ($t_{n1}$, $t_{n2}$, ...) typ}!
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{Каноничный пример}
+\begin{lstlisting}[language=ocaml,mathescape=true]
+type 'a expr =
+| EInt   : int                 -> int expr
+| EBool  : bool                -> bool expr
+| EEqual : int expr * int expr -> bool expr
+
+EEqual (EInt 5, EInt 6)
+
+- : bool expr = EEqual (EInt 5, EInt 6)
+
+!\pause!
+
+EEqual (!\colorbox{red}{EBool true}, EInt 6)
+\end{lstlisting}
+
+\begin{verbatim}
+Error: This expression has type bool expr
+       but an expression was expected of type int expr
+       Type bool is not compatible with type int
+\end{verbatim}
+\end{frame}
+
+\begin{frame}{Лейбниц?}
+ 
+\end{frame}
+
+\section{GADT и ленивые списки}
+
+\begin{frame}[fragile]{GADT и наблюдение за ленивыми списками}
+\begin{lstlisting}[language=ocaml,mathescape=true]
+type ('o,'a) stream_query =
+| Head : ('a,       'a) stream_query
+| Tail : ('a stream,'a) stream_query
+\end{lstlisting}
+% TODO: починить шрифт
+% Второй параметр -- что генерирует стрим
+% первый -- что получает при наблюдении
+\end{frame}
+
+\begin{frame}[fragile]{Результат преобразования объявления типа коданных}
+\begin{lstlisting}[language=ocaml]
+and 'a stream = Stream of {
+  dispatch : 'o . ('o, 'a) stream query -> 'o
+}
+\end{lstlisting}
+As our inversion of control turns a codata into a
+function defined by pattern matching over observation requests
+
+\vspace{1cm}
+
+Тип в System F 
+\begin{lstlisting}[language=ocaml,mathescape=true]
+$\forall$'a .($\forall$'o . ('o,'a) stream_query ->   'o) ->   'a stream
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{?}
+\begin{lstlisting}[language=ocaml]
+let rec fib : int stream =
+  let dispatch : type o. (o, int) stream query -> o = function
+  | Head -> 0
+  | Tail -> !\pause!
+    let dispatch : type o.(o, int) stream query -> o = function
+    | Head -> 1
+    | Tail -> map2 (+) fib (tail fib)
+    in Stream { dispatch }
+  in Stream { dispatch }
+\end{lstlisting}
+\end{frame}
 
 
 \begin{frame}{Реляционное программирование на miniKanren}
