@@ -88,22 +88,25 @@
   \end{minipage}
   }%
 }
+\newcommand*\bigcdot{\mathpalette\bigcdot@{.5}}
 
 \lstdefinelanguage{ocaml}{
 keywords={let, begin, end, in, match, type, and, fun, module,
 function, try, with, class, object, method, of, rec, repeat, until,
+corec, cofunction, lazy,
 while, not, do, done, as, val, inherit, module, sig, @ type, struct,
 if, then, else, open, virtual, new, fresh},
 sensitive=true,
 basicstyle=\small\ttfamily,
 commentstyle=\scriptsize\rmfamily,
 keywordstyle=\ttfamily\bfseries,
-identifierstyle=\ttfamily,
+%identifierstyle=\ttfamily,
 basewidth={0.5em,0.5em},
 columns=fixed,
 moredelim=**[is][\only<+>{\color{black}\lstset{style=highlight}}]{@}{@},
 fontadjust=true,
 literate={->}{{$\to$}}1
+	 {<-}{{\leftarrow}}1
          {===}{{$\equiv$}}1
          {=/=}{{$\not\equiv$}}1
 }
@@ -122,8 +125,9 @@ literate={==}{{$\equiv$}}1
 }
 
 \lstset{
-basicstyle=\small,
-identifierstyle=\ttfamily,
+% basicstyle=\small,
+basicstyle=\footnotesize, 
+%identifierstyle=\ttfamily,
 keywordstyle=\bfseries,
 commentstyle=\scriptsize\rmfamily,
 basewidth={0.5em,0.5em},
@@ -199,61 +203,148 @@ language=ocaml
 
 \end{frame}
 
-\begin{frame}[fragile]{Data types and Pattern matching}
-A data type is defined by its Constructors :
+% \begin{frame}[fragile]{Data types and Pattern matching}
+% A data type is defined by its Constructors :
+% 
+% \begin{lstlisting}[language=ocaml,mathescape=true]
+% type 'a list = Nil | Cons of 'a * 'a list
+% 
+% let ns: int list = Cons(1, Cons(2,Nil))
+% \end{lstlisting}
+% Deconstruct with pattern matching:
+% \begin{lstlisting}[language=ocaml,mathescape=true]
+% let rec map f xs =
+%   match xs with
+%   | Nil -> Nil
+%   | Cons (x,xs) -> Cons(f x, map f xs)
+% 
+% map succ ns;;
+% 
+% $-$ : int list = Cons(2, Cons(3, Nil))
+% \end{lstlisting}
+% \end{frame}
+
+\begin{frame}[fragile]{Объявление бесконечных значений}
 
 \begin{lstlisting}[language=ocaml,mathescape=true]
-type 'a list = Nil | Cons of 'a * 'a list
-
-let ns: int list = Cons(1, Cons(2,Nil))
+let rec fib () = 0 :: 1 :: map2 (+) (fib ()) (tl (fib ()))
 \end{lstlisting}
-Deconstruct with pattern matching:
+В call-be-value языках присутствуют проблемы.
 \begin{lstlisting}[language=ocaml,mathescape=true]
-let rec map f xs =
-  match xs with
-  | Nil -> Nil
-  | Cons (x,xs) -> Cons(f x, map f xs)
+type 'a lazy_list = C of 'a * 'a lazy_list Lazy.t
 
-map succ ns;;
+let rec fib = C (0, lazy (C (1, lazy (map2' (+) fib (tl' fib)))))
 
-$-$ : int list = Cons(2, Cons(3, Nil))
 \end{lstlisting}
 \end{frame}
 
 \begin{frame}[fragile]{Мотивация}
-\begin{itemize}
- \item Call-by-value is an evaluation strategy in which the arguments are evaluated before being passed to the functions.
+Будем использовать copattern matching, который уже часто используется в proof assistants
+
+Обычный pattern matching деконструирует конечное значение определенное конструктором
+
+Copattern matching создает бесконечное вычисление, составленное из результатов 
+``наблюдений'' (observations) за значениями в некотором контексте
+
+Паттерн матчинг обладает контролем какое значение построить.
+
+Copattern matching предлагает потенциальные варианты, и позволяет контексту выбирать между ними.
+
+А observation -- что-то типа \lstinline{Lazy.force}
+\end{frame}
+
+\begin{frame}[fragile]{Copattern-matching. Пример. Фибоначчи}
+Это не настоящий синтаксис OCaml
 \begin{lstlisting}
-let rec zeros = Cons (0, zeros )
+let corec fib : int stream with
+| .. #Head -> 0
+| .. #Tail : int stream with
+| .. #Tail#Head -> 1
+| .. #Tail#Tail -> map2 (+) fib (fib#Tail)
 \end{lstlisting}
-Вычисление расходится
-\item Решение - ?
+
+% Значение fib в 1й строчке задаетпоток чисел, который строится по трём правилам
+% Если наблюдается голова, то возвращаем 0
+% второе правило про наблюдения, осуществляемые по цепочке
+% Если наблюдается голова хвоста, то возвращаем 1
+% Третий случай говорит. что надо сделать поточечное сложение двух потоков чисел.
+
+\end{frame}
+\begin{frame}[fragile]{Copattern-matching. Пример. Фибоначчи}
+Это не настоящий синтаксис OCaml
+\begin{lstlisting}
+ let corec fib : int stream with
+| .. #Head -> 0
+| .. #Tail : int stream with
+| .. #Tail#Head -> 1
+| .. #Tail#Tail -> map2 (+) fib (fib#Tail)
+\end{lstlisting}
+При обычном паттерн-матчинге все ветки возвращают одинаковый тип, но тут это не так.
+Тип веточки зависит от ипа наблюдения: если смотрим в голову, то надо возвращать значение
+типа int, а если хвост, то int stream. Опишем явно котип данных для стрима
+
+Это не настоящий синтаксис OCaml
+\begin{lstlisting}
+type 'a stream = {
+  Head: 'a        !$\leftarrow$! 'a stream
+  Tail: 'a stream !$\leftarrow$! 'a stream
+}
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Что хочется получить}
+\begin{itemize}
+ \item Копаттерны для OCaml
+ \item Используя дуальность, реинтерпретировать это в терминах pattern matching
+ \item Типобезопасно
+ \item Эффективно
 \end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{Мотивация}
-Call-by-value $\Rightarrow$ раходимость.
-
-Решение : сэмулировать call-by-name (à la Haskell). 
-
-
-\begin{lstlisting}[language=ocaml,mathescape=true]
-type 'a list = Nil | Cons of 'a * (unit -> 'a list)
-
-let rec zeros = Cons (0, fun () -> zeros)
-\end{lstlisting}
-
-\begin{lstlisting}[language=ocaml,mathescape=true]
-let rec map f xs =
-  match xs with
-  | Nil -> Nil
-  | Cons (x,th) -> Cons(f x, map f (th ()))
-
-map ((+)1) zeros;;
-
-$-$ : int list = Cons(1, <fun>)
-\end{lstlisting}
+\begin{frame}[fragile]{Что получилось}
+\begin{itemize}
+ \item \href{https://github.com/yurug/ocaml4.04.0-copatterns}{OCaml-4.04+copatterns \faGithub}.
+ \item non-indexed codatatypes
+ \item Типобезопасно, но с GADT и 2nd-order polymorphic types
+ \item Эффективно (\lstinline=lazy cofunction=)
+\end{itemize}
 \end{frame}
+
+
+% \begin{frame}[fragile]{Мотивация}
+% \begin{itemize}
+%  \item Call-by-value is an evaluation strategy in which the arguments are evaluated before being passed to the functions.
+% \begin{lstlisting}
+% let rec zeros = Cons (0, zeros )
+% \end{lstlisting}
+% Вычисление расходится
+% \item Решение - ?
+% \end{itemize}
+% \end{frame}
+
+% \begin{frame}[fragile]{Мотивация}
+% Call-by-value $\Rightarrow$ раходимость.
+% 
+% Решение : сэмулировать call-by-name (à la Haskell). 
+% 
+% 
+% \begin{lstlisting}[language=ocaml,mathescape=true]
+% type 'a list = Nil | Cons of 'a * (unit -> 'a list)
+% 
+% let rec zeros = Cons (0, fun () -> zeros)
+% \end{lstlisting}
+% 
+% \begin{lstlisting}[language=ocaml,mathescape=true]
+% let rec map f xs =
+%   match xs with
+%   | Nil -> Nil
+%   | Cons (x,th) -> Cons(f x, map f (th ()))
+% 
+% map ((+)1) zeros;;
+% 
+% $-$ : int list = Cons(1, <fun>)
+% \end{lstlisting}
+% \end{frame}
 
 
 \section{GADT}
@@ -341,6 +432,8 @@ function defined by pattern matching over observation requests
 \begin{lstlisting}[language=ocaml,mathescape=true]
 $\forall$'a .($\forall$'o . ('o,'a) stream_query ->   'o) ->   'a stream
 \end{lstlisting}
+\vspace{1cm}
+\href{https://caml.inria.fr/pub/papers/garrigue_remy-poly-ic99.ps.gz}{Jacques Garrigue and Didier Rémy. 1999. }
 \end{frame}
 
 \begin{frame}[fragile]{?}
@@ -355,438 +448,202 @@ let rec fib : int stream =
     in Stream { dispatch }
   in Stream { dispatch }
 \end{lstlisting}
-\end{frame}
-
-
-\begin{frame}{Реляционное программирование на miniKanren}
- % \vskip1cm
- \begin{center}
- От программ-\emph{функций} к программам-\emph{отношениям}:
- \end{center}
-
- $$
- f \colon X \to Y\;\leadsto\;\oo{f} \subseteq X\times Y
- $$
- \vskip5mm
- \begin{tabular}{m{4cm}m{6cm}}
-    %\includegraphics[scale=0.3]{trs.jpg} &
-    \begin{itemize}
-       \item Изначально DSL для Scheme/Racket с довольно минималистичной реализацией
-       \item Семейство языков ($\mu$Kanren, $\alpha$  Kanren, cKanren, и т.д.)
-       \item Встраивается как DSL в широкий набор языков (включая OCaml, Haskell, Scala, и т.д.)
-       \item Daniel P. Friedman, William Byrd and   Oleg Kiselyov. \emph{The Reasoned Schemer},
-       The MIT Press, Cambridge, MA, 2005
-    \end{itemize}
- \end{tabular}
- \vskip 3cm
-\end{frame}
-
-\begin{frame}[fragile]{Пример: реляционное слияние списков (OCaml/OCanren/miniKanren)}
-%\vskip5mm
-\begin{adjustwidth}{-1.5em}{-1.5em}
-\begin{tabular}{m{6cm}m{6cm}}
- \graybox{$\inml{append} \colon \alpha\:\inml{list} \to \alpha\:\inml{list} \to \alpha\:\inml{list}$} &
- \graybox{$\oo{\inml{append}}\subseteq\alpha\:\inml{list}\times\alpha\:\inml{list}\times\alpha\:\inml{list}$}\\
- \begin{lstlisting}[language=ocaml,keywordstyle=\bfseries]
-let rec append xs ys =
-  match xs with
-  | []      -> ys
-  | h :: tl ->
-      h :: (append tl ys)!\pause!
- \end{lstlisting} &
- \begin{lstlisting}[mathescape=true,language=ocaml]
-let rec append$^o$ xs ys xys =!\pause!
-  ((xs === nil) &&& (xys === ys))!\pause!
-  |||
-  (fresh (h t tys)!\pause!
-     (xs  === h % t)!\pause!
-     (xys === h % tys)!\pause!
-     (append$^o$ t ys tys) )
- \end{lstlisting}
-\end{tabular}\pause
-\begin{center}
-\begin{minipage}{6cm}
-\centering{\small\bf В оригинальной реализации:}
-\begin{lstlisting}[mathescape=true,language=scheme]
-(define (append$^o$ xs ys xys)
-   (conde
-      [(== '() xs) (== ys xys)]
-      [(fresh (h t tys)
-         (== `(,h . ,t) xs)
-         (== `(,h . ,tys) xys)
-         (append$^o$ t ys tys))]))
+\begin{lstlisting}[language=ocaml]
+let tail (Stream { dispatch }) = dispatch Tail
 \end{lstlisting}
-\end{minipage}
-\end{center}
+% no sharing between fiv and `tail fib`. Need lazy coputation
 
-\end{adjustwidth}
-\vskip5mm
+% Типы тут хорошие не смотря на то, что 3я строчка возвращает число, а 4я
+% стрим. Просто answer type `o` в разных ветках имеет разные типы из-за GADT stream_query,
+% в 1й бранче 1 имеет тип о, а во втрой `Stream{dispatch}` тоже имеет тип о.
+
+% Замечание, преобразование не очень эффективное, так как fib и tail fib не имеют общей части.
+
 \end{frame}
 
-% \begin{frame}[fragile]{Набросок минимальной реализации}
-% Jason Hemann, Daniel P. Friedman. \emph{$\mu$Kanren: A Minimal Functional
-% Core for Relational Programming} // Scheme'13:
-% \vskip5mm
-% \small
-% \pause
-% \begin{tabular}{p{5cm}c}
-% Логические переменные  & $X=\{x_1,x_2,\dots\}$ \vspace*{-\baselineskip} \\
-% Символы (конструкторы) & $S=\{s_1,s_2,\dots\}$ \vspace*{-\baselineskip} \\
-% Термы                  & $T=X\cup\{s\;(t_1,\dots,t_k)\mid s\in S,\; t_i \in T\}$ \vspace*{-\baselineskip} \\
-% Подстановки            & $\Sigma=T^X$ \vspace*{-\baselineskip} \\
-% \\\pause
-% Унификация & $(\equiv)\colon\Sigma\to T\to T\to\Sigma_\perp$ \vspace*{-\baselineskip}\\
-% \\\pause
-% State (подстановка + как создавать новые логические переменные) & $\sigma$ \vspace*{-\baselineskip}\\
-% Goal (функция из состояния в ленивый список состояний) & $g : \sigma\to\sigma\;\inml{stream}$ \vspace*{-\baselineskip} \\
-% Конъюнкция $g \wedge g$ & ``bind''  \vspace*{-\baselineskip} \\
-% Дизъюнкция $g \vee   g$ & ``mplus'' \vspace*{-\baselineskip} \\
-% 
-% Refinement: извлечение посчитанных ответов & $\inml{refine} \colon \sigma\to X\to T$ \vspace*{-\baselineskip}
-% \end{tabular}
-% 
-% \end{frame}
+\begin{frame}[fragile]{?}
+\begin{lstlisting}[language=ocaml]
+let corec fib : int stream with
+| ..#Head -> 0
+| ..#Tail : int stream with
+| ..#Tail#Head -> 1
+| ..#Tail#Tail -> map2 (+) fib (fib#Tail)
+\end{lstlisting}
 
-\begin{frame}[fragile]{miniKanren vs. Prologs (1)}
-\begin{itemize}
-  \item Стратегия поиска: interleaving.
-%       \begin{itemize}
-% 	\item Поиск в глубину (DFS) быстрее при конечном переборе.
-% 	\item Чтобы DFS завершался в Prolog введены дополнительные синтаксические конструкции (cuts).
-%       \end{itemize}
-%   \item miniKanren реализован как DSL -- встраивается в другие языки.
-\end{itemize}
+При преобразовании произошел unnesting
+% Anton Setzer, Brigitte Pientka, and David Thibodeau у них тоже был алгоритм, но другой
+\end{frame}
+
+
+\section{Formalization}
+
+\begin{frame}[c]{Преобразование}
+\centering
+{\LARGE $\lambda^C \to \lambda^G$}
+\end{frame}
+
+\begin{frame}[c]{Термы}
+\begin{tabular}{ l l r }
+  $t,u $&$::=$ & \\
+  &|  $x$ & Переменная \\
+  &|  $D$ & Observation request  \\
+  &|  $K t$ & \graybox{Конструктор с аргументами} \\
+  &|  $t t$ & Применение  \\
+  &|  $t \cdot t$  & \graybox{Observation}  \\
+  &|  $\mu^+ f: \sigma := \lambda \bar{x}\{\bar{b}\}$ & \graybox{Функция } \\
+  &|  $\mu^- f: \sigma := \lambda \bar{x}\{\bar{b}\}$ & \graybox{Коданные} \\
+\end{tabular}
+% Здесь про выделенные надо что-то сказать
+% Observation request раньше (у Thuibodeau&Pientka) писался как t\cdot D, 
+% но у нас справа произвольные терм, который может быть простым Request или сложным.
+% Таким образом у нас first-class observations
+
+% Конструктор тут всегда один, но в ML бывает 0 или много. Это всё не умаляет общность,
+% так как пары и unit можно записать как котипы данных (пример 3.1 в статье)
+
+% мюшки для рекурсии. Плюс и минус отвечает за то, как конструируются данные
+% рекурсивно или корекурсивно.
+\end{frame}
+
+\begin{frame}[c]{Ветки мэтчинга и значения}
+\begin{tabular}{ l l r }
+  $b $ & $::=$ & \\
+  &|  $\bullet \Rightarrow t$ & Suspension \\
+  &|  $\cdot D \Rightarrow t$  & Observation case \\
+  &|  $K x$ & Деконструирование \\
+\end{tabular}
+% Рекурсивные и корекурсивные функции используют один и другой вид бранчей соответственно
+% лямбда-абстракция это ни то, ни другое, у неё первый случай, а жирная точка, это отсутсвие 
+% копаттерна
+
+\vspace{1cm}
+
+\begin{tabular}{ l l r }
+  $v $ & $::=$ & \\
+  &|  $\lambda^{-} \bar{x}\{\bar{b}\} \Rightarrow t$ & Коданные\\
+  &|  $\lambda^{+} \bar{x}\{\bar{b}\} \Rightarrow t$ & Функция \\
+  &|  $K v$ & Данные\\
+  &|  $D$   & Request\\
+\end{tabular}
+% вектор аргументов может быть пустой, это позволяет описывать рекурсивные данные и коданные.
+%  Пьетка (ICFP,2013) вводили понятие Generalized lambda-abstraction, то различать эти вещи проще.
+% Синтаксис бранчей выглядит чересчур атомарным, чтобы выражить вложенные копаттерны,
+% но тут поможет unnesting. Но об этом позже
+\end{frame}
+
+\begin{frame}[c]{Семантика малого шага}
+\begin{tabular}{ r c l }
+  E[t] & $\xrightarrow{\text{SCxt}}$ & $E[t'] \quad если \quad t\to t'$ \\
+  
+  $\mu^{\diamond} f:\sigma := \lambda \bar{x}\{\bar{b}\}$ & $\xrightarrow{\text{SUnr}}$ & 
+     $\lambda^\diamond \bar{x}\{(\bar{b}[f \mapsto \mu^\diamond f:\sigma := \lambda \bar{x}\{\bar{b}\}])\}$ где $\diamond \in \{+,-\}$ \\
+     
+  $(\lambda^\diamond x \bar{x}\{\bar{b}\})v$ & $\xrightarrow{\text{SPush}}$ & $\lambda^\diamond \bar{x}\{\bar{b}[x\mapsto v]\}$ если SEval не применим \\
+  
+  $(\lambda^\diamond x \{\bullet \Rightarrow t | \bar{b}\})v$ & $\xrightarrow{\text{SEval}}$ &  $t[x \mapsto v]$ где $\diamond \in \{+,-\}$\\
+    
+  $(\lambda^+ \bullet \{K x \Rightarrow t \mid \bar{b}\})(K v)$ & $\xrightarrow{\text{SDes}}$ &  $t[x \mapsto v]$ \\
+  
+  $(\lambda^+ \bullet \{K x \Rightarrow t \mid \bar{b}\})(K' v)$ & $\xrightarrow{\text{SDesF}}$ & 
+    $(\lambda^+ \bullet \{\bar{b}\})(K' v)$ если $K \neq K'$ \\
+  
+  $(\lambda^- \bullet \{\cdot D \Rightarrow t \mid \bar{b}\})D$ & $\xrightarrow{\text{SObs}}$ &  
+    $t$ \\
+  
+  $(\lambda^- \bullet \{\cdot D \Rightarrow t \mid \bar{b}\})D'$ & $\xrightarrow{\text{SObsF}}$ &
+    $(\lambda^- \bullet \{\bar{b}\})D'$ если $D \neq D'$
+\end{tabular}
+% SCxt вставляет терм в контексте
+% SUnr (unroll) вставляет тело (ко)рекусривной функции в место вызова, делая 1 шаг
+% Spush делает бета-редукцию пока больше 1го аргумента у лямбды
+
+% SEval если только один формальный аргумент и первая бранча это suspended computation, то можно заменить вхождения икса
+
+% Если лямбда-абстракция это рекурсивная функция с буллетом (нет формальных входных аргументов),
+% то нам передали сконструированное значение и его надо мэтчить
+% всё просто для SDes и SDesF
+
+% C правилами для копаттернов всё примерно также, только  observation copattern не связывает никаких переменных,так что 
+% нет никаких подстановок
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Тут D  не несет в себе никаких аргументов, поэтому если они нужны, то тут выразительность не теряется (ХЗ почему)\
+% у них были аргументы в предыдущей версии, там был короче язык, но сложнее трансформация, и её было сложнее
+% перенести в OCaml. Потому оставили так.
+
+\end{frame}
+
+\begin{frame}[c]{Типы}
+\begin{tabular}{l l r}
+  $\tau,\rho,\omega$ & $::=$ & \\
+  &| $\alpha$ & Типовая переменная \\
+  &| $\varepsilon^+(\bar{\tau})$  & Данные \\
+  &| $\varepsilon^-(\bar{\tau})$  & Коданные \\
+  &| $\tau \to \tau$ & Стрелка \\
+  &| $\tau \leftarrow \varepsilon^-(\bar{\tau})$ & Observation request \\
+\end{tabular}
+
+% С плюсиком GADT (они у нас везде), с минусиком котипы данных, стрелки и кострелки
+% Потом должно быть понятно. почему кострелки справа налево
+\end{frame}
+
+\begin{frame}[c]{?}
+% Всё это выглядит не очень выразительно по сравнению с предыдущими работами по котипам
+% потому что там были констрейнты на равенство типов, а тут нет. Но всё хорошо
+% 1) эпсилоны применяются не к типовым переменным, а к ground типам
+% 2) И ещё можно с помощью GADT выразить равенства
+
+% TODO: надо таки сделать как по Лейбницу.
+\end{frame}
+
+\begin{frame}[c]{Окружения с именами типов и констрейнты}
+% Тут ничего интересного
+\begin{tabular}{l l r}
+  $\Gamma$ & $::=$ & \\
+  &| $\bullet$ & пусто \\
+  &| $\Gamma \alpha$  & Связанная переменная типа \\
+  &| $\Gamma (x: \alpha)$ & Связанная переменная \\
+\end{tabular}
+
+\vspace{1cm}
+
+\begin{tabular}{l l r}
+  $C$ & $::=$ & \\
+  &| true  & Тривиальный \\
+  &| false & Пустой \\
+  &| $\tau=\tau$ & Равенство типов\\
+  &| $C \bigwedge C $ & Конъюнкция\\
+\end{tabular}
+% Тут ничего интересного
+\end{frame}
+
+\begin{frame}[fragile]{Правила для типов}
+Тут показывать скриншот :)
+
+% Тут и гамма, и констрейнты, рассказать как читать
+
+% Sconv это дополнительное правило, типа если констрейнты говорят, что типы равны, то...
+% Svar и Sapply стандартные
+
+% Srequest просто приписывает тип реквесту, ХЗ, непонятно что тут вообще, но вроде что-то очень простое
+% SConstruct банален
+
+% SObserve & SApply дуальны: просто проверяет что левая часть подходит под правую
+% стрелочка справа налево подразумевает что reqest logically driving вычисления
+
+% SLam это банальная лямбда абстракция
+% SFun проверяет что (ко)рекурсивные функции хорошие. Стрёмно, но вторая строчка проверяет что тут идет 
+% типовая аннотация функции хорошая
+\end{frame}
+
+% Я тут теоремы пропустил
+
+\begin{frame}[fragile]{Язык $\lambda^G$}
+1
 \end{frame}
 
 \begin{frame}[fragile]{Поиск в глубину (dfs)}
-\begin{figure}
-\centering
-%\includegraphics[width=0.7\textwidth]{dfs.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Поиск в ширину (bfs)}
-\begin{figure}
-\centering
-%\includegraphics[width=0.7\textwidth]{bfs.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{Interleaving поиск}
-\begin{figure}
-\centering
-%\includegraphics[width=0.7\textwidth]{interleave.png}
-\end{figure}
-\end{frame}
-
-\begin{frame}[fragile]{miniKanren vs. Prologs (2)}
-\begin{itemize}
-  \item Стратегия поиска: interleaving search.
-      \begin{itemize}
-	\item Поиск в глубину (DFS) быстрее при конечном переборе.
-	\item Чтобы DFS завершался в Prolog введены дополнительные синтаксические конструкции (cuts).
-      \end{itemize}
-  \item miniKanren реализован как DSL -- встраивается в другие языки.
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Цель работы}
-OCanren -- DSL для типобезопасного встраивания miniKanren в OCaml.
-\end{frame}
-
-\begin{frame}[fragile]{Изначальные ожидания}
-\begin{itemize}
- \item Меньше ошибок при разработке.
- \item Сходная производительность, или даже лучше.
-\end{itemize}
-
-\end{frame}
-
-\begin{frame}[fragile]{Предыдущие типобезопасные встраивания}
-\begin{itemize}
- \item HaskellKanren    \href{https://github.com/JaimieMurdock/HK}{\faGithub}
- \item ukanren          \href{https://github.com/rntz/ukanren}{\faGithub}
- \item miniKanren-ocaml \href{https://github.com/lightyang/minikanren-ocaml}{\faGithub}
- \item Molog            \href{https://github.com/acfoltzer/Molog}{\faGithub}
- \item MiniKanrenT      \href{https://github.com/jvranish/MiniKanrenT}{\faGithub}
-\end{itemize}
-\pause
-\vspace{1in}
-Различия могу быть в следущем:
-\begin{itemize}
- \item Как именно используются типы?
- \item Как производится унификация?
-\end{itemize}
-
-\end{frame}
-
-
-
-\begin{frame}[fragile]{Как используются типы?}
-\begin{itemize}
-\item Один заранее созданный тип, на котором унификация разрешена.
-  \begin{itemize}
-    \item[\faTimes] Нет поддержки пользовательских типов.
-
-    \item[\faCheck] ``Универсальная'' функция унификации.
-  \end{itemize}
-    \vspace{1em}
-    ukanren, miniKanren-ocaml, HaskellKanren
-    \vspace{1em}
-\pause
-\item О размещении логических переменных беспокоится пользователь.
-  \begin{itemize}
-    \item[\faTimes] Неудобно.
-    \item[\faTimes] Функция унификации для каждого типа своя.
-    \item[\faCheck] Поддержка произвольных типов данных.
-  \end{itemize}
-  \vspace{1em}
-  miniKanrenT, Molog
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Как сделано в OCanren?}
-
-\begin{itemize}
- \item Один тип для разделения логических переменных от конкретных термов
-    \begin{lstlisting}[mathescape=true]
-      type $\alpha$ logic = Var of int | Value of $\alpha$
-    \end{lstlisting}
- \item который используется в пользовательских типах.
-
- \pause
- \item Полиморфная унификация -- \emph{одна} для всех типов.
- % Почему-то курсив не работает
-    \vspace{1em}
-    \begin{itemize}
-    \item[\faTimes] Подход специфичен для OCaml.
-    \item[\faTimes] Написано в типонебезопасном стиле...
-    \item[\faCheck] ... но это скрыто от пользователя.
-    \item[\faCheck] Идеалогически как в первоисточнике.
-    \end{itemize}
-  \pause
-  \item Пользователь должен следовать рекомендациям по описанию типов.
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Систематическое конструирование логических типов (на примере списка)}
-  % mathescape=true,
-  \begin{lstlisting}[mathescape=true]
-  type $\alpha$ logic = Var of int | Value of $\alpha$
-  ...!\pause!
-  type ($\alpha$, $\beta$) glist = Nil | Cons of $\alpha$ * $\beta$ !\pause!
-
-  type $\alpha$  list = ($\alpha$, $\alpha$ list) glist !\pause!
-
-  type $\alpha$ llist = ($\alpha$, $\alpha$ llist) glist logic !\pause!
-
-  ...
-  # Value Nil
-  -: $\alpha$ llist
-  # Value (Cons (Value 1), Value Nil)
-  -: int logic llist
-  # Value (Cons (Var 101), Value Nil)
-  -: int logic llist
-  \end{lstlisting}
-\end{frame}
-
-
-\begin{frame}[fragile]{Типобезопасность (пример)}
-\begin{lstlisting}[mathescape=true]
-type $\alpha$ logic = Var of int | Value of $\alpha$
-...
-val x : $\alpha$ logic
-val s : string logic
-...
-(x === s)
-...
-!\pause!
-val n : int logic
-... (x === n) ...
-\end{lstlisting}
-\begin{verbatim}
-Error: 
-  This expression has type int logic
-  but an expression was expected of type string logic
-  Type int is not compatible with type string
-\end{verbatim}
-
-\end{frame}
-
-\begin{frame}[fragile]{Промежуточные результаты}
-Были представлены на ML Workshop 2016 (совмещённым с ICFP 2016)
-\begin{itemize}
-\item Типобезопасное встраивание miniKanren в OCaml.
-\item Полиморфная унификация.
-\item Подход для описания типов.
-\end{itemize}
-
-\vspace{2em}
-\pause
-\begin{enumerate}
- \item[\faCheck] Типы помогают выявить некоторые ошибки.
- \pause
- \item[\faTimes] Выигрыша в скорости нет.
- \item[\faTimes] Даже наоборот.
-\end{enumerate}
-
-\end{frame}
-
-\begin{frame}[fragile]{Дальнейшие задачи}
-  \begin{itemize}
-  \item Найти причину замедления.
-  \item Ускорить.
-  \item Подход должен остаться типобезопасным.
-  \end{itemize}
-
-\end{frame}
-
-\begin{frame}[fragile]{Полиморфная унификация в OCanren}
-
-Работает для всех логических типов  $\oo{\alpha}$:
-
-$$
-(\equiv)\;\colon \Sigma\to\oo{\alpha}\to\oo{\alpha}\to\Sigma_{\perp}
-$$
-\pause
-
-Стандартный алгоритм с треугольной подстановкой и \textit{occurs check}, использующий типонебезопасный интерфейс  \lstinline{Obj}.
-\pause
-
-\vspace{3em}
-Тонкости:
-\begin{itemize}
-\item Типонебезопасный стиль -- компилятор теряет информацию о типах.
-\item Дополнительная стадия восстановления типов (refinement).
-\end{itemize}
-\end{frame}
-
-% \begin{frame}[fragile]{Полиморфная унификация 2 из 7}
-%   %\begin{figure}
-%   \centering
-%   %\includegraphics[width=0.6\textwidth]{img0.pdf}
-%   \includegraphics[scale=0.5]{img0.png}
-%   %\end{figure}
-% \end{frame}
-
-\begin{frame}[fragile]{Алгебраические типы данных в памяти}
-  \centering
-  \begin{lstlisting}[mathescape=true]
-    type ($\alpha, \beta, ...$) typ =   
-    | $C_1$ of $t_{11}$ * ... * $t_{1m}$  
-    | ...
-    | $C_n$ of $t_{n1}$ * ... * $t_{nm}$  
-  \end{lstlisting}
-  \pause
-  \vspace{3em}
-  
-
-\end{frame}
-
-
-
-\begin{frame}[fragile]{План улучшения реализации}
-  \begin{itemize}
-  \item Новое представление деревьев
-    \begin{itemize}
-      \item Значению нельзя присвоить конкретный тип.
-      \item Нужен абстрактный тип значений.
-      \item Предоставить интерфейс для конструирования логических значений.
-      \item Преобразование абстрактного логического значения в типизируемое (во время refinement).
-    \end{itemize}
-  \item Модернизировать подход по описанию типов логических значений.
-  \item Не потерять типовую безопасность.
-  \end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Тип injected}
-  \begin{lstlisting}[mathescape=true]
-  type ($\alpha$, $\beta$) injected!
-  \end{lstlisting}
-
-\vskip 1cm
-  Тип $\alpha$ -- это исходный тип, а тип $\beta$ -- его логическое представление
-% \vskip 1cm
-%   Представление ground-типов совпадает с представлением $\alpha$.
-\end{frame}
-
-\begin{frame}[fragile]{Конструирование логических значений для простых типов}
-  \begin{lstlisting}[mathescape=true]
-  type ($\alpha$, $\beta$) injected
-
-  val lift: $\alpha$ ->   ($\alpha$,$\alpha$) injected
-  val inj : ($\alpha$, $\beta$) injected -> $\thinspace$  ($\alpha$, $\beta$ logic) injected
-  \end{lstlisting}
-  \pause\vskip 1cm
-  Например, для чисел:
-  \begin{lstlisting}[mathescape=true]
-  # inj (lift 5)
-  -: (int, int logic) injected
-  \end{lstlisting}
-  \pause
-  Оба введенных примитива оставляют переданное значение как есть (identity)
-\end{frame}
-
-\begin{frame}[fragile]{Конструирование логических значений для сложных типов}
-  \begin{lstlisting}[mathescape=true]
-  module Option = struct
-    type $\alpha$ option = None | Some of $\alpha$
-    let fmap = ...
-  end!\pause!
-
-  # Make1(Option).distrib
-  ...!\pause!
-  # let some x  = inj (distrib (Some x))
-  -: ($\alpha$, $\beta$) injected -> $\thinspace$ ($\alpha$ option, $\beta$ option logic) injected
-  \end{lstlisting}
-  \pause
-
-  Примитив \lstinline{distrib}, который позволяет конструировать из значений типа \lstinline{(_, _) injected} 
-  другие значения типа \lstinline{(_, _) injected}.
-  \vskip 1cm
-  Он ничего не делает со значением (identity).
-  
-%   Здесь \emph{fmap} нужен для доказательства того, что тип является функтором, т.е.
-%   что \emph{distrib} можно приминить.
-
-\end{frame}
-
-\begin{frame}[fragile]{Восстановление посчитанных значений (refinement)}
-  Необходимо, так как значения в типе \lstinline[mathescape=true]{($\alpha$, $\beta$) injected} хранятся в
-  нетипизированном виде.
-
-  \begin{lstlisting}[mathescape=true]
-  module Option = struct
-    type $\alpha$ option = None | Some of $\alpha$
-    let fmap = ...
-  end!
-
-  \pause!
-
-  # Make1(Option).reify
-    : (($\alpha$, $\beta$) injected -> $\enspace \beta$) -> !\pause!
-      ($\alpha$ option, $\beta$ option logic) injected -> 
-      $\beta$ option logic
-
-  \end{lstlisting}
-
-  При построении \emph{reify} функция \emph{fmap} используется по существу.
-\end{frame}
-
-\begin{frame}[fragile]{Итоговые результаты}
-
-\begin{itemize}
- \item Типобезопасная реализация.
- \item C поддержкой неравенств термов (disequality constraints) и occurs check.
- \item Сравнима по скорости с \href{https://github.com/michaelballantyne/faster-miniKanren/}{faster-miniKanren \faGithub}.
- \item Типы выявляют простые ошибки.
- \item Типобезопасность могут заменить некоторые проверки во время выполнения (abstento, numero, symbolo)...
- \item ... сокращая количество примитивов с 8 до 5 
- (\lstinline{===}, \lstinline{=/=}, конъюнкция, дизъюнкция, fresh).
-\end{itemize}
-
-\vskip 2cm
-Репозиторий \href{https://github.com/dboulytchev/OCanren}{\faGithub}
+1
 \end{frame}
 
 \end{document}
