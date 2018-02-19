@@ -17,6 +17,7 @@
 \usepackage{changepage} % for adjustwidth
 \usepackage{pstricks}
 \usepackage{tikz}
+\usepackage{stmaryrd}
 \usepackage{pdfpages}
 \usepackage{fontawesome}
 \usepackage[scaled]{DejaVuSansMono}
@@ -59,6 +60,7 @@
 \newcommand{\fibm}{\Rightarrow_{\mathit{fib}}}
 \newcommand{\oo}[1]{{#1}^o}
 \newcommand{\inml}[1]{\mbox{\lstinline{#1}}}
+\newcommand{\sem}[1]{\llbracket #1\rrbracket}
 
 \setlength{\epigraphwidth}{.55\textwidth}
 
@@ -175,13 +177,6 @@ language=ocaml
 
 \section{Мотивация}
 
-\begin{frame}{Спойлер?}
-\begin{itemize}
- \item Расширим OCaml копаттернами, кофункциями и т.д.
-\end{itemize}
-
-\end{frame}
-
 \begin{frame}{Мотивация}
  
 \begin{itemize}
@@ -196,33 +191,15 @@ language=ocaml
     \item Коиндуктивные типы и copattern matching
   \end{itemize}
   \vspace{1in}
-  \pause
-  Copatterns: Programming Infinite Structures by Observations
-  Abel, Pientka, Thibodeau and Setzer (POPL – 2013)
 \end{itemize}
+\pause
+Copatterns: Programming Infinite Structures by Observations
+Abel, Pientka, Thibodeau и Setzer (POPL, 2013)
 
+и другие статьи от тех же авторов
+% Есть две группы статей, про копаттерны&indexed codattypes от Thibadeau&Pientka
+% И одна про unnesting
 \end{frame}
-
-% \begin{frame}[fragile]{Data types and Pattern matching}
-% A data type is defined by its Constructors :
-% 
-% \begin{lstlisting}[language=ocaml,mathescape=true]
-% type 'a list = Nil | Cons of 'a * 'a list
-% 
-% let ns: int list = Cons(1, Cons(2,Nil))
-% \end{lstlisting}
-% Deconstruct with pattern matching:
-% \begin{lstlisting}[language=ocaml,mathescape=true]
-% let rec map f xs =
-%   match xs with
-%   | Nil -> Nil
-%   | Cons (x,xs) -> Cons(f x, map f xs)
-% 
-% map succ ns;;
-% 
-% $-$ : int list = Cons(2, Cons(3, Nil))
-% \end{lstlisting}
-% \end{frame}
 
 \begin{frame}[fragile]{Объявление бесконечных значений}
 
@@ -230,6 +207,7 @@ language=ocaml
 let rec fib () = 0 :: 1 :: map2 (+) (fib ()) (tl (fib ()))
 \end{lstlisting}
 В call-be-value языках присутствуют проблемы.
+\pause
 \begin{lstlisting}[language=ocaml,mathescape=true]
 type 'a lazy_list = C of 'a * 'a lazy_list Lazy.t
 
@@ -238,58 +216,48 @@ let rec fib = C (0, lazy (C (1, lazy (map2' (+) fib (tl' fib)))))
 \end{lstlisting}
 \end{frame}
 
-\begin{frame}[fragile]{Мотивация}
-Будем использовать copattern matching, который уже часто используется в proof assistants
+\begin{frame}[fragile]{Идея}
+\begin{itemize}
+ \item Copattern matching вместо pattern matching
+ \item Строим бесконечное вычисление из результатов ``наблюдений'' (observations)
+ \item Copattern matching предлагает потенциальные варианты того, что можно
+      построить
+\end{itemize}
 
-Обычный pattern matching деконструирует конечное значение определенное конструктором
-
-Copattern matching создает бесконечное вычисление, составленное из результатов 
-``наблюдений'' (observations) за значениями в некотором контексте
-
-Паттерн матчинг обладает контролем какое значение построить.
-
-Copattern matching предлагает потенциальные варианты, и позволяет контексту выбирать между ними.
-
-А observation -- что-то типа \lstinline{Lazy.force}
+% Будем использовать copattern matching, который уже часто используется в 
+% proof assistants.
+% Паттерн матчинг обладает контролем какое значение построить. Copattern matching 
+% предлагает потенциальные варианты, и позволяет контексту выбирать между ними.
+% А observation -- что-то типа \lstinline{Lazy.force}
 \end{frame}
 
+
 \begin{frame}[fragile]{Copattern-matching. Пример. Фибоначчи}
-Это не настоящий синтаксис OCaml
-\begin{lstlisting}
-let corec fib : int stream with
-| .. #Head -> 0
-| .. #Tail : int stream with
-| .. #Tail#Head -> 1
-| .. #Tail#Tail -> map2 (+) fib (fib#Tail)
-\end{lstlisting}
-
-% Значение fib в 1й строчке задаетпоток чисел, который строится по трём правилам
-% Если наблюдается голова, то возвращаем 0
-% второе правило про наблюдения, осуществляемые по цепочке
-% Если наблюдается голова хвоста, то возвращаем 1
-% Третий случай говорит. что надо сделать поточечное сложение двух потоков чисел.
-
-\end{frame}
-\begin{frame}[fragile]{Copattern-matching. Пример. Фибоначчи}
-Это не настоящий синтаксис OCaml
-\begin{lstlisting}
- let corec fib : int stream with
-| .. #Head -> 0
-| .. #Tail : int stream with
-| .. #Tail#Head -> 1
-| .. #Tail#Tail -> map2 (+) fib (fib#Tail)
-\end{lstlisting}
-При обычном паттерн-матчинге все ветки возвращают одинаковый тип, но тут это не так.
-Тип веточки зависит от ипа наблюдения: если смотрим в голову, то надо возвращать значение
-типа int, а если хвост, то int stream. Опишем явно котип данных для стрима
-
-Это не настоящий синтаксис OCaml
+Объявление корекурсивного типа
 \begin{lstlisting}
 type 'a stream = {
   Head: 'a        !$\leftarrow$! 'a stream
   Tail: 'a stream !$\leftarrow$! 'a stream
 }
 \end{lstlisting}
+
+Копаттерн-матчинг. Пример использования в расширенном синтаксисе OCaml
+\begin{lstlisting}
+ let corec fib : int stream with
+| .. #Head -> 0
+| .. #Tail : int stream with
+| .. #Tail#Head -> 1
+| .. #Tail#Tail -> map2!$_{stream}$! (+) fib (fib#Tail)
+\end{lstlisting}
+% Значение fib в 1й строчке задаетпоток чисел, который строится по трём правилам
+% Если наблюдается голова, то возвращаем 0
+% второе правило про наблюдения, осуществляемые по цепочке
+% Если наблюдается голова хвоста, то возвращаем 1
+% Третий случай говорит. что надо сделать поточечное сложение двух потоков чисел.
+
+%При обычном паттерн-матчинге все ветки возвращают одинаковый тип, но тут это не так.
+%Тип веточки зависит от ипа наблюдения: если смотрим в голову, то надо возвращать значение
+%типа int, а если хвост, то int stream. Опишем явно котип данных для стрима
 \end{frame}
 
 \begin{frame}[fragile]{Что хочется получить}
@@ -304,61 +272,14 @@ type 'a stream = {
 \begin{frame}[fragile]{Что получилось}
 \begin{itemize}
  \item \href{https://github.com/yurug/ocaml4.04.0-copatterns}{OCaml-4.04+copatterns \faGithub}.
- \item non-indexed codatatypes
  \item Типобезопасно, но с GADT и 2nd-order polymorphic types
  \item Эффективно (\lstinline=lazy cofunction=)
 \end{itemize}
 \end{frame}
 
 
-% \begin{frame}[fragile]{Мотивация}
-% \begin{itemize}
-%  \item Call-by-value is an evaluation strategy in which the arguments are evaluated before being passed to the functions.
-% \begin{lstlisting}
-% let rec zeros = Cons (0, zeros )
-% \end{lstlisting}
-% Вычисление расходится
-% \item Решение - ?
-% \end{itemize}
-% \end{frame}
-
-% \begin{frame}[fragile]{Мотивация}
-% Call-by-value $\Rightarrow$ раходимость.
-% 
-% Решение : сэмулировать call-by-name (à la Haskell). 
-% 
-% 
-% \begin{lstlisting}[language=ocaml,mathescape=true]
-% type 'a list = Nil | Cons of 'a * (unit -> 'a list)
-% 
-% let rec zeros = Cons (0, fun () -> zeros)
-% \end{lstlisting}
-% 
-% \begin{lstlisting}[language=ocaml,mathescape=true]
-% let rec map f xs =
-%   match xs with
-%   | Nil -> Nil
-%   | Cons (x,th) -> Cons(f x, map f (th ()))
-% 
-% map ((+)1) zeros;;
-% 
-% $-$ : int list = Cons(1, <fun>)
-% \end{lstlisting}
-% \end{frame}
-
 
 \section{GADT}
-
-\begin{frame}[fragile]{GADT}
-Они же
-\begin{itemize}
-\item Generalized Algebraic Data Type
-\item first-class phantom type (James \& Hinze, 2003)
-\item guarded recursive datatype (Xi\&Chen,2003)
-\item equality-qualified type (Sheard \& Pasalic, \textit{tile here}, 2004)
-\end{itemize}
-
-\end{frame}
 
 \begin{frame}[fragile]{Синтаксис GADT}
 \begin{lstlisting}[language=ocaml,mathescape=true]
@@ -374,23 +295,33 @@ type ($\alpha$,$\beta$, ... ) typ =
   | ...
   | $C_n$ !\colorbox{yellow}{:}! $\tau_{n1}$ * ... * $\tau_{nm_n}$ !\colorbox{yellow}{$\rightarrow$ ($t_{n1}$, $t_{n2}$, ...) typ}!
 \end{lstlisting}
+% Они как бы guarded и generalized и equality-qualified
+\end{frame}
 
+\begin{frame}[fragile]{GADT}
+Они же
+\begin{itemize}
+\item Generalized Algebraic Data Type
+\item First-class phantom type (James\&Hinze, 2003)
+\item Guarded recursive datatype (Xi\&Chen, 2003)
+\item Equality-qualified type (Sheard\&Pasalic, \textit{tile here}, 2004)
+\end{itemize}
 \end{frame}
 
 \begin{frame}[fragile]{Каноничный пример}
 \begin{lstlisting}[language=ocaml,mathescape=true]
 type 'a expr =
-| EInt   : int                 -> int expr
-| EBool  : bool                -> bool expr
-| EEqual : int expr * int expr -> bool expr
+| Int      : int                 -> int expr
+| Bool     : bool                -> bool expr
+| EqualInt : int expr * int expr -> bool expr
 
-EEqual (EInt 5, EInt 6)
+EqualInt (Int 5, Int 6)
 
-- : bool expr = EEqual (EInt 5, EInt 6)
+- : bool expr = EqualInt (Int 5, Int 6)
 
 !\pause!
 
-EEqual (!\colorbox{red}{EBool true}, EInt 6)
+EqualInt (!\colorbox{red}{Bool true}, Int 6)
 \end{lstlisting}
 
 \begin{verbatim}
@@ -400,8 +331,48 @@ Error: This expression has type bool expr
 \end{verbatim}
 \end{frame}
 
-\begin{frame}{Лейбниц?}
- 
+\begin{frame}[fragile]{Равенство типов 1/2 (слайд, которого нет)}
+\begin{lstlisting}
+module Num = struct
+  type t
+end
+
+(* type num  *)
+
+type _ dataFormat =
+  | Date  : Num.t  dataFormat
+  | Number: Num.t  dataFormat
+  | String: string dataFormat
+  | Bool  : bool   dataFormat
+
+let test: Num.t dataFormat -> unit = function
+| Number -> ()
+| Date   -> ()
+| _      ->  _  (* required *) 
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Равенство типов 2/2 (слайд, которого нет)}
+\begin{lstlisting}
+type (_,_) eq = Eq: ('a,'a) eq
+module Num: sig
+  type t
+  val eq: (t,string) eq
+end = struct .. end
+
+type _ dateFormat =
+  | Date  : Num.t  dateFormat
+  | Number: Num.t  dateFormat
+  | String: string dateFormat
+
+let test: Num.t dateFormat -> unit = function
+| Number -> ()
+| Date   -> ()
+| _      ->  _  (* required *) 
+
+let () = match Num.eq with Eq -> test String
+
+\end{lstlisting}
 \end{frame}
 
 \section{GADT и ленивые списки}
@@ -423,36 +394,38 @@ and 'a stream = Stream of {
   dispatch : 'o . ('o, 'a) stream query -> 'o
 }
 \end{lstlisting}
-As our inversion of control turns a codata into a
-function defined by pattern matching over observation requests
+% As our inversion of control turns a codata into a
+% function defined by pattern matching over observation requests
 
 \vspace{1cm}
 
-Тип в System F 
+А в System F тип конструктора \lstinline=Stream= записывается так:
 \begin{lstlisting}[language=ocaml,mathescape=true]
-$\forall$'a .($\forall$'o . ('o,'a) stream_query ->   'o) ->   'a stream
+$\forall$'a . ($\forall$'o . ('o,'a) stream_query ->   'o) -> 'a stream
 \end{lstlisting}
 \vspace{1cm}
 \href{https://caml.inria.fr/pub/papers/garrigue_remy-poly-ic99.ps.gz}{Jacques Garrigue and Didier Rémy. 1999. }
+% Внутренняя квантификация по типу 'o немного напоминает, answer types,
+% которые получаются при преобразовании в CPS. Однако там ничего не известно
+% про тип выходного значения, а тут всё норм благодаря GADT: всем возможные 
+% инстанциации закодированы в конструкторах
 \end{frame}
 
-\begin{frame}[fragile]{?}
-\begin{lstlisting}[language=ocaml]
+\begin{frame}[fragile]{Фибоначчи после трансформации}
+\begin{lstlisting}[language=ocaml,numbers=left,stepnumber=1]
 let rec fib : int stream =
   let dispatch : type o. (o, int) stream query -> o = function
   | Head -> 0
   | Tail -> !\pause!
     let dispatch : type o.(o, int) stream query -> o = function
     | Head -> 1
-    | Tail -> map2 (+) fib (tail fib)
+    | Tail -> map2 (+) !\graybox{fib}! (!\graybox{tail fib}!)
     in Stream { dispatch }
   in Stream { dispatch }
 \end{lstlisting}
 \begin{lstlisting}[language=ocaml]
 let tail (Stream { dispatch }) = dispatch Tail
 \end{lstlisting}
-% no sharing between fiv and `tail fib`. Need lazy coputation
-
 % Типы тут хорошие не смотря на то, что 3я строчка возвращает число, а 4я
 % стрим. Просто answer type `o` в разных ветках имеет разные типы из-за GADT stream_query,
 % в 1й бранче 1 имеет тип о, а во втрой `Stream{dispatch}` тоже имеет тип о.
@@ -461,7 +434,7 @@ let tail (Stream { dispatch }) = dispatch Tail
 
 \end{frame}
 
-\begin{frame}[fragile]{?}
+\begin{frame}[fragile]{Исходные фибоначчи с копаттернами}
 \begin{lstlisting}[language=ocaml]
 let corec fib : int stream with
 | ..#Head -> 0
@@ -475,7 +448,7 @@ let corec fib : int stream with
 \end{frame}
 
 
-\section{Formalization}
+\section{Формализация}
 
 \begin{frame}[c]{Преобразование}
 \centering
@@ -486,31 +459,35 @@ let corec fib : int stream with
 \begin{tabular}{ l l r }
   $t,u $&$::=$ & \\
   &|  $x$ & Переменная \\
-  &|  $D$ & Observation request  \\
-  &|  $K t$ & \graybox{Конструктор с аргументами} \\
-  &|  $t t$ & Применение  \\
+  &|  $D$ & \graybox{Observation request}\\
+  &|  $K\; t$ & \graybox{Конструктор с 1 аргументом} \\
+  &|  $t\; t$ & Применение  \\
   &|  $t \cdot t$  & \graybox{Observation}  \\
-  &|  $\mu^+ f: \sigma := \lambda \bar{x}\{\bar{b}\}$ & \graybox{Функция } \\
-  &|  $\mu^- f: \sigma := \lambda \bar{x}\{\bar{b}\}$ & \graybox{Коданные} \\
+  &|  $\mu^+ f: \sigma := \lambda \bar{x}\{\bar{b}\}$ & Функция  \\
+  &|  $\mu^- f: \sigma := \lambda \bar{x}\{\bar{b}\}$ & Коданные \\
 \end{tabular}
+
+
 % Здесь про выделенные надо что-то сказать
 % Observation request раньше (у Thuibodeau&Pientka) писался как t\cdot D, 
 % но у нас справа произвольные терм, который может быть простым Request или сложным.
 % Таким образом у нас first-class observations
 
-% Конструктор тут всегда один, но в ML бывает 0 или много. Это всё не умаляет общность,
-% так как пары и unit можно записать как котипы данных (пример 3.1 в статье)
+% Аргумент конструктора тут всегда один, но в ML бывает 0 или много. 
+% Это всё не умаляет общность,
+% так как пары и unit можно записать как котипы данных (пример 3.1 в статье). 
+% Про это будет позже
 
 % мюшки для рекурсии. Плюс и минус отвечает за то, как конструируются данные
-% рекурсивно или корекурсивно.
+% рекурсивно или корекурсивно. фигурные скобочки отделяют тело от аргументов
 \end{frame}
 
 \begin{frame}[c]{Ветки мэтчинга и значения}
 \begin{tabular}{ l l r }
-  $b $ & $::=$ & \\
+  $branch$ & $::=$ & \\
   &|  $\bullet \Rightarrow t$ & Suspension \\
-  &|  $\cdot D \Rightarrow t$  & Observation case \\
-  &|  $K x$ & Деконструирование \\
+  &|  $K\;x$ & Деконструирование \\
+  &|  $\cdot D \Rightarrow t$  & Observation  \\
 \end{tabular}
 % Рекурсивные и корекурсивные функции используют один и другой вид бранчей соответственно
 % лямбда-абстракция это ни то, ни другое, у неё первый случай, а жирная точка, это отсутсвие 
@@ -519,40 +496,44 @@ let corec fib : int stream with
 \vspace{1cm}
 
 \begin{tabular}{ l l r }
-  $v $ & $::=$ & \\
+  $value$ & $::=$ & \\
   &|  $\lambda^{-} \bar{x}\{\bar{b}\} \Rightarrow t$ & Коданные\\
   &|  $\lambda^{+} \bar{x}\{\bar{b}\} \Rightarrow t$ & Функция \\
   &|  $K v$ & Данные\\
   &|  $D$   & Request\\
 \end{tabular}
 % вектор аргументов может быть пустой, это позволяет описывать рекурсивные данные и коданные.
-%  Пьетка (ICFP,2013) вводили понятие Generalized lambda-abstraction, то различать эти вещи проще.
+% Пьетка (ICFP,2013) вводили понятие Generalized lambda-abstraction, то различать эти вещи проще.
 % Синтаксис бранчей выглядит чересчур атомарным, чтобы выражить вложенные копаттерны,
 % но тут поможет unnesting. Но об этом позже
 \end{frame}
 
-\begin{frame}[c]{Семантика малого шага}
+\begin{frame}[c]{Семантика малого шага для $\lambda^C$}
 \begin{tabular}{ r c l }
-  E[t] & $\xrightarrow{\text{SCxt}}$ & $E[t'] \quad если \quad t\to t'$ \\
+  $E[t]$ & $\xrightarrow{\text{SCxt}}$ & $E[t'] \quad если \quad t\to t'$ \\
   
   $\mu^{\diamond} f:\sigma := \lambda \bar{x}\{\bar{b}\}$ & $\xrightarrow{\text{SUnr}}$ & 
-     $\lambda^\diamond \bar{x}\{(\bar{b}[f \mapsto \mu^\diamond f:\sigma := \lambda \bar{x}\{\bar{b}\}])\}$ где $\diamond \in \{+,-\}$ \\
+     $\lambda^\diamond \bar{x}\{(\bar{b}[\;f \mapsto \mu^\diamond f:\sigma := \lambda \bar{x}\{\bar{b}\}])\}$ \\
      
   $(\lambda^\diamond x \bar{x}\{\bar{b}\})v$ & $\xrightarrow{\text{SPush}}$ & $\lambda^\diamond \bar{x}\{\bar{b}[x\mapsto v]\}$ если SEval не применим \\
   
-  $(\lambda^\diamond x \{\bullet \Rightarrow t | \bar{b}\})v$ & $\xrightarrow{\text{SEval}}$ &  $t[x \mapsto v]$ где $\diamond \in \{+,-\}$\\
+  $(\lambda^\diamond x \{\bullet \Rightarrow t | \bar{b}\})v$ & $\xrightarrow{\text{SEval}}$ &  $t[x \mapsto v]$ \\
     
-  $(\lambda^+ \bullet \{K x \Rightarrow t \mid \bar{b}\})(K v)$ & $\xrightarrow{\text{SDes}}$ &  $t[x \mapsto v]$ \\
+  $(\lambda^+ \bullet \{K\;x \Rightarrow t \mid \bar{b}\})(K\;\;v)$ & $\xrightarrow{\text{SDes}}$ &  $t[x \mapsto v]$ \\
   
-  $(\lambda^+ \bullet \{K x \Rightarrow t \mid \bar{b}\})(K' v)$ & $\xrightarrow{\text{SDesF}}$ & 
-    $(\lambda^+ \bullet \{\bar{b}\})(K' v)$ если $K \neq K'$ \\
+  $(\lambda^+ \bullet \{K\;x \Rightarrow t \mid \bar{b}\})(K'\;v)$ & $\xrightarrow{\text{SDesF}}$ & 
+    $(\lambda^+ \bullet \{\bar{b}\})(K' v)$, если $K \neq K'$ \\
   
-  $(\lambda^- \bullet \{\cdot D \Rightarrow t \mid \bar{b}\})D$ & $\xrightarrow{\text{SObs}}$ &  
+  $(\lambda^- \bullet \{\cdot D \Rightarrow t \mid \bar{b}\})\;D\;$ & $\xrightarrow{\text{SObs}}$ &  
     $t$ \\
   
-  $(\lambda^- \bullet \{\cdot D \Rightarrow t \mid \bar{b}\})D'$ & $\xrightarrow{\text{SObsF}}$ &
-    $(\lambda^- \bullet \{\bar{b}\})D'$ если $D \neq D'$
+  $(\lambda^- \bullet \{\cdot D \Rightarrow t \mid \bar{b}\})\;D'$ & $\xrightarrow{\text{SObsF}}$ &
+    $(\lambda^- \bullet \{\bar{b}\})D'$, если $D \neq D'$
 \end{tabular}
+
+\vspace{1cm}
+
+где $\diamond \in \{+,-\}$
 % SCxt вставляет терм в контексте
 % SUnr (unroll) вставляет тело (ко)рекусривной функции в место вызова, делая 1 шаг
 % Spush делает бета-редукцию пока больше 1го аргумента у лямбды
@@ -567,15 +548,16 @@ let corec fib : int stream with
 % нет никаких подстановок
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%
-% Тут D  не несет в себе никаких аргументов, поэтому если они нужны, то тут выразительность не теряется (ХЗ почему)\
-% у них были аргументы в предыдущей версии, там был короче язык, но сложнее трансформация, и её было сложнее
-% перенести в OCaml. Потому оставили так.
+% Тут в D нет вложенных копаттернов, они не нужны, выразительность не теряется, потому что
+% разрешенно возвращать функцию, а потом с ней оперировать
+% У Observations были аргументы в предыдущей версии, там был короче язык, но сложнее трансформация, 
+% и её было сложнее перенести в OCaml. Потому оставили так.
 
 \end{frame}
 
 \begin{frame}[c]{Типы}
 \begin{tabular}{l l r}
-  $\tau,\rho,\omega$ & $::=$ & \\
+  $\tau$ & $::=$ & \\
   &| $\alpha$ & Типовая переменная \\
   &| $\varepsilon^+(\bar{\tau})$  & Данные \\
   &| $\varepsilon^-(\bar{\tau})$  & Коданные \\
@@ -585,15 +567,35 @@ let corec fib : int stream with
 
 % С плюсиком GADT (они у нас везде), с минусиком котипы данных, стрелки и кострелки
 % Потом должно быть понятно. почему кострелки справа налево
+\vspace{1cm}
+\centering
+$\epsilon^+(\overline{\alpha})\;:=\; \Sigma_i K_i \;:\forall\overline{\alpha}.\tau_i \;\to       \;\epsilon^+(\bar{\tau}_i)$
+
+$\epsilon^+(\overline{\alpha})\;\;:=\; \times_i D_i   :\forall\overline{\alpha}.\tau_i \;\leftarrow\;\epsilon^-(\bar{\tau}_i)$
 \end{frame}
 
-\begin{frame}[c]{?}
+\begin{frame}[c]{Одного аргумента у $K$ -- достаточно}
 % Всё это выглядит не очень выразительно по сравнению с предыдущими работами по котипам
 % потому что там были констрейнты на равенство типов, а тут нет. Но всё хорошо
 % 1) эпсилоны применяются не к типовым переменным, а к ground типам
 % 2) И ещё можно с помощью GADT выразить равенства
 
 % TODO: надо таки сделать как по Лейбницу.
+\centering
+$\epsilon^+(\bar{\alpha})\;:=\; \Sigma_i K_i \;:\forall\overline{\alpha}.\tau_i \;\to       \;\epsilon^+(\bar{\tau}_i)$
+
+$\epsilon^+(\bar{\alpha})\;\;:=\; \times_i D_i   :\forall\overline{\alpha}.\tau_i \;\leftarrow\;\epsilon^-(\bar{\tau}_i)$
+\vspace{1cm}
+
+$unit = DUnit : unit \leftarrow unit$
+% Тут может быть много определений юнита, как типа с одним жителем, но все определения будут 
+% изоморфны
+\vspace{.5cm}
+
+$pair(\alpha,\beta) = \begin{cases}
+    DFst : \forall\alpha \beta . \alpha \leftarrow pair(\alpha,\beta) \\
+    DSnd : \forall\alpha \beta . \beta  \leftarrow pair(\alpha,\beta)
+\end{cases}$
 \end{frame}
 
 \begin{frame}[c]{Окружения с именами типов и констрейнты}
@@ -611,18 +613,28 @@ let corec fib : int stream with
   $C$ & $::=$ & \\
   &| true  & Тривиальный \\
   &| false & Пустой \\
-  &| $\tau=\tau$ & Равенство типов\\
+  &| $\tau=\tau$ & Атомарное равенство\\
   &| $C \bigwedge C $ & Конъюнкция\\
 \end{tabular}
-% Тут ничего интересного
+% Констрейнты нужны чтобы поддержать GADT (и индексированные котипы данных)
+
 \end{frame}
 
 \begin{frame}[fragile]{Правила для типов}
 Тут показывать скриншот :)
 
 % Тут и гамма, и констрейнты, рассказать как читать
+% Г,С |- t:\tau ожначает что в окружении и констрейнтах t имеет мономорфный тип тау
+% Г,С |- \x.b : \diamond\tau означает что в окружении такомто и при таких констрейнтах
+% абстракция обозначает ромбик-функцию и имеет тип тау
 
-% Sconv это дополнительное правило, типа если констрейнты говорят, что типы равны, то...
+% С||-\tau=\rho Означает, что из констрейнтов следует, что тип \tau эквив. \rho
+% Sconv это дополнительное правило про равенство типов
+
+% Тут нет никакой полиморфности, потому что полиморфные типовые переменные сразу же
+% инстанциируются в нужные
+
+
 % Svar и Sapply стандартные
 
 % Srequest просто приписывает тип реквесту, ХЗ, непонятно что тут вообще, но вроде что-то очень простое
@@ -633,17 +645,220 @@ let corec fib : int stream with
 
 % SLam это банальная лямбда абстракция
 % SFun проверяет что (ко)рекурсивные функции хорошие. Стрёмно, но вторая строчка проверяет что тут идет 
-% типовая аннотация функции хорошая
+% типовая аннотация функции хорошая. 
+% Аннотация \forall \bar{\alpha} приписывается человеком к фнукции f . Проверка того, что 
+% фнукции подходит тип, приписанный человеком, происходит во второй строчке
+
+% Spat оно типа стандартное для GADTов. Задачей стоит определить тип икса, стоящего под 
+% конструктором К. Входной тип стрелки должен использовать тот же самый конструктор типа
+% как и та штука, которую мы мэтчим. Аргументы могут отличаться, и это отличие протаскивается
+% с самого конструктора в правую часть бранча. Потому локально (в каждой отдельной бранче)
+% подразумевается, что \bar{\tau}=\bar{\tau}' (3я строчка). Эти равенства локальные,
+% и потому не могут сбежать наружу, чт обозначается гипотезой \bar{\beta}#Г
+
+% C копаттернами аналогично.
+% Блин, я это понял.
 \end{frame}
 
 % Я тут теоремы пропустил
 
-\begin{frame}[fragile]{Язык $\lambda^G$}
-1
+\begin{frame}[fragile]{Теоремы $\lambda^C$}
+Теорема (про редукцию):
+
+$C$ выполнимо. Если $\Gamma,C \vdash t:\tau$ и $t\to t'$, тогда
+$\Gamma, C \vdash t':\tau$ .
+
+\vspace{1cm}
+
+Теорема (Про прогресс).
+
+Констрейнты $C$ выполнимы. Если $\Gamma,C \vdash t:\tau$, то либо $t$ это 
+конечное значение или существует $t'$ такое что $t \to t'$.
 \end{frame}
 
-\begin{frame}[fragile]{Поиск в глубину (dfs)}
-1
+\begin{frame}[fragile]{Синтаксис и семантика $\lambda^G$}
+\begin{itemize}
+ \item Нет observations ни в синтаксисе, ни в правилах для семантики (просто выкинули)
+ \item Конструкторы могут иметь 0 или много аргументов
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Синтаксис и семантика $\lambda^G$}
+% Типы в статье на 9й странице.
+$\lambda^C:\qquad\epsilon^+(\overline{\alpha})\;:=\; \Sigma_i K_i \;:\forall\overline{\alpha}.\tau_i \;\to\;\epsilon^+(\bar{\tau}_i)$
+
+$\lambda^G:\qquad\epsilon^+(\overline{\alpha})\;:=\; \Sigma_i K_i \;:\forall\overline{\alpha}.\overline{\sigma} \;\to\;\epsilon^+(\bar{\tau}_i)$
+
+В $\lambda^G$ аргументы конструктора могут иметь полиморфный тип, а к самому конструктору
+приписывается схема типов второго порядка.
+
+% В $\lambda^C$, система типов основани на двух правилах: одно для термов,
+% второе для абстракций. Главная разница в том, что между типами $\lambda^C$ и
+% типами в $\lambda^G$, что теперь правила присваивают схему типов
+% (не мономорфный тип) к терму.
+% 
+% Однако в ML, многие правил принимают только мономорфные типы
+% чтобы поддерживать разрешимость вывода типов. Тут повторяются все трюки,
+% что использует компилятор OCaml (см. статью Реми и Гаррика).
+% Правила (TConv), (TApply), (TRecfun) и (TLam) сделаны по аналогии с $\lambda^C$.
+% Правило (SVar) было разделено на (TVar) и (TInst).
+% Это разделение позвляет полиморфно типизированным идентификаторам
+% после извлечения из env встать на место, где ожидается полиморфный терм. 
+% (This contrasts
+% with usual syntax-directed typing rules of ML where polymorphic
+% identifiers are immediately instantiated when extracted from the
+% environment.) Смотря на правило (TConstructor), видно, что аргументы конструктора
+% являются как раз таким местом: им присваиваются схемы типов, описанные при объявлении типа 
+% данных. Это немного более строгий констрейнт на общность аргументов конструктора, 
+% переменные связанные при паттерн матчинге могут быть полиморфными, что выражается
+% новой гипотезой в правиле TPat, которая теперь вводит в окружение (\bar{x}:\bar{\sigma})
+% чтобы протайпчекать тело ветки. Если закрыть на это глаза, то правила одинаковые с lambda^C
+\end{frame}
+
+\section{Трансляция}
+
+\begin{frame}[fragile]{Схема трансляции}
+% Тут три части
+% 
+Типы
+\begin{tabular}{r c l}
+  $\sem{\alpha}$ & = & $\alpha$ \\
+  $\sem{\tau \to \rho}$ & = & $\sem{\tau}\to\sem{\rho}$ \\
+  $\sem{\epsilon^+(\bar{\tau})}$ & = & $\epsilon^+(\sem{\bar{\tau}})$ \\
+  $\sem{\tau \leftarrow \epsilon^-(\bar{\tau})}$ & = & $\epsilon_r^-(\sem{\tau}\sem{\bar{\tau}})$ \\
+  $\sem{\epsilon^-(\bar{\tau})}$ & = & $\epsilon^-_d (\sem{\bar{\tau}})$ \\
+\end{tabular}
+
+\vspace{1cm}
+
+Термы
+\begin{tabular}{r c l}
+$\sem{x}$        & = & $x$ \\
+$\sem{tu}$       & = & $\sem{t}\sem{u}$ \\
+$\sem{t\cdot u}$ & = & \graybox{$\sem{u}\sem{t}$} \\
+$\sem{Kt}$       & = & $K\sem{t}$ \\
+$\sem{D}$        & = & \graybox{$d$} \\
+$\sem{\mu^- f:\forall \bar{\alpha}.\tau := \lambda \bar{x}\{\bar{b}\}}$ &=& 
+  $\mu^+ f:\forall \bar{\alpha}.\sem{\tau} := \lambda \bar{x}.K^{\epsilon^-(\bar{\tau})}\sem{\bar{b}}^\bot_{\bar{\alpha},O(\tau)}$ \\
+$\sem{\mu^+ f:\forall \bar{\alpha}.\tau := \lambda \bar{x}\{\bar{b}\}}$ &=& 
+  $\mu^+ f:\forall \bar{\alpha}.\sem{\tau} := \lambda \bar{x}.\sem{\bar{b}}$ \\
+$\sem{K x \Rightarrow t}$       & = & $K x \Rightarrow\sem{t}$ \\
+
+$\sem{\vee \cdot D_i \Rightarrow t}^\bot_{\bar{\alpha},\epsilon^-{\bar{\tau}}}$       & = & 
+  $\mu^+\_:\;\;\forall \beta.\epsilon^-_r(\beta,\bar{\tau})\to \beta \;\;:= \;\;\lambda \bullet .$ \graybox{$\vee_i D_i \Rightarrow \sem{t}$} \\
+
+\end{tabular}
+% d маленькое это та короткая реализация tail, которая на инверсии управления.
+% Интересных мест тут мало
+% 1) применение копаттерна, которое использует инверсию управления
+% 2) Сам копаттерн заменяется, на функцию с маленькой буквы
+% 3) Корекурсивная функция в последней строчке превращается в паттерн мэтчинг по 
+%    reified observation
+% По остальным термам идет в лоб, сохраняя структуру
+\end{frame}
+
+\begin{frame}[fragile]{Преобразование объявлений типов}
+Индуктивные
+
+$\sem{\epsilon^+(\bar{\alpha}):= \Sigma_i K_i :\forall\bar{\alpha}.\tau_i\to\epsilon^+(\bar{\tau}_i)}$ = 
+  $\epsilon^+(\bar{\alpha}):= \Sigma_i K_i :\forall\bar{\alpha}.\sem{\tau_i}\to\epsilon^+(\sem{\bar{\tau}}_i) $\\
+\vspace{1cm}
+Коиндуктивные
+
+$\sem{\epsilon^+(\bar{\alpha}):= \times_i D_i :\forall\bar{\alpha}.\tau_i \leftarrow\epsilon^-(\bar{\tau}_i)} $ =
+
+\qquad
+  $\begin{cases}
+   \;\;\;\;\;\;\epsilon_r^-(\bar{\alpha}):=\Sigma_i D_i: \forall\bar{\alpha}.\epsilon_r^-(\sem{\tau_i},\sem{\bar{\tau}_i})\\
+   \;\;\;\;\;\;\epsilon_d^-(\bar{\alpha}):=K^{\epsilon^-(\bar{\alpha})}:\forall\bar{\alpha}.(\forall\beta.\epsilon^-_r(\beta,\bar{\alpha})\to\beta)\to \epsilon_d^-(\bar{\alpha})\\
+   \forall i,\;\;\;\;\;\;\;\;d_i:=\mu^+\_:\forall\bar{\alpha}.\epsilon^-_d(\sem{\bar{\tau}_i})\to \sem{\tau_i}:=\lambda\bullet.K^{\epsilon^-(\bar{\alpha})}c\Rightarrow c\, D_i\\
+  \end{cases}$
+\\
+% Может тут надо привести пример про список чтобы показать, что есть что?
+\end{frame}
+
+\section{Реализация}
+
+%\section{Unnesting}
+\begin{frame}[fragile]{Unnesting паттернов и копаттернов. Пример.}
+% делаем не как у Сецера и комании
+\begin{lstlisting}[language=ocaml,mathescape=true]
+type _ repr =                   type _ qrepr = {
+| Int  : int  -> int repr          QInt  : int  !$\leftarrow$! int qrepr;
+| Bool : bool -> bool repr         QBool : bool !$\leftarrow$! bool qrepr }
+\end{lstlisting}
+
+\begin{lstlisting}[language=ocaml,mathescape=true]
+let corec f : type a . a repr -> a qrepr with
+| (..(Int n))#QInt   -> n
+| (..(Bool b))#QBool -> b
+\end{lstlisting}
+\centering{$\Downarrow$}
+\begin{lstlisting}[language=ocaml,mathescape=true]
+let f : type a . a repr -> a qrepr = fun x ->
+  let dispatch : type o . (o, a) qrepr_query -> o = function
+  | QInt  -> (match x with Int n  -> n)
+  | QBool -> (match x with Bool b -> b)
+  in 
+  Qrepr { dispatch }
+\end{lstlisting}
+%\vspace{1cm}
+% У Сецнера было преобразование которое не зависило от порядка, что является 
+% стрёмным если пытаться запихнуть его в ML. Ткнцть пальцев во ``fresh splitting variables''
+% x
+\end{frame}
+
+
+\begin{frame}[fragile]{``Лишние'' паттерны. Два примера}
+\begin{lstlisting}[language=ocaml,mathescape=true]
+let corec zeros : int stream with
+| ..#Head -> 0
+| ..#Head -> 1       (* <= to remove *)
+| ..#Tail -> zeros
+\end{lstlisting}
+\pause
+\begin{lstlisting}[language=ocaml,mathescape=true]
+let corec f : int -> int stream with
+| (.. n)#Head -> 0
+| (.. n)#Tail -> f (n - 1)   (* <= to remove *)
+| (.. n)#Tail : int stream with
+| (.. n)#Tail#Head -> n
+| (.. n)#Tail#Tail -> f (n + 1)
+\end{lstlisting}
+Более глубокие считаются более сильными
+% Потому что если человек написал (f n)#Tail#Head то уж он наверняка желает 
+% потом написать и случай для Tail, потому считать (f n)#Tail#Tail лишним
+% не имеет смысла
+\end{frame}
+
+\begin{frame}[fragile]{Ленивые вычисления}
+\begin{lstlisting}[language=ocaml]
+let rec fib : int stream =
+  let dispatch : type o. (o, int) stream query -> o = function
+  | Head -> 0
+  | Tail ->
+    let dispatch : type o.(o, int) stream query -> o = function
+    | Head -> 1
+    | Tail -> map2 (+) !\graybox{fib}! (!\graybox{tail fib}!)
+    in Stream { dispatch }
+  in Stream { dispatch }
+\end{lstlisting}
+
+Можно заменить каждый \lstinline=dispatch= на dispatch с мемоизацией (на слайдах нет)
+\end{frame}
+
+\begin{frame}[fragile]{First-order и high-order observations}
+\begin{itemize}
+ \item По описанию копаттерна сгенерировались функции...
+ \item Их можно передавать в другие функции и получать high-order
+\end{itemize}
+% Их нельзя хешировать, но можно хешировать конструкторы копаттерна
+% См. пример про Жизнь
+\end{frame}
+
+\begin{frame}[fragile]{Пример про жизнь и комонаду}
+$ $
 \end{frame}
 
 \end{document}
