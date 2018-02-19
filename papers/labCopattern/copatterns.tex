@@ -348,7 +348,7 @@ type _ dataFormat =
 let test: Num.t dataFormat -> unit = function
 | Number -> ()
 | Date   -> ()
-| _      ->  _  (* required *) 
+| _      -> ()  (* required *) 
 \end{lstlisting}
 \end{frame}
 
@@ -368,7 +368,7 @@ type _ dateFormat =
 let test: Num.t dateFormat -> unit = function
 | Number -> ()
 | Date   -> ()
-| _      ->  _  (* required *) 
+| _      -> ()  (* required *) 
 
 let () = match Num.eq with Eq -> test String
 
@@ -383,7 +383,6 @@ type ('o,'a) stream_query =
 | Head : ('a,       'a) stream_query
 | Tail : ('a stream,'a) stream_query
 \end{lstlisting}
-% TODO: починить шрифт
 % Второй параметр -- что генерирует стрим
 % первый -- что получает при наблюдении
 \end{frame}
@@ -414,10 +413,10 @@ $\forall$'a . ($\forall$'o . ('o,'a) stream_query ->   'o) -> 'a stream
 \begin{frame}[fragile]{Фибоначчи после трансформации}
 \begin{lstlisting}[language=ocaml,numbers=left,stepnumber=1]
 let rec fib : int stream =
-  let dispatch : type o. (o, int) stream query -> o = function
+  let dispatch : type o . ('o, int) stream query -> 'o = function
   | Head -> 0
   | Tail -> !\pause!
-    let dispatch : type o.(o, int) stream query -> o = function
+    let dispatch : type o .('o, int) stream query -> 'o = function
     | Head -> 1
     | Tail -> map2 (+) !\graybox{fib}! (!\graybox{tail fib}!)
     in Stream { dispatch }
@@ -571,7 +570,7 @@ let corec fib : int stream with
 \centering
 $\epsilon^+(\overline{\alpha})\;:=\; \Sigma_i K_i \;:\forall\overline{\alpha}.\tau_i \;\to       \;\epsilon^+(\bar{\tau}_i)$
 
-$\epsilon^+(\overline{\alpha})\;\;:=\; \times_i D_i   :\forall\overline{\alpha}.\tau_i \;\leftarrow\;\epsilon^-(\bar{\tau}_i)$
+$\epsilon^-(\overline{\alpha})\;\;:=\; \times_i D_i   :\forall\overline{\alpha}.\tau_i \;\leftarrow\;\epsilon^-(\bar{\tau}_i)$
 \end{frame}
 
 \begin{frame}[c]{Одного аргумента у $K$ -- достаточно}
@@ -582,9 +581,9 @@ $\epsilon^+(\overline{\alpha})\;\;:=\; \times_i D_i   :\forall\overline{\alpha}.
 
 % TODO: надо таки сделать как по Лейбницу.
 \centering
-$\epsilon^+(\bar{\alpha})\;:=\; \Sigma_i K_i \;:\forall\overline{\alpha}.\tau_i \;\to       \;\epsilon^+(\bar{\tau}_i)$
+$\epsilon^+(\overline{\alpha})\;:=\; \Sigma_i K_i \;:\forall\overline{\alpha}.\tau_i \;\to       \;\epsilon^+(\bar{\tau}_i)$
 
-$\epsilon^+(\bar{\alpha})\;\;:=\; \times_i D_i   :\forall\overline{\alpha}.\tau_i \;\leftarrow\;\epsilon^-(\bar{\tau}_i)$
+$\epsilon^-(\overline{\alpha})\;\;:=\; \times_i D_i   :\forall\overline{\alpha}.\tau_i \;\leftarrow\;\epsilon^-(\bar{\tau}_i)$
 \vspace{1cm}
 
 $unit = DUnit : unit \leftarrow unit$
@@ -620,11 +619,11 @@ $pair(\alpha,\beta) = \begin{cases}
 
 \end{frame}
 
-\begin{frame}[fragile]{Правила для типов}
+\begin{frame}[fragile]{Правила типизации}
 Тут показывать скриншот :)
 
 % Тут и гамма, и констрейнты, рассказать как читать
-% Г,С |- t:\tau ожначает что в окружении и констрейнтах t имеет мономорфный тип тау
+% Г,С |- t:\tau означает что в окружении и констрейнтах t имеет мономорфный тип тау
 % Г,С |- \x.b : \diamond\tau означает что в окружении такомто и при таких констрейнтах
 % абстракция обозначает ромбик-функцию и имеет тип тау
 
@@ -684,12 +683,13 @@ $\Gamma, C \vdash t':\tau$ .
 \end{frame}
 
 
-\begin{frame}[fragile]{Синтаксис и семантика $\lambda^G$}
+\begin{frame}[fragile]{Разница между $\lambda^C$ и $\lambda^G$}
 % Типы в статье на 9й странице.
 $\lambda^C:\qquad\epsilon^+(\overline{\alpha})\;:=\; \Sigma_i K_i \;:\forall\overline{\alpha}.\tau_i \;\to\;\epsilon^+(\bar{\tau}_i)$
 
 $\lambda^G:\qquad\epsilon^+(\overline{\alpha})\;:=\; \Sigma_i K_i \;:\forall\overline{\alpha}.\overline{\sigma} \;\to\;\epsilon^+(\bar{\tau}_i)$
 
+\vspace{1cm}
 В $\lambda^G$ аргументы конструктора могут иметь полиморфный тип, а к самому конструктору
 приписывается схема типов второго порядка.
 
@@ -851,7 +851,8 @@ let rec fib : int stream =
 \begin{frame}[fragile]{First-order и high-order observations}
 \begin{itemize}
  \item По описанию копаттерна сгенерировались функции...
- \item Их можно передавать в другие функции и получать high-order
+ \item ...их можно передавать в другие функции и получать high-order
+ \item Это главный contribution.
 \end{itemize}
 % Их нельзя хешировать, но можно хешировать конструкторы копаттерна
 % См. пример про Жизнь

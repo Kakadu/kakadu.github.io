@@ -1,6 +1,8 @@
 .SUFFIXES: .pdf .tex
+.PHONY: all
 
 NAME=copatterns
+
 all: $(NAME).pdf
 
 
