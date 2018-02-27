@@ -1,0 +1,9 @@
+[archive]
+email = ""
+owner = "kakadu"
+title = ""
+uuid = "c0615a9d-3844-4b56-91cc-4b1968ddd7ab"
+[web]
+static_dir = ".logarion/static"
+stylesheets = ["main.css"]
+url = "http://localhost:3666"
