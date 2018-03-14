@@ -1,0 +1,553 @@
+\documentclass{beamer}
+
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{default}
+
+\usepackage[scaled]{DejaVuSansMono}
+
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[rounded][shadow=true]
+\setbeamercolor{block title}{use=structure,fg=white,bg=blue!75!black}
+\beamertemplateballitem
+
+\mode<presentation>{
+  \usetheme{default}
+}
+
+\theoremstyle{definition}
+% coloring tables
+\usepackage{hhline}
+\usepackage{colortbl}
+\usepackage{xcolor}
+\definecolor{YellowGreen} {HTML}{B5C28C}
+\definecolor{ForestGreen} {HTML}{009B55}
+\definecolor{Blueish}{HTML}{A6C5E1}
+\newcommand{\RowColor}{\rowcolor{red!50} \cellcolor{white}}
+
+%% colored links
+% \definecolor{links}{HTML}{2A1B81}
+\hypersetup{colorlinks,linkbordercolor=red,linkcolor=,urlcolor=blue}
+% \hypersetup{colorlinks=true,linkbordercolor=red,urlcolor=blue,pdfborderstyle={/S/U/W 1}}
+\usepackage{hyperref}          % clickable URls and cross-references
+%%%% code listings
+\usepackage{minted}
+
+\usepackage{fontawesome}
+\newcommand{\faGood}{\textcolor{ForestGreen}{\faThumbsUp}}
+\newcommand{\faBad}{\textcolor{red}{\faThumbsODown}}
+%fancy letters
+\newcommand{\jsoo}{Js\_of\_ocaml }
+\usepackage{mathrsfs,amsmath}
+\usepackage{mathtools}  % for xRightArrow
+\input{trollface.tex}
+
+% =======================================================================
+\title{Обзор программирования на OCaml для Web}
+\author{Дмитрий Косарев}
+\institute[]{
+\small{
+JetBrains Labs\\
+% Лаборатория языковых инструментов
+}
+}
+
+\date{
+  \vskip 2cm
+  \small{
+  It Global Meetup\\
+  FProg\\
+  \textbf{17 марта, 2018}
+  }
+}
+
+\begin{document}
+\begin{frame}
+  \titlepage
+\end{frame}
+
+\begin{frame}[fragile]{План}
+\begin{itemize}
+ \item Достойное упоминания
+ \item Ocsigen веб-сервер и как заменить Javascript
+ \item Ещё один способ как можно заменить Javascript
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Достойная упоминания}
+Webmachine -- для создания RESTful сервисов
+\href{http://github.com/inhabitedtype/ocaml-webmachine}{\beamergotobutton{Link}}
+\vskip5mm
+Очень похоже на
+
+\begin{itemize}
+ \item Webmachine для Erlang \href{http://github.com/webmachine/webmachine}{\beamergotobutton{Link}}
+ \item Liberator для Clojure \href{http://clojure-liberator.github.io/liberator/}{\beamergotobutton{Link}}
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Что нужно от очередного нового веб-фреймворка на языке $\mathscr{L}$?}
+\begin{itemize}
+ \item Делало то, что нужно
+ \item Своя ``фишка''
+ \item Интеграция с кодом на $\mathscr{L}$
+ \item Интеграция с кодом, который сейчас используется в Web
+ \item Желательно, лаконичность
+ \item Некоторые уважают типобезопасность...
+ \item ``Адекватный'' синтаксис
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Взаимодействие в Web}
+\begin{figure}
+\centering
+\includegraphics[width=0.7\textwidth]{web1.png}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}[fragile]{Бестиповость}
+
+\begin{tabular}{l r}
+  \begin{minipage}{5cm}
+  \begin{block}{С сервера послали}
+  \verb=1,0:Текст приветствия=
+  \end{block}
+  \begin{block}{На клиенте ожидалось}
+  \verb=line <int>: <string>=
+  \end{block}
+  \end{minipage} & 
+    \includegraphics[width=.5\textwidth]{web2.png}
+\end{tabular}   
+\end{frame}
+
+
+\begin{frame}{Хочется один tierless язык для всего}
+\begin{center}
+
+\includegraphics[width=0.8\textwidth]{ClientServer.png}
+\vskip5mm
+Другие tierless языки:\\
+\vskip5mm
+\begin{minipage}{0.34\textwidth}
+\begin{itemize}
+ \item Links
+ \item Hop
+ \item Ur/Web
+ \item \textbf{Eliom}
+\end{itemize}
+\end{minipage}
+
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\includegraphics[width=.9\textwidth]{tierless.png}
+
+Срисовано у \href{https://www.irif.fr/~gradanne/papers/talk_phdthesis.pdf#page=20}{Gabriel Radanne}
+\end{frame}
+
+
+\begin{frame}[fragile]
+  \includegraphics[width=.5\textwidth]{ocsigen.png}
+  \includegraphics[width=.4\textwidth]{INRIA_logo_2011.png}\\
+  \vskip5mm
+  \resizebox{\textwidth}{!}{
+  \begin{tabular}{| l   l  |}
+  \hline
+  \multicolumn{2}{|c|}{\cellcolor{YellowGreen}Eliom} \\ \hline
+  \cellcolor{Blueish}      Server & \cellcolor{yellow}Js\_of\_ocaml \\ \hline
+  \multicolumn{2}{|c|}{OCaml} \\ \hline
+  \end{tabular}
+  }
+\end{frame}
+
+\begin{frame}[fragile]
+  \includegraphics[width=.5\textwidth]{ocsigen.png}\\
+  \vskip5mm
+  \resizebox{\textwidth}{!}{
+  \begin{tabular}{| l   l  |}
+  \hline
+  \multicolumn{2}{|c|}{\cellcolor{YellowGreen}Library} \\ \hline
+  \multicolumn{2}{|c|}{\cellcolor{YellowGreen}Syntax extension} \\ \hline
+
+  \cellcolor{Blueish}      Server & \cellcolor{yellow}Js\_of\_ocaml \\ \hline
+  \multicolumn{2}{|c|}{OCaml} \\ \hline
+  \end{tabular}
+  }
+\end{frame}
+
+\begin{frame}[fragile]{Серверная часть. Пример 1/2}
+\begin{minted}{ocaml}
+let service_with_params =
+  Eliom_registration.Html.create
+    ~path: ...
+    ~meth:(Get ... )
+    handler
+\end{minted}
+\pause\definecolor{links}{HTML}{2A1B81}
+\hypersetup{colorlinks,linkcolor=,urlcolor=links}
+\begin{itemize}
+ \item Именованые параметры
+ \item Можно больше одного сервиса на путь
+ \item В данном случае из handler должен вернуться Html
+\end{itemize}
+% Если вместо числа пришло не число, то Eliom сам выдаст ошибку
+\end{frame}
+
+\begin{frame}[fragile]{Серверная часть. Пример 2/2}
+\begin{minted}{ocaml}
+let service_with_params =
+  Eliom_registration.Html.create
+    ~path:(Path ["horde"; "orc"])
+    ~meth:(Get (int "i" ** (int "ii" ** string "s")))
+    (fun (i,(ii,s)) -> 
+       (* Тут обрабатываем Get запрос, 
+          отдаём Html *)
+    )
+\end{minted}
+\pause
+\begin{itemize}
+ \item Если параметр не подходит по типу -- ошибка
+ \item Разумеется, пользовательские типы параметров поддержаны
+ \item Нетипизированные параметры (список пар строк)
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Порождение, например, Html}
+\begin{minted}{ocaml}
+Eliom_registration.Html.create ~path ~meth
+  (fun _ ->
+    let open Eliom_content.Html.D in
+    let input = input ~a:[a_input_type `Text] () in
+\end{minted}
+\pause\vspace{-2pt}
+\begin{minted}{ocaml}
+    let button =
+      button ~a:[a_onclick ...] [pcdata "Read value"]
+    in
+\end{minted}
+\pause\vspace{-2pt}
+\begin{minted}{ocaml}
+    Lwt.return
+         (html
+            (head (title (pcdata "Test")) [])
+            (body [input; button])))
+  )
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Типизация через полиморфные варианты}
+\begin{minted}{ocaml}
+(* OK *)
+script ~a:[a_async ()] (pcdata "http://something");  
+
+(* ERROR *)
+h2 ~a:[a_async ()] [pcdata "Some text"];
+\end{minted}
+
+Больше информации в 
+\href{https://caml.inria.fr/pub/docs/manual-ocaml/lablexamples.html#sec46}{OCaml manual}
+
+В Haskell их пытаются \href{https://hackage.haskell.org/package/data-diverse-2.0.1.0/docs/Data-Diverse-Which.html}
+{эмулировать}, 
+но выглядит страшно :)
+% что есть не как в Elm, потому что их нет в явном виде даже в Haskell
+\end{frame}
+
+\begin{frame}[fragile]{Три семантики для создаваемых тегов}
+DOM-семантика
+\begin{minted}{ocaml}
+    Eliom_content.Html.D
+\end{minted}
+``Функциональная``
+\begin{minted}{ocaml}
+    Eliom_content.Html.F
+\end{minted}
+Реактивная
+\begin{minted}{ocaml}
+    Eliom_content.Html.R
+\end{minted}
+\vskip5mm
+Если нужно, то можно использовать все три одновременно
+\end{frame}
+
+\begin{frame}[fragile]{D. vs F.}
+\begin{minted}{ocaml}
+let b = button ~a:... [pcdata "text"] in
+div [ b; b; b]
+\end{minted}
+\vskip5mm
+По значению vs. по ссылке
+\end{frame}
+
+\begin{frame}[fragile]{Реактивность. Пример}
+\begin{minted}{ocaml}
+let value_signal,set_value = React.S.create "initial"
+\end{minted}
+\pause\vspace{-2pt}
+\begin{minted}{ocaml}
+let content_signal : _ React.signal =
+  React.S.map (fun str ->
+    let l = split str in
+    let ps = l |> List.map 
+      (fun s -> F.p [F.pcdata s]) in
+    F.div ps
+  )
+  value_signal
+\end{minted}
+\pause\vspace{-2pt}
+\begin{minted}{ocaml}
+let make_client_nodes () =
+  [ D.p [R.pcdata value_signal]
+  ; R.node content_signal
+  ]
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Про self-adjusting вычисления}
+\verb=Incr_dom= от     \href{https://www.janestreet.com/}{Janestreet Capitals} \href{https://github.com/janestreet/incr_dom}{\faGithub}
+
+\verb=Virtual DOM=  от \href{https://www.janestreet.com/}{Janestreet Capitals} \href{https://github.com/janestreet/virtual_dom}{\faGithub}
+
+\verb=virtual-dom= от Matt-Esch \href{https://github.com/Matt-Esch/virtual-dom}{\faGithub} 
+\vskip5mm
+\href{https://blog.janestreet.com/self-adjusting-dom/}{Блогпост} из Janestreet Tech Blog
+% иногда дорого заменять весь DOM по изменению сигнала. Тут на смену придут self-adjusting compuattions(SAC)
+% Если их использовать, то будет перестраиваться только часть, та часть которая завязана на измененные данные.
+\end{frame}
+
+\begin{frame}[fragile]{Фрагменты клиентского и серверного кода}
+\begin{minted}{ocaml}
+let%server x  = ...
+
+let%client y  = ...
+
+let%shared z  = ...
+\end{minted}
+\vskip5mm
+Всё в одном файле
+\end{frame}
+
+\begin{frame}[fragile]{Фрагменты клиентского кода на сервере}
+\begin{minted}{ocaml}
+let%server x = [%client 1 + 3 ]
+\end{minted}
+
+На клиенте считается \verb=1+3=.
+
+Сервер оперирует этим как ''черным`` ящиком
+\end{frame}
+
+\begin{frame}[fragile]{Доступ к данным сервера на клиенте}
+\begin{minted}{ocaml}
+let%server s  : int = 1 + 2
+
+let%client y  : int = ~%s + 1
+\end{minted}
+Ограничение -- jsonификация типа переменной s
+\end{frame}
+
+\begin{frame}[fragile]{Чуть более содержательный пример}
+\begin{minted}{ocaml}
+let%server counter action =
+\end{minted}
+\pause\vspace{-1em}
+\begin{minted}{ocaml}
+  let state = [%client ref 0 ] in
+\end{minted}
+\pause\vspace{-1em}
+\begin{minted}{ocaml}
+  button ~button_type:`Button
+    ~a:[a_onclick [%client fun _ ->
+\end{minted}
+\pause\vspace{-1em}
+\begin{minted}{ocaml}
+          incr ~%state;
+\end{minted}
+\pause\vspace{-1em}
+\begin{minted}{ocaml}
+          ~%action !(~%state) 
+       ]]
+\end{minted}
+\pause\vspace{-1em}
+\begin{minted}{ocaml}
+    [pcdata "Increment"]
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{RPC}
+\begin{minted}{ocaml}
+let%server log str = (* тут логгируем str *)
+\end{minted}
+\pause\vspace{-2pt}
+\begin{minted}{ocaml}
+let%client log =
+  ~%(Eliom_client.server_function 
+      [%derive.json: string] 
+      log)
+\end{minted}
+\pause\vspace{-2pt}
+\begin{minted}{ocaml}
+let%client () =
+  Eliom_client.onload (fun () ->
+    (* N.B. Серверные функции недоступны
+       пока страничка не прогрузилась *)
+    async (fun () -> 
+      log "Hello from the client to the server!"))
+\end{minted}
+\end{frame}
+
+\begin{frame}{Замечание про порядок вычислений}
+Куски клиентского кода на сервере не вычисляются сразу.
+
+Они регистрируются для последующего исполнения.
+
+Когда страница прислана, то они начинают выполняться.
+\end{frame}
+
+\begin{frame}[fragile]{Объекты Javascript}
+\pause
+\begin{minted}{ocaml}
+let options = object%js
+  val         x = 3 (* read-only prop *)
+  val mutable y = 4 (* read/write prop *)
+end
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{TyXML API vs. DOM API}
+\begin{minted}{ocaml}
+let n = div ~a:[a_id "some div id"]
+  [ pcdata "aaa"
+  ; pcdata "bbb" ]
+let d = Eliom_content.Html.To_dom.of_div n
+\end{minted}
+\pause \vskip5mm \vskip10mm
+\begin{minted}{ocaml}
+let d =
+  let d = createDiv document in  
+  d##.id := (Js.string "some div id");
+  appendChild d 
+    (document##createTextNode (Js.string "aaa"));
+  appendChild d 
+    (document##createTextNode (Js.string "bbb"));
+  d
+\end{minted}
+\end{frame}
+
+% \begin{frame}[fragile]{}
+% 1
+% \end{frame}
+
+\begin{frame}[fragile]{Компиляция OCaml кода}
+\includegraphics[width=1\textwidth]{compilation1.png}
+\end{frame}
+
+\begin{frame}[fragile]{Компиляция Eliom проекта}
+\begin{center}
+\includegraphics[width=0.5\textwidth]{compilation2.png}
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Оптимизации $\rightarrow$ bytecode $\rightarrow$ Javascript}
+\jsoo генерирует Javascript из \textbf{внутреннего} представления (bytecode)
+\begin{itemize}
+ \item[\faBad]  Получается нечитаемый код
+ \item[\faBad]  Транслируется не очень быстро
+ \pause
+ \item[\faGood] Большинство фич языка можно использовать
+ \item[\faGood] Больше оптимизаций, шустрее работает \href{https://www.irif.fr/~balat/publications/vouillon_balat-js_of_ocaml.pdf#page=13}
+	  {\beamergotobutton{Графики тут}}
+\end{itemize}
+\vskip5mm
+Следствие: всё что скомпилировалось в байткод, оттранслируется в Javascript
+
+\pause
+\vskip5mm
+Elm \Huge \trollface
+
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Ocsigen. Итоги}
+\begin{itemize}
+ \item ``Фишка'' -- tierless \pause
+ \item Интеграция с существующим кодом на OCaml, \textbf{весь} синтаксис поддержан \pause
+ \item Интеграция с существующим кодом на Javascript \pause
+ \item Типобезопасность в целом \pause
+ \item Можно оторвать \jsoo и использовать отдельно \pause
+ \item[\faBad] Клиентская часть компилируется небыстро \pause
+ \item[\faBad] Нечитаемый Javascript на выходе \pause
+ \item[\faBad]  ``Адекватный'' синтаксис \pause
+ \item[\faGood] ИМХО, адекватный
+\end{itemize}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Другой вид трансляции}
+Было:\\
+*.ml $\xRightarrow{OCaml}$ bytecode $\xRightarrow{Js\!\_\!of\!\_\!ocaml}$ *.js
+\vskip10mm\pause
+А давайте теперь делать вот так:
+*.ml $\Rightarrow$ *.js
+\begin{itemize}
+ \item Хотим уметь транслировать \textbf{весь} язык\pause
+ \item [\faBad]  Все OCaml библиотеки надо перекомпилять 
+ \item [\faBad]  Не были использованы OCaml-специфичные оптимизации
+ \item [\faGood] Есть возможность сделать читаемый Javascript
+ \item [\faGood] Быстрая (инкрементальная) трансляция
+\end{itemize}
+\vskip5mm\pause
+Bucklescript от \href{https://www.techatbloomberg.com/}{Bloomberg}\\
+\end{frame}
+
+\begin{frame}[fragile]{Bucklescript\href{https://github.com/BuckleScript/bucklescript}{\faGithub}}
+\href{https://bucklescript.github.io/bucklescript-playground/index.html}{Bucklescript песочница}
+\vskip5mm
+\pause
+По сути backend к компилятору \vskip5mm\pause
+
+Иногда, работает быстрее рукописного Javascript \vskip5mm\pause
+
+\jsoo дружественнее к инфраструктуре OCaml, BuckleScript -- нет
+\end{frame}
+
+\begin{frame}[fragile]{Почти все проблемы решены...}
+\faBad Кроме массового недовольства синтаксисом 
+\vskip15mm \pause
+\includegraphics[width=.9\textwidth]{ReasonML.png}
+\end{frame}
+
+\begin{frame}[fragile]{ReasonML}
+\href{https://reasonml.github.io/}{Сайт}
+\vskip5mm
+\href{https://reasonml.github.io/docs/en/comparison-to-ocaml.html}{Синтаксис Reason vs. OCaml}
+\vskip5mm
+\href{https://reasonml.github.io/en/try.html}{Песочница}
+\vskip5mm
+\href{https://www.reason-conf.com/}{ReasonConf} 11--13 мая 2018, Вена, Австрия
+\end{frame}
+
+\begin{frame}
+\center{\Huge Вопросы?}
+\end{frame}
+
+
+\begin{frame}{Какие-то ссылки...}
+ 
+Ocsigen demo \href{http://ocsigen.org/ocsigen-start/demo}{\faGithub} и
+\href{http://ocsigen.org/ocsigen-start/demo/}{online}
+
+Ocsigen \href{http://ocsigen.org/graffiti/}{graffiti} demo \href{https://github.com/ocsigen/graffiti}{\faGithub}
+\end{frame}
+
+\end{document}
