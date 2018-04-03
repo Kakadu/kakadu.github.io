@@ -34,6 +34,9 @@ GHC и WinHugs и как ими пользоваться:
 ~~~~~
 http://learnyouahaskell.com/[Learn You a Haskell for Great Good]
 
+https://vk.com/wall-54530371_9051[Денис Шевченко "О Haskell по-человечески" 2014] Мало страниц, большой шрифт, хорошо рассказанные азы
+на простых примерах
+
 Можно также найти Р.Душкина "ФП на языке Haskell". https://wiki.haskell.org/Books[Ещё список на Haskell Wiki] (в том числе и на русском).
 
 А также некоторые задачи поможет решить "Purely Functional Data Structures" от Chris Okasaki (есть русское издание).
