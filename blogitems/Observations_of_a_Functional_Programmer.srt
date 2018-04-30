@@ -1,0 +1,6796 @@
+1
+00:00:22,550 --> 00:00:25,680
+testing excellent okay
+
+2
+00:00:25,680 --> 00:00:29,220
+I can talk much louder now um okay so
+
+3
+00:00:29,220 --> 00:00:31,730
+it's it's a pleasure to be here at CFE
+
+4
+00:00:31,730 --> 00:00:35,640
+and one of the reasons why I am so happy
+
+5
+00:00:35,640 --> 00:00:37,980
+to come here and kind of talk about my
+
+6
+00:00:37,980 --> 00:00:40,140
+experience is that CFP has really been a
+
+7
+00:00:40,140 --> 00:00:43,140
+big part of my own career and the kind
+
+8
+00:00:43,140 --> 00:00:45,360
+of the work that I've done over the last
+
+9
+00:00:45,360 --> 00:00:48,570
+kind of 15 years in industry so I came
+
+10
+00:00:48,570 --> 00:00:51,000
+here at CFP ten years ago that was my
+
+11
+00:00:51,000 --> 00:00:53,489
+first introduction to this community and
+
+12
+00:00:53,489 --> 00:00:55,350
+gave a talk about the work that we were
+
+13
+00:00:55,350 --> 00:00:57,090
+doing at Jane Street at the time and the
+
+14
+00:00:57,090 --> 00:00:59,010
+somewhat odd decision that we have made
+
+15
+00:00:59,010 --> 00:01:02,280
+that we had made of going to a kind of
+
+16
+00:01:02,280 --> 00:01:04,860
+perfectly innocent company and rewriting
+
+17
+00:01:04,860 --> 00:01:06,539
+their infrastructure in some obscure
+
+18
+00:01:06,539 --> 00:01:08,820
+functional programming language and I
+
+19
+00:01:08,820 --> 00:01:10,200
+came to see or fee to kind of talk about
+
+20
+00:01:10,200 --> 00:01:13,380
+that experience and at the time CFP was
+
+21
+00:01:13,380 --> 00:01:15,840
+kind of a unique venue in that it was
+
+22
+00:01:15,840 --> 00:01:18,060
+one of the only places that you could go
+
+23
+00:01:18,060 --> 00:01:20,039
+to to talk about this kind of work
+
+24
+00:01:20,039 --> 00:01:21,780
+because there just weren't that many
+
+25
+00:01:21,780 --> 00:01:24,210
+people in industry kind of taking
+
+26
+00:01:24,210 --> 00:01:25,440
+functional programming ideas and
+
+27
+00:01:25,440 --> 00:01:29,570
+applying them to real applications and
+
+28
+00:01:29,570 --> 00:01:32,310
+there was there weren't natural venues
+
+29
+00:01:32,310 --> 00:01:33,930
+for people who are doing this kind of
+
+30
+00:01:33,930 --> 00:01:35,729
+work to come together and meet and see
+
+31
+00:01:35,729 --> 00:01:39,900
+RFP fill that void and in many ways the
+
+32
+00:01:39,900 --> 00:01:41,759
+the landscape of functional programming
+
+33
+00:01:41,759 --> 00:01:43,619
+has changed quite a lot over the years
+
+34
+00:01:43,619 --> 00:01:46,229
+in that there are now in some sense many
+
+35
+00:01:46,229 --> 00:01:47,970
+more venues where you can go and talk to
+
+36
+00:01:47,970 --> 00:01:49,259
+other people who are excited about
+
+37
+00:01:49,259 --> 00:01:51,210
+functional programming there's like the
+
+38
+00:01:51,210 --> 00:01:54,600
+code mesh lamda gems strange loop like
+
+39
+00:01:54,600 --> 00:01:56,880
+long list of all sorts of amusingly
+
+40
+00:01:56,880 --> 00:01:59,189
+named conferences where there are people
+
+41
+00:01:59,189 --> 00:02:00,420
+who are really excited about programming
+
+42
+00:02:00,420 --> 00:02:01,409
+language ideas and excited about
+
+43
+00:02:01,409 --> 00:02:03,899
+functional programming and but the thing
+
+44
+00:02:03,899 --> 00:02:07,200
+that I think makes C ofp a kind of
+
+45
+00:02:07,200 --> 00:02:09,810
+unique place and really kind of more
+
+46
+00:02:09,810 --> 00:02:12,780
+really more broadly about IC fpm the
+
+47
+00:02:12,780 --> 00:02:14,310
+kind of all the set of related workshops
+
+48
+00:02:14,310 --> 00:02:16,980
+is it's a place where the industrial
+
+49
+00:02:16,980 --> 00:02:19,290
+viewpoint and the practical viewpoint
+
+50
+00:02:19,290 --> 00:02:21,510
+and the academic viewpoint meet up and
+
+51
+00:02:21,510 --> 00:02:23,880
+from my perspective that's been a very
+
+52
+00:02:23,880 --> 00:02:27,510
+kind of productive nexus I've really
+
+53
+00:02:27,510 --> 00:02:30,419
+kind of made a lot of connections and a
+
+54
+00:02:30,419 --> 00:02:32,639
+lot of friends in this broader community
+
+55
+00:02:32,639 --> 00:02:34,930
+and learned an enormous amount from
+
+56
+00:02:34,930 --> 00:02:37,090
+in sometimes my I feel like think of my
+
+57
+00:02:37,090 --> 00:02:39,190
+experience that I kind of want to talk
+
+58
+00:02:39,190 --> 00:02:40,930
+about today is really coming from three
+
+59
+00:02:40,930 --> 00:02:43,510
+different pots one of those is the
+
+60
+00:02:43,510 --> 00:02:45,099
+experience I have in the world at Jane
+
+61
+00:02:45,099 --> 00:02:47,260
+Street and of course that's kind of the
+
+62
+00:02:47,260 --> 00:02:49,030
+kind of in some sense like the deepest
+
+63
+00:02:49,030 --> 00:02:51,220
+richest most grounding experience like
+
+64
+00:02:51,220 --> 00:02:52,690
+the experience of actually trying to do
+
+65
+00:02:52,690 --> 00:02:55,959
+something at scale with you know with
+
+66
+00:02:55,959 --> 00:02:57,040
+significant amounts of money at stake
+
+67
+00:02:57,040 --> 00:02:59,049
+and significant numbers of people and
+
+68
+00:02:59,049 --> 00:03:02,769
+and that's been a very interesting and
+
+69
+00:03:02,769 --> 00:03:05,049
+at this point fairly extended process
+
+70
+00:03:05,049 --> 00:03:07,930
+when I started at Jane Street on 2002
+
+71
+00:03:07,930 --> 00:03:08,890
+there was something like thirty
+
+72
+00:03:08,890 --> 00:03:11,470
+employees today there's something like
+
+73
+00:03:11,470 --> 00:03:16,319
+500 so it's grown quite a bit and the
+
+74
+00:03:16,319 --> 00:03:18,940
+depth of the reliance on functional
+
+75
+00:03:18,940 --> 00:03:20,829
+probing programming technologies has
+
+76
+00:03:20,829 --> 00:03:23,170
+only gotten greater in the years when I
+
+77
+00:03:23,170 --> 00:03:25,750
+started there I was like doing a little
+
+78
+00:03:25,750 --> 00:03:27,519
+tiny bit of oh camel on the side for
+
+79
+00:03:27,519 --> 00:03:29,530
+some research projects certain that the
+
+80
+00:03:29,530 --> 00:03:30,879
+code I was reading was throwaway code
+
+81
+00:03:30,879 --> 00:03:33,549
+and you know eighty thousand lines later
+
+82
+00:03:33,549 --> 00:03:35,140
+it turned out I wasn't going back to be
+
+83
+00:03:35,140 --> 00:03:37,540
+an academic and you know the code
+
+84
+00:03:37,540 --> 00:03:39,280
+actually had to be kept around and it
+
+85
+00:03:39,280 --> 00:03:42,130
+was by the way terrible code and took
+
+86
+00:03:42,130 --> 00:03:43,510
+many years to unwind all the bad things
+
+87
+00:03:43,510 --> 00:03:47,200
+I did in the beginning to the kind of
+
+88
+00:03:47,200 --> 00:03:49,150
+point where we started flipping over our
+
+89
+00:03:49,150 --> 00:03:50,920
+production infrastructure to using Oh
+
+90
+00:03:50,920 --> 00:03:54,400
+camel to today where we have you know
+
+91
+00:03:54,400 --> 00:03:57,370
+something like 80 full-time developers
+
+92
+00:03:57,370 --> 00:03:58,810
+who program exclusive you know camel
+
+93
+00:03:58,810 --> 00:04:01,510
+maybe 150 or 200 people for whom a large
+
+94
+00:04:01,510 --> 00:04:02,799
+part of their job is program you know
+
+95
+00:04:02,799 --> 00:04:06,430
+camel we kind of shockingly enough have
+
+96
+00:04:06,430 --> 00:04:08,049
+all of our incoming traders and many
+
+97
+00:04:08,049 --> 00:04:09,190
+actually people who are hired in other
+
+98
+00:04:09,190 --> 00:04:10,810
+roles come and spend a month a
+
+99
+00:04:10,810 --> 00:04:13,239
+month-long Oh camel boot camp where they
+
+100
+00:04:13,239 --> 00:04:15,400
+have to learn how to use the UNIX shell
+
+101
+00:04:15,400 --> 00:04:18,668
+and program in Emacs and you know camel
+
+102
+00:04:18,668 --> 00:04:20,410
+and using our crazy monadic concurrency
+
+103
+00:04:20,410 --> 00:04:22,450
+libraries and like shockingly it works
+
+104
+00:04:22,450 --> 00:04:24,750
+sort of an interesting story of its own
+
+105
+00:04:24,750 --> 00:04:27,070
+so anyway that that kind of experience
+
+106
+00:04:27,070 --> 00:04:28,150
+of taking functional programming and
+
+107
+00:04:28,150 --> 00:04:30,370
+Britain making it actually work has been
+
+108
+00:04:30,370 --> 00:04:32,470
+one thing that's informed me in a big
+
+109
+00:04:32,470 --> 00:04:35,169
+way the other one is kind of getting
+
+110
+00:04:35,169 --> 00:04:37,900
+connected to other people who have gone
+
+111
+00:04:37,900 --> 00:04:39,789
+off into industry to use functional
+
+112
+00:04:39,789 --> 00:04:40,840
+programming and there's more and more
+
+113
+00:04:40,840 --> 00:04:44,409
+people who've done that and kind of I've
+
+114
+00:04:44,409 --> 00:04:46,659
+learned a lot from what I've seen of
+
+115
+00:04:46,659 --> 00:04:47,830
+what other people have tried in what
+
+116
+00:04:47,830 --> 00:04:48,370
+succeeded
+
+117
+00:04:48,370 --> 00:04:51,970
+what hasn't and the other the other pot
+
+118
+00:04:51,970 --> 00:04:52,900
+from which I feel like I've learned a
+
+119
+00:04:52,900 --> 00:04:55,090
+lot is the pot of academic functional
+
+120
+00:04:55,090 --> 00:04:57,160
+programming right I think the the and of
+
+121
+00:04:57,160 --> 00:04:58,720
+course that's the thing that I CFP kind
+
+122
+00:04:58,720 --> 00:05:00,430
+of uniquely brings to the table is there
+
+123
+00:05:00,430 --> 00:05:03,070
+are all these people who are involved in
+
+124
+00:05:03,070 --> 00:05:04,919
+developing the intellectual framework
+
+125
+00:05:04,919 --> 00:05:07,600
+under which all of these techniques come
+
+126
+00:05:07,600 --> 00:05:09,639
+from and in not just the intellectual
+
+127
+00:05:09,639 --> 00:05:11,680
+framework but actually often the actual
+
+128
+00:05:11,680 --> 00:05:14,530
+software artifacts come out of academia
+
+129
+00:05:14,530 --> 00:05:17,760
+and like you know from an industrial
+
+130
+00:05:17,760 --> 00:05:22,449
+point of view most academic code kind of
+
+131
+00:05:22,449 --> 00:05:22,960
+sucks
+
+132
+00:05:22,960 --> 00:05:25,000
+and so it's something of a miracle the
+
+133
+00:05:25,000 --> 00:05:26,620
+quality of some of the language
+
+134
+00:05:26,620 --> 00:05:28,240
+implementations that have emerged from
+
+135
+00:05:28,240 --> 00:05:29,350
+the functional programming community I
+
+136
+00:05:29,350 --> 00:05:32,080
+think it's a kind of a nice mark for the
+
+137
+00:05:32,080 --> 00:05:33,930
+the amount of these people care about
+
+138
+00:05:33,930 --> 00:05:36,130
+the kind of pragmatics of software
+
+139
+00:05:36,130 --> 00:05:38,320
+engineering and and use a lot of those
+
+140
+00:05:38,320 --> 00:05:41,949
+ideas in their own work so anyway I
+
+141
+00:05:41,949 --> 00:05:43,990
+think it's all three of these areas I
+
+142
+00:05:43,990 --> 00:05:45,310
+think the Jane Street has been a very
+
+143
+00:05:45,310 --> 00:05:46,510
+exciting place to do functional
+
+144
+00:05:46,510 --> 00:05:48,419
+programming I think the broader world of
+
+145
+00:05:48,419 --> 00:05:50,650
+industrial applications has grown a lot
+
+146
+00:05:50,650 --> 00:05:53,289
+and the academic world has also UIC FP
+
+147
+00:05:53,289 --> 00:05:54,460
+is the biggest it's ever been that's
+
+148
+00:05:54,460 --> 00:05:56,770
+also an exciting world and so I think I
+
+149
+00:05:56,770 --> 00:05:57,550
+kind of want to use those three
+
+150
+00:05:57,550 --> 00:05:59,160
+perspectives to kind of say a few small
+
+151
+00:05:59,160 --> 00:06:01,360
+like lessons and observations I've
+
+152
+00:06:01,360 --> 00:06:03,849
+gotten from that so the first thing I
+
+153
+00:06:03,849 --> 00:06:06,370
+want to talk about is a kind of
+
+154
+00:06:06,370 --> 00:06:09,400
+terminological problem that we have in
+
+155
+00:06:09,400 --> 00:06:10,479
+talking about functional programming
+
+156
+00:06:10,479 --> 00:06:12,490
+which is when we use the word functional
+
+157
+00:06:12,490 --> 00:06:14,919
+programming we're often talking about
+
+158
+00:06:14,919 --> 00:06:18,070
+two different worlds and three core
+
+159
+00:06:18,070 --> 00:06:19,510
+ideas that animate those worlds in the
+
+160
+00:06:19,510 --> 00:06:21,460
+two worlds I think of as like the
+
+161
+00:06:21,460 --> 00:06:25,030
+descendents of Lisp and ml right Lisp is
+
+162
+00:06:25,030 --> 00:06:27,490
+the older of the two it's the kind of pure
+
+163
+00:06:27,490 --> 00:06:29,919
+functional programming language although
+
+164
+00:06:29,919 --> 00:06:31,240
+it wasn't that functional when it first
+
+165
+00:06:31,240 --> 00:06:35,860
+started invented in the 50s and there's
+
+166
+00:06:35,860 --> 00:06:38,500
+ml you know a much more sprightly young
+
+167
+00:06:38,500 --> 00:06:42,250
+language from the mid 70s and and I
+
+168
+00:06:42,250 --> 00:06:43,630
+think these two languages and their
+
+169
+00:06:43,630 --> 00:06:46,330
+descendants have been important
+
+170
+00:06:46,330 --> 00:06:49,270
+and importantly distinct approaches to
+
+171
+00:06:49,270 --> 00:06:51,070
+programming and when people get up on
+
+172
+00:06:51,070 --> 00:06:52,389
+stage and say "I use functional
+
+173
+00:06:52,389 --> 00:06:54,250
+programming" they often mean one or the
+
+174
+00:06:54,250 --> 00:06:54,550
+other
+
+175
+00:06:54,550 --> 00:06:56,199
+and it's important to understand that
+
+176
+00:06:56,199 --> 00:06:57,460
+because the things they say about why
+
+177
+00:06:57,460 --> 00:06:59,500
+it's valuable are different there's a
+
+178
+00:06:59,500 --> 00:07:01,580
+core idea that animates both
+
+179
+00:07:01,580 --> 00:07:03,110
+which is or a few queries this notion
+
+180
+00:07:03,110 --> 00:07:07,240
+that you should kind of focus on using
+
+181
+00:07:07,240 --> 00:07:10,159
+pure computation and immutable data
+
+182
+00:07:10,159 --> 00:07:12,319
+structures and have easy access to
+
+183
+00:07:12,319 --> 00:07:14,509
+constructs for higher-order computing
+
+184
+00:07:14,509 --> 00:07:16,400
+right this is the whole like first-class
+
+185
+00:07:16,400 --> 00:07:18,530
+functions and all of that that's the
+
+186
+00:07:18,530 --> 00:07:20,539
+thing that animates both of them and is
+
+187
+00:07:20,539 --> 00:07:22,189
+a kind of important important piece of
+
+188
+00:07:22,189 --> 00:07:24,409
+both but then each one adds its own
+
+189
+00:07:24,409 --> 00:07:27,199
+important independent piece and I claim
+
+190
+00:07:27,199 --> 00:07:28,370
+that independent pieces that are not
+
+191
+00:07:28,370 --> 00:07:31,219
+each one doesn't quite adopt as well as
+
+192
+00:07:31,219 --> 00:07:33,979
+they could and should the the advantage
+
+193
+00:07:33,979 --> 00:07:35,300
+of the other I think the obvious thing
+
+194
+00:07:35,300 --> 00:07:37,310
+the thing that ml brings is types so the
+
+195
+00:07:37,310 --> 00:07:39,650
+whole set of kind of ml related
+
+196
+00:07:39,650 --> 00:07:41,659
+languages in Haskell and Scala and F
+
+197
+00:07:41,659 --> 00:07:43,009
+sharp and no camel and so on and so
+
+198
+00:07:43,009 --> 00:07:45,919
+forth the thing that distinguishes them
+
+199
+00:07:45,919 --> 00:07:47,659
+is the type system right this kind of
+
+200
+00:07:47,659 --> 00:07:50,810
+formal system of rules that enforces
+
+201
+00:07:50,810 --> 00:07:52,789
+invariants on your code and informs how
+
+202
+00:07:52,789 --> 00:07:54,289
+you think about and reason about that
+
+203
+00:07:54,289 --> 00:07:56,240
+code that's the thing that makes those
+
+204
+00:07:56,240 --> 00:08:00,139
+languages unique and special and 
+
+205
+00:08:00,139 --> 00:08:01,430
+from my perspective the thing that the
+
+206
+00:08:01,430 --> 00:08:05,240
+Lisp family really gets right is macros
+
+207
+00:08:05,240 --> 00:08:07,159
+you really just kind of syntactic
+
+208
+00:08:07,159 --> 00:08:08,810
+transformations on your code and if you
+
+209
+00:08:08,810 --> 00:08:11,270
+you look at the two communities they
+
+210
+00:08:11,270 --> 00:08:13,039
+each I think they each kind of
+
+211
+00:08:13,039 --> 00:08:15,169
+understand certainly on the academic
+
+212
+00:08:15,169 --> 00:08:16,250
+side I feel like they each understand
+
+213
+00:08:16,250 --> 00:08:18,110
+the value of the other's work but don't
+
+214
+00:08:18,110 --> 00:08:19,940
+quite manage to kind of fully integrate
+
+215
+00:08:19,940 --> 00:08:21,680
+it like I look forward one day to the
+
+216
+00:08:21,680 --> 00:08:24,440
+day that oh camel has a macro system
+
+217
+00:08:24,440 --> 00:08:26,349
+that the racket people won't laugh at
+
+218
+00:08:26,349 --> 00:08:29,690
+and and similarly that the racket people
+
+219
+00:08:29,690 --> 00:08:31,639
+have a type system that the ml people
+
+220
+00:08:31,639 --> 00:08:33,409
+won't look at and see wow that's so much
+
+221
+00:08:33,409 --> 00:08:34,760
+more complicated than I can understand
+
+222
+00:08:34,760 --> 00:08:37,429
+right I think that it's it's merging
+
+223
+00:08:37,429 --> 00:08:38,899
+these ideas together is valuable and I
+
+224
+00:08:38,899 --> 00:08:40,190
+think it's one of the things that we
+
+225
+00:08:40,190 --> 00:08:41,929
+kind of see getting better over time I I
+
+226
+00:08:41,929 --> 00:08:44,149
+hope in my lifetime I will see oh OCaml
+
+227
+00:08:44,149 --> 00:08:48,519
+have such a macro system but it's it's
+
+228
+00:08:48,519 --> 00:08:50,630
+it's still at one of these things where
+
+229
+00:08:50,630 --> 00:08:51,560
+I feel like there are lessons to be
+
+230
+00:08:51,560 --> 00:08:53,149
+learned by the two sides and it's just
+
+231
+00:08:53,149 --> 00:08:54,380
+when you hear people talk about you
+
+232
+00:08:54,380 --> 00:08:56,149
+should understand which of these worlds
+
+233
+00:08:56,149 --> 00:08:57,260
+are coming from if you want to really
+
+234
+00:08:57,260 --> 00:08:58,100
+understand the things that they're
+
+235
+00:08:58,100 --> 00:09:02,180
+saying and in terms of the the kind of I
+
+236
+00:09:02,180 --> 00:09:04,130
+think people have mostly come to really
+
+237
+00:09:04,130 --> 00:09:05,779
+appreciate it I said like the values of
+
+238
+00:09:05,779 --> 00:09:07,430
+the other points of view I think when
+
+239
+00:09:07,430 --> 00:09:09,380
+you talk to people on the ml side they
+
+240
+00:09:09,380 --> 00:09:12,500
+don't not have macro systems because
+
+241
+00:09:12,500 --> 00:09:14,480
+they think they're useless or don't have
+
+242
+00:09:14,480 --> 00:09:15,440
+great macro they think
+
+243
+00:09:15,440 --> 00:09:16,550
+it's hard and they don't haven't yet
+
+244
+00:09:16,550 --> 00:09:18,440
+figured out how to do it in reconcile it
+
+245
+00:09:18,440 --> 00:09:20,180
+nicely inside a typed language which
+
+246
+00:09:20,180 --> 00:09:23,060
+raises some extra challenges and I think
+
+247
+00:09:23,060 --> 00:09:25,640
+increasingly the the kind of dynamically
+
+248
+00:09:25,640 --> 00:09:27,260
+typed functional language world and in
+
+249
+00:09:27,260 --> 00:09:29,510
+fact the dynamically typed world has
+
+250
+00:09:29,510 --> 00:09:32,300
+come to appreciate more the values of
+
+251
+00:09:32,300 --> 00:09:33,890
+types in fact there's a lot of work
+
+252
+00:09:33,890 --> 00:09:36,200
+that's come out of this community of how
+
+253
+00:09:36,200 --> 00:09:38,960
+to kind of gradually add types into
+
+254
+00:09:38,960 --> 00:09:40,370
+these systems the whole gradual type
+
+255
+00:09:40,370 --> 00:09:42,410
+systems and like you can hardly like
+
+256
+00:09:42,410 --> 00:09:43,700
+walk around the programming world
+
+257
+00:09:43,700 --> 00:09:45,290
+without tripping over a language that
+
+258
+00:09:45,290 --> 00:09:46,670
+has added a syntax for a type
+
+259
+00:09:46,670 --> 00:09:49,820
+annotations even Python has one now, you
+
+260
+00:09:49,820 --> 00:09:50,930
+know. I don't know how far they've gotten
+
+261
+00:09:50,930 --> 00:09:52,250
+in building actual type system for it
+
+262
+00:09:52,250 --> 00:09:54,890
+but they started with a syntax so yester
+
+263
+00:09:54,890 --> 00:09:59,750
+somewhere but anyway those worlds matter
+
+264
+00:09:59,750 --> 00:10:00,980
+a lot if you want to understand kind of
+
+265
+00:10:00,980 --> 00:10:02,960
+what happens here at ICFP and I think
+
+266
+00:10:02,960 --> 00:10:04,070
+either another dynamic that's worth
+
+267
+00:10:04,070 --> 00:10:05,780
+acknowledging even though it's sometimes
+
+268
+00:10:05,780 --> 00:10:08,240
+awkward is like actually the ML branch
+
+269
+00:10:08,240 --> 00:10:10,010
+is ascendant here right if you look at
+
+270
+00:10:10,010 --> 00:10:11,330
+the papers and look at what people are
+
+271
+00:10:11,330 --> 00:10:13,430
+writing the vast majority of that work
+
+272
+00:10:13,430 --> 00:10:17,060
+is from the kind of type family and I
+
+273
+00:10:17,060 --> 00:10:19,100
+think that's you know some of that I
+
+274
+00:10:19,100 --> 00:10:21,410
+some of that I think is just kind of
+
+275
+00:10:21,410 --> 00:10:24,590
+details of how the community works and
+
+276
+00:10:24,590 --> 00:10:26,000
+some of it is I feel like you know there
+
+277
+00:10:26,000 --> 00:10:27,950
+probably aren't enough voices from some
+
+278
+00:10:27,950 --> 00:10:29,480
+of the other parts here as they're kind
+
+279
+00:10:29,480 --> 00:10:31,670
+of should be but it's sort of useful to
+
+280
+00:10:31,670 --> 00:10:32,840
+kind of know what the structure of the
+
+281
+00:10:32,840 --> 00:10:36,920
+community is so before I mentioned this
+
+282
+00:10:36,920 --> 00:10:39,380
+idea that things have gotten a lot
+
+283
+00:10:39,380 --> 00:10:40,460
+better there's a lot more activity
+
+284
+00:10:40,460 --> 00:10:42,410
+there's also you know new conference and
+
+285
+00:10:42,410 --> 00:10:43,940
+all that but it's actually important to
+
+286
+00:10:43,940 --> 00:10:46,670
+remember that like it's totally not
+
+287
+00:10:46,670 --> 00:10:48,950
+popular like functional programming is
+
+288
+00:10:48,950 --> 00:10:51,530
+still very much a minority activity you
+
+289
+00:10:51,530 --> 00:10:53,420
+go around and talk to people at schools
+
+290
+00:10:53,420 --> 00:10:56,450
+and it's way better than it was like
+
+291
+00:10:56,450 --> 00:10:57,800
+when I was hiring people ten years ago
+
+292
+00:10:57,800 --> 00:10:59,750
+it was like a coin flip whether a
+
+293
+00:10:59,750 --> 00:11:01,250
+graduate from a top school would have
+
+294
+00:11:01,250 --> 00:11:03,710
+ever heard of ml or a related language
+
+295
+00:11:03,710 --> 00:11:06,170
+and now they've almost all heard of
+
+296
+00:11:06,170 --> 00:11:08,180
+something in that space and many of them
+
+297
+00:11:08,180 --> 00:11:10,430
+have been taught it in school but it's
+
+298
+00:11:10,430 --> 00:11:12,830
+still like an exotic weird thing that
+
+299
+00:11:12,830 --> 00:11:14,690
+like you know their professors taught
+
+300
+00:11:14,690 --> 00:11:15,940
+them and there's somewhat suspicious of
+
+301
+00:11:15,940 --> 00:11:18,530
+its it's still not I think it just feels
+
+302
+00:11:18,530 --> 00:11:21,200
+like part of the ordinary fabric of the
+
+303
+00:11:21,200 --> 00:11:23,780
+computing world another evidence of this
+
+304
+00:11:23,780 --> 00:11:26,089
+you see lots of like sneaky functional
+
+305
+00:11:26,089 --> 00:11:27,290
+programming projects that can you talk
+
+306
+00:11:27,290 --> 00:11:28,970
+to people in
+
+307
+00:11:28,970 --> 00:11:30,709
+they're like yeah I managed to hide this
+
+308
+00:11:30,709 --> 00:11:34,819
+from my manager it's like a good job
+
+309
+00:11:34,819 --> 00:11:36,620
+like it's it's sort of there's something
+
+310
+00:11:36,620 --> 00:11:38,449
+problematic about this view of like you
+
+311
+00:11:38,449 --> 00:11:39,889
+have to kind of sneak the technology and
+
+312
+00:11:39,889 --> 00:11:41,540
+it indicates that this something kind of
+
+313
+00:11:41,540 --> 00:11:43,639
+nascent and incomplete in the kind of
+
+314
+00:11:43,639 --> 00:11:46,819
+distribution of these ideas and I think
+
+315
+00:11:46,819 --> 00:11:48,430
+I think that's worth separating is
+
+316
+00:11:48,430 --> 00:11:51,410
+influenced from popularity which is to
+
+317
+00:11:51,410 --> 00:11:52,579
+say functional programming has been
+
+318
+00:11:52,579 --> 00:11:55,339
+enormously influential right if you
+
+319
+00:11:55,339 --> 00:11:56,480
+look at the design of all sorts of
+
+320
+00:11:56,480 --> 00:11:59,029
+languages they've been changed a lot by
+
+321
+00:11:59,029 --> 00:12:00,709
+the ideas and functional programming you
+
+322
+00:12:00,709 --> 00:12:02,899
+mean even by very old ideas like garbage
+
+323
+00:12:02,899 --> 00:12:04,370
+collection which landed in LISP before
+
+324
+00:12:04,370 --> 00:12:07,129
+it landed anywhere else which like you
+
+325
+00:12:07,129 --> 00:12:08,750
+know took a mere 40 years to go
+
+326
+00:12:08,750 --> 00:12:10,339
+mainstream it says like quick
+
+327
+00:12:10,339 --> 00:12:15,139
+transitions but also generics and you
+
+328
+00:12:15,139 --> 00:12:16,610
+know you see closures and languages like
+
+329
+00:12:16,610 --> 00:12:18,199
+Java you see type inference showing up
+
+330
+00:12:18,199 --> 00:12:20,000
+all over the place lots of technology
+
+331
+00:12:20,000 --> 00:12:22,069
+that originated in functional languages
+
+332
+00:12:22,069 --> 00:12:24,769
+has spread out into other languages so
+
+333
+00:12:24,769 --> 00:12:26,750
+that's one form of influence another
+
+334
+00:12:26,750 --> 00:12:28,819
+form of influences idioms right there
+
+335
+00:12:28,819 --> 00:12:30,050
+are all sorts of ideas about how to
+
+336
+00:12:30,050 --> 00:12:32,120
+program that are transportable anywhere
+
+337
+00:12:32,120 --> 00:12:34,939
+and have been transported so lots of
+
+338
+00:12:34,939 --> 00:12:37,639
+lots of advice in from people who work
+
+339
+00:12:37,639 --> 00:12:39,829
+in lots of languages will point out the
+
+340
+00:12:39,829 --> 00:12:42,259
+value of having immutable data
+
+341
+00:12:42,259 --> 00:12:44,240
+structures it's a kind of very common
+
+342
+00:12:44,240 --> 00:12:47,449
+bit of wisdom you'll see frameworks like
+
+343
+00:12:47,449 --> 00:12:49,430
+react right you know the JavaScript
+
+344
+00:12:49,430 --> 00:12:51,259
+world like keeps on minting like new
+
+345
+00:12:51,259 --> 00:12:52,910
+JavaScript frameworks every 45 seconds
+
+346
+00:12:52,910 --> 00:12:55,250
+but some of the react is one of the more
+
+347
+00:12:55,250 --> 00:12:56,990
+popular ones it's kind of stuck it seems
+
+348
+00:12:56,990 --> 00:12:59,959
+to be sticking around and it is deeply
+
+349
+00:12:59,959 --> 00:13:02,389
+animated by kind of classical functional
+
+350
+00:13:02,389 --> 00:13:06,189
+programming ideas but I think it's the
+
+351
+00:13:06,189 --> 00:13:08,930
+the movement of features into other
+
+352
+00:13:08,930 --> 00:13:11,389
+languages and the movement of ideas into
+
+353
+00:13:11,389 --> 00:13:13,939
+people's brains I think is not enough
+
+354
+00:13:13,939 --> 00:13:16,550
+right first of all the when you move
+
+355
+00:13:16,550 --> 00:13:19,069
+ideas into other languages you only get
+
+356
+00:13:19,069 --> 00:13:21,019
+a kind of partial reflection of them I
+
+357
+00:13:21,019 --> 00:13:22,069
+think there's a real difference between
+
+358
+00:13:22,069 --> 00:13:24,439
+operating in a language which is yay had
+
+359
+00:13:24,439 --> 00:13:26,540
+closures added to it and operating a
+
+360
+00:13:26,540 --> 00:13:28,009
+language which was designed from the
+
+361
+00:13:28,009 --> 00:13:29,800
+ground up for functional programming and
+
+362
+00:13:29,800 --> 00:13:31,879
+when the idioms move out into other
+
+363
+00:13:31,879 --> 00:13:33,500
+places the idioms are limited right and
+
+364
+00:13:33,500 --> 00:13:35,360
+in fact the part that gets to move out
+
+365
+00:13:35,360 --> 00:13:36,769
+into other languages like that
+
+366
+00:13:36,769 --> 00:13:38,660
+intersection between the ml and Lisp
+
+367
+00:13:38,660 --> 00:13:41,420
+world the like the higher-order pure
+
+368
+00:13:41,420 --> 00:13:42,830
+stuff like that
+
+369
+00:13:42,830 --> 00:13:44,420
+you can do anywhere with the appropriate
+
+370
+00:13:44,420 --> 00:13:45,950
+level you can do it and see for God's
+
+371
+00:13:45,950 --> 00:13:49,360
+sake like you can do but but the whole
+
+372
+00:13:49,360 --> 00:13:51,350
+disciplines that come from things like
+
+373
+00:13:51,350 --> 00:13:53,480
+you know high quality macro systems and
+
+374
+00:13:53,480 --> 00:13:56,000
+that come from high quality type systems
+
+375
+00:13:56,000 --> 00:13:57,920
+are just not accessible so in some sense
+
+376
+00:13:57,920 --> 00:14:00,020
+I feel like we shouldn't be satisfied by
+
+377
+00:14:00,020 --> 00:14:01,730
+the kind of current state of affairs in
+
+378
+00:14:01,730 --> 00:14:03,320
+the way in which functional languages
+
+379
+00:14:03,320 --> 00:14:07,030
+are used in practical circumstances a
+
+380
+00:14:07,030 --> 00:14:09,740
+further limitation of the way in which
+
+381
+00:14:09,740 --> 00:14:10,940
+functional languages tend to be used in
+
+382
+00:14:10,940 --> 00:14:12,680
+the real world is where you do go find
+
+383
+00:14:12,680 --> 00:14:14,450
+like the places where people are using
+
+384
+00:14:14,450 --> 00:14:16,970
+like well-designed functional languages
+
+385
+00:14:16,970 --> 00:14:19,940
+for real practical purposes the purposes
+
+386
+00:14:19,940 --> 00:14:21,770
+are almost always the placement of
+
+387
+00:14:21,770 --> 00:14:23,720
+lipstick on pigs right which is to say
+
+388
+00:14:23,720 --> 00:14:26,810
+the prettying up and improving the
+
+389
+00:14:26,810 --> 00:14:29,410
+experience of working with other kind of
+
+390
+00:14:29,410 --> 00:14:32,630
+variously broken forms of technology so
+
+391
+00:14:32,630 --> 00:14:34,970
+and like impressive like you know
+
+392
+00:14:34,970 --> 00:14:37,310
+awesome industrial scale lipstick on a
+
+393
+00:14:37,310 --> 00:14:39,740
+pig projects but still lipstick on a pig
+
+394
+00:14:39,740 --> 00:14:42,470
+right I think one of the if you within
+
+395
+00:14:42,470 --> 00:14:43,880
+the ocala world which I'm very familiar
+
+396
+00:14:43,880 --> 00:14:46,580
+with one of the more impressive places
+
+397
+00:14:46,580 --> 00:14:47,660
+that's done this is Facebook where they
+
+398
+00:14:47,660 --> 00:14:49,430
+have like a whole bunch of like really
+
+399
+00:14:49,430 --> 00:14:54,040
+awesome projects to make PHP better oh
+
+400
+00:14:54,040 --> 00:14:56,330
+right and like the amount of work that's
+
+401
+00:14:56,330 --> 00:14:57,920
+been poured into PHP is kind of shocking
+
+402
+00:14:57,920 --> 00:15:00,230
+right to it you know it's like you know
+
+403
+00:15:00,230 --> 00:15:03,440
+a company has gone in and they use that
+
+404
+00:15:03,440 --> 00:15:05,810
+technology and like you broke it you
+
+405
+00:15:05,810 --> 00:15:07,550
+bought it you know it's their thing now
+
+406
+00:15:07,550 --> 00:15:08,930
+and they have to take care of it and
+
+407
+00:15:08,930 --> 00:15:12,170
+they do these amazing projects you know
+
+408
+00:15:12,170 --> 00:15:14,270
+these kind of like the the hack compiler
+
+409
+00:15:14,270 --> 00:15:16,240
+I remember a demo that I saw where
+
+410
+00:15:16,240 --> 00:15:19,070
+Julian Veloce who's one of the main guys
+
+411
+00:15:19,070 --> 00:15:19,670
+behind it
+
+412
+00:15:19,670 --> 00:15:21,650
+showed me like you do a git rebase and
+
+413
+00:15:21,650 --> 00:15:23,180
+like changing thousands of files while
+
+414
+00:15:23,180 --> 00:15:24,800
+they're compiler is incrementally
+
+415
+00:15:24,800 --> 00:15:26,690
+updating so fast it's done 10
+
+416
+00:15:26,690 --> 00:15:28,070
+milliseconds after the rebase is
+
+417
+00:15:28,070 --> 00:15:29,050
+complete right it's working
+
+418
+00:15:29,050 --> 00:15:31,160
+significantly faster than get can, right.
+
+419
+00:15:31,160 --> 00:15:33,260
+it's pretty good, right, and it's like a
+
+420
+00:15:33,260 --> 00:15:34,850
+big parallel or camel program that does
+
+421
+00:15:34,850 --> 00:15:37,460
+all of this stuff but like it's the
+
+422
+00:15:37,460 --> 00:15:39,800
+the restriction to a smaller set of
+
+423
+00:15:39,800 --> 00:15:42,680
+concerns and activities is concerning
+
+424
+00:15:42,680 --> 00:15:44,780
+right I think in one of my views from
+
+425
+00:15:44,780 --> 00:15:46,580
+the work that I've done is that that
+
+426
+00:15:46,580 --> 00:15:48,110
+functional programming is a perfectly
+
+427
+00:15:48,110 --> 00:15:51,200
+good general purpose tool right you can
+
+428
+00:15:51,200 --> 00:15:53,270
+be used quite broadly for a wide variety
+
+429
+00:15:53,270 --> 00:15:56,300
+of projects and it's often limited and
+
+430
+00:15:56,300 --> 00:15:56,690
+the
+
+431
+00:15:56,690 --> 00:15:58,100
+which is limited I think are connected
+
+432
+00:15:58,100 --> 00:16:00,650
+to the academic origins of the field
+
+433
+00:16:00,650 --> 00:16:03,770
+like you see it limited to compilers and
+
+434
+00:16:03,770 --> 00:16:06,290
+ESL's and formal methods that's like the
+
+435
+00:16:06,290 --> 00:16:09,500
+place where you see most of it that's
+
+436
+00:16:09,500 --> 00:16:10,670
+said it's a thing which is I think
+
+437
+00:16:10,670 --> 00:16:12,800
+improving and growing over time if you
+
+438
+00:16:12,800 --> 00:16:15,380
+look at so Jenestreet's one example of
+
+439
+00:16:15,380 --> 00:16:17,000
+a sort of completely general purpose
+
+440
+00:16:17,000 --> 00:16:19,010
+kind of place that's using functional
+
+441
+00:16:19,010 --> 00:16:21,410
+programming whatsapp's use of air Lange
+
+442
+00:16:21,410 --> 00:16:23,660
+is another kind of famous example of
+
+443
+00:16:23,660 --> 00:16:26,840
+this Twitter and Scala and then there's
+
+444
+00:16:26,840 --> 00:16:27,800
+like the people who are coming up with
+
+445
+00:16:27,800 --> 00:16:30,880
+new languages like Apple with Swift and
+
+446
+00:16:30,880 --> 00:16:34,760
+Mozilla with Rust are both kind of early
+
+447
+00:16:34,760 --> 00:16:37,120
+and very sweet but still interesting
+
+448
+00:16:37,120 --> 00:16:39,110
+places that have kind of repackaged
+
+449
+00:16:39,110 --> 00:16:40,790
+these ideas in somewhat different ways
+
+450
+00:16:40,790 --> 00:16:42,050
+and kind of trying to push them towards
+
+451
+00:16:42,050 --> 00:16:43,670
+doing practical and fairly
+
+452
+00:16:43,670 --> 00:16:45,620
+general-purpose stuff and in fact a key
+
+453
+00:16:45,620 --> 00:16:47,810
+Facebook itself is also has some
+
+454
+00:16:47,810 --> 00:16:49,640
+internal projects to try and push the
+
+455
+00:16:49,640 --> 00:16:51,470
+use of OCaml for ordinary programming
+
+456
+00:16:51,470 --> 00:16:53,930
+rather than for kind of special purpose
+
+457
+00:16:53,930 --> 00:16:56,240
+language kind of work so I think this is
+
+458
+00:16:56,240 --> 00:16:59,510
+an ongoing in ongoing process and this
+
+459
+00:16:59,510 --> 00:17:00,950
+progress that's been made but it's still
+
+460
+00:17:00,950 --> 00:17:04,699
+quite incomplete so one of the questions
+
+461
+00:17:04,699 --> 00:17:07,670
+is why like what yeah I'm personally
+
+462
+00:17:07,670 --> 00:17:09,170
+deeply convinced that functional
+
+463
+00:17:09,170 --> 00:17:10,490
+programming is great probably lots of
+
+464
+00:17:10,490 --> 00:17:13,099
+you are too and why doesn't everyone
+
+465
+00:17:13,099 --> 00:17:15,349
+else agree and I think there's a kind of
+
+466
+00:17:15,349 --> 00:17:18,349
+fundamental fact that there's no
+
+467
+00:17:18,349 --> 00:17:20,480
+evidence you basically can't convince
+
+468
+00:17:20,480 --> 00:17:22,220
+anybody like in for good reasons like
+
+469
+00:17:22,220 --> 00:17:23,510
+you really can't convince anyone because
+
+470
+00:17:23,510 --> 00:17:25,459
+there's there is no good way of
+
+471
+00:17:25,459 --> 00:17:27,140
+obtaining experimental evidence about
+
+472
+00:17:27,140 --> 00:17:28,850
+this. like imagine designing the
+
+473
+00:17:28,850 --> 00:17:30,950
+experiment that would prove that you
+
+474
+00:17:30,950 --> 00:17:32,390
+know programming language technology A
+
+475
+00:17:32,390 --> 00:17:34,130
+is better than programming technology B
+
+476
+00:17:34,130 --> 00:17:36,350
+it's like you guys in this side are
+
+477
+00:17:36,350 --> 00:17:37,580
+going to be randomizing to grew the
+
+478
+00:17:37,580 --> 00:17:38,600
+group that's doing their project in
+
+479
+00:17:38,600 --> 00:17:41,000
+COBOL for two years and you you know
+
+480
+00:17:41,000 --> 00:17:42,920
+know like no one's going to do that like
+
+481
+00:17:42,920 --> 00:17:45,260
+the the only thing that matters in
+
+482
+00:17:45,260 --> 00:17:47,300
+programming are the things that
+
+483
+00:17:47,300 --> 00:17:51,470
+happen with experience and scale and you
+
+484
+00:17:51,470 --> 00:17:53,240
+can't get experience and scale in the
+
+485
+00:17:53,240 --> 00:17:55,280
+lab, right. the only experimental
+
+486
+00:17:55,280 --> 00:17:57,050
+instruments that you have, if you're
+
+487
+00:17:57,050 --> 00:17:58,150
+doing stuff in university, is like
+
+488
+00:17:58,150 --> 00:18:01,730
+sophomores and there's no pile of
+
+489
+00:18:01,730 --> 00:18:03,260
+sophomores high enough to prove anything
+
+490
+00:18:03,260 --> 00:18:04,910
+about what it's like to be an actual
+
+491
+00:18:04,910 --> 00:18:06,800
+programmer because they're doing small
+
+492
+00:18:06,800 --> 00:18:08,030
+things and they're, you know,
+
+493
+00:18:08,030 --> 00:18:09,920
+there's a small time scale involve
+
+494
+00:18:09,920 --> 00:18:11,750
+so the experiment evidence is incredibly
+
+495
+00:18:11,750 --> 00:18:15,200
+hard to come by and in some sense I
+
+496
+00:18:15,200 --> 00:18:16,310
+don't think we should be surprised
+
+497
+00:18:16,310 --> 00:18:19,700
+because I think that, in some sense,
+
+498
+00:18:19,700 --> 00:18:21,920
+the wrong expectations come from the
+
+499
+00:18:21,920 --> 00:18:23,570
+the name of our overall field it's
+
+500
+00:18:23,570 --> 00:18:26,540
+computer science it's like you know any
+
+501
+00:18:26,540 --> 00:18:27,950
+field that has to call itself a science
+
+502
+00:18:27,950 --> 00:18:30,350
+you should be a little dubious of and, I
+
+503
+00:18:30,350 --> 00:18:32,150
+think, Computer Science is in many ways a
+
+504
+00:18:32,150 --> 00:18:33,800
+kind of mathematical engineering
+
+505
+00:18:33,800 --> 00:18:35,240
+discipline and if you look at
+
+506
+00:18:35,240 --> 00:18:36,230
+programming language design in
+
+507
+00:18:36,230 --> 00:18:38,300
+particular, I think, it's more of a kind
+
+508
+00:18:38,300 --> 00:18:40,280
+of mathematical design oriented thing.
+
+509
+00:18:40,280 --> 00:18:42,110
+it's closer to Architecture than it is
+
+510
+00:18:42,110 --> 00:18:43,850
+to experimental physics, I think that, and
+
+511
+00:18:43,850 --> 00:18:47,540
+so you don't get, you don't get to
+
+512
+00:18:47,540 --> 00:18:48,890
+the expectation that you're going to
+
+513
+00:18:48,890 --> 00:18:50,240
+have scientific ways of evaluating these
+
+514
+00:18:50,240 --> 00:18:52,280
+things because the things that are being
+
+515
+00:18:52,280 --> 00:18:54,830
+done are too fundamentally human in
+
+516
+00:18:54,830 --> 00:18:58,370
+nature, too fundamentally social and I
+
+517
+00:18:58,370 --> 00:18:59,180
+think this is actually a fundamental
+
+518
+00:18:59,180 --> 00:19:01,310
+problem for programming language learn. I
+
+519
+00:19:01,310 --> 00:19:03,440
+think it helps explain that disturbing
+
+520
+00:19:03,440 --> 00:19:05,600
+40-year gap between when garbage
+
+521
+00:19:05,600 --> 00:19:07,490
+collection was invented and when it
+
+522
+00:19:07,490 --> 00:19:09,070
+started being used in the mainstream way
+
+523
+00:19:09,070 --> 00:19:11,420
+is because it's very hard to convince
+
+524
+00:19:11,420 --> 00:19:13,790
+people and people are very much in their
+
+525
+00:19:13,790 --> 00:19:15,200
+own heads, right. It's hard for them to
+
+526
+00:19:15,200 --> 00:19:18,020
+appreciate the things that they don't
+
+527
+00:19:18,020 --> 00:19:19,520
+understand, right. I think this is a key a
+
+528
+00:19:19,520 --> 00:19:22,160
+general problem of it's very hard to
+
+529
+00:19:22,160 --> 00:19:24,350
+value technologies especially
+
+530
+00:19:24,350 --> 00:19:26,210
+programming language ideas that you
+
+531
+00:19:26,210 --> 00:19:28,420
+don't already deeply understand and I
+
+532
+00:19:28,420 --> 00:19:31,190
+think this is a serious problem for
+
+533
+00:19:31,190 --> 00:19:32,780
+people who want to kind of push and
+
+534
+00:19:32,780 --> 00:19:34,550
+evangelize functional programming
+
+535
+00:19:34,550 --> 00:19:37,940
+because it's it's so hard to convince
+
+536
+00:19:37,940 --> 00:19:40,310
+somebody that it's better like you can
+
+537
+00:19:40,310 --> 00:19:41,420
+explain to them how it works you can
+
+538
+00:19:41,420 --> 00:19:43,310
+show them a small example and you can
+
+539
+00:19:43,310 --> 00:19:45,140
+tell them you know your success story
+
+540
+00:19:45,140 --> 00:19:47,300
+and by the success stories like, I mean
+
+541
+00:19:47,300 --> 00:19:50,300
+in some ways, this conference
+
+542
+00:19:50,300 --> 00:19:52,070
+specializes in success stories and
+
+543
+00:19:52,070 --> 00:19:53,960
+sometimes failure stories experience but
+
+544
+00:19:53,960 --> 00:19:55,940
+successors are interesting to look at.
+
+545
+00:19:55,940 --> 00:19:58,850
+but they're not convincing, right, because
+
+546
+00:19:58,850 --> 00:20:01,250
+for every one functional programming
+
+547
+00:20:01,250 --> 00:20:03,410
+success story there's ten imperative
+
+548
+00:20:03,410 --> 00:20:05,780
+programming success stories, right, and as
+
+549
+00:20:05,780 --> 00:20:07,910
+we know popularity isn't... it's not like
+
+550
+00:20:07,910 --> 00:20:09,260
+you should thereby be convinced at
+
+551
+00:20:09,260 --> 00:20:10,490
+imperative programming, right, we know
+
+552
+00:20:10,490 --> 00:20:12,560
+that popularity is a bad guide to what
+
+553
+00:20:12,560 --> 00:20:14,630
+to do like see previous comment about
+
+554
+00:20:14,630 --> 00:20:16,820
+garbage collection, right, so popularity
+
+555
+00:20:16,820 --> 00:20:19,760
+can't be the guide and so it's... it's... it's
+
+556
+00:20:19,760 --> 00:20:21,260
+hard to convince people who haven't
+
+557
+00:20:21,260 --> 00:20:23,030
+fully 
+
+558
+00:20:23,030 --> 00:20:26,090
+used and really experienced the
+
+559
+00:20:26,090 --> 00:20:28,880
+ideas in question. And it's when this is
+
+560
+00:20:28,880 --> 00:20:30,920
+not just like a thing to say about those
+
+561
+00:20:30,920 --> 00:20:33,260
+dumb imperative programming people, it's
+
+562
+00:20:33,260 --> 00:20:35,270
+true about all of us - like I've
+
+563
+00:20:35,270 --> 00:20:36,620
+experienced this myself in ways that
+
+564
+00:20:36,620 --> 00:20:38,150
+have been somewhat humbling so one of my
+
+565
+00:20:38,150 --> 00:20:39,890
+favorite experiences in this regard was
+
+566
+00:20:39,890 --> 00:20:42,860
+at some point a new feature was added to
+
+567
+00:20:42,860 --> 00:20:45,350
+a camel generalised algebraic data types
+
+568
+00:20:45,350 --> 00:20:50,330
+and I was not excited. I thought: "Oh, this
+
+569
+00:20:50,330 --> 00:20:52,100
+is the kind of garbage you get when you
+
+570
+00:20:52,100 --> 00:20:53,450
+let compiler writers design your
+
+571
+00:20:53,450 --> 00:20:55,910
+programming language" like some... like
+
+572
+00:20:55,910 --> 00:20:59,390
+fancy-schmancy type system nonsense that
+
+573
+00:20:59,390 --> 00:21:01,070
+lets them more precisely express... blah
+
+574
+00:21:01,070 --> 00:21:02,300
+blah blah. I'm already sleeping... like... I'm
+
+575
+00:21:02,300 --> 00:21:04,730
+a systems programmer, I don't care about
+
+576
+00:21:04,730 --> 00:21:06,680
+like all sorts of fancy type system
+
+577
+00:21:06,680 --> 00:21:08,930
+things, like. I want you know, I want the
+
+578
+00:21:08,930 --> 00:21:10,280
+better help messages and a faster
+
+579
+00:21:10,280 --> 00:21:12,860
+compiler and better inlining and like
+
+580
+00:21:12,860 --> 00:21:14,360
+can we please stop working on the type
+
+581
+00:21:14,360 --> 00:21:19,190
+system. And it turns out I was kind of
+
+582
+00:21:19,190 --> 00:21:21,290
+wrong, like... GADT's, do you know what
+
+583
+00:21:21,290 --> 00:21:23,620
+they're really good for? optimization!
+
+584
+00:21:23,620 --> 00:21:26,300
+like writing... you want to write like a
+
+585
+00:21:26,300 --> 00:21:28,220
+thing that can process you know a couple
+
+586
+00:21:28,220 --> 00:21:29,540
+million messages a second and get a
+
+587
+00:21:29,540 --> 00:21:32,180
+message in and out in five MKBps. you
+
+588
+00:21:32,180 --> 00:21:35,090
+should learn how to use GADT's which was
+
+589
+00:21:35,090 --> 00:21:36,890
+surprising. Like I did not expect that it
+
+590
+00:21:36,890 --> 00:21:38,720
+turns out GADT's are a really good tool
+
+591
+00:21:38,720 --> 00:21:40,300
+for controlling memory representation
+
+592
+00:21:40,300 --> 00:21:43,010
+and not a thing I'd known about and not
+
+593
+00:21:43,010 --> 00:21:44,510
+a thing I'd understood. Another
+
+594
+00:21:44,510 --> 00:21:47,110
+thing that was added with GADT's was
+
+595
+00:21:47,110 --> 00:21:49,630
+that was good support for using
+
+596
+00:21:49,630 --> 00:21:51,740
+existentially quantified type variables
+
+597
+00:21:51,740 --> 00:21:53,990
+in OCaml which like sounds about as like
+
+598
+00:21:53,990 --> 00:21:56,150
+nerdy pointy-headed like what is
+
+599
+00:21:56,150 --> 00:21:57,800
+essentially like orient math class again
+
+600
+00:21:57,800 --> 00:21:59,840
+but it turns out existentially
+
+601
+00:21:59,840 --> 00:22:01,460
+quantified type variables are really
+
+602
+00:22:01,460 --> 00:22:04,790
+useful and I had I knew what they were
+
+603
+00:22:04,790 --> 00:22:06,860
+and I had come to understand that
+
+604
+00:22:06,860 --> 00:22:09,020
+because ml didn't have them in a clean
+
+605
+00:22:09,020 --> 00:22:10,520
+and easy to access way oh camel didn't
+
+606
+00:22:10,520 --> 00:22:11,810
+have them and I'd learned they're so
+
+607
+00:22:11,810 --> 00:22:13,370
+standard ways of kind of working around
+
+608
+00:22:13,370 --> 00:22:15,260
+it and like you know you get a record
+
+609
+00:22:15,260 --> 00:22:16,430
+full of closures that hide the
+
+610
+00:22:16,430 --> 00:22:17,990
+underlying thing and everything works
+
+611
+00:22:17,990 --> 00:22:21,020
+out, and it turns out that totally sucked
+
+612
+00:22:21,020 --> 00:22:23,090
+like it didn't perform very well it was
+
+613
+00:22:23,090 --> 00:22:24,680
+hard to know the code was harder to
+
+614
+00:22:24,680 --> 00:22:26,570
+write. existencial were much cleaner and
+
+615
+00:22:26,570 --> 00:22:28,700
+much more natural and I kind of had like
+
+616
+00:22:28,700 --> 00:22:30,140
+dismissed them out of hand without
+
+617
+00:22:30,140 --> 00:22:32,450
+really fully understanding them. and so I
+
+618
+00:22:32,450 --> 00:22:34,160
+think this kind of highlighted to me the
+
+619
+00:22:34,160 --> 00:22:36,570
+idea that you really want to
+
+620
+00:22:36,570 --> 00:22:40,109
+think broadly about the other kind of
+
+621
+00:22:40,109 --> 00:22:41,279
+ideas that are out there and try and
+
+622
+00:22:41,279 --> 00:22:43,320
+understand and inhabit the understanding
+
+623
+00:22:43,320 --> 00:22:44,339
+of other programming language
+
+624
+00:22:44,339 --> 00:22:45,899
+communities and maybe you know that
+
+625
+00:22:45,899 --> 00:22:46,919
+thing and some other language that you
+
+626
+00:22:46,919 --> 00:22:48,779
+think isn't very valuable maybe you
+
+627
+00:22:48,779 --> 00:22:50,879
+should try it, and try and live in those
+
+628
+00:22:50,879 --> 00:22:51,839
+shoes for a little while and see if
+
+629
+00:22:51,839 --> 00:22:53,279
+there's something that you can pick up
+
+630
+00:22:53,279 --> 00:22:54,509
+and steal and bring back to your own
+
+631
+00:22:54,509 --> 00:23:00,989
+work. Another thing people commonly like
+
+632
+00:23:00,989 --> 00:23:03,149
+to talk about and in particular, I think,
+
+633
+00:23:03,149 --> 00:23:05,190
+people who are in this place of like
+
+634
+00:23:05,190 --> 00:23:06,570
+trying to get functional programming
+
+635
+00:23:06,570 --> 00:23:08,459
+used in some practical context and what
+
+636
+00:23:08,459 --> 00:23:10,979
+they're in is they say you know we
+
+637
+00:23:10,979 --> 00:23:12,299
+should use the right tool for the job
+
+638
+00:23:12,299 --> 00:23:14,489
+and the right tool for this job is say a
+
+639
+00:23:14,489 --> 00:23:16,469
+functional programming language. And I
+
+640
+00:23:16,469 --> 00:23:18,659
+have some sympathy for this idea after
+
+641
+00:23:18,659 --> 00:23:19,940
+all
+
+642
+00:23:19,940 --> 00:23:22,289
+should we use the wrong tool for the job?
+
+643
+00:23:22,289 --> 00:23:24,479
+right of course we use the right tool
+
+644
+00:23:24,479 --> 00:23:27,359
+for the job! but I think that the the
+
+645
+00:23:27,359 --> 00:23:28,739
+whole suggestion is in some sense
+
+646
+00:23:28,739 --> 00:23:31,559
+animated by a kind of mistaken idea and
+
+647
+00:23:31,559 --> 00:23:33,419
+I think there's two different mistaken
+
+648
+00:23:33,419 --> 00:23:36,539
+ideas that animate it. one is: the the
+
+649
+00:23:36,539 --> 00:23:39,089
+idea that that we need lots of different
+
+650
+00:23:39,089 --> 00:23:42,059
+tools because different jobs require
+
+651
+00:23:42,059 --> 00:23:43,259
+different tools, because you know there's
+
+652
+00:23:43,259 --> 00:23:44,399
+just like you know we need a big
+
+653
+00:23:44,399 --> 00:23:45,929
+complicated tool bet that you wear
+
+654
+00:23:45,929 --> 00:23:47,489
+around your you know where around your
+
+655
+00:23:47,489 --> 00:23:48,690
+waist it like gives all the different
+
+656
+00:23:48,690 --> 00:23:49,559
+tools you can do for solving the
+
+657
+00:23:49,559 --> 00:23:51,449
+different jobs and I think it turns out
+
+658
+00:23:51,449 --> 00:23:54,179
+that's mostly a mistake in the sense.
+
+659
+00:23:54,179 --> 00:23:57,149
+that yeah there are some you need some
+
+660
+00:23:57,149 --> 00:23:58,499
+variety of tools all you should use one
+
+661
+00:23:58,499 --> 00:24:00,269
+programming language for every single
+
+662
+00:24:00,269 --> 00:24:02,369
+thing that you do but there are
+
+663
+00:24:02,369 --> 00:24:03,690
+programming language techniques that are
+
+664
+00:24:03,690 --> 00:24:05,969
+more broad spectrum than others that can
+
+665
+00:24:05,969 --> 00:24:09,749
+solve more kinds of problems and you're
+
+666
+00:24:09,749 --> 00:24:11,549
+better off picking those when you can
+
+667
+00:24:11,549 --> 00:24:14,849
+because because it affects the
+
+668
+00:24:14,849 --> 00:24:16,139
+organization that you're in, it makes
+
+669
+00:24:16,139 --> 00:24:18,739
+that organization better. why? well
+
+670
+00:24:18,739 --> 00:24:21,899
+because you want to maximize various
+
+671
+00:24:21,899 --> 00:24:23,669
+forms of sharing and flexibility and
+
+672
+00:24:23,669 --> 00:24:25,529
+just kind of the power of the individual
+
+673
+00:24:25,529 --> 00:24:26,789
+developer and the organization that
+
+674
+00:24:26,789 --> 00:24:30,690
+you're in, and having a small number of
+
+675
+00:24:30,690 --> 00:24:32,159
+tools that people can really develop
+
+676
+00:24:32,159 --> 00:24:34,889
+expertise in and develop tools for right
+
+677
+00:24:34,889 --> 00:24:36,419
+you know your programming language is a
+
+678
+00:24:36,419 --> 00:24:37,879
+tool but you need tools for that tool
+
+679
+00:24:37,879 --> 00:24:41,249
+and so that and and develop shared
+
+680
+00:24:41,249 --> 00:24:44,700
+standards so that people can walk into
+
+681
+00:24:44,700 --> 00:24:46,200
+some other code base and understand how
+
+682
+00:24:46,200 --> 00:24:47,819
+it works right so that people are kind
+
+683
+00:24:47,819 --> 00:24:49,980
+of transportable between different areas.
+
+684
+00:24:49,980 --> 00:24:52,230
+that's enormously freeing like one
+
+685
+00:24:52,230 --> 00:24:53,580
+something you find sometimes here is
+
+686
+00:24:53,580 --> 00:24:55,740
+like oh we went off and built XYZ and
+
+687
+00:24:55,740 --> 00:24:58,559
+language W that nobody uses and it's
+
+688
+00:24:58,559 --> 00:25:01,350
+great although I have this chain tying
+
+689
+00:25:01,350 --> 00:25:02,850
+me to that project and I can never leave
+
+690
+00:25:02,850 --> 00:25:04,049
+because nobody else knows the language.
+
+691
+00:25:04,049 --> 00:25:05,909
+right like that's awkward and you don't
+
+692
+00:25:05,909 --> 00:25:07,139
+want to be stuck in that situation and
+
+693
+00:25:07,139 --> 00:25:08,370
+it's not a thing you want for your
+
+694
+00:25:08,370 --> 00:25:11,429
+organization and so I think that you
+
+695
+00:25:11,429 --> 00:25:12,929
+know people are with people who are in
+
+696
+00:25:12,929 --> 00:25:15,889
+organizations that have very strong
+
+697
+00:25:15,889 --> 00:25:17,490
+requirements and standards on which
+
+698
+00:25:17,490 --> 00:25:19,230
+languages they use. Google sort of famous
+
+699
+00:25:19,230 --> 00:25:22,860
+for having for right you can program in
+
+700
+00:25:22,860 --> 00:25:25,019
+C++ and you can program in Python you
+
+701
+00:25:25,019 --> 00:25:26,669
+can program in Java and you can program
+
+702
+00:25:26,669 --> 00:25:29,490
+in Go, and while I somewhat in like
+
+703
+00:25:29,490 --> 00:25:30,840
+occasionally again you can like hide
+
+704
+00:25:30,840 --> 00:25:32,100
+from your managers and do something else
+
+705
+00:25:32,100 --> 00:25:35,549
+but like mostly that's it and while I
+
+706
+00:25:35,549 --> 00:25:37,980
+don't especially approve of the concrete
+
+707
+00:25:37,980 --> 00:25:40,289
+list of choices I think the fact that
+
+708
+00:25:40,289 --> 00:25:41,850
+they keep it down to a small list is
+
+709
+00:25:41,850 --> 00:25:44,039
+totally rational right I think if you
+
+710
+00:25:44,039 --> 00:25:46,350
+want to have a good software engineering
+
+711
+00:25:46,350 --> 00:25:48,210
+experience. the ability to kind of focus
+
+712
+00:25:48,210 --> 00:25:50,340
+down on a small set of languages, I think,
+
+713
+00:25:50,340 --> 00:25:52,769
+really helps you do a better job of that
+
+714
+00:25:52,769 --> 00:25:54,450
+and I think that this is the kind of
+
+715
+00:25:54,450 --> 00:25:56,639
+thing that that really depends on scale.
+
+716
+00:25:56,639 --> 00:25:58,260
+and many things about programming depend
+
+717
+00:25:58,260 --> 00:25:59,909
+on scale. you know when you first if you
+
+718
+00:25:59,909 --> 00:26:00,929
+start out like you're doing a small
+
+719
+00:26:00,929 --> 00:26:03,840
+thing in a small company and the
+
+720
+00:26:03,840 --> 00:26:05,429
+individual speed with which you can do
+
+721
+00:26:05,429 --> 00:26:07,320
+stuff is in some sense the dominant
+
+722
+00:26:07,320 --> 00:26:09,539
+factor, it's like what can be comfortable
+
+723
+00:26:09,539 --> 00:26:11,429
+what makes me able to do my job best. and
+
+724
+00:26:11,429 --> 00:26:14,159
+you can sort of go by that and be pretty
+
+725
+00:26:14,159 --> 00:26:17,340
+happy for a while, but as you get if
+
+726
+00:26:17,340 --> 00:26:19,019
+you're going to do anything really big
+
+727
+00:26:19,019 --> 00:26:21,269
+significant you need other people right
+
+728
+00:26:21,269 --> 00:26:23,090
+programming is social it's collaborative
+
+729
+00:26:23,090 --> 00:26:26,399
+and as you try and increase the scale at
+
+730
+00:26:26,399 --> 00:26:29,730
+which you're working on things, well, you
+
+731
+00:26:29,730 --> 00:26:32,010
+need to the you need to deal with the
+
+732
+00:26:32,010 --> 00:26:34,320
+fact that the constant shift around, the
+
+733
+00:26:34,320 --> 00:26:36,570
+expense is change, right, you get more
+
+734
+00:26:36,570 --> 00:26:39,779
+costs that come from interactions right
+
+735
+00:26:39,779 --> 00:26:41,399
+as you have a big system with lots of
+
+736
+00:26:41,399 --> 00:26:43,440
+pieces and lots of people involved when
+
+737
+00:26:43,440 --> 00:26:45,929
+you change individual pieces, right, that
+
+738
+00:26:45,929 --> 00:26:48,389
+can break other things and something
+
+739
+00:26:48,389 --> 00:26:49,620
+that pushes you in the direction of
+
+740
+00:26:49,620 --> 00:26:51,320
+different choices about tools and
+
+741
+00:26:51,320 --> 00:26:53,549
+different choices about how you organize
+
+742
+00:26:53,549 --> 00:26:55,679
+things. and so I think it's an important
+
+743
+00:26:55,679 --> 00:26:56,809
+thing to think about when you're picking
+
+744
+00:26:56,809 --> 00:26:59,399
+technology is not just what it means for
+
+745
+00:26:59,399 --> 00:27:01,159
+you but what it means for the overall
+
+746
+00:27:01,159 --> 00:27:03,210
+organization
+
+747
+00:27:03,210 --> 00:27:05,760
+and for us that's actually affected
+
+748
+00:27:05,760 --> 00:27:09,059
+a lot the way that we think about how we
+
+749
+00:27:09,059 --> 00:27:12,270
+kind of invest in not just the language
+
+750
+00:27:12,270 --> 00:27:14,190
+that we use but the tools surrounding it.
+
+751
+00:27:14,190 --> 00:27:15,840
+like over time we've spent a lot more
+
+752
+00:27:15,840 --> 00:27:19,409
+time and energy thinking about language
+
+753
+00:27:19,409 --> 00:27:22,350
+tools and testing, right, and you know the
+
+754
+00:27:22,350 --> 00:27:23,789
+OCaml type system is a wonderful thing
+
+755
+00:27:23,789 --> 00:27:26,549
+and it catches lots of bugs for you and
+
+756
+00:27:26,549 --> 00:27:29,399
+you can skate away with like not quite
+
+757
+00:27:29,399 --> 00:27:31,950
+enough testing for a surprisingly long
+
+758
+00:27:31,950 --> 00:27:33,390
+time. and we kind of did that for a while
+
+759
+00:27:33,390 --> 00:27:35,309
+and then over time as things got more
+
+760
+00:27:35,309 --> 00:27:37,470
+complicated and the stakes got higher
+
+761
+00:27:37,470 --> 00:27:40,169
+we're like that that was dumb and we
+
+762
+00:27:40,169 --> 00:27:41,940
+started really investing in other kinds
+
+763
+00:27:41,940 --> 00:27:45,600
+of tools and that turns out to be kind
+
+764
+00:27:45,600 --> 00:27:48,120
+of incredibly important as you get
+
+765
+00:27:48,120 --> 00:27:49,320
+bigger and you need to change how you
+
+766
+00:27:49,320 --> 00:27:50,490
+behave. and but the other thing that
+
+767
+00:27:50,490 --> 00:27:52,740
+required more tools like early on we had
+
+768
+00:27:52,740 --> 00:27:55,590
+we had like lots of functional
+
+769
+00:27:55,590 --> 00:27:57,600
+programming people who we had hired to
+
+770
+00:27:57,600 --> 00:27:58,500
+do the work in the functional
+
+771
+00:27:58,500 --> 00:28:00,120
+programming language. which was great and
+
+772
+00:28:00,120 --> 00:28:02,039
+in fact that's one of the advantages for
+
+773
+00:28:02,039 --> 00:28:04,860
+us had been of using these kind of
+
+774
+00:28:04,860 --> 00:28:06,870
+languages is you know the set of
+
+775
+00:28:06,870 --> 00:28:09,029
+functional programmers is roughly empty
+
+776
+00:28:09,029 --> 00:28:10,710
+but the people in that empty set are
+
+777
+00:28:10,710 --> 00:28:12,330
+pretty good and so there was a real
+
+778
+00:28:12,330 --> 00:28:14,820
+advantage of hiring of pulling in high
+
+779
+00:28:14,820 --> 00:28:17,460
+quality people by virtue of the language
+
+780
+00:28:17,460 --> 00:28:20,370
+that we were using. but you know as we
+
+781
+00:28:20,370 --> 00:28:22,110
+got bigger we started hiring people in
+
+782
+00:28:22,110 --> 00:28:23,520
+more diverse ways, hiring more kids out
+
+783
+00:28:23,520 --> 00:28:25,770
+of school who weren't already like baked
+
+784
+00:28:25,770 --> 00:28:27,750
+in functional programmers, and also
+
+785
+00:28:27,750 --> 00:28:30,480
+teaching people to program who weren't
+
+786
+00:28:30,480 --> 00:28:32,520
+really by nature programmers at all,
+
+787
+00:28:32,520 --> 00:28:34,500
+right it turns out learning have if
+
+788
+00:28:34,500 --> 00:28:36,210
+you're a technical person who's capable
+
+789
+00:28:36,210 --> 00:28:37,950
+learning how to program. learning how to
+
+790
+00:28:37,950 --> 00:28:40,500
+program badly... is incredibly valuable!
+
+791
+00:28:40,500 --> 00:28:42,539
+like we had made a lot of money from
+
+792
+00:28:42,539 --> 00:28:44,429
+like lots of terrible code that people
+
+793
+00:28:44,429 --> 00:28:46,320
+have written you know to solve their own
+
+794
+00:28:46,320 --> 00:28:48,149
+narrow problem maybe not in a kind of
+
+795
+00:28:48,149 --> 00:28:50,070
+scalable and sustainable way but in a
+
+796
+00:28:50,070 --> 00:28:51,990
+way that locally worked for them and the
+
+797
+00:28:51,990 --> 00:28:53,370
+small group of people they were working
+
+798
+00:28:53,370 --> 00:28:55,440
+in. and you also have to change how you
+
+799
+00:28:55,440 --> 00:28:57,659
+invest when you're trying to grow beyond
+
+800
+00:28:57,659 --> 00:29:00,299
+like that core group of like-minded
+
+801
+00:29:00,299 --> 00:29:02,159
+people who've gone who are there for the
+
+802
+00:29:02,159 --> 00:29:05,070
+particular technology to a broader set
+
+803
+00:29:05,070 --> 00:29:06,390
+of people who are there for all sorts of
+
+804
+00:29:06,390 --> 00:29:09,690
+other reasons. And if that this feeds
+
+805
+00:29:09,690 --> 00:29:12,450
+into another kind of larger kind of "you
+
+806
+00:29:12,450 --> 00:29:13,740
+broke it you bought it" phenomenon. right.
+
+807
+00:29:13,740 --> 00:29:14,940
+so I mentioned this about Facebook where
+
+808
+00:29:14,940 --> 00:29:16,909
+that happened with them with PHP so
+
+809
+00:29:16,909 --> 00:29:19,159
+happened with us with OCamel and
+
+810
+00:29:19,159 --> 00:29:21,169
+because I'm also happier about that
+
+811
+00:29:21,169 --> 00:29:24,999
+particular ownership story... but but the
+
+812
+00:29:24,999 --> 00:29:27,679
+you it in some sense using a minority
+
+813
+00:29:27,679 --> 00:29:29,929
+language.... like that's actually the hard
+
+814
+00:29:29,929 --> 00:29:31,669
+part you think oh using functional
+
+815
+00:29:31,669 --> 00:29:32,960
+programming in the world that's hard no
+
+816
+00:29:32,960 --> 00:29:34,249
+it's not the functional programming
+
+817
+00:29:34,249 --> 00:29:35,299
+parts easy that makes your life better
+
+818
+00:29:35,299 --> 00:29:37,909
+the part that's hard is being a minority
+
+819
+00:29:37,909 --> 00:29:41,479
+language being, having the poorer set of
+
+820
+00:29:41,479 --> 00:29:43,399
+tools and the poor set of libraries and
+
+821
+00:29:43,399 --> 00:29:44,690
+the poor sort of shared understanding
+
+822
+00:29:44,690 --> 00:29:48,529
+that comes from being small, and when you
+
+823
+00:29:48,529 --> 00:29:51,950
+enter into a world like this and you
+
+824
+00:29:51,950 --> 00:29:55,220
+succeed, you sort of have bought a
+
+825
+00:29:55,220 --> 00:29:56,840
+requirement to do something about it,
+
+826
+00:29:56,840 --> 00:29:57,799
+right. and that's something that's
+
+827
+00:29:57,799 --> 00:29:59,539
+happened to us is that we kind of
+
+828
+00:29:59,539 --> 00:30:01,669
+recognize fairly early that you know as
+
+829
+00:30:01,669 --> 00:30:03,049
+our kind of use of account will ramped
+
+830
+00:30:03,049 --> 00:30:05,029
+up and as the business ramped up we
+
+831
+00:30:05,029 --> 00:30:06,649
+needed to really invest in the broader
+
+832
+00:30:06,649 --> 00:30:08,840
+community, and we've tried to adopt a
+
+833
+00:30:08,840 --> 00:30:11,659
+kind of point of view of like
+
+834
+00:30:11,659 --> 00:30:13,489
+enlightened self-interest about this.
+
+835
+00:30:13,489 --> 00:30:15,859
+which is to say we've tried to take the
+
+836
+00:30:15,859 --> 00:30:18,769
+broad view that the overall community
+
+837
+00:30:18,769 --> 00:30:20,869
+around the language is important and we
+
+838
+00:30:20,869 --> 00:30:22,820
+need to support it and it's important to
+
+839
+00:30:22,820 --> 00:30:24,019
+our success but we don't need to support
+
+840
+00:30:24,019 --> 00:30:26,450
+it narrowly so, for example, we've spent a
+
+841
+00:30:26,450 --> 00:30:29,479
+lot of time funding the building of
+
+842
+00:30:29,479 --> 00:30:31,729
+infrastructure that we're never going to
+
+843
+00:30:31,729 --> 00:30:34,190
+use, right, so this is great tool in 
+
+844
+00:30:34,190 --> 00:30:35,749
+OCaml which we didn't write but which we
+
+845
+00:30:35,749 --> 00:30:37,999
+funded the work by OcamlPro which is a
+
+846
+00:30:37,999 --> 00:30:39,649
+commercial services company right called
+
+847
+00:30:39,649 --> 00:30:42,769
+OPAM which is a package manager before Oh
+
+848
+00:30:42,769 --> 00:30:45,769
+Pam it was an embarrassing thing to have
+
+849
+00:30:45,769 --> 00:30:46,970
+to explain to someone how to install a
+
+850
+00:30:46,970 --> 00:30:49,009
+camel I remember doing a tutorial at sea
+
+851
+00:30:49,009 --> 00:30:50,119
+a few years ago where I felt like I
+
+852
+00:30:50,119 --> 00:30:51,950
+brought out my like my burlap sack full
+
+853
+00:30:51,950 --> 00:30:53,359
+of tar balls and like emptied them out
+
+854
+00:30:53,359 --> 00:30:54,979
+on the table and tada you can probably
+
+855
+00:30:54,979 --> 00:30:56,659
+figure this out and you know we spent
+
+856
+00:30:56,659 --> 00:30:58,369
+like the first two hours or something
+
+857
+00:30:58,369 --> 00:31:00,889
+just installing stuff. it's horrible. now
+
+858
+00:31:00,889 --> 00:31:02,779
+okay Oh Pam install blah blah and things
+
+859
+00:31:02,779 --> 00:31:05,389
+work and that's transformative but we
+
+860
+00:31:05,389 --> 00:31:07,399
+don't use it it has no role in our
+
+861
+00:31:07,399 --> 00:31:09,739
+internal infrastructure but the
+
+862
+00:31:09,739 --> 00:31:11,419
+community has a role in our world, like I
+
+863
+00:31:11,419 --> 00:31:13,489
+think we've benefitted enormous amount
+
+864
+00:31:13,489 --> 00:31:15,919
+from the work that the kind of core
+
+865
+00:31:15,919 --> 00:31:17,179
+contributors to your calomel itself have
+
+866
+00:31:17,179 --> 00:31:18,919
+done and people building libraries and
+
+867
+00:31:18,919 --> 00:31:20,119
+people building tools all sorts of great
+
+868
+00:31:20,119 --> 00:31:21,649
+stuff has come our way because the
+
+869
+00:31:21,649 --> 00:31:23,720
+community is like alive and active and
+
+870
+00:31:23,720 --> 00:31:25,909
+successful. and you know we tried to
+
+871
+00:31:25,909 --> 00:31:28,789
+support it by evangelizing and giving
+
+872
+00:31:28,789 --> 00:31:30,320
+talks and releasing our own soft
+
+873
+00:31:30,320 --> 00:31:31,670
+supporting the stuff that other people
+
+874
+00:31:31,670 --> 00:31:34,430
+do, and I think it's worked out
+
+875
+00:31:34,430 --> 00:31:36,620
+extraordinarily well for us I think it's
+
+876
+00:31:36,620 --> 00:31:38,570
+it's helped the the community that we
+
+877
+00:31:38,570 --> 00:31:40,370
+depend so much on become more vibrant.
+
+878
+00:31:40,370 --> 00:31:43,430
+it's helped us hire people and I think
+
+879
+00:31:43,430 --> 00:31:46,010
+it's something I kind of recommend to
+
+880
+00:31:46,010 --> 00:31:47,360
+organizations that are in this position.
+
+881
+00:31:47,360 --> 00:31:48,650
+like if you really depend on a
+
+882
+00:31:48,650 --> 00:31:51,200
+technology you shouldn't make an overly
+
+883
+00:31:51,200 --> 00:31:54,320
+narrow calculation of like ah well you
+
+884
+00:31:54,320 --> 00:31:55,730
+know if I spend this much money what do
+
+885
+00:31:55,730 --> 00:31:57,380
+I don't get any product back out of it
+
+886
+00:31:57,380 --> 00:31:58,820
+so it's not worth it, right? it turns out
+
+887
+00:31:58,820 --> 00:32:00,950
+I think that these communities have a
+
+888
+00:32:00,950 --> 00:32:03,080
+lot of value and you know they'll take
+
+889
+00:32:03,080 --> 00:32:04,700
+your concerns more seriously if you kind
+
+890
+00:32:04,700 --> 00:32:06,770
+of openly contribute back to them and I
+
+891
+00:32:06,770 --> 00:32:08,120
+think it's for for companies that are
+
+892
+00:32:08,120 --> 00:32:09,470
+involved in minority languages I think
+
+893
+00:32:09,470 --> 00:32:11,720
+it's a really valuable kind of mindset
+
+894
+00:32:11,720 --> 00:32:17,240
+to take. another observation, so I was
+
+895
+00:32:17,240 --> 00:32:18,680
+talking before about the relationship
+
+896
+00:32:18,680 --> 00:32:21,680
+between kind of academia and industrial
+
+897
+00:32:21,680 --> 00:32:23,660
+work. and I think that's a really
+
+898
+00:32:23,660 --> 00:32:26,300
+productive perspective and I think lots
+
+899
+00:32:26,300 --> 00:32:28,280
+of you will sometimes hear people in
+
+900
+00:32:28,280 --> 00:32:30,500
+industry being like oh uh academia
+
+901
+00:32:30,500 --> 00:32:33,020
+they're all off heads in the sky doing
+
+902
+00:32:33,020 --> 00:32:35,060
+stuff that doesn't matter for practical
+
+903
+00:32:35,060 --> 00:32:37,670
+work and I really think this isn't true.
+
+904
+00:32:37,670 --> 00:32:39,020
+I think that in fact I feel this
+
+905
+00:32:39,020 --> 00:32:40,280
+actually about loss of academic
+
+906
+00:32:40,280 --> 00:32:42,620
+disciplines my own home field is
+
+907
+00:32:42,620 --> 00:32:44,480
+distributed systems and I feel like I
+
+908
+00:32:44,480 --> 00:32:45,860
+learned an enormous amount for the work
+
+909
+00:32:45,860 --> 00:32:47,420
+I did there that was a practical import.
+
+910
+00:32:47,420 --> 00:32:49,280
+like even though I didn't go off like
+
+911
+00:32:49,280 --> 00:32:50,870
+writing Paxos algorithms for doing
+
+912
+00:32:50,870 --> 00:32:52,880
+distributed consensus, nonetheless the
+
+913
+00:32:52,880 --> 00:32:55,310
+kind of insights and and intellectual
+
+914
+00:32:55,310 --> 00:32:57,560
+organization that came from that world I
+
+915
+00:32:57,560 --> 00:32:59,870
+found enormously informative, and I feel
+
+916
+00:32:59,870 --> 00:33:01,160
+very much the same way about the
+
+917
+00:33:01,160 --> 00:33:02,630
+programming language community. in fact a
+
+918
+00:33:02,630 --> 00:33:04,910
+thing I find kind of surprising and like
+
+919
+00:33:04,910 --> 00:33:09,230
+mildly frustrating is how sensible the
+
+920
+00:33:09,230 --> 00:33:11,180
+the academic community. I feel like you
+
+921
+00:33:11,180 --> 00:33:13,100
+know I've I've been off like in industry
+
+922
+00:33:13,100 --> 00:33:14,570
+doing practical stuff for over a decade,
+
+923
+00:33:14,570 --> 00:33:16,820
+like you know I've had a lot of hard-won
+
+924
+00:33:16,820 --> 00:33:18,740
+lessons about what's the right way of
+
+925
+00:33:18,740 --> 00:33:19,910
+approaching thing and how do you solve
+
+926
+00:33:19,910 --> 00:33:22,130
+problems, and the degree to which like
+
+927
+00:33:22,130 --> 00:33:24,380
+you know I go off and talk to the sort
+
+928
+00:33:24,380 --> 00:33:26,840
+of you know senior  people in the
+
+929
+00:33:26,840 --> 00:33:27,950
+programming language community about how
+
+930
+00:33:27,950 --> 00:33:29,240
+things should be done in the amount of
+
+931
+00:33:29,240 --> 00:33:32,450
+like shared ideas and and and concept. is
+
+932
+00:33:32,450 --> 00:33:33,860
+like surprisingly high it's like how do
+
+933
+00:33:33,860 --> 00:33:35,480
+they get there like they're just writing
+
+934
+00:33:35,480 --> 00:33:37,490
+compilers and like papers and stuff like
+
+935
+00:33:37,490 --> 00:33:38,870
+how do they know anything about software
+
+936
+00:33:38,870 --> 00:33:41,570
+engineering? but I think there's a
+
+937
+00:33:41,570 --> 00:33:43,070
+there's a part of what's going on is
+
+938
+00:33:43,070 --> 00:33:43,730
+this
+
+939
+00:33:43,730 --> 00:33:47,930
+surprising there's a the
+
+940
+00:33:47,930 --> 00:33:50,150
+languages are kind of surprisingly kind
+
+941
+00:33:50,150 --> 00:33:53,990
+of well fit to the problem space, which
+
+942
+00:33:53,990 --> 00:33:55,310
+in a way which I think is sort of
+
+943
+00:33:55,310 --> 00:33:58,460
+accidental. Like, I think, is... I
+
+944
+00:33:58,460 --> 00:33:59,090
+think, I think, that
+
+945
+00:33:59,090 --> 00:34:00,860
+Phil Wadler has talked about before but
+
+946
+00:34:00,860 --> 00:34:02,630
+I think the good programming
+
+947
+00:34:02,630 --> 00:34:04,370
+languages were more invented, were more
+
+948
+00:34:04,370 --> 00:34:06,620
+discovered than invented and I think the
+
+949
+00:34:06,620 --> 00:34:08,120
+people who discovered them kind of got
+
+950
+00:34:08,120 --> 00:34:09,980
+lucky in some sense like they were like
+
+951
+00:34:09,980 --> 00:34:11,690
+you know working in a good space things
+
+952
+00:34:11,690 --> 00:34:13,219
+that had nice mathematical structure and
+
+953
+00:34:13,219 --> 00:34:15,139
+the kind of Help together. but the fact
+
+954
+00:34:15,139 --> 00:34:16,880
+that ml and its descendants are such
+
+955
+00:34:16,880 --> 00:34:18,889
+good pragmatic programming languages in
+
+956
+00:34:18,889 --> 00:34:21,260
+some senses I think dumb luck like. there
+
+957
+00:34:21,260 --> 00:34:22,429
+were lots of other programming languages
+
+958
+00:34:22,429 --> 00:34:23,659
+that people invented that turned out not
+
+959
+00:34:23,659 --> 00:34:26,540
+to be as as good and I don't I don't
+
+960
+00:34:26,540 --> 00:34:27,650
+think like people sort of thought in
+
+961
+00:34:27,650 --> 00:34:30,530
+advance and had you know deep reasons to
+
+962
+00:34:30,530 --> 00:34:31,670
+know that these were the right things. I
+
+963
+00:34:31,670 --> 00:34:32,750
+think there's a certain amount of a
+
+964
+00:34:32,750 --> 00:34:34,489
+certain amount of luck that fell in
+
+965
+00:34:34,489 --> 00:34:37,790
+there. but in any case I think it turns
+
+966
+00:34:37,790 --> 00:34:39,199
+out that the academic world that thinks
+
+967
+00:34:39,199 --> 00:34:40,940
+about these languages has a lot of
+
+968
+00:34:40,940 --> 00:34:42,679
+practical useful things to say and some
+
+969
+00:34:42,679 --> 00:34:44,540
+of it is on the design of the language
+
+970
+00:34:44,540 --> 00:34:46,699
+themselves, and some of it is on the ways
+
+971
+00:34:46,699 --> 00:34:48,409
+in which you should use them, in the kind
+
+972
+00:34:48,409 --> 00:34:50,570
+of idioms that are useful, like one thing
+
+973
+00:34:50,570 --> 00:34:52,280
+that I've had kind of personally a very
+
+974
+00:34:52,280 --> 00:34:54,770
+productive back-and-forth on with lots
+
+975
+00:34:54,770 --> 00:34:56,540
+of people and the academic world is on a
+
+976
+00:34:56,540 --> 00:34:57,890
+kind of incremental and reactive
+
+977
+00:34:57,890 --> 00:34:59,810
+programming. where there's a whole bunch
+
+978
+00:34:59,810 --> 00:35:01,280
+of work that people have done about how
+
+979
+00:35:01,280 --> 00:35:03,110
+to think about structuring incremental
+
+980
+00:35:03,110 --> 00:35:04,610
+programs and that turns out to be a
+
+981
+00:35:04,610 --> 00:35:06,860
+really important pragmatic problem for a
+
+982
+00:35:06,860 --> 00:35:08,330
+lot of different things, right. if you're
+
+983
+00:35:08,330 --> 00:35:10,640
+building you know trading systems or
+
+984
+00:35:10,640 --> 00:35:13,010
+you're building user interfaces or lots
+
+985
+00:35:13,010 --> 00:35:14,390
+of other kinds of calculations you might
+
+986
+00:35:14,390 --> 00:35:16,420
+want to do, this notion of having
+
+987
+00:35:16,420 --> 00:35:18,650
+programs that can efficiently react to
+
+988
+00:35:18,650 --> 00:35:21,440
+new information is a kind of fundamental
+
+989
+00:35:21,440 --> 00:35:24,650
+problem, and it turns out the academic
+
+990
+00:35:24,650 --> 00:35:26,060
+perspective on this was very valuable.
+
+991
+00:35:26,060 --> 00:35:27,650
+and like there's a system that we built
+
+992
+00:35:27,650 --> 00:35:29,600
+internally called incremental, where we
+
+993
+00:35:29,600 --> 00:35:31,130
+wrote the first version without really
+
+994
+00:35:31,130 --> 00:35:33,920
+reading the paper carefully and we made
+
+995
+00:35:33,920 --> 00:35:35,780
+a lot of mistakes and you know going
+
+996
+00:35:35,780 --> 00:35:37,010
+back and looking at the papers helped
+
+997
+00:35:37,010 --> 00:35:38,210
+and there were lots of things that we
+
+998
+00:35:38,210 --> 00:35:39,170
+were able to fix by kind of
+
+999
+00:35:39,170 --> 00:35:41,180
+understanding the kind of academic
+
+1000
+00:35:41,180 --> 00:35:43,070
+perspective and the ideas that people
+
+1001
+00:35:43,070 --> 00:35:45,640
+had kind of carefully thought through.
+
+1002
+00:35:45,640 --> 00:35:48,530
+it's worth saying it's also true in the
+
+1003
+00:35:48,530 --> 00:35:49,760
+other direction I think there's a lot
+
+1004
+00:35:49,760 --> 00:35:51,200
+that academia can learn from
+
+1005
+00:35:51,200 --> 00:35:53,630
+practitioners, I guess somehow in that in
+
+1006
+00:35:53,630 --> 00:35:54,920
+that in some of that same work I think
+
+1007
+00:35:54,920 --> 00:35:57,020
+there's lots of there were lots of
+
+1008
+00:35:57,020 --> 00:35:57,560
+semantics
+
+1009
+00:35:57,560 --> 00:35:59,540
+that we got wrong in our first versions.
+
+1010
+00:35:59,540 --> 00:36:01,610
+and lost performance ideas that the
+
+1011
+00:36:01,610 --> 00:36:04,490
+author's got wrong, and, you know I think
+
+1012
+00:36:04,490 --> 00:36:07,070
+some of this difference in information
+
+1013
+00:36:07,070 --> 00:36:09,440
+comes from difference in focus. there are
+
+1014
+00:36:09,440 --> 00:36:11,090
+just certain kinds of problems that
+
+1015
+00:36:11,090 --> 00:36:14,030
+academics don't kind of fully have
+
+1016
+00:36:14,030 --> 00:36:16,940
+access to. some of them are have to do
+
+1017
+00:36:16,940 --> 00:36:18,710
+with exactly what problem space you're
+
+1018
+00:36:18,710 --> 00:36:20,150
+looking at, like there are certain kinds
+
+1019
+00:36:20,150 --> 00:36:22,730
+of performance problems that academics
+
+1020
+00:36:22,730 --> 00:36:24,680
+happen not to look at, and practice some
+
+1021
+00:36:24,680 --> 00:36:26,210
+practitioners do care about, and that's
+
+1022
+00:36:26,210 --> 00:36:28,580
+one kind of information difference that
+
+1023
+00:36:28,580 --> 00:36:30,800
+goes the other way. Another thing that I
+
+1024
+00:36:30,800 --> 00:36:33,200
+think academics have very poor access to
+
+1025
+00:36:33,200 --> 00:36:35,300
+in some sense is the problems that come
+
+1026
+00:36:35,300 --> 00:36:37,400
+at scale. so when you think about how do
+
+1027
+00:36:37,400 --> 00:36:41,090
+I deal with versioning and code review
+
+1028
+00:36:41,090 --> 00:36:43,130
+and testing and various other like
+
+1029
+00:36:43,130 --> 00:36:46,010
+software engineering stuff that matters
+
+1030
+00:36:46,010 --> 00:36:47,390
+when you get when you when you're trying
+
+1031
+00:36:47,390 --> 00:36:49,700
+to build multi-million line code bases.
+
+1032
+00:36:49,700 --> 00:36:51,560
+there's a queue very little experience
+
+1033
+00:36:51,560 --> 00:36:52,700
+in academia there's a whole bunch of
+
+1034
+00:36:52,700 --> 00:36:55,120
+interesting problems there, that you know
+
+1035
+00:36:55,120 --> 00:36:57,650
+see previous comment about like academic
+
+1036
+00:36:57,650 --> 00:36:59,270
+code is usually not that good there's
+
+1037
+00:36:59,270 --> 00:37:00,260
+really not that much code review
+
+1038
+00:37:00,260 --> 00:37:02,330
+involved a lot of those things. like
+
+1039
+00:37:02,330 --> 00:37:04,340
+those infrastructure just not ones
+
+1040
+00:37:04,340 --> 00:37:06,710
+that they've had an opportunity to kind
+
+1041
+00:37:06,710 --> 00:37:10,760
+of really dig into and understand, and so
+
+1042
+00:37:10,760 --> 00:37:12,140
+I think there's a really kind of
+
+1043
+00:37:12,140 --> 00:37:14,030
+productive space for both of these
+
+1044
+00:37:14,030 --> 00:37:15,290
+worlds to talk to each other and share
+
+1045
+00:37:15,290 --> 00:37:17,180
+information, and, I think, whichever side
+
+1046
+00:37:17,180 --> 00:37:18,590
+you're on I think it's worth seeking out
+
+1047
+00:37:18,590 --> 00:37:20,300
+people from the other side the other
+
+1048
+00:37:20,300 --> 00:37:21,830
+thing that academics can learn from
+
+1049
+00:37:21,830 --> 00:37:24,620
+practitioners is kind of something about
+
+1050
+00:37:24,620 --> 00:37:26,720
+like what what things matter. right, I
+
+1051
+00:37:26,720 --> 00:37:28,280
+think academic start out with pretty
+
+1052
+00:37:28,280 --> 00:37:30,350
+good intuitions about kind of what are
+
+1053
+00:37:30,350 --> 00:37:31,730
+reasonable ways of designing programming
+
+1054
+00:37:31,730 --> 00:37:35,120
+languages but I think in the field when
+
+1055
+00:37:35,120 --> 00:37:36,620
+you're using it with a large number of
+
+1056
+00:37:36,620 --> 00:37:38,330
+people on that scale, like you learn all
+
+1057
+00:37:38,330 --> 00:37:39,590
+sorts of things about what things can be
+
+1058
+00:37:39,590 --> 00:37:40,760
+talked to people on what things can't
+
+1059
+00:37:40,760 --> 00:37:42,380
+and, what features are too complicated
+
+1060
+00:37:42,380 --> 00:37:44,630
+for people to use in practice, and what
+
+1061
+00:37:44,630 --> 00:37:46,430
+kind of techniques actually meld very
+
+1062
+00:37:46,430 --> 00:37:48,650
+well and are easy to show people. and I
+
+1063
+00:37:48,650 --> 00:37:51,620
+think, programming languages really is as
+
+1064
+00:37:51,620 --> 00:37:53,360
+I said it's kind of a human oriented
+
+1065
+00:37:53,360 --> 00:37:55,040
+design problem in addition to being a
+
+1066
+00:37:55,040 --> 00:37:56,630
+mathematical problem. and I think it's
+
+1067
+00:37:56,630 --> 00:37:58,220
+important for the academic side to pay
+
+1068
+00:37:58,220 --> 00:37:59,960
+attention to the human side. and the
+
+1069
+00:37:59,960 --> 00:38:01,430
+practitioners have most of the humans
+
+1070
+00:38:01,430 --> 00:38:03,560
+that are kind of doing doing programming
+
+1071
+00:38:03,560 --> 00:38:05,180
+at big scale, I think it's worth more
+
+1072
+00:38:05,180 --> 00:38:07,990
+communication there.7
+
+1073
+00:38:08,200 --> 00:38:12,970
+so another kind of aspect of the kind of
+
+1074
+00:38:12,970 --> 00:38:14,650
+practical use of programming language in
+
+1075
+00:38:14,650 --> 00:38:17,680
+the real world is teaching them and I've
+
+1076
+00:38:17,680 --> 00:38:19,299
+thought about teaching in a lot of ways
+
+1077
+00:38:19,299 --> 00:38:22,180
+in my life like sometimes literally with
+
+1078
+00:38:22,180 --> 00:38:25,089
+my own kids. I have I have three kids all
+
+1079
+00:38:25,089 --> 00:38:27,520
+of whom I have taught on a surprisingly
+
+1080
+00:38:27,520 --> 00:38:29,710
+wide variety of different programming
+
+1081
+00:38:29,710 --> 00:38:32,619
+languages at this point. and that itself
+
+1082
+00:38:32,619 --> 00:38:35,589
+is a super exciting kind of adventure to
+
+1083
+00:38:35,589 --> 00:38:37,569
+go through and, by the way, if you want
+
+1084
+00:38:37,569 --> 00:38:39,160
+good idea for a project to do with your
+
+1085
+00:38:39,160 --> 00:38:42,160
+kids text adventures, I recommend text
+
+1086
+00:38:42,160 --> 00:38:45,819
+adventure they're super fun. but there's
+
+1087
+00:38:45,819 --> 00:38:49,660
+also the issue of teaching of functional
+
+1088
+00:38:49,660 --> 00:38:52,480
+programming in schools which I think is
+
+1089
+00:38:52,480 --> 00:38:54,599
+one of the ways in which these ideas are
+
+1090
+00:38:54,599 --> 00:38:56,859
+distributed and I think an important
+
+1091
+00:38:56,859 --> 00:38:58,750
+thing like if you care about functional
+
+1092
+00:38:58,750 --> 00:39:00,220
+languages getting more traction and
+
+1093
+00:39:00,220 --> 00:39:02,380
+being used more and being a more kind of
+
+1094
+00:39:02,380 --> 00:39:04,119
+real part of the computational world.
+
+1095
+00:39:04,119 --> 00:39:06,040
+then you should care about the
+
+1096
+00:39:06,040 --> 00:39:08,589
+educational side of this, and I feel like
+
+1097
+00:39:08,589 --> 00:39:11,950
+the story that has around this has is
+
+1098
+00:39:11,950 --> 00:39:15,010
+both kind of good and improving but also
+
+1099
+00:39:15,010 --> 00:39:17,290
+sort of tenuous, which is to say you like
+
+1100
+00:39:17,290 --> 00:39:19,480
+I go I actually go around and have had
+
+1101
+00:39:19,480 --> 00:39:22,780
+the privilege of giving talks at a whole
+
+1102
+00:39:22,780 --> 00:39:24,670
+bunch of different universities that
+
+1103
+00:39:24,670 --> 00:39:27,490
+teach some variant of ML as part of
+
+1104
+00:39:27,490 --> 00:39:29,380
+their kind of major curriculum as a
+
+1105
+00:39:29,380 --> 00:39:30,960
+thing that everybody goes through. and
+
+1106
+00:39:30,960 --> 00:39:33,280
+there's a kind of shocking number of
+
+1107
+00:39:33,280 --> 00:39:36,579
+them, right, brown and CMU and Cornell and
+
+1108
+00:39:36,579 --> 00:39:38,170
+Princeton and Harvard and some other a
+
+1109
+00:39:38,170 --> 00:39:40,119
+bunch of like major US universities and
+
+1110
+00:39:40,119 --> 00:39:41,559
+a lot of universities in Europe as well
+
+1111
+00:39:41,559 --> 00:39:42,760
+and probably other places I'm not
+
+1112
+00:39:42,760 --> 00:39:44,710
+thinking, of teach functional programming
+
+1113
+00:39:44,710 --> 00:39:47,109
+as a kind of core important part of the
+
+1114
+00:39:47,109 --> 00:39:49,900
+curriculum. but there's something sort of
+
+1115
+00:39:49,900 --> 00:39:51,730
+tenuous about this state of affairs
+
+1116
+00:39:51,730 --> 00:39:53,950
+which is to say the functional
+
+1117
+00:39:53,950 --> 00:39:56,140
+programming itself is not necessarily
+
+1118
+00:39:56,140 --> 00:39:59,260
+widely kind of recognized and understood
+
+1119
+00:39:59,260 --> 00:40:01,900
+as a as a kind of important and valuable
+
+1120
+00:40:01,900 --> 00:40:04,660
+discipline, and even in departments that
+
+1121
+00:40:04,660 --> 00:40:06,490
+have very strong kind of functional
+
+1122
+00:40:06,490 --> 00:40:08,049
+programming contingents, there's often
+
+1123
+00:40:08,049 --> 00:40:09,160
+some other part of the department that
+
+1124
+00:40:09,160 --> 00:40:10,990
+looks suspiciously at the functional
+
+1125
+00:40:10,990 --> 00:40:14,440
+programming people and the main reason, I
+
+1126
+00:40:14,440 --> 00:40:16,270
+think, that so many of these schools
+
+1127
+00:40:16,270 --> 00:40:18,099
+teach functional programming is because
+
+1128
+00:40:18,099 --> 00:40:19,390
+the people who care most about
+
+1129
+00:40:19,390 --> 00:40:21,369
+programming are the people who study
+
+1130
+00:40:21,369 --> 00:40:22,150
+programming
+
+1131
+00:40:22,150 --> 00:40:23,589
+they're often the ones who are willing
+
+1132
+00:40:23,589 --> 00:40:24,960
+to take the time to teach the courses,
+
+1133
+00:40:24,960 --> 00:40:29,289
+and so anyway like this is sort of all
+
+1134
+00:40:29,289 --> 00:40:30,700
+academic inside baseball why does it
+
+1135
+00:40:30,700 --> 00:40:32,470
+matter, I think the reason it matters is
+
+1136
+00:40:32,470 --> 00:40:36,609
+if you care about the kind of language
+
+1137
+00:40:36,609 --> 00:40:39,279
+community being successful, I think you
+
+1138
+00:40:39,279 --> 00:40:41,230
+should care about how that how those
+
+1139
+00:40:41,230 --> 00:40:43,210
+languages are kind of useful and usable
+
+1140
+00:40:43,210 --> 00:40:45,759
+in academia, and I think that requires
+
+1141
+00:40:45,759 --> 00:40:48,970
+some real focus on tooling that can be
+
+1142
+00:40:48,970 --> 00:40:50,799
+used by people who are teaching. I think
+
+1143
+00:40:50,799 --> 00:40:53,049
+teaching languages is hard , you know,
+
+1144
+00:40:53,049 --> 00:40:54,720
+there's and there's lots of
+
+1145
+00:40:54,720 --> 00:40:57,039
+infrastructure to help people out like
+
+1146
+00:40:57,039 --> 00:40:59,559
+in in mainstream languages. like you go
+
+1147
+00:40:59,559 --> 00:41:02,499
+and use Java and you have all these kind
+
+1148
+00:41:02,499 --> 00:41:04,660
+of really awesome ideas that help you
+
+1149
+00:41:04,660 --> 00:41:06,009
+explore things and help you find things
+
+1150
+00:41:06,009 --> 00:41:07,329
+and like yeah there's a lot of.
+
+1151
+00:41:07,329 --> 00:41:08,619
+boilerplate too right but like there's a
+
+1152
+00:41:08,619 --> 00:41:09,819
+button that generates a bunch of it and
+
+1153
+00:41:09,819 --> 00:41:12,160
+people are often made sort of happy by
+
+1154
+00:41:12,160 --> 00:41:13,749
+that. and then even separate from the
+
+1155
+00:41:13,749 --> 00:41:15,249
+concrete tools there are other
+
+1156
+00:41:15,249 --> 00:41:18,240
+advantages that that we can't have like
+
+1157
+00:41:18,240 --> 00:41:20,619
+Stack Overflow, like you want to know a
+
+1158
+00:41:20,619 --> 00:41:22,599
+thing about some major language, either
+
+1159
+00:41:22,599 --> 00:41:24,069
+go to stack overflow and search it and
+
+1160
+00:41:24,069 --> 00:41:25,839
+you will find like bajillions of answers.
+
+1161
+00:41:25,839 --> 00:41:27,700
+and you want to know something about a
+
+1162
+00:41:27,700 --> 00:41:29,170
+relatively obscure kind of minority
+
+1163
+00:41:29,170 --> 00:41:31,239
+language and that's a lot thinner on the
+
+1164
+00:41:31,239 --> 00:41:34,900
+ground. and ... you can't all at once
+
+1165
+00:41:34,900 --> 00:41:37,480
+manufacture that kind of shared 
+
+1166
+00:41:37,480 --> 00:41:40,450
+knowledge base in kind of off in the
+
+1167
+00:41:40,450 --> 00:41:41,890
+web but you can make your tools better
+
+1168
+00:41:41,890 --> 00:41:43,809
+and I think making tools better in a way
+
+1169
+00:41:43,809 --> 00:41:45,190
+that optimizes towards learning I think
+
+1170
+00:41:45,190 --> 00:41:46,509
+is really helpful. and this is the thing
+
+1171
+00:41:46,509 --> 00:41:49,869
+that we've had a lot of kind of internal
+
+1172
+00:41:49,869 --> 00:41:53,259
+kind of experience and success with it
+
+1173
+00:41:53,259 --> 00:41:55,239
+as well and that we mentioned we have
+
+1174
+00:41:55,239 --> 00:41:57,069
+this kind of OCAml boot camp where we teach a
+
+1175
+00:41:57,069 --> 00:41:58,749
+bunch of non-programmers.
+
+1176
+00:41:58,749 --> 00:42:00,309
+I mean some programmers and some non
+
+1177
+00:42:00,309 --> 00:42:02,140
+programmers but not functional
+
+1178
+00:42:02,140 --> 00:42:03,849
+programmers to program in our world and
+
+1179
+00:42:03,849 --> 00:42:06,160
+it's gotten massively easier over the
+
+1180
+00:42:06,160 --> 00:42:07,359
+years. and one of the reasons it's gotten
+
+1181
+00:42:07,359 --> 00:42:09,190
+easier is because we've invested a lot
+
+1182
+00:42:09,190 --> 00:42:11,470
+in the tools and again that's kind of an
+
+1183
+00:42:11,470 --> 00:42:12,700
+overall thing that I feel like I've
+
+1184
+00:42:12,700 --> 00:42:14,739
+learned over the years is that tools are
+
+1185
+00:42:14,739 --> 00:42:17,440
+incredibly important, like many good
+
+1186
+00:42:17,440 --> 00:42:19,839
+things about languages can be swamped by
+
+1187
+00:42:19,839 --> 00:42:21,819
+bad tools. if you want a good evidence
+
+1188
+00:42:21,819 --> 00:42:24,160
+for how important tools are compared to
+
+1189
+00:42:24,160 --> 00:42:28,029
+languages look at Go, which is frankly
+
+1190
+00:42:28,029 --> 00:42:30,519
+uninspiring programming language, who's
+
+1191
+00:42:30,519 --> 00:42:32,680
+like you know ideas were like fresh in
+
+1192
+00:42:32,680 --> 00:42:34,220
+1968 but
+
+1193
+00:42:34,220 --> 00:42:35,840
+it's just like doesn't have that much to
+
+1194
+00:42:35,840 --> 00:42:39,080
+offer, but the tooling is awesome! and I
+
+1195
+00:42:39,080 --> 00:42:41,060
+know lots of people including people who
+
+1196
+00:42:41,060 --> 00:42:42,800
+are happy functional programmers feel
+
+1197
+00:42:42,800 --> 00:42:44,060
+like yeah this go thing it's not bad. I
+
+1198
+00:42:44,060 --> 00:42:47,330
+mean yeah I wish I had sent a higher
+
+1199
+00:42:47,330 --> 00:42:49,280
+order anything in good you know
+
+1200
+00:42:49,280 --> 00:42:50,540
+parametric polymorphism and all this
+
+1201
+00:42:50,540 --> 00:42:52,670
+stuff and but you know what the tools
+
+1202
+00:42:52,670 --> 00:42:54,470
+don't suck and and that that's
+
+1203
+00:42:54,470 --> 00:42:55,880
+incredibly valuable. and I think it's
+
+1204
+00:42:55,880 --> 00:42:57,860
+it's easy from a kind of point of view
+
+1205
+00:42:57,860 --> 00:42:59,780
+that like values the language, it's easy
+
+1206
+00:42:59,780 --> 00:43:00,980
+to underestimate the point of view of
+
+1207
+00:43:00,980 --> 00:43:07,120
+tools. so I guess kind of one kind of
+
+1208
+00:43:07,120 --> 00:43:11,210
+final point I want to make is that when
+
+1209
+00:43:11,210 --> 00:43:13,610
+you're off wanting to do practical
+
+1210
+00:43:13,610 --> 00:43:15,950
+things and take functional languages and
+
+1211
+00:43:15,950 --> 00:43:18,950
+make good real-world use of them. it's
+
+1212
+00:43:18,950 --> 00:43:22,220
+often it's often tempting to focus on
+
+1213
+00:43:22,220 --> 00:43:23,900
+evangelism, I'm trying to convince people
+
+1214
+00:43:23,900 --> 00:43:25,520
+I'm trying to get other people to do
+
+1215
+00:43:25,520 --> 00:43:27,860
+things and, I think that is a hard
+
+1216
+00:43:27,860 --> 00:43:29,750
+proposition in kind of a losing game in
+
+1217
+00:43:29,750 --> 00:43:31,940
+some sense. people are hard to convince
+
+1218
+00:43:31,940 --> 00:43:35,000
+and the world moves very slowly,  right. I
+
+1219
+00:43:35,000 --> 00:43:36,650
+think getting ideas out there I think
+
+1220
+00:43:36,650 --> 00:43:39,560
+you know you can do it and I think this
+
+1221
+00:43:39,560 --> 00:43:41,060
+community has chipped away at it over
+
+1222
+00:43:41,060 --> 00:43:43,850
+the years and pushed forward a lot of
+
+1223
+00:43:43,850 --> 00:43:45,200
+these ideas and gotten a lot more uptake
+
+1224
+00:43:45,200 --> 00:43:48,680
+on it, but it can take sometimes like, you
+
+1225
+00:43:48,680 --> 00:43:50,930
+know, glacial timeframes, right, you know
+
+1226
+00:43:50,930 --> 00:43:53,750
+again like parametric polymorphism mid
+
+1227
+00:43:53,750 --> 00:43:56,240
+70s invented hit mainstream languages
+
+1228
+00:43:56,240 --> 00:43:59,330
+2000 2000 something right whenever like
+
+1229
+00:43:59,330 --> 00:44:01,760
+generics hit Java again like 35 years or
+
+1230
+00:44:01,760 --> 00:44:03,980
+something, gap between invention and use.
+
+1231
+00:44:03,980 --> 00:44:07,910
+so, well, I think it's it's great to think
+
+1232
+00:44:07,910 --> 00:44:11,480
+long term about how you can help spread
+
+1233
+00:44:11,480 --> 00:44:15,040
+the ideas, I think short terms, you know,
+
+1234
+00:44:15,040 --> 00:44:18,530
+just succeed right these languages are
+
+1235
+00:44:18,530 --> 00:44:20,870
+incredibly valuable tools you can use
+
+1236
+00:44:20,870 --> 00:44:22,820
+them for making your own life in your
+
+1237
+00:44:22,820 --> 00:44:26,180
+own organization better. and by doing so
+
+1238
+00:44:26,180 --> 00:44:27,740
+you can you know build another one of
+
+1239
+00:44:27,740 --> 00:44:29,330
+these success stories. it won't exactly
+
+1240
+00:44:29,330 --> 00:44:31,040
+be convincing, right, as I said success
+
+1241
+00:44:31,040 --> 00:44:33,560
+stories don't really prove anything but
+
+1242
+00:44:33,560 --> 00:44:35,720
+they add up over time. and in the
+
+1243
+00:44:35,720 --> 00:44:36,920
+meantime you can have like a great
+
+1244
+00:44:36,920 --> 00:44:38,780
+profitable business that does wonderful
+
+1245
+00:44:38,780 --> 00:44:40,400
+things and you get to work with tools
+
+1246
+00:44:40,400 --> 00:44:41,480
+that don't make you want to claw your
+
+1247
+00:44:41,480 --> 00:44:44,810
+eyes out. and I think that's that's a
+
+1248
+00:44:44,810 --> 00:44:47,060
+it's a it's a kind of short-term
+
+1249
+00:44:47,060 --> 00:44:48,059
+strategy that
+
+1250
+00:44:48,059 --> 00:44:50,549
+you can all kind of take and just kind
+
+1251
+00:44:50,549 --> 00:44:52,229
+of do the thing with our own hands 
+
+1252
+00:44:52,229 --> 00:44:55,349
+that makes us the most effective. Snd
+
+1253
+00:44:55,349 --> 00:44:58,410
+with that I'm happy to take questions.
+
+1254
+00:44:58,410 --> 00:45:18,180
+oh, hi! it's more of a comment than a
+
+1255
+00:45:18,180 --> 00:45:20,939
+question. you mentioned that's you found
+
+1256
+00:45:20,939 --> 00:45:22,920
+it open but you don't use you don't use
+
+1257
+00:45:22,920 --> 00:45:25,670
+OPAM. and you also released a lot of
+
+1258
+00:45:25,670 --> 00:45:28,289
+packages on github but have you tried
+
+1259
+00:45:28,289 --> 00:45:32,339
+building those packages using the tools
+
+1260
+00:45:32,339 --> 00:45:35,160
+that a OCaml programmers have and not
+
+1261
+00:45:35,160 --> 00:45:38,009
+your internal tools. it's it can be quite
+
+1262
+00:45:38,009 --> 00:45:43,319
+tough and a lot of them, I had a couple
+
+1263
+00:45:43,319 --> 00:45:45,479
+of cases where, it's like, I saw a cool
+
+1264
+00:45:45,479 --> 00:45:47,789
+package on github I pull it out I pull
+
+1265
+00:45:47,789 --> 00:45:49,890
+it down, and it just doesn't compile and
+
+1266
+00:45:49,890 --> 00:45:52,559
+then I have to figure out like okay what
+
+1267
+00:45:52,559 --> 00:45:54,059
+do I have to tweak here what do I have
+
+1268
+00:45:54,059 --> 00:45:56,369
+to tweak there and here's the couple of
+
+1269
+00:45:56,369 --> 00:45:58,650
+lines of code I need to delete to make
+
+1270
+00:45:58,650 --> 00:46:00,059
+it work.
+
+1271
+00:46:00,059 --> 00:46:03,660
+using a ocamlbuild or interest in my
+
+1272
+00:46:03,660 --> 00:46:07,410
+local environment. so the question is
+
+1273
+00:46:07,410 --> 00:46:11,459
+there's a comments like so you're at
+
+1274
+00:46:11,459 --> 00:46:13,229
+least a lot of packages but do you try
+
+1275
+00:46:13,229 --> 00:46:15,269
+building them using the tools that other
+
+1276
+00:46:15,269 --> 00:46:17,549
+people have recently we do actually we
+
+1277
+00:46:17,549 --> 00:46:19,319
+have there's a lot of work in the OCaml
+
+1278
+00:46:19,319 --> 00:46:20,670
+world for making kind of continuous
+
+1279
+00:46:20,670 --> 00:46:23,069
+integration testing for OPAM packages
+
+1280
+00:46:23,069 --> 00:46:25,920
+and actually these days when I do like
+
+1281
+00:46:25,920 --> 00:46:27,599
+an open upgrade and install our stuff it
+
+1282
+00:46:27,599 --> 00:46:29,640
+usually works pretty smoothly at least
+
+1283
+00:46:29,640 --> 00:46:30,959
+on the Mac which is where I do stuff at
+
+1284
+00:46:30,959 --> 00:46:33,209
+home. and so yeah we've been doing a lot
+
+1285
+00:46:33,209 --> 00:46:34,709
+of work to make that integration
+
+1286
+00:46:34,709 --> 00:46:37,650
+smoother. and in fact I think the primary
+
+1287
+00:46:37,650 --> 00:46:38,910
+thing we're doing that's going to really
+
+1288
+00:46:38,910 --> 00:46:40,829
+make that really work is we've taken a
+
+1289
+00:46:40,829 --> 00:46:42,179
+bunch of our internal tools like Jenga
+
+1290
+00:46:42,179 --> 00:46:43,559
+which is a build system that we had -
+
+1291
+00:46:43,559 --> 00:46:45,509
+that we wrote internally. a fact about
+
+1292
+00:46:45,509 --> 00:46:47,009
+which I'm deeply embarrassed like the
+
+1293
+00:46:47,009 --> 00:46:48,569
+idea that a company today should write
+
+1294
+00:46:48,569 --> 00:46:50,519
+its own build system is ridiculous but
+
+1295
+00:46:50,519 --> 00:46:52,709
+there are no good build systems. it's
+
+1296
+00:46:52,709 --> 00:46:54,390
+sort of crazy but anyway so we wrote we
+
+1297
+00:46:54,390 --> 00:46:55,949
+wrote our own build system and we're
+
+1298
+00:46:55,949 --> 00:46:58,079
+we've we've now done a bunch of work to
+
+1299
+00:46:58,079 --> 00:46:59,339
+make it usable outside and we're gonna
+
+1300
+00:46:59,339 --> 00:47:01,319
+start releasing our packages externally
+
+1301
+00:47:01,319 --> 00:47:02,000
+using the same
+
+1302
+00:47:02,000 --> 00:47:04,160
+we use internally. but the reason we
+
+1303
+00:47:04,160 --> 00:47:05,840
+don't use open is I think a subtle one
+
+1304
+00:47:05,840 --> 00:47:08,780
+that I think people who work in kind of
+
+1305
+00:47:08,780 --> 00:47:12,170
+more intensely like the kind of working
+
+1306
+00:47:12,170 --> 00:47:13,880
+on stuff that's more purely open-source
+
+1307
+00:47:13,880 --> 00:47:16,850
+often don't fully understand which is
+
+1308
+00:47:16,850 --> 00:47:20,030
+that the lots of companies ourselves
+
+1309
+00:47:20,030 --> 00:47:21,590
+included have found it's incredibly
+
+1310
+00:47:21,590 --> 00:47:25,130
+useful to have single very large
+
+1311
+00:47:25,130 --> 00:47:27,230
+repositories for managing their codebase
+
+1312
+00:47:27,230 --> 00:47:28,310
+that's kind of what's called a mono repo
+
+1313
+00:47:28,310 --> 00:47:30,440
+approach, which turns out to be massively
+
+1314
+00:47:30,440 --> 00:47:33,020
+a massively simplifying technique and
+
+1315
+00:47:33,020 --> 00:47:34,820
+like Google and Facebook and lots of
+
+1316
+00:47:34,820 --> 00:47:36,640
+other places do this and we do it too
+
+1317
+00:47:36,640 --> 00:47:39,800
+and that's incompatible with things like
+
+1318
+00:47:39,800 --> 00:47:42,290
+OPAM's workflow and like the the
+
+1319
+00:47:42,290 --> 00:47:43,880
+downside is you have to do some work to
+
+1320
+00:47:43,880 --> 00:47:46,130
+cross that impedance barrier of figuring
+
+1321
+00:47:46,130 --> 00:47:47,390
+how to kind of push things to the open
+
+1322
+00:47:47,390 --> 00:47:48,890
+source world. the upside is you get to
+
+1323
+00:47:48,890 --> 00:47:50,330
+build your source code without ever
+
+1324
+00:47:50,330 --> 00:47:52,180
+having to say the word constraint solver
+
+1325
+00:47:52,180 --> 00:47:54,740
+right which totally sucks right. it's
+
+1326
+00:47:54,740 --> 00:47:56,270
+just a much simpler version you can say
+
+1327
+00:47:56,270 --> 00:47:57,680
+like what's the version of the world
+
+1328
+00:47:57,680 --> 00:47:59,150
+this single hash tells me everything
+
+1329
+00:47:59,150 --> 00:48:01,820
+that's an incredibly powerful kind of
+
+1330
+00:48:01,820 --> 00:48:08,660
+software engineering move. hi@ Tyler dramaski
+
+1331
+00:48:08,660 --> 00:48:11,270
+from fugue. I had a question you
+
+1332
+00:48:11,270 --> 00:48:14,090
+mentioned going from using okay ml is
+
+1333
+00:48:14,090 --> 00:48:15,920
+kind of like an experimental language in
+
+1334
+00:48:15,920 --> 00:48:17,750
+Jane Street to now it's you know the
+
+1335
+00:48:17,750 --> 00:48:19,220
+language is James Street it's used
+
+1336
+00:48:19,220 --> 00:48:22,370
+everywhere I was kind of wondering what
+
+1337
+00:48:22,370 --> 00:48:24,710
+it was like crossing that tipping point
+
+1338
+00:48:24,710 --> 00:48:26,030
+where you guys knew that you were
+
+1339
+00:48:26,030 --> 00:48:28,520
+invested and especially when it comes to
+
+1340
+00:48:28,520 --> 00:48:29,930
+the tooling being able to make the
+
+1341
+00:48:29,930 --> 00:48:33,500
+business justification of... aaa... writing the
+
+1342
+00:48:33,500 --> 00:48:35,810
+tooling internally versus like moving to
+
+1343
+00:48:35,810 --> 00:48:38,270
+a language where there is that tooling
+
+1344
+00:48:38,270 --> 00:48:42,830
+already exists. yeah so yeah change is a
+
+1345
+00:48:42,830 --> 00:48:44,540
+pretty a pretty good place and a pretty
+
+1346
+00:48:44,540 --> 00:48:46,940
+rational place and one of the things I
+
+1347
+00:48:46,940 --> 00:48:48,650
+have loved about my professional life
+
+1348
+00:48:48,650 --> 00:48:51,620
+there is that by and large the major
+
+1349
+00:48:51,620 --> 00:48:53,840
+work I had to do to convince other
+
+1350
+00:48:53,840 --> 00:48:55,130
+people that we needed to do something
+
+1351
+00:48:55,130 --> 00:48:57,650
+was to first convince myself and once I
+
+1352
+00:48:57,650 --> 00:48:59,390
+had an argument that made sense to me it
+
+1353
+00:48:59,390 --> 00:49:01,370
+was pretty easy to get other people to
+
+1354
+00:49:01,370 --> 00:49:03,290
+come on board. we didn't like the the
+
+1355
+00:49:03,290 --> 00:49:05,990
+move to OCaml was taken after like some
+
+1356
+00:49:05,990 --> 00:49:07,730
+serious thought and some discussion and
+
+1357
+00:49:07,730 --> 00:49:10,720
+you know looking at statistics about how
+
+1358
+00:49:10,720 --> 00:49:13,550
+vital the community was, and thinking
+
+1359
+00:49:13,550 --> 00:49:15,110
+about like how practical we move this
+
+1360
+00:49:15,110 --> 00:49:15,920
+was and thinking
+
+1361
+00:49:15,920 --> 00:49:18,829
+other companies had done. the move to do
+
+1362
+00:49:18,829 --> 00:49:20,119
+more tooling work has been incremental
+
+1363
+00:49:20,119 --> 00:49:23,720
+and has been justified by the effects
+
+1364
+00:49:23,720 --> 00:49:24,920
+piece-by-piece like it's somewhat you're
+
+1365
+00:49:24,920 --> 00:49:25,819
+like. oh we're in spent some time getting
+
+1366
+00:49:25,819 --> 00:49:27,440
+tooling anyone and all the people who
+
+1367
+00:49:27,440 --> 00:49:29,480
+are working are like oh this is so much
+
+1368
+00:49:29,480 --> 00:49:30,589
+better and I'm so much more productive
+
+1369
+00:49:30,589 --> 00:49:31,819
+you're like. okay we should do more of
+
+1370
+00:49:31,819 --> 00:49:34,640
+this and by trying to kind of rationally
+
+1371
+00:49:34,640 --> 00:49:35,720
+engage with the question of what's the
+
+1372
+00:49:35,720 --> 00:49:37,819
+best thing for the company we're able to
+
+1373
+00:49:37,819 --> 00:49:39,799
+kind of realize that we just needed to
+
+1374
+00:49:39,799 --> 00:49:48,980
+do more of us. so Yaron you talked about
+
+1375
+00:49:48,980 --> 00:49:50,960
+gathering evidence for the value of the
+
+1376
+00:49:50,960 --> 00:49:51,859
+functional programming.
+
+1377
+00:49:51,859 --> 00:49:53,660
+well Jane Street is in a very good
+
+1378
+00:49:53,660 --> 00:49:56,000
+position to do that but to do so
+
+1379
+00:49:56,000 --> 00:49:57,440
+convincingly you probably need to
+
+1380
+00:49:57,440 --> 00:49:59,540
+collaborate not with people from the PL
+
+1381
+00:49:59,540 --> 00:50:01,250
+community but with people from the
+
+1382
+00:50:01,250 --> 00:50:02,780
+empirical software engineering community.
+
+1383
+00:50:02,780 --> 00:50:05,750
+I wonder if you have any such studies
+
+1384
+00:50:05,750 --> 00:50:08,089
+going on or whether there's an
+
+1385
+00:50:08,089 --> 00:50:11,000
+opportunity there. So we don't have the
+
+1386
+00:50:11,000 --> 00:50:13,250
+studies going on and I am and I'd love
+
+1387
+00:50:13,250 --> 00:50:14,240
+to talk about this later but I'm
+
+1388
+00:50:14,240 --> 00:50:16,309
+actually deeply dubious about this in
+
+1389
+00:50:16,309 --> 00:50:18,260
+principle. like I think when I look at
+
+1390
+00:50:18,260 --> 00:50:19,460
+the James Street experience around
+
+1391
+00:50:19,460 --> 00:50:22,010
+software engineering I think what better
+
+1392
+00:50:22,010 --> 00:50:23,480
+evidence is there a functional
+
+1393
+00:50:23,480 --> 00:50:24,559
+programming being great. where we had a
+
+1394
+00:50:24,559 --> 00:50:26,329
+company which didn't use functional
+
+1395
+00:50:26,329 --> 00:50:28,849
+programming and then we brought it in
+
+1396
+00:50:28,849 --> 00:50:31,010
+and like you know we had this much
+
+1397
+00:50:31,010 --> 00:50:32,900
+objectively much better software
+
+1398
+00:50:32,900 --> 00:50:34,849
+infrastructure after all that work and
+
+1399
+00:50:34,849 --> 00:50:36,650
+an incredibly successful company that we
+
+1400
+00:50:36,650 --> 00:50:37,880
+really depended on that software in a
+
+1401
+00:50:37,880 --> 00:50:39,799
+fundamental way. clearly functional
+
+1402
+00:50:39,799 --> 00:50:41,390
+programming is great but actually
+
+1403
+00:50:41,390 --> 00:50:43,099
+there's no evidence at all from that.
+
+1404
+00:50:43,099 --> 00:50:45,530
+right. because the people doing the
+
+1405
+00:50:45,530 --> 00:50:47,270
+rewrite were different people and it was
+
+1406
+00:50:47,270 --> 00:50:48,950
+a rewrite which is always better even
+
+1407
+00:50:48,950 --> 00:50:50,089
+with the Saint well not oh it's better
+
+1408
+00:50:50,089 --> 00:50:51,440
+but you have a lot of new opportunities
+
+1409
+00:50:51,440 --> 00:50:53,829
+on a rewrite sometimes it's worse and
+
+1410
+00:50:53,829 --> 00:50:56,690
+like we put new people and new energy in
+
+1411
+00:50:56,690 --> 00:50:58,549
+a different time, like, there's nothing
+
+1412
+00:50:58,549 --> 00:51:00,440
+like a controlled experiment here. and
+
+1413
+00:51:00,440 --> 00:51:02,240
+now though you come into ghu today and
+
+1414
+00:51:02,240 --> 00:51:05,599
+like oh my god selection bias like we
+
+1415
+00:51:05,599 --> 00:51:06,920
+have hired differently from other
+
+1416
+00:51:06,920 --> 00:51:08,780
+organizations we have all sorts of
+
+1417
+00:51:08,780 --> 00:51:10,430
+differences in our behavior. and I just
+
+1418
+00:51:10,430 --> 00:51:12,200
+don't know as a scientific matter how
+
+1419
+00:51:12,200 --> 00:51:14,210
+you to construct any kind of useful
+
+1420
+00:51:14,210 --> 00:51:16,700
+empirical data from the work that we do.
+
+1421
+00:51:16,700 --> 00:51:18,589
+so I've talked some with people kind of
+
+1422
+00:51:18,589 --> 00:51:20,630
+on the side and I've never come away
+
+1423
+00:51:20,630 --> 00:51:23,270
+with the something that seemed to me
+
+1424
+00:51:23,270 --> 00:51:25,490
+like a kind of technique that seemed
+
+1425
+00:51:25,490 --> 00:51:27,770
+kind of well-founded and that... thought
+
+1426
+00:51:27,770 --> 00:51:29,210
+would be like that if the results came
+
+1427
+00:51:29,210 --> 00:51:30,650
+out and I saw them I would believe them
+
+1428
+00:51:30,650 --> 00:51:32,359
+and India I think exactly probably
+
+1429
+00:51:32,359 --> 00:51:33,470
+results come out and people say oh that
+
+1430
+00:51:33,470 --> 00:51:35,180
+one violates my prior belief so I'm
+
+1431
+00:51:35,180 --> 00:51:37,099
+gonna find ways I don't believe in the
+
+1432
+00:51:37,099 --> 00:51:38,930
+study. and I guess don't believe in any of
+
+1433
+00:51:38,930 --> 00:51:39,859
+the studies including the ones that
+
+1434
+00:51:39,859 --> 00:51:41,230
+confirm my beliefs because I think
+
+1435
+00:51:41,230 --> 00:51:43,849
+social science is hard and Social
+
+1436
+00:51:43,849 --> 00:51:45,770
+Sciences about things that are too
+
+1437
+00:51:45,770 --> 00:51:48,980
+expensive to do like make people switch
+
+1438
+00:51:48,980 --> 00:51:50,240
+to make large teams of people switch
+
+1439
+00:51:50,240 --> 00:51:52,430
+programming languages seem nearly
+
+1440
+00:51:52,430 --> 00:51:57,680
+impossible. that's you
+
+1441
+00:51:57,680 --> 00:52:02,829
+A Clipper Good from Google I have a
+
+1442
+00:52:02,829 --> 00:52:07,309
+comment on the last I think the last
+
+1443
+00:52:07,309 --> 00:52:09,470
+slide sorry I didn't drink my coffee
+
+1444
+00:52:09,470 --> 00:52:12,829
+today yet sorry okay so so use advantage
+
+1445
+00:52:12,829 --> 00:52:16,819
+there is a it works but only if the
+
+1446
+00:52:16,819 --> 00:52:21,650
+organization you're in is not too big. if
+
+1447
+00:52:21,650 --> 00:52:23,270
+the organization is big enough there is
+
+1448
+00:52:23,270 --> 00:52:28,490
+so much existing, so much existing
+
+1449
+00:52:28,490 --> 00:52:30,799
+infrastructure without which you cannot
+
+1450
+00:52:30,799 --> 00:52:33,470
+use the tool of your choice because
+
+1451
+00:52:33,470 --> 00:52:37,700
+there is no integrations. so, yes, module
+
+1452
+00:52:37,700 --> 00:52:40,730
+this slide that's right, yeah -- I think, I
+
+1453
+00:52:40,730 --> 00:52:41,930
+think you're absolutely right --
+
+1454
+00:52:41,930 --> 00:52:44,270
+there is often a chicken neck problem if
+
+1455
+00:52:44,270 --> 00:52:45,859
+you're big enough there is no
+
+1456
+00:52:45,859 --> 00:52:48,230
+infrastructure you can use the
+
+1457
+00:52:48,230 --> 00:52:50,059
+infrastructure to do good projects there
+
+1458
+00:52:50,059 --> 00:52:51,619
+is no good projects there is no reason
+
+1459
+00:52:51,619 --> 00:52:52,849
+for infrastructure that exists
+
+1460
+00:52:52,849 --> 00:52:55,280
+specifically about I'm talking about a
+
+1461
+00:52:55,280 --> 00:52:59,030
+Haskell to Google and yeah this is a
+
+1462
+00:52:59,030 --> 00:53:00,559
+really tough right one. -- Yeah I think
+
+1463
+00:53:00,559 --> 00:53:01,490
+that's right I mean I think if you if
+
+1464
+00:53:01,490 --> 00:53:03,619
+you if you really want to be able to
+
+1465
+00:53:03,619 --> 00:53:05,000
+kind of make your own choices about
+
+1466
+00:53:05,000 --> 00:53:06,260
+technology I think there's two things
+
+1467
+00:53:06,260 --> 00:53:08,150
+you can do right you can you know start
+
+1468
+00:53:08,150 --> 00:53:09,650
+your own place and do your own small
+
+1469
+00:53:09,650 --> 00:53:10,849
+thing and build things the way you want
+
+1470
+00:53:10,849 --> 00:53:12,020
+to and then you can start small and
+
+1471
+00:53:12,020 --> 00:53:12,970
+build from there
+
+1472
+00:53:12,970 --> 00:53:16,130
+or you can do the hard you know laudable
+
+1473
+00:53:16,130 --> 00:53:17,900
+work of convincing an organization to do
+
+1474
+00:53:17,900 --> 00:53:19,819
+something new. One of the reasons I'm
+
+1475
+00:53:19,819 --> 00:53:22,490
+actually like kind of upset about Go as
+
+1476
+00:53:22,490 --> 00:53:24,559
+a language is not because it's a bad
+
+1477
+00:53:24,559 --> 00:53:27,559
+language is an OK language, but it's very
+
+1478
+00:53:27,559 --> 00:53:29,990
+rare that a company takes the
+
+1479
+00:53:29,990 --> 00:53:32,000
+opportunity to like build a big new
+
+1480
+00:53:32,000 --> 00:53:34,369
+language and like it's a depressingly
+
+1481
+00:53:34,369 --> 00:53:37,220
+kind of small amount of progress to have
+
+1482
+00:53:37,220 --> 00:53:39,290
+done in that move, right, and I think that
+
+1483
+00:53:39,290 --> 00:53:41,089
+you know there are people in various
+
+1484
+00:53:41,089 --> 00:53:42,170
+larger companies who are
+
+1485
+00:53:42,170 --> 00:53:43,670
+trying to do the work to build
+
+1486
+00:53:43,670 --> 00:53:46,310
+institutional infrastructure for using
+
+1487
+00:53:46,310 --> 00:53:47,840
+functional programming and, I think,
+
+1488
+00:53:47,840 --> 00:53:49,880
+that's great but I think just saying, oh
+
+1489
+00:53:49,880 --> 00:53:51,290
+I'm gonna do it on my own and find a way
+
+1490
+00:53:51,290 --> 00:53:53,870
+to hide it from my manager, it's like for
+
+1491
+00:53:53,870 --> 00:53:55,460
+I'd only good career move I don't know
+
+1492
+00:53:55,460 --> 00:53:57,020
+like I think you know if you want to if
+
+1493
+00:53:57,020 --> 00:53:58,160
+you want to do well it's great to
+
+1494
+00:53:58,160 --> 00:53:59,570
+optimize for the organization you're in
+
+1495
+00:53:59,570 --> 00:54:01,340
+rather than just optimize for the thing
+
+1496
+00:54:01,340 --> 00:54:02,660
+that's like technically the most fun for
+
+1497
+00:54:02,660 --> 00:54:13,640
+you. So, I think, as you say I don't think
+
+1498
+00:54:13,640 --> 00:54:16,720
+you can take Jane Street to be some
+
+1499
+00:54:16,720 --> 00:54:19,910
+proof that using a functional language
+
+1500
+00:54:19,910 --> 00:54:22,820
+guarantees success but you can't take it
+
+1501
+00:54:22,820 --> 00:54:24,710
+as a proof that it doesn't guarantee
+
+1502
+00:54:24,710 --> 00:54:29,810
+failure -- I agree, I agree, and I think many
+
+1503
+00:54:29,810 --> 00:54:31,460
+people imagine that failure is the only
+
+1504
+00:54:31,460 --> 00:54:33,770
+option when using function languages is
+
+1505
+00:54:33,770 --> 00:54:35,180
+certainly for the kind of work that we
+
+1506
+00:54:35,180 --> 00:54:37,040
+do, I think, lots of people think well
+
+1507
+00:54:37,040 --> 00:54:38,450
+clearly that's not going to work and it
+
+1508
+00:54:38,450 --> 00:54:40,280
+turns out no, actually big successful
+
+1509
+00:54:40,280 --> 00:54:43,970
+business totally works. (Q) Charles Mike (?)
+
+1510
+00:54:43,970 --> 00:54:48,770
+from X. in terms of sort of spreading our
+
+1511
+00:54:48,770 --> 00:54:50,660
+wings conceptually what languages do you
+
+1512
+00:54:50,660 --> 00:54:51,830
+think in this community 
+
+1513
+00:54:51,830 --> 00:54:53,330
+community aren't looking at that we
+
+1514
+00:54:53,330 --> 00:54:58,490
+should? for that matter to include things
+
+1515
+00:54:58,490 --> 00:55:02,110
+like NGO -- (Y) so I think I think I think
+
+1516
+00:55:02,110 --> 00:55:04,070
+there I often feel like there's
+
+1517
+00:55:04,070 --> 00:55:06,470
+insufficient communication I think I
+
+1518
+00:55:06,470 --> 00:55:07,910
+mentioned earlier between like the typed
+
+1519
+00:55:07,910 --> 00:55:10,310
+and untyped. so I think there's a lot to
+
+1520
+00:55:10,310 --> 00:55:12,710
+the ml community and I mean ML like you
+
+1521
+00:55:12,710 --> 00:55:14,840
+know in this is ml and Lisp right I'm
+
+1522
+00:55:14,840 --> 00:55:16,520
+not dying me to exclude like Haskell and
+
+1523
+00:55:16,520 --> 00:55:18,020
+Scala or whatever but I think the the
+
+1524
+00:55:18,020 --> 00:55:20,510
+the statically type world could learn a
+
+1525
+00:55:20,510 --> 00:55:21,920
+lot from the things that are understood
+
+1526
+00:55:21,920 --> 00:55:23,450
+about macro systems, I think macro
+
+1527
+00:55:23,450 --> 00:55:25,250
+systems are really incredibly valuable
+
+1528
+00:55:25,250 --> 00:55:26,540
+and learning how that works is great I
+
+1529
+00:55:26,540 --> 00:55:29,840
+think a thing which I feel like I should
+
+1530
+00:55:29,840 --> 00:55:33,440
+learn more about is some of the kind of
+
+1531
+00:55:33,440 --> 00:55:35,510
+more proof oriented systems that kind of
+
+1532
+00:55:35,510 --> 00:55:37,010
+Agda and Coq of the world which I've
+
+1533
+00:55:37,010 --> 00:55:38,840
+learned little bits about but I
+
+1534
+00:55:38,840 --> 00:55:43,400
+mentioned learning more yeah that's
+
+1535
+00:55:43,400 --> 00:55:44,660
+that's what comes to mind I don't I
+
+1536
+00:55:44,660 --> 00:55:46,460
+don't have like a super long list of
+
+1537
+00:55:46,460 --> 00:55:48,530
+things it's just I kind of in general
+
+1538
+00:55:48,530 --> 00:55:49,730
+try and like when I learn about new
+
+1539
+00:55:49,730 --> 00:55:50,930
+things kind of poke around and try and
+
+1540
+00:55:50,930 --> 00:55:52,520
+see how they work and like wordsworth
+
+1541
+00:55:52,520 --> 00:55:55,280
+also look at like systems that you don't
+
+1542
+00:55:55,280 --> 00:55:56,060
+think are going to be great.
+
+1543
+00:55:56,060 --> 00:55:57,920
+like, I think that looking at and
+
+1544
+00:55:57,920 --> 00:55:59,960
+understanding what it is about the world
+
+1545
+00:55:59,960 --> 00:56:01,640
+of Go that's so compelling because it
+
+1546
+00:56:01,640 --> 00:56:03,230
+really is in many ways very compelling
+
+1547
+00:56:03,230 --> 00:56:05,210
+looking at the JavaScript world and how
+
+1548
+00:56:05,210 --> 00:56:08,540
+they manage software and how they manage
+
+1549
+00:56:08,540 --> 00:56:09,920
+packaging which I think is a mix of
+
+1550
+00:56:09,920 --> 00:56:12,170
+great and terrible but I think there's
+
+1551
+00:56:12,170 --> 00:56:14,030
+some things to be learned from there. so
+
+1552
+00:56:14,030 --> 00:56:15,410
+I think some stuff within the functional
+
+1553
+00:56:15,410 --> 00:56:16,820
+programming world and some stuff from
+
+1554
+00:56:16,820 --> 00:56:18,590
+outside of it and actually and another
+
+1555
+00:56:18,590 --> 00:56:20,840
+thing you should learn from like C++ and
+
+1556
+00:56:20,840 --> 00:56:23,360
+C about performance and about what are
+
+1557
+00:56:23,360 --> 00:56:24,800
+the things what are the things that C
+
+1558
+00:56:24,800 --> 00:56:27,680
+programmers do to make things go fast
+
+1559
+00:56:27,680 --> 00:56:29,900
+and understand how you can make your
+
+1560
+00:56:29,900 --> 00:56:31,190
+language capable of doing those things
+
+1561
+00:56:31,190 --> 00:56:32,630
+that's another I think important area
+
+1562
+00:56:32,630 --> 00:56:34,880
+where it's easy to get like, oh I'm often
+
+1563
+00:56:34,880 --> 00:56:37,010
+my like you know high-higher type
+
+1564
+00:56:37,010 --> 00:56:38,660
+dependent lead lambda calculus in the
+
+1565
+00:56:38,660 --> 00:56:40,400
+sky kind of thing and like not think
+
+1566
+00:56:40,400 --> 00:56:42,770
+about machines. and you should also think
+
+1567
+00:56:42,770 --> 00:56:47,030
+about machines (Q) yarn Hendrika a
+
+1568
+00:56:47,030 --> 00:56:48,830
+Commonwealth Bank one of the things that
+
+1569
+00:56:48,830 --> 00:56:53,600
+I grapple with is how hard to push FP in
+
+1570
+00:56:53,600 --> 00:56:54,590
+general in the context of this
+
+1571
+00:56:54,590 --> 00:56:57,260
+conversation at non-specialists. the
+
+1572
+00:56:57,260 --> 00:57:00,650
+example I'm thinking of is the machine
+
+1573
+00:57:00,650 --> 00:57:04,610
+learning community where they really
+
+1574
+00:57:04,610 --> 00:57:07,760
+love R and Python and the problem that
+
+1575
+00:57:07,760 --> 00:57:09,620
+we've been using the tooling as the
+
+1576
+00:57:09,620 --> 00:57:11,060
+metaphor for the things we don't have in
+
+1577
+00:57:11,060 --> 00:57:13,010
+this conversation but in this case, like
+
+1578
+00:57:13,010 --> 00:57:14,780
+the the our world is one I look at where
+
+1579
+00:57:14,780 --> 00:57:17,780
+like what is so exciting in our land
+
+1580
+00:57:17,780 --> 00:57:19,640
+that keeps these reasonably intelligent
+
+1581
+00:57:19,640 --> 00:57:22,550
+people doing sanely stupid things
+
+1582
+00:57:22,550 --> 00:57:24,110
+because you look at the the idiot that
+
+1583
+00:57:24,110 --> 00:57:26,020
+the code they construct it's it's awful.
+
+1584
+00:57:26,020 --> 00:57:29,330
+and yet they get the outcomes they need
+
+1585
+00:57:29,330 --> 00:57:32,180
+and so my question is is where do you
+
+1586
+00:57:32,180 --> 00:57:33,740
+think because I know like it by
+
+1587
+00:57:33,740 --> 00:57:35,780
+reputation anyway Jane Street does a lot
+
+1588
+00:57:35,780 --> 00:57:38,030
+of work to help new hires who aren't
+
+1589
+00:57:38,030 --> 00:57:40,130
+core programmers come on board at least
+
+1590
+00:57:40,130 --> 00:57:42,410
+with to be able to share the lingua
+
+1591
+00:57:42,410 --> 00:57:44,330
+franca working in your case OCAML
+
+1592
+00:57:44,330 --> 00:57:46,700
+I've tried that before in Haskell it
+
+1593
+00:57:46,700 --> 00:57:49,370
+works really well. but I'm sort of up
+
+1594
+00:57:49,370 --> 00:57:51,860
+against the line where like if I if I go
+
+1595
+00:57:51,860 --> 00:57:53,780
+one step further we've got a turns out a
+
+1596
+00:57:53,780 --> 00:57:57,080
+big scholarship, okay, but if we go one
+
+1597
+00:57:57,080 --> 00:57:59,180
+further and try and get the data
+
+1598
+00:57:59,180 --> 00:58:01,040
+scientists to be doing things in a way
+
+1599
+00:58:01,040 --> 00:58:02,690
+we can put in production it kind of
+
+1600
+00:58:02,690 --> 00:58:04,100
+implies they work in Scala or Haskell.
+
+1601
+00:58:04,100 --> 00:58:06,320
+and they're not there at the moment and
+
+1602
+00:58:06,320 --> 00:58:09,140
+I'm sort of nervous about that should we
+
+1603
+00:58:09,140 --> 00:58:11,330
+be tolerating them continue to work in
+
+1604
+00:58:11,330 --> 00:58:13,070
+our and tooling around that or should we
+
+1605
+00:58:13,070 --> 00:58:15,230
+be trying to drag them off of our and
+
+1606
+00:58:15,230 --> 00:58:18,560
+numpy and so on and reimplemented the
+
+1607
+00:58:18,560 --> 00:58:19,820
+machine learning infrastructure in our
+
+1608
+00:58:19,820 --> 00:58:20,990
+languages. and I'm just curious how you
+
+1609
+00:58:20,990 --> 00:58:23,450
+feel about that class of problem. (Y) yeah I
+
+1610
+00:58:23,450 --> 00:58:24,710
+mean I think that's actually very hard
+
+1611
+00:58:24,710 --> 00:58:26,630
+to give you a sense of why I think it's
+
+1612
+00:58:26,630 --> 00:58:28,670
+hard like we haven't succeeded in doing
+
+1613
+00:58:28,670 --> 00:58:30,770
+it like we still use R for things
+
+1614
+00:58:30,770 --> 00:58:33,320
+because there's lots of nice integration
+
+1615
+00:58:33,320 --> 00:58:35,740
+of all sorts of little packages. and like
+
+1616
+00:58:35,740 --> 00:58:37,880
+ecosystems are valuable and it's hard to
+
+1617
+00:58:37,880 --> 00:58:40,430
+replicate those ecosystems. So, I'm like
+
+1618
+00:58:40,430 --> 00:58:42,050
+I'm more optimum I think I'm I'm more
+
+1619
+00:58:42,050 --> 00:58:43,970
+optimistic about teaching people how to
+
+1620
+00:58:43,970 --> 00:58:45,860
+use functional programming. but taking
+
+1621
+00:58:45,860 --> 00:58:48,050
+like powerful ecosystems that have lots
+
+1622
+00:58:48,050 --> 00:58:49,790
+of built-in functionality and replacing
+
+1623
+00:58:49,790 --> 00:58:52,370
+them, like.... I think that's really hard and
+
+1624
+00:58:52,370 --> 00:58:53,870
+I think you need to have a really like
+
+1625
+00:58:53,870 --> 00:58:55,190
+in some of that I feel like you take it
+
+1626
+00:58:55,190 --> 00:58:56,270
+from what are you like inhabiting their
+
+1627
+00:58:56,270 --> 00:58:57,800
+perspective think about their daily
+
+1628
+00:58:57,800 --> 00:58:58,940
+workflow. and think would it really be
+
+1629
+00:58:58,940 --> 00:59:01,040
+easier in this programming language and
+
+1630
+00:59:01,040 --> 00:59:02,600
+like often the answer is no often it's
+
+1631
+00:59:02,600 --> 00:59:04,130
+just easier for them to like throw act
+
+1632
+00:59:04,130 --> 00:59:06,050
+together they're our thing and like you
+
+1633
+00:59:06,050 --> 00:59:07,220
+know don't recommend to people things
+
+1634
+00:59:07,220 --> 00:59:10,790
+that don't make them more effective. (Q) hi
+
+1635
+00:59:10,790 --> 00:59:13,730
+Eric Tora Bora um though what are the
+
+1636
+00:59:13,730 --> 00:59:15,440
+things that are coming up - a camel
+
+1637
+00:59:15,440 --> 00:59:17,810
+maybe in the next three four five years
+
+1638
+00:59:17,810 --> 00:59:20,960
+that are coming from the academia into
+
+1639
+00:59:20,960 --> 00:59:22,490
+the language that you are really excited
+
+1640
+00:59:22,490 --> 00:59:24,200
+about that's going to change your life
+
+1641
+00:59:24,200 --> 00:59:25,880
+as a practitioner... (Y) there ah
+
+1642
+00:59:25,880 --> 00:59:29,810
+interesting so a thing that has a thing
+
+1643
+00:59:29,810 --> 00:59:31,790
+that has been like lots of collaboration
+
+1644
+00:59:31,790 --> 00:59:33,710
+between us and between the academic
+
+1645
+00:59:33,710 --> 00:59:36,760
+world is flambda which is a better
+
+1646
+00:59:36,760 --> 00:59:38,780
+inlining pasture of OCAML kind of
+
+1647
+00:59:38,780 --> 00:59:40,460
+improving your camels optimization so
+
+1648
+00:59:40,460 --> 00:59:43,460
+that's I think an exciting thing there's
+
+1649
+00:59:43,460 --> 00:59:46,850
+been a lot of work that's happened from
+
+1650
+00:59:46,850 --> 00:59:49,940
+outside of our walls on improving kind
+
+1651
+00:59:49,940 --> 00:59:51,860
+of IDE like functionality in OCamel
+
+1652
+00:59:51,860 --> 00:59:54,440
+and that kind of getting like integrated
+
+1653
+00:59:54,440 --> 00:59:56,390
+and upstream with a compiler and stuff
+
+1654
+00:59:56,390 --> 00:59:58,040
+is the thing that kind of makes the kind
+
+1655
+00:59:58,040 --> 01:00:01,150
+of day-to-day working really lovely.
+
+1656
+01:00:01,150 --> 01:00:03,800
+there's a couple another another big
+
+1657
+01:00:03,800 --> 01:00:05,450
+thing that's coming which I'm pretty
+
+1658
+01:00:05,450 --> 01:00:06,770
+excited about is modular implicit's --
+
+1659
+01:00:06,770 --> 01:00:09,950
+which is essentially a form of type
+
+1660
+01:00:09,950 --> 01:00:12,380
+class like functionality for ML that
+
+1661
+01:00:12,380 --> 01:00:13,790
+kind of fits better inside of an ML
+
+1662
+01:00:13,790 --> 01:00:17,630
+language. and I think that will be quite
+
+1663
+01:00:17,630 --> 01:00:19,960
+useful.
+
+1664
+01:00:20,370 --> 01:00:22,380
+another another interesting one is
+
+1665
+01:00:22,380 --> 01:00:25,350
+there's some work on effects tracking
+
+1666
+01:00:25,350 --> 01:00:28,410
+in OCaml which I am both skeptical
+
+1667
+01:00:28,410 --> 01:00:29,790
+and excited about like I think it could
+
+1668
+01:00:29,790 --> 01:00:31,200
+be good and it could be problematic I
+
+1669
+01:00:31,200 --> 01:00:32,460
+see lots of the new things are
+
+1670
+01:00:32,460 --> 01:00:33,500
+interesting in that they open up
+
+1671
+01:00:33,500 --> 01:00:37,560
+enormous enormous issues of like how you
+
+1672
+01:00:37,560 --> 01:00:39,690
+design libraries which are complicated
+
+1673
+01:00:39,690 --> 01:00:41,250
+questions and then I think it'll take
+
+1674
+01:00:41,250 --> 01:00:43,050
+time to unwind. So like the language
+
+1675
+01:00:43,050 --> 01:00:44,130
+feature comes first and you learn how to
+
+1676
+01:00:44,130 --> 01:00:45,930
+use it later sometimes years later.
+
+1677
+01:00:45,930 --> 01:00:46,950
+actually I think one of the great one of
+
+1678
+01:00:46,950 --> 01:00:48,540
+the fascinating if you want to
+
+1679
+01:00:48,540 --> 01:00:49,890
+understand how people learning how to
+
+1680
+01:00:49,890 --> 01:00:53,460
+use languages develops go look at like
+
+1681
+01:00:53,460 --> 01:00:55,800
+the implementation of a functional
+
+1682
+01:00:55,800 --> 01:00:57,480
+programming compiler from 20 years ago
+
+1683
+01:00:57,480 --> 01:01:01,500
+and... they're often kind of a mess like
+
+1684
+01:01:01,500 --> 01:01:02,940
+they didn't know how to use a lot of the
+
+1685
+01:01:02,940 --> 01:01:03,930
+features that the languages themselves
+
+1686
+01:01:03,930 --> 01:01:06,060
+had in like over time people have come
+
+1687
+01:01:06,060 --> 01:01:08,310
+to understand this goes back the idea of
+
+1688
+01:01:08,310 --> 01:01:09,480
+like these languages and sometimes feel
+
+1689
+01:01:09,480 --> 01:01:10,770
+like they were invented by mistake, like
+
+1690
+01:01:10,770 --> 01:01:12,420
+all the great things about them were not
+
+1691
+01:01:12,420 --> 01:01:14,430
+fully apparent at the time of their
+
+1692
+01:01:14,430 --> 01:01:15,330
+writing and I think some of the things
+
+1693
+01:01:15,330 --> 01:01:17,190
+that are coming we won't know like GADT's
+
+1694
+01:01:17,190 --> 01:01:18,540
+and first-class modules were things
+
+1695
+01:01:18,540 --> 01:01:19,560
+that landed recently which I'm very
+
+1696
+01:01:19,560 --> 01:01:21,720
+happy about the next thing that comes
+
+1697
+01:01:21,720 --> 01:01:23,310
+that I may be happy about maybe not
+
+1698
+01:01:23,310 --> 01:01:27,480
+something I know is going to be good all
+
+1699
+01:01:27,480 --> 00:00:00,000
+(Organizer) right, let's think run!
+

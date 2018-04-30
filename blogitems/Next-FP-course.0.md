@@ -126,3 +126,12 @@ V8 это не понравится и оно будет работать 10 р�
 чтобы писать аннотации у каждой переменной, типы могут быть выведены компилятором.
 
 (Тут мне стало лень констпектировать)
+
+-- 
+Talk by Yaron Minsky 
+(https://www.youtube.com/watch?v=_1GZShA1F20)[`Observations of a Functional Programmer`]
+
+(https://www.youtube.com/watch?v=_1GZShA1F20)[`A plan on Janestreet's website`]
+
+I downloaded subtitles and slightlyedited them. You can get them 
+(https://kakadu.github.io/blogitems/Observations_of_a_Functional_Programmer.srt)
