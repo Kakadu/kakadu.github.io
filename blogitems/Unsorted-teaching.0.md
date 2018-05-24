@@ -8,5 +8,11 @@ There I collect an unsorted list of teaching materials (slides, tasks, etc.) tha
 
 [Resolution and logic programming](http://www.comp.nus.edu.sg/~cs3234/cs3234-lec05.pdf)
 
+Fold/Unfold exercises
+
+A few remarks and explanations why combination of fold/unfold is an assembly of functional programming. Intial topic on 
+[OCaml discuss server](https://discuss.ocaml.org/t/how-to-unfold-unfold-what-is-a-good-source/). Nice 
+[slides](http://conal.net/talks/folds-and-unfolds.pdf) from Conal Eliott. And a [reply](https://discuss.ocaml.org/t/how-to-unfold-unfold-what-is-a-good-source/2039/7) explaining why the signature can't be 
+simplified.
 
  
