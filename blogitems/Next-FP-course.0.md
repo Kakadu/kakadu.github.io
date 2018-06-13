@@ -7,6 +7,8 @@ uuid: c0615a9d-3844-4b56-91cc-4b1968ddd7ab
 
 (https://habrahabr.ru/post/350386/)[Паттерн "Стратегия" из кучи функций]
 
+(http://people.csail.mit.edu/dnj/teaching/6898/projects/vicente-wagner.pdf)[Design patterns in OCaml]
+
 -- 
 Talk by Yaron Minsky 
 (https://www.youtube.com/watch?v=0arFPIQatCU)[`Types, and Why You Should Care`]
@@ -133,5 +135,5 @@ Talk by Yaron Minsky
 
 (https://www.youtube.com/watch?v=_1GZShA1F20)[`A plan on Janestreet's website`]
 
-I downloaded subtitles and slightlyedited them. You can get them 
+I downloaded subtitles and slightly edited them. You can get them 
 (https://kakadu.github.io/blogitems/Observations_of_a_Functional_Programmer.srt)
