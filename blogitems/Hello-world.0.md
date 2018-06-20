@@ -1,9 +1,10 @@
-title: Hello, world, it's first entry
-authors: kakadu <kakadu@protonmail.ch>
-date: 2018-02-24T16:29:52-00:00
-uuid: c0615a9d-3844-4b56-91cc-4b1968ddd7ab
-keywords: wtf
-topics: hello
+Title: Hello, world, it's first entry
+Authors: kakadu <kakadu@protonmail.ch>
+Date: 2018-02-24T16:29:52-00:00
+ID: c0615a9d-3844-4b56-91cc-4b1968ddd7a0
+Keywords: wtf
+Topics: hello
+Categories: listed, published
 
 Hey, there! SP have recently released the new version of his blog engine called 
 Logarion which supports generation of static pages from now. So, I decided to give 

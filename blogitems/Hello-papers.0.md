@@ -1,8 +1,9 @@
-title: Unsorted papers
-authors: kakadu <kakadu@protonmail.ch>
-date: 2018-02-24T21:03:00-00:00
-uuid: c0615a9d-3844-4b56-91cc-4b1968ddd7ab
-topics: papers, unsorted
+Title: Unsorted papers
+Authors: kakadu <kakadu@protonmail.ch>
+Date: 2018-02-24T21:03:00-00:00
+ID: c0615a9d-3844-4b56-91cc-4b1968ddd7ab
+Topics: papers, unsorted
+Categories: listed, published
 
 This note stub will be filled by a list papers that I might find 
 interesting but didn't read yet.
@@ -21,6 +22,21 @@ Some prolog [implementations](https://sicstus.sics.se/sicstus/docs/3.12.8/html/s
 
 ---
 
+## Verification
+
+### Inventing a new language
+
+OCaml with some annotations and Why3 solver under the hood (J.-C. Filliatre et all): [A Toolchain to Produce Correct-by-Construction OCaml Programs](https://hal.inria.fr/hal-01783851/file/main.pdf) 
 
 
+## Really unsorted
+
+[Code](https://github.com/dboulytchev/coq-supplementary) for Coq course from SPbAU.
+
+Why Elm is [wrong](http://reasonablypolymorphic.com/blog/elm-is-wrong/).
+
+Oleg's [resumable exceptions](http://okmij.org/ftp/ML/#resumable-exn).
+Oleg is doing [RTTI using first-class modules](http://okmij.org/ftp/ML/first-class-modules/generics.ml).
+
+Octachron is doing peano arithmetic using types and polymorphic variants in OCaml https://github.com/Octachron/rational_in_types .
 

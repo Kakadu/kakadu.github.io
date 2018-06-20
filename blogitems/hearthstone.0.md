@@ -1,7 +1,9 @@
-Title: hearthstone
+Title: Hearthstone
 Authors: kakadu <kakadu@protonmail.ch>
 Date: 2018-04-13T10:15:00-00:00
 ID: c0615a9d-3844-4b56-91cc-4b1968ddd7ab
+Topics: games
+Categories: listed, published
 
 Witchwood is out. I opened 70 + 16 packs.
 The last opened pack contained and a legendary card. So, now I have 
