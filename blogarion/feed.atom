@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-<title></title><link rel="alternate" type="text/html" href="/"/><link rel="self" type="application/atom+xml" href="//feed.atom" /><id>urn:uuid:c0615a9d-3844-4b56-91cc-4b1968ddd7ab</id><updated>2018-06-20T16:10:51-00:00</updated>
+<title></title><link rel="alternate" type="text/html" href="/"/><link rel="self" type="application/atom+xml" href="//feed.atom" /><id>urn:uuid:c0615a9d-3844-4b56-91cc-4b1968ddd7ab</id><updated>2018-06-21T18:32:04-00:00</updated>
 <entry><title>Hello, world, it's first entry</title><id>urn:uuid:c0615a9d-3844-4b56-91cc-4b1968ddd7a0</id><link rel="alternate" href="//note/hello-world-it-s-first-entry" /><updated>2018-02-24T16:29:52-00:00</updated><author><name>kakadu</name><uri>kakadu@</uri></author><category term="hello"/><content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml"><p>Hey, there! SP have recently released the new version of his blog engine called 
 Logarion which supports generation of static pages from now. So, I decided to give 
 it a try. I have a few ideas what I&#39;m going to write there but I don&#39;t expect that 
@@ -10,7 +10,17 @@ hope that your eyes flow out.</p>
 amount of opened Firefox tabs by somehow systemized entries. I hope create to some blog entries each of them will be a collection of links with some descriptions. I hope that is will work fine, at least I have a lot of topics to systematize.</p>
 <p>It&#39;s planned to have a few categories, most of them will be about functional programming, or teaching functional programming, and stuff like this.</p>
 </div></content></entry>
-<entry><title>Unsorted</title><id>urn:uuid:c0615a9d-3844-4b56-91cc-4b1968ddd7ab</id><link rel="alternate" href="//note/unsorted" /><updated>2018-06-20T15:59:13-00:00</updated><author><name>kakadu</name><uri>kakadu@</uri></author><content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml"><p><hr/></p>
+<entry><title>Unsorted</title><id>urn:uuid:c0615a9d-3844-4b56-91cc-4b1968ddd7ab</id><link rel="alternate" href="//note/unsorted" /><updated>2018-06-20T15:59:13-00:00</updated><author><name>kakadu</name><uri>kakadu@</uri></author><content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml"><p><hr/><a href='http://flyingfrogblog.blogspot.com/2017/12/does-reference-counting-really-use-less.html'>Does reference counting really use less memory than tracing garbage collection? Swift vs OCaml</a> from J. Harrop</p>
+<p>https://practicaltypography.com/</p>
+<p><a href='https://www.e-reading.club/book.php?book=1027483'>Игрушки дома Баллантайн</a></p>
+<p><a href='http://odis.io/talks/ocaml-coro.pdf'>Stream Processing with Coroutines in OCaml</a></p>
+<p><a href='https://www.ozon.ru/context/detail/id/138433007/'>Конструирование языков. От эсперанто до дотракийского</a></p>
+</div></content></entry>
+<entry><title>Unsorted</title><id>urn:uuid:c0615a9d-3844-4b56-91cc-4b1968ddd7ab</id><link rel="alternate" href="//note/unsorted" /><updated>2018-06-20T15:59:13-00:00</updated><author><name>kakadu</name><uri>kakadu@</uri></author><content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml"><p><hr/><a href='http://flyingfrogblog.blogspot.com/2017/12/does-reference-counting-really-use-less.html'>Does reference counting really use less memory than tracing garbage collection? Swift vs OCaml</a> from J. Harrop</p>
+<p>https://practicaltypography.com/</p>
+<p><a href='https://www.e-reading.club/book.php?book=1027483'>Игрушки дома Баллантайн</a></p>
+<p><a href='http://odis.io/talks/ocaml-coro.pdf'>Stream Processing with Coroutines in OCaml</a></p>
+<p><a href='https://www.ozon.ru/context/detail/id/138433007/'>Конструирование языков. От эсперанто до дотракийского</a></p>
 </div></content></entry>
 <entry><title>Next FP course</title><id>urn:uuid:c0615a9d-3844-4b56-91cc-4b1968ddd7ad</id><link rel="alternate" href="//note/next-fp-course" /><updated>2018-03-04T14:39:22-00:00</updated><author><name>kakadu</name><uri>kakadu@</uri></author><content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml"><p><hr/>(https://habrahabr.ru/post/350386/)[Паттерн &quot;Стратегия&quot; из кучи функций]</p>
 <p>(http://people.csail.mit.edu/dnj/teaching/6898/projects/vicente-wagner.pdf)[Design patterns in OCaml]</p>
@@ -123,7 +133,15 @@ Talk by Yaron Minsky
 <p>I downloaded subtitles and slightly edited them. You can get them 
 (https://kakadu.github.io/blogitems/Observations_of_a_Functional_Programmer.srt)</p>
 </div></content></entry>
-<entry><title>Unsorted</title><id>urn:uuid:c0615a9d-3844-4b56-91cc-4b1968ddd7ab</id><link rel="alternate" href="//note/unsorted" /><updated>2018-06-20T15:59:13-00:00</updated><author><name>kakadu</name><uri>kakadu@</uri></author><content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml"><p><hr/></p>
+<entry><title>Unsorted</title><id>urn:uuid:c0615a9d-3844-4b56-91cc-4b1968ddd7ab</id><link rel="alternate" href="//note/unsorted" /><updated>2018-06-20T15:59:13-00:00</updated><author><name>kakadu</name><uri>kakadu@</uri></author><content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml"><p><hr/><a href='http://flyingfrogblog.blogspot.com/2017/12/does-reference-counting-really-use-less.html'>Does reference counting really use less memory than tracing garbage collection? Swift vs OCaml</a> from J. Harrop</p>
+<p>https://practicaltypography.com/</p>
+<p><a href='https://www.e-reading.club/book.php?book=1027483'>Игрушки дома Баллантайн</a></p>
+<p><a href='http://odis.io/talks/ocaml-coro.pdf'>Stream Processing with Coroutines in OCaml</a></p>
+<p><a href='https://www.ozon.ru/context/detail/id/138433007/'>Конструирование языков. От эсперанто до дотракийского</a></p>
 </div></content></entry>
-<entry><title>Unsorted</title><id>urn:uuid:c0615a9d-3844-4b56-91cc-4b1968ddd7ab</id><link rel="alternate" href="//note/unsorted" /><updated>2018-06-20T15:59:13-00:00</updated><author><name>kakadu</name><uri>kakadu@</uri></author><content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml"><p><hr/></p>
+<entry><title>Unsorted</title><id>urn:uuid:c0615a9d-3844-4b56-91cc-4b1968ddd7ab</id><link rel="alternate" href="//note/unsorted" /><updated>2018-06-20T15:59:13-00:00</updated><author><name>kakadu</name><uri>kakadu@</uri></author><content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml"><p><hr/><a href='http://flyingfrogblog.blogspot.com/2017/12/does-reference-counting-really-use-less.html'>Does reference counting really use less memory than tracing garbage collection? Swift vs OCaml</a> from J. Harrop</p>
+<p>https://practicaltypography.com/</p>
+<p><a href='https://www.e-reading.club/book.php?book=1027483'>Игрушки дома Баллантайн</a></p>
+<p><a href='http://odis.io/talks/ocaml-coro.pdf'>Stream Processing with Coroutines in OCaml</a></p>
+<p><a href='https://www.ozon.ru/context/detail/id/138433007/'>Конструирование языков. От эсперанто до дотракийского</a></p>
 </div></content></entry></feed>

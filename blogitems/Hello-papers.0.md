@@ -40,3 +40,12 @@ Oleg is doing [RTTI using first-class modules](http://okmij.org/ftp/ML/first-cla
 
 Octachron is doing peano arithmetic using types and polymorphic variants in OCaml https://github.com/Octachron/rational_in_types .
 
+[Category Theory for Computing Science](http://www.math.mcgill.ca/triples/Barr-Wells-ctcs.pdf) by Michael Barr & Charles Wells
+
+[Martosz Milewski lectures](https://www.youtube.com/watch?v=I8LbkfSSR58&list=PLbgaMIhjbmEnaH_LTkxLI7FMa2HsnawM_) on Category Theory
+
+[Reasonably Programmable Syntax](https://www.cs.cmu.edu/~comar/omar-thesis.pdf) ph.D. thesis from Cyrus Omar
+
+[Set-Theoretic Types for Polymorphic Variants](https://arxiv.org/pdf/1606.01106v1.pdf)
+
+[Kan Extensions for Program Optimisation Or: Art and Dan Explain an Old Trick](https://www.cs.ox.ac.uk/ralf.hinze/Kan.pdf)
