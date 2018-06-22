@@ -9,11 +9,10 @@ Categories: listed, published
 
 [Does reference counting really use less memory than tracing garbage collection? Swift vs OCaml](http://flyingfrogblog.blogspot.com/2017/12/does-reference-counting-really-use-less.html) from J. Harrop
 
-[Practical typography book](https://practicaltypography.com/)
-
-[Игрушки дома Баллантайн](https://www.e-reading.club/book.php?book=1027483)
-
 [Stream Processing with Coroutines in OCaml](http://odis.io/talks/ocaml-coro.pdf)
+
+[The Exceptional Beauty of Doom 3's Source Code](https://kotaku.com/5975610/the-exceptional-beauty-of-doom-3s-source-code)
+
 
 ### Performance questions
 
@@ -24,6 +23,10 @@ Categories: listed, published
 [Base64 encoding with SIMD instructions](http://0x80.pl/notesen/2016-01-12-sse-base64-encoding.html)
 
 ### Books
+
+[Practical typography book](https://practicaltypography.com/)
+
+[Игрушки дома Баллантайн](https://www.e-reading.club/book.php?book=1027483)
 
 [habr: 13 сентября 2015 Подальше от обыденной реальности: фантастические романы, которые стоит прочитать](https://habr.com/company/robohunter/blog/384101/)
 

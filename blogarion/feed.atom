@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom">
-<title></title><link rel="alternate" type="text/html" href="/"/><link rel="self" type="application/atom+xml" href="//feed.atom" /><id>urn:uuid:c0615a9d-3844-4b56-91cc-4b1968ddd7ab</id><updated>2018-06-22T12:46:45-00:00</updated>
+<title></title><link rel="alternate" type="text/html" href="/"/><link rel="self" type="application/atom+xml" href="//feed.atom" /><id>urn:uuid:c0615a9d-3844-4b56-91cc-4b1968ddd7ab</id><updated>2018-06-22T13:16:49-00:00</updated>
 <entry><title>Hello, world, it's first entry</title><id>urn:uuid:c0615a9d-3844-4b56-91cc-4b1968ddd7a0</id><link rel="alternate" href="//note/hello-world-it-s-first-entry" /><updated>2018-02-24T16:29:52-00:00</updated><author><name>kakadu</name><uri>kakadu@</uri></author><category term="hello"/><content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml"><p>Hey, there! SP have recently released the new version of his blog engine called 
 Logarion which supports generation of static pages from now. So, I decided to give 
 it a try. I have a few ideas what I&#39;m going to write there but I don&#39;t expect that 
@@ -25,6 +25,8 @@ simplified.</p>
 <p><a href='https://softwareengineering.stackexchange.com/questions/322431/what-is-a-comonad-and-how-are-they-useful'>Good allegory about monads</a> See the original question where the gy explains monads and asks about comonads.</p>
 <p>https://github.com/kwf/ComonadSheet</p>
 <p>TODO: links from N.Mishin</p>
+<p><a href='https://www.cl.cam.ac.uk/teaching/1718/L28/materials.html'>Advanced Functional Programming</a> from Cambridge 2018</p>
+<p>(https://www.cl.cam.ac.uk/teaching/1718/Types/)[Types] from Cambridge</p>
 <h3 id="Functional-programming-books">Functional programming books</h3>
 
 <p><a href='https://cs.uwaterloo.ca/~plragde/flaneries/FDS/index.html'>Functional Data Structures</a> (a flânerie by Prabhakar Ragde)
@@ -38,6 +40,7 @@ with OCaml in mind: sorting, sequence access, queues, sets and maps, hashconsing
 <p>Haskell Wiki: <a href='https://wiki.haskell.org/OOP_vs_type_classes'>OOP vs type classes</a></p>
 <p><a href='https://github.com/Stanislav-Sartasov/spsu-mm-programming-second-course'>Github Сартасовского курса</a></p>
 <p><a href='http://www2.imm.dtu.dk/courses/02917/Presburger1.pdf'>Presburger Arithmetic: Cooper’s algorithm</a></p>
+<p><a href='https://github.com/jwbuurlage/category-theory-programmers'>Notes on Category Theory and Haskell</a></p>
 </div></content></entry>
 <entry><title>Unsorted teaching</title><id>urn:uuid:c0615a9d-3844-4b56-91cc-4b1968ddd7ab</id><link rel="alternate" href="//note/unsorted-teaching" /><updated>2018-02-27T22:09:31-00:00</updated><author><name>kakadu</name><uri>kakadu@</uri></author><category term="teaching"/><category term="unsorted"/><content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml"><p>There I collect an unsorted list of teaching materials (slides, tasks, etc.) that seems to describe the topic well enough or useful in general.</p>
 <p><a href='http://www.comp.nus.edu.sg/~cs3234/cs3234-lec05.pdf'>Resolution and logic programming</a></p>
@@ -54,6 +57,8 @@ simplified.</p>
 <p><a href='https://softwareengineering.stackexchange.com/questions/322431/what-is-a-comonad-and-how-are-they-useful'>Good allegory about monads</a> See the original question where the gy explains monads and asks about comonads.</p>
 <p>https://github.com/kwf/ComonadSheet</p>
 <p>TODO: links from N.Mishin</p>
+<p><a href='https://www.cl.cam.ac.uk/teaching/1718/L28/materials.html'>Advanced Functional Programming</a> from Cambridge 2018</p>
+<p>(https://www.cl.cam.ac.uk/teaching/1718/Types/)[Types] from Cambridge</p>
 <h3 id="Functional-programming-books">Functional programming books</h3>
 
 <p><a href='https://cs.uwaterloo.ca/~plragde/flaneries/FDS/index.html'>Functional Data Structures</a> (a flânerie by Prabhakar Ragde)
@@ -67,6 +72,7 @@ with OCaml in mind: sorting, sequence access, queues, sets and maps, hashconsing
 <p>Haskell Wiki: <a href='https://wiki.haskell.org/OOP_vs_type_classes'>OOP vs type classes</a></p>
 <p><a href='https://github.com/Stanislav-Sartasov/spsu-mm-programming-second-course'>Github Сартасовского курса</a></p>
 <p><a href='http://www2.imm.dtu.dk/courses/02917/Presburger1.pdf'>Presburger Arithmetic: Cooper’s algorithm</a></p>
+<p><a href='https://github.com/jwbuurlage/category-theory-programmers'>Notes on Category Theory and Haskell</a></p>
 </div></content></entry>
 <entry><title>Next FP course</title><id>urn:uuid:c0615a9d-3844-4b56-91cc-4b1968ddd7ad</id><link rel="alternate" href="//note/next-fp-course" /><updated>2018-03-04T14:39:22-00:00</updated><author><name>kakadu</name><uri>kakadu@</uri></author><content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml"><p><hr/>(https://habrahabr.ru/post/350386/)[Паттерн &quot;Стратегия&quot; из кучи функций]</p>
 <p>(http://people.csail.mit.edu/dnj/teaching/6898/projects/vicente-wagner.pdf)[Design patterns in OCaml]</p>
@@ -194,6 +200,8 @@ simplified.</p>
 <p><a href='https://softwareengineering.stackexchange.com/questions/322431/what-is-a-comonad-and-how-are-they-useful'>Good allegory about monads</a> See the original question where the gy explains monads and asks about comonads.</p>
 <p>https://github.com/kwf/ComonadSheet</p>
 <p>TODO: links from N.Mishin</p>
+<p><a href='https://www.cl.cam.ac.uk/teaching/1718/L28/materials.html'>Advanced Functional Programming</a> from Cambridge 2018</p>
+<p>(https://www.cl.cam.ac.uk/teaching/1718/Types/)[Types] from Cambridge</p>
 <h3 id="Functional-programming-books">Functional programming books</h3>
 
 <p><a href='https://cs.uwaterloo.ca/~plragde/flaneries/FDS/index.html'>Functional Data Structures</a> (a flânerie by Prabhakar Ragde)
@@ -207,6 +215,7 @@ with OCaml in mind: sorting, sequence access, queues, sets and maps, hashconsing
 <p>Haskell Wiki: <a href='https://wiki.haskell.org/OOP_vs_type_classes'>OOP vs type classes</a></p>
 <p><a href='https://github.com/Stanislav-Sartasov/spsu-mm-programming-second-course'>Github Сартасовского курса</a></p>
 <p><a href='http://www2.imm.dtu.dk/courses/02917/Presburger1.pdf'>Presburger Arithmetic: Cooper’s algorithm</a></p>
+<p><a href='https://github.com/jwbuurlage/category-theory-programmers'>Notes on Category Theory and Haskell</a></p>
 </div></content></entry>
 <entry><title>Unsorted teaching</title><id>urn:uuid:c0615a9d-3844-4b56-91cc-4b1968ddd7ab</id><link rel="alternate" href="//note/unsorted-teaching" /><updated>2018-02-27T22:09:31-00:00</updated><author><name>kakadu</name><uri>kakadu@</uri></author><category term="teaching"/><category term="unsorted"/><content type="xhtml"><div xmlns="http://www.w3.org/1999/xhtml"><p>There I collect an unsorted list of teaching materials (slides, tasks, etc.) that seems to describe the topic well enough or useful in general.</p>
 <p><a href='http://www.comp.nus.edu.sg/~cs3234/cs3234-lec05.pdf'>Resolution and logic programming</a></p>
@@ -223,6 +232,8 @@ simplified.</p>
 <p><a href='https://softwareengineering.stackexchange.com/questions/322431/what-is-a-comonad-and-how-are-they-useful'>Good allegory about monads</a> See the original question where the gy explains monads and asks about comonads.</p>
 <p>https://github.com/kwf/ComonadSheet</p>
 <p>TODO: links from N.Mishin</p>
+<p><a href='https://www.cl.cam.ac.uk/teaching/1718/L28/materials.html'>Advanced Functional Programming</a> from Cambridge 2018</p>
+<p>(https://www.cl.cam.ac.uk/teaching/1718/Types/)[Types] from Cambridge</p>
 <h3 id="Functional-programming-books">Functional programming books</h3>
 
 <p><a href='https://cs.uwaterloo.ca/~plragde/flaneries/FDS/index.html'>Functional Data Structures</a> (a flânerie by Prabhakar Ragde)
@@ -236,4 +247,5 @@ with OCaml in mind: sorting, sequence access, queues, sets and maps, hashconsing
 <p>Haskell Wiki: <a href='https://wiki.haskell.org/OOP_vs_type_classes'>OOP vs type classes</a></p>
 <p><a href='https://github.com/Stanislav-Sartasov/spsu-mm-programming-second-course'>Github Сартасовского курса</a></p>
 <p><a href='http://www2.imm.dtu.dk/courses/02917/Presburger1.pdf'>Presburger Arithmetic: Cooper’s algorithm</a></p>
+<p><a href='https://github.com/jwbuurlage/category-theory-programmers'>Notes on Category Theory and Haskell</a></p>
 </div></content></entry></feed>

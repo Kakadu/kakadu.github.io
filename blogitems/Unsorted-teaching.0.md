@@ -32,6 +32,10 @@ https://github.com/kwf/ComonadSheet
 
 TODO: links from N.Mishin 
 
+[Advanced Functional Programming](https://www.cl.cam.ac.uk/teaching/1718/L28/materials.html) from Cambridge 2018
+
+(https://www.cl.cam.ac.uk/teaching/1718/Types/)[Types] from Cambridge
+
 ### Functional programming books
 
 [Functional Data Structures](https://cs.uwaterloo.ca/~plragde/flaneries/FDS/index.html) (a flânerie by Prabhakar Ragde)
