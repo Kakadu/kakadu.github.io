@@ -53,3 +53,5 @@ Haskell Wiki: [OOP vs type classes](https://wiki.haskell.org/OOP_vs_type_classes
 [Github Сартасовского курса](https://github.com/Stanislav-Sartasov/spsu-mm-programming-second-course)
 
 [Presburger Arithmetic: Cooper’s algorithm](http://www2.imm.dtu.dk/courses/02917/Presburger1.pdf)
+
+[Notes on Category Theory and Haskell](https://github.com/jwbuurlage/category-theory-programmers)
