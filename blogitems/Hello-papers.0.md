@@ -49,3 +49,15 @@ Octachron is doing peano arithmetic using types and polymorphic variants in OCam
 [Set-Theoretic Types for Polymorphic Variants](https://arxiv.org/pdf/1606.01106v1.pdf)
 
 [Kan Extensions for Program Optimisation Or: Art and Dan Explain an Old Trick](https://www.cs.ox.ac.uk/ralf.hinze/Kan.pdf)
+
+[Type-Preserving CPS Translation of Σ and Π Types is Not Not Possible](https://williamjbowman.com/resources/cps-sigma.pdf) from POPL 2018
+
+[A Principled approach to Ornamentation in ML](http://pauillac.inria.fr/~remy/ornaments/mlorn-2017-09.pdf)
+
+[A Categorical View of Computational Effects](https://www.youtube.com/watch?v=6t6bsWVOIzs)
+
+[Explicit Effect Subtyping](https://people.cs.kuleuven.be/%7Etom.schrijvers/Research/papers/esop2018.pdf)
+
+
+
+
