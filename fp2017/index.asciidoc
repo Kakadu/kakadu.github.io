@@ -52,6 +52,10 @@ http://queue.acm.org/detail.cfm?id=2038036[OCaml for the Masses] Большин�
 
 https://two-wrongs.com/a-gentle-introduction-to-monad-transformers[Адекватный туториал] про трансформеры
 
+https://ruhaskell.org/links.html
+
+Курсы на степике "какие есть": https://stepik.org/course/75/ и https://stepik.org/course/693/ от Д.Москвина
+
 [[week1]]
 Неделя 1
 --------
