@@ -1,0 +1,85 @@
+:source-highlighter: pygments
+:pygments-style: monokai
+:local-css-style: pastie
+
+Функциональное Программирование (матмех, осень 2017)
+====================================================
+:Author: Dmitrii Kosarev aka Kakadu
+:email:  Dmitrii.Kosarev@protonmail.ch
+
+[[about]]
+Пролог
+-----
+
+GHC и WinHugs и как ими пользоваться:
+
+* Самая распостраненый способ уставновить Haskell - это Haskell Platform (http://www.haskell.org/platform).
+  Работает для Windows, Linux и Mac. Для курса будет достаточно минимального варианта установки.
+* В Haskell Platform есть простые среды разработки GHCi и WinGHCi. http://msimuni.wdfiles.com/local--files/fp4/StartingWithGHC.pdf[Вот] краткая инструкция о том, как начать с ними работать.
+
+Книги на английском
+~~~~~~~~~~~~~~~~~~~
+http://learnyouahaskell.com/chapters[Learn You a Haskell for Great Good]
+
+https://www.twirpx.com/file/1674935[Bird R. Thinking Functionally with Haskell]
+
+Книги на русском
+~~~~~~~~~~~~~~~~
+
+https://www.ohaskell.guide/pdf/ohaskell.pdf[Денис Шевченко "О Haskell по-человечески" 2014] Мало страниц, большой шрифт, хорошо рассказанные азы
+на простых примерах
+
+https://anton-k.github.io/ru-haskell-book/files/ru-haskell-book.pdf[По-русски], свиду нормально написано, но проект книги заброшен и
+код местами устарел и не компилится.
+
+Можно также найти Р.Душкина "ФП на языке Haskell". https://wiki.haskell.org/Books[Ещё список на Haskell Wiki] (в том числе и на русском).
+
+А также некоторые задачи поможет решить "Purely Functional Data Structures" от Chris Okasaki (есть русское издание).
+
+Свалка ссылок 
+~~~~~~~~~~~~~
+https://vimeo.com/153042584[Yaron Minsky - Why OCaml]. Хорошо для общего развития: какие языки бывают, что от хорошего языка программирования требуется, и т.д.
+
+http://queue.acm.org/detail.cfm?id=2038036[OCaml for the Masses] Большинстов аргументов переносимо и на Haskell.
+
+https://two-wrongs.com/a-gentle-introduction-to-monad-transformers[Адекватный туториал] про трансформеры
+
+https://ruhaskell.org/links.html
+
+Курсы на степике "какие есть": https://stepik.org/course/75/ и https://stepik.org/course/693/ от Д.Москвина
+
+[[week1]]
+Неделя 1 (06 сентября)
+----------------------
+
+asdf
+
+[[week2]]
+Неделя 2 (13 сентября)
+----------------------
+
+qwer
+
+[[week3]]
+Неделя 3 (20 сентября)
+----------------------
+
+qwer
+
+[[week4]]
+Неделя 4 (27 сентября)
+----------------------
+
+Разгрузочный день
+
+// link:exercises6.html[Упражнения про исчисление высказываний и немного про списки]
+
+ifdef::backend-docbook[]
+[index]
+Example Index
+-------------
+////////////////////////////////////////////////////////////////
+The index is normally left completely empty, it's contents being
+generated automatically by the DocBook toolchain.
+////////////////////////////////////////////////////////////////
+endif::backend-docbook[]
