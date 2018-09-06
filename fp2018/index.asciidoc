@@ -22,6 +22,9 @@ http://learnyouahaskell.com/chapters[Learn You a Haskell for Great Good]
 
 https://www.twirpx.com/file/1674935[Bird R. Thinking Functionally with Haskell]
 
+https://github.com/hmemcpy/milewski-ctfp-pdf[Category Theory for Programmers] (а также видео) хорошая, но может
+ показаться зубодробительной. Короче, не для каждого.
+
 Книги переведенные
 ~~~~~~~~~~~~~~~~~~
 
