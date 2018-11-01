@@ -1,0 +1,53 @@
+\documentclass[14pt,fleqn,oneside]{book} 
+
+\usepackage[top=1cm,bottom=1cm,left=1cm,right=0.5cm,headsep=10pt,a4paper]{geometry}
+
+\usepackage{fontspec}
+\newfontfamily\monacoB{MonacoB} 
+
+\usepackage{lscape}
+
+\setmainfont[
+ Ligatures=TeX,
+ Extension=.otf,
+ BoldFont=cmunbx,
+ ItalicFont=cmunti,
+ BoldItalicFont=cmunbi,
+ SizeFeatures={Size=20}
+]{cmunrm}
+
+\setsansfont[
+ Ligatures=TeX,
+ Extension=.otf,
+ BoldFont=cmunsx,
+ ItalicFont=cmunsi,
+]{cmunss}
+
+\setmonofont[
+ Ligatures=TeX,
+ Extension=.otf,
+ BoldFont=cmuntb,
+ ItalicFont=cmunit,
+ SizeFeatures={Size=20}
+]{cmuntt}
+
+% \setmonofont[
+%  Ligatures=TeX,
+%  Extension=.otf,
+% %  BoldFont=MonacoB,
+% %  ItalicFont=MonacoB,
+%  SizeFeatures={Size=20}
+% ]{MonacoB.otf}
+
+
+\begin{document}
+Можно ли подставить функцию с одним типом туда, где ожидается функция со вторым?
+\begin{enumerate}
+ \item \verb![a -> (Int,bool)] -> [Int] -> [b -> a -> (Int,b)] ! \\
+       \verb!f a -> f Int -> f (Bool -> a)!
+ 
+ \item \verb!f (f Bool) -> Maybe Int -> Maybe [Bool]! \\
+       \verb!f (g a) -> g Int -> g (f a)!
+\end{enumerate}
+
+\end{document}
