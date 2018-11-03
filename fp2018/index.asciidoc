@@ -11,10 +11,12 @@
 Пролог
 -----
 
-* https://repl.it[Repl.it!] и там выбрать Haskell. На первых порах хватит.
-* Самая распостраненый способ уставновить Haskell - это Haskell Platform (http://www.haskell.org/platform).
-  Работает для Windows, Linux и Mac. Для курса будет достаточно минимального варианта установки.
-* В Haskell Platform есть простые среды разработки GHCi и WinGHCi. http://msimuni.wdfiles.com/local--files/fp4/StartingWithGHC.pdf[Вот] краткая инструкция о том, как начать с ними работать.
+* [.line-through]#https://repl.it[Repl.it!] и там выбрать Haskell. На первых порах хватит.#
+* [.line-through]#Eсть плагин для IntelliJ IDEA#
+* Нужно устанавливать https://github.com/haskell/haskell-ide-engine[Haskell IDE Engine a.k.a. HIE] и в README читать как настроить ваш любимый редактор (VsCode, Emacs, etc.)
+* [.line-through]#Самая распостраненый способ уставновить Haskell - это Haskell Platform (http://www.haskell.org/platform).
+  Работает для Windows, Linux и Mac. Для курса будет достаточно минимального варианта установки.#
+* [.line-through]#В Haskell Platform есть простые среды разработки GHCi и WinGHCi. http://msimuni.wdfiles.com/local--files/fp4/StartingWithGHC.pdf[Вот] краткая инструкция о том, как начать с ними работать.#
 
 Книги на английском
 ~~~~~~~~~~~~~~~~~~~
