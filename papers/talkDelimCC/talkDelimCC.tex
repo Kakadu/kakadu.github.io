@@ -1,0 +1,71 @@
+\documentclass{beamer}
+
+\beamertemplatenavigationsymbolsempty % remove navigation bar
+
+\usepackage[utf8]{inputenc} 
+\usetheme{default}
+
+\usepackage{xltxtra} % load xunicode
+\usepackage{polyglossia}
+\setmainlanguage{russian}
+\setotherlanguage{english}
+
+\usepackage{xcolor}
+\definecolor{YellowGreen} {HTML}{B5C28C}
+\definecolor{ForestGreen} {HTML}{009B55}
+\definecolor{MyBackground}{HTML}{F0EDAA}
+
+\usepackage{xltxtra} % load xunicode
+
+\newfontfamily\monacoB{MonacoB} 
+\usepackage{listings}
+\lstset
+  { language=haskell
+  , basicstyle=\monacoB         % print whole listing small
+  , stringstyle=\monacoB      % typewriter type for strings
+  , showstringspaces=false       % no special string spaces
+  }
+\lstdefinestyle{hsstyle1}
+         { keywords={data}
+         , showstringspaces=false
+         , basicstyle=\monacoB
+%          , showspaces=false
+%          , showstringspaces=false
+%          , columns=fixed 
+          , language=haskell
+          , deletekeywords={Int,Float,String,List,Void}
+          , breaklines=true
+%           , columns=fullflexible
+          , commentstyle=\color{ForestGreen}
+          , commentstyle=\color{ForestGreen}
+          , mathescape=true
+          , backgroundcolor = \color{MyBackground}
+}
+
+
+\begin{document}
+
+
+\begin{frame}[fragile]{У нас был интерпретатор языка $\Lambda$ ...}
+%\lstbegin
+\begin{lstlisting}[style={hsstyle1}]
+type Name = String
+data Term = Var       Name  
+          | Con Int  
+          | Add Term Term  
+          | Lam Name Term    
+          | App Term Term
+\end{lstlisting}
+
+Обязуем интепретатор возвращать вот такое значение
+\begin{lstlisting}[style={hsstyle1}]
+data Value = Wrong  
+           | Num Int  
+           | Fun (Value -> Value)
+           
+showval :: Value -> String             
+-- asdfasdfa asdfasd
+\end{lstlisting}
+\end{frame}
+
+\end{document}
