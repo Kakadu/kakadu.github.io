@@ -27,6 +27,8 @@ https://www.twirpx.com/file/1674935[Bird R. Thinking Functionally with Haskell]
 https://github.com/hmemcpy/milewski-ctfp-pdf[Category Theory for Programmers] (а также видео) хорошая, но может
  показаться зубодробительной. Короче, не для каждого.
 
+Обзор стандартной библиотеки (english) http://www.cse.chalmers.se/edu/course/TDA452/tourofprelude.html[HTML] http://www.cse.chalmers.se/edu/course/TDA452/Haskell-Prelude-Tour-A4.pdf[PDF]
+
 Книги переведенные
 ~~~~~~~~~~~~~~~~~~
 
@@ -45,6 +47,8 @@ https://anton-k.github.io/ru-haskell-book/files/ru-haskell-book.pdf[По-рус�
 
 А также
 ~~~~~~~
+
+http://cheatsheet.codeslower.com/CheatSheet.pdf[Шпаргалка]
 
 Можно донимать хаскеллистов в различных чатиках на просторах IRC или Telegram
 
