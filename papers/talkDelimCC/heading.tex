@@ -1,0 +1,158 @@
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+\usepackage{fontspec}
+\setmainfont[
+ Ligatures=TeX,
+ Extension=.otf,
+ BoldFont=cmunbx,
+ ItalicFont=cmunti,
+ BoldItalicFont=cmunbi,
+]{cmunrm}
+% С засечками (для заголовков)
+\setsansfont[
+ Ligatures=TeX,
+ Extension=.otf,
+ BoldFont=cmunsx,
+ ItalicFont=cmunsi,
+]{cmunss}
+
+\setmonofont[
+ Ligatures=TeX,
+ Extension=.otf,
+ BoldFont=cmuntb,
+ ItalicFont=cmunvi,
+]{cmuntt}
+
+
+\usepackage{xcolor}
+\definecolor{YellowGreen} {HTML}{B5C28C}
+\definecolor{ForestGreen} {HTML}{009B55}
+\definecolor{DarkGreen}   {HTML}{009B55}
+\definecolor{MyBackground}{HTML}{F0EDAA}
+
+\usepackage{xltxtra} % load xunicode
+\usepackage{polyglossia}
+\setmainlanguage{russian}
+\setotherlanguage{english}
+
+% \let\cyrillicfonttt\monofamily
+% \usepackage[TT={Scale=0.88,FakeStretch=0.9},
+% SS={Scale=0.9},
+% RM={Scale=0.9},
+% DefaultFeatures={Ligatures=TeX}]{dejavu-otf} % support opentype DejaVu fonts
+% https://github.com/vjpr/monaco-bold/raw/master/MonacoB/MonacoB.otf
+% \newfontfamily\monacoB{MonacoB} 
+
+% \usepackage{inconsolata}
+\usepackage{listings}
+% \lstdefinestyle{style1}{
+%   language=haskell,
+%   numbers=left,
+%   stepnumber=1,
+%   numbersep=10pt,
+%   tabsize=4,
+%   showspaces=false,
+%   showstringspaces=false
+% }
+\lstdefinestyle{hsstyle1}
+         { showstringspaces=false
+         , keywords={data}         
+         , basicstyle=\ttfamily
+%          , showspaces=false
+%          , showstringspaces=false
+%          , columns=fixed 
+         , language=haskell
+%          , deletekeywords={Int,Float,String,List,Void}
+%          , breaklines=true
+         %, columns=fullflexible
+          , escapeinside={§§}
+%          , escapebegin=\begin{russian}\monacoB\color{DarkGreen}
+%          , escapeend=\end{russian}
+          , commentstyle=\color{DarkGreen}
+%          , escapebegin=\begin{russian}\monacoB\color{ForestGreen}
+%          , escapeend=\end{russian}
+         , mathescape=true
+%          , backgroundcolor = \color{MyBackground}
+}
+
+\lstdefinelanguage{ocaml}{
+keywords={@type, function, fun, let, in, match, with, when, class, type,
+object, method, of, rec, repeat, until, while, not, do, done, as, val, inherit,
+new, module, sig, deriving, datatype, struct, if, then, else, open, private, virtual, include, success, failure,
+assert, true, false, end},
+sensitive=true,
+commentstyle=\small\itshape\ttfamily,
+keywordstyle=\ttfamily\underbar,
+identifierstyle=\ttfamily,
+basewidth={0.5em,0.5em},
+columns=fixed,
+fontadjust=true,
+literate={->}{{$\to$}}3 ,
+morecomment=[s]{(*}{*)}
+}
+\lstdefinestyle{camlstyle1}
+  { language=ocaml
+  , moredelim=**[is][\color{red}]{@}{@}
+}
+
+\newcommand{\inline}[1]{\lstinline{haskell}{#1}}
+
+\def\hsinline{\lstinline[style={hsstyle1}]}
+\def\camline{\lstinline[style={camlstyle1}]}
+\def\inline{\hsinline}
+\def\myinline{\lstinline[basicstyle=\monacoB]}
+\def\hline{\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}}
+
+% \renewcommand{\vskip}{\vspace{1cm}}
+
+\lstnewenvironment{hslisting} {
+    \lstset { style={hsstyle1} }
+  }
+  {}
+  
+\lstset
+  { language=haskell
+%   , basicstyle=\monacoB         % print whole listing small
+%   , stringstyle=\monacoB      % typewriter type for strings
+  , showstringspaces=false       % no special string spaces
+  }
+
+\usefonttheme{professionalfonts}
+\usepackage{times}
+\usepackage{tikz}
+\usetikzlibrary{cd}
+% \usepackage{tikz-cd}
+\usepackage{amsmath}
+%\DeclareMathOperator{->}{\rightarrow}
+\newcommand\iso{\ensuremath{\cong}}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usetikzlibrary{arrows,shapes}
+\usepackage{verbatimbox} % for verbnobox
+
+\usepackage{fontawesome}
+% \newfontfamily{\FA}{Font Awesome 5 Free} % some glyphs missing
+\expandafter\def\csname faicon@facebook\endcsname{{\FA\symbol{"F09A}}}
+\def\faQuestionSign{{\FA\symbol{"F059}}}
+\def\faQuestion{{\FA\symbol{"F128}}}
+\def\faExclamation{{\FA\symbol{"F12A}}}
+\def\faUploadAlt{{\FA\symbol{"F093}}}
+\def\faLemon{{\FA\symbol{"F094}}}
+\def\faPhone{{\FA\symbol{"F095}}}
+\def\faCheckEmpty{{\FA\symbol{"F096}}}
+\def\faBookmarkEmpty{{\FA\symbol{"F097}}}
+\def\faCheck{{\FA\symbol{"F00C}}}
+
+\newcommand{\faGood}{\textcolor{ForestGreen}{\faThumbsUp}}
+\newcommand{\faBad}{\textcolor{red}{\faThumbsODown}}
+\newcommand{\usefulExercise}{\textcolor{red}{\faPlus}}
+
+\usepackage{soul} % for \st that strikes through
+\usepackage[normalem]{ulem} % \sout
+% \newcommand{\hline}{\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}}
+% \usepackage{minted}
+% \newcommand{\inline}[1]{\mintinline{haskell}{#1}}
+
+\hypersetup{%
+  colorlinks=true, linkcolor=blue
+}
+% \usepackage[colorlinks=true, linkcolor=blue]{hyperref} 

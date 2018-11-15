@@ -1,6 +1,11 @@
 all:
 	xelatex -interaction=nonstopmode talkDelimCC.tex
+	bibtex talkDelimCC
+	xelatex -interaction=nonstopmode talkDelimCC.tex
+
 
 clean:
-	$(RM) -f *.log *.aux
+	$(RM) *.log *.aux *.snm *.toc *.vrb *.bbl *.blg *.nav
+
+
 

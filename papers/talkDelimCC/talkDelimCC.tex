@@ -4,68 +4,693 @@
 
 \usepackage[utf8]{inputenc} 
 \usetheme{default}
+% \usetheme{Frankfurt}
+\usetheme{Boadilla}
 
-\usepackage{xltxtra} % load xunicode
-\usepackage{polyglossia}
-\setmainlanguage{russian}
-\setotherlanguage{english}
+% Define my settings
+\definecolor{mygreen}{cmyk}{0.82,0.11,1,0.25}
+\setbeamertemplate{blocks}[rounded][shadow=false]
+% \addtobeamertemplate{block begin}{\pgfsetfillopacity{0.8}}{\pgfsetfillopacity{1}}
+\setbeamercolor{structure}{fg=mygreen}
+% \setbeamercolor*{block title example}{fg=blue!50,bg= blue!10}
+% \setbeamercolor*{block body example}{fg= blue,bg= blue!5}
 
-\usepackage{xcolor}
-\definecolor{YellowGreen} {HTML}{B5C28C}
-\definecolor{ForestGreen} {HTML}{009B55}
-\definecolor{MyBackground}{HTML}{F0EDAA}
+\input{heading.tex}
+\usepackage{ebproof}
+\usepackage{syntax}
 
-\usepackage{xltxtra} % load xunicode
-
-\newfontfamily\monacoB{MonacoB} 
-\usepackage{listings}
-\lstset
-  { language=haskell
-  , basicstyle=\monacoB         % print whole listing small
-  , stringstyle=\monacoB      % typewriter type for strings
-  , showstringspaces=false       % no special string spaces
-  }
-\lstdefinestyle{hsstyle1}
-         { keywords={data}
-         , showstringspaces=false
-         , basicstyle=\monacoB
-%          , showspaces=false
-%          , showstringspaces=false
-%          , columns=fixed 
-          , language=haskell
-          , deletekeywords={Int,Float,String,List,Void}
-          , breaklines=true
-%           , columns=fullflexible
-          , commentstyle=\color{ForestGreen}
-          , commentstyle=\color{ForestGreen}
-          , mathescape=true
-          , backgroundcolor = \color{MyBackground}
-}
-
+% http://pllab.is.ocha.ac.jp/~asai/cw2011tutorial/slides.pdf
+\title{Gentle introduction to delimited continuations}
+\author{Дмитрий Косарев}
 
 \begin{document}
+\begin{frame} \titlepage \end{frame}
+
+\begin{frame}{Обзор}
+ 
+ \begin{itemize}
+  \item call-with-current-continuation (callCC)
+  \item[\faCheck] \camline=shift=/\camline=reset=
+  \item[\faCheck] Примеры
+  \item[\faCheck] Предикативный полиморфизм
+  \item Импредикативный полиморфизм
+  \item CPS-преобразование
+  \item \camline=prompt=
+  \item \camline=cupto=
+  \item Через монады \cite{Dyvbig2007}
+ \end{itemize}
+
+\end{frame}
 
 
-\begin{frame}[fragile]{У нас был интерпретатор языка $\Lambda$ ...}
-%\lstbegin
-\begin{lstlisting}[style={hsstyle1}]
-type Name = String
-data Term = Var       Name  
-          | Con Int  
-          | Add Term Term  
-          | Lam Name Term    
-          | App Term Term
+\begin{frame}[fragile]{Что такое продолжение (continuation)?}
+ \begin{block}{Continuation}
+Это остаток вычисления
+\end{block}
+\begin{itemize}
+ \item Текущее вычисление: внутри  \hsinline=[]=
+ \item Остаток вычисления: снаружи  \hsinline=[]=
+\end{itemize}
+Пример: \hsinline=3+[5*2]-1=
+\begin{itemize}
+ \item Текущее вычисление: 5*2
+ \item Остаток вычисления: \hsinline=3+[$\cdot$]-1= 
+\end{itemize}
+\vspace{1cm}
+``Если дали значение для "дырки" \hsinline=[=$\cdot$\hsinline=]=, то прибавить 3 и вычесть 1``, т.е. \camline=fun x -> 3 + x - 1=.
+\end{frame}
+
+\begin{frame}[fragile]{Что такое продолжение (continuation)?}
+ \begin{block}{Continuation}
+Это остаток вычисления
+\end{block}
+Продолжения можно потерять по мере вычисления. 
+
+Например: \hsinline=3+[5*2]-1=
+\begin{itemize}
+ \item Заменим \hsinline=[$\cdot$]=  на \camline=raise Abort=:\\
+    \camline=3+[raise Abort]-1=
+ \item Теряющееся продолжение \hsinline=3+[$\cdot$]-1= является текущим
+\end{itemize}
+\vspace{1cm}
+\end{frame}
+
+\begin{frame}[fragile]{Разграниченные продолжения (continuation)?}
+\begin{block}{Continuation}
+Это остаток вычисления
+\end{block}
+\begin{alertblock}{Синтаксис} 
+\camline=reset (fun () -> M)=
+\end{alertblock}
+
+Например: \camline=@reset (fun () ->@ 3 + [5*2]@)@ - 1 =
+\begin{itemize}
+ \item Текущее вычисление: \camline=5*2=
+ \item Текущее разграниченное продолжение: \hsinline=3+[$\cdot$]=
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Shift}
+\begin{alertblock}{Синтаксис} 
+\camline=shift (fun k -> M)=
+\end{alertblock}
+\begin{itemize}
+ \item забывает текущее продолжение
+ \item сохраняет забытое как k
+ \item и исполняет \verb=M=
+\end{itemize}
+
+Например: 
+\begin{center}
+\camline=reset (fun () -> 3 + [shift (fun k -> M)]) - 1 =
+
+{\Large $\Downarrow$}
+
+\camline=reset (fun () -> [shift (fun k -> M)]) - 1 =
+
+где k = reset (fun () -> 3 + [$\cdot$])
+\end{center}
+
+%{\Large ??? }
+\end{frame}
+
+\begin{frame}[fragile]{Полученными продолжениями можно не пользоваться}
+\begin{alertblock}{ }
+\camline=shift (fun _ -> M)=
+\end{alertblock}
+\begin{itemize}
+ \item Сохраненное продолжение просто отбрасывается
+ \item Очень похоже на исключения
+\end{itemize}
+
+Пример: 
+
+\begin{center}
+\camline=reset (fun () -> 3 + [shift (fun _ -> 2)]) - 1 =
+
+{\Large $\Downarrow$}
+
+\camline=reset (fun () ->                       2) - 1 =
+
+где k = reset (fun () -> 3 + [$\cdot$])
+
+{\Large $\Downarrow$}
+
+\camline=2 - 1=
+
+{\Large $\Downarrow$}
+
+\camline=1=
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Упражнение}
+Дан список чисел, нужно их перемножить, а если встретился ноль, то \textit{сразу} вернуть ноль.
+\begin{lstlisting}[style={camlstyle1}]
+let rec times lst = match lst with
+  | [] -> 1
+  | 0 :: tl -> @???@
+  | h :: tl -> h * times tl
+\end{lstlisting}
+Вызывать функцию будем так:
+\begin{lstlisting}[style={camlstyle1}]
+reset (fun () -> times [1; 2; 0; 4])
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Ответ на упражнение}
+Дан список чисел, нужно их перемножить, а если встретился ноль, то \textit{сразу} вернуть ноль.
+\begin{lstlisting}[style={camlstyle1}]
+# let rec times lst = match lst with
+  | [] -> 1
+  | 0 :: tl -> @shift (fun _ -> 0)@
+  | h :: tl -> h * times tl
+;;
+times : int list => int = <fun>
+# reset (fun () -> times [1;2;0;4]) ;;
+- : int = 0
+# reset (fun () -> times [1;2;3;4]) ;;
+- : int = 24
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Как сохранять продолжения}
+\begin{block}{}
+\camline=shift (fun k -> k)=
+\end{block}
+\begin{itemize}
+\item Возвращаем продолжение сразу и как есть
+\item А потом его можно вызывать!
+\end{itemize}
+
+Пример: \camline=reset (fun () -> 3 + [...] - 1)=
+\begin{lstlisting}[style={camlstyle1}]
+# let f   = reset (fun () -> 3 + @shift (fun k -> k)@ - 1) ;;
+f : int => int = <fun>
+# f 10;;
+- : int = 12
 \end{lstlisting}
 
-Обязуем интепретатор возвращать вот такое значение
-\begin{lstlisting}[style={hsstyle1}]
-data Value = Wrong  
-           | Num Int  
-           | Fun (Value -> Value)
-           
-showval :: Value -> String             
--- asdfasdfa asdfasd
+\begin{lstlisting}[style={camlstyle1}]
+# let f @x@  = reset (fun () -> 3 + shift (fun k -> k) - 1) @x@;;
+f : int -> int = <fun>
+# f 10;;
+- : int = 12
 \end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Упражнение}
+\begin{block}{}
+\camline=shift (fun k -> k)=
+\end{block}
+
+Вот identity для списка:
+\begin{lstlisting}[style={camlstyle1}]
+(* id : 'a list -> 'a list *)
+let rec id lst = match lst with 
+  | [] -> []                     (* modify here *)
+  | h :: tl -> h :: id tl;; 
+\end{lstlisting}
+Внесите изменение в строчке, чтобы извлечь продолжение, если функция вызывается вот так:
+\begin{lstlisting}[style={camlstyle1}]
+reset (fun () -> id[1;2;3]) ;;
+\end{lstlisting}
+Что это продолжение делает?
+\end{frame}
+
+\begin{frame}[fragile]{Решение упражнения}
+\begin{lstlisting}[style={camlstyle1}]
+(* id : 'a list -> 'a list *)
+let rec id lst = match lst with 
+  | [] -> @shift (fun k -> k)@
+  | h :: tl -> h :: id tl;; 
+id : int list => int list = <fun>
+\end{lstlisting}
+\pause
+\begin{lstlisting}[style={camlstyle1}]
+# let append123 = reset (fun () -> id[1;2;3]) ;;
+append123 : int list => int list = <fun>
+# append123 [4;5;6];;
+- : int list = [1;2;3;4;5;6]
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Композиция}
+% Можно увидеть некоторый шаблон:
+\begin{center}
+\camline!fun x -> reset (f x)!
+
+{\Large $\Downarrow$ }
+
+\camline!compose f g  = fun x -> reset (f (g x))!
+\end{center}
+\end{frame}
+
+\begin{frame}[fragile]{Fix с callCC и delimCC}
+
+\begin{center}
+\begin{lstlisting}[style={camlstyle1}]
+let k = callCC (fun x -> c) in 
+k k
+\end{lstlisting}
+
+\begin{lstlisting}[style={camlstyle1}]
+let fix0 f =
+  reset (let x = shift (fun c -> c c) in
+         f (fun a -> x x a))
+\end{lstlisting}
+\end{center}
+\end{frame}
+
+
+\begin{frame}[fragile]{Answer types}
+\begin{lstlisting}[style={camlstyle1}]
+let rec append lst = match lst with 
+  | [] -> shift (fun k -> k)
+  | h :: tl -> h :: append tl;;
+\end{lstlisting}
+\begin{lstlisting}[style={camlstyle1}]
+let append123 = reset (fun () -> append [1;2;3]) ;;
+\end{lstlisting}
+\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}
+\begin{center}
+$ 1 :: 2 :: 3 :: \bullet$  \camline=  : 'a list=
+
+$\Downarrow$ shift
+
+$\lambda x\!s \rightarrow 1 :: 2 :: 3 :: x\!s$ \camline=  : 'a list -> 'a list =
+\end{center}
+Новый вид записи типов:
+
+\camline='a list / 'a list -> 'a list / ('a list -> 'a list)= 
+\vspace{0.5cm}
+
+т.е. $\forall$ 'a функция по значению с типом \camline='a list= возвращает \camline='a list= в непосредственном контексте; однако, в процессе тип результата (answer type)  текущего контекста модифицируется до \camline='a list -> 'a list=.
+
+\end{frame}
+
+\begin{frame}[fragile]{Полиморфизм по answer type (1/2)}
+Произвольные функции с типом \camline=S -> T= должны рассматриваться как полиморфные функции с типом \camline=S/'a -> T/'a=.\\ \vspace{0.5cm}
+Рассмотрим (как бы мономорфную) функцию \camline!let add1 x = 1+x!
+
+\begin{lstlisting}[style={camlstyle1}]
+ reset (fun () -> add1 x; ())
+ reset (fun () -> add1 x; true)
+\end{lstlisting}
+
+Два типа \camline=int/unit -> int/unit= и \camline=int/unit -> int/unit= (анти)унифицируются до \camline=int/'a -> int/'a=.
+\end{frame}
+
+\begin{frame}[fragile]{Полиморфизм по answer type (2/2)}
+\begin{lstlisting}[style={camlstyle1}]
+let rec visit lst = match lst with 
+| [] -> @shift@ (fun h -> [])
+| h :: tl -> h :: @shift@ (fun k -> 
+                            (k []) :: reset (k (visit rest)))
+let rec prefix lst = reset (visit lst)
+\end{lstlisting}
+
+Первый \camline=shift= начинает конструирование префиксов, возвращая \camline=[] : 'a list list=.
+
+Второй \camline=shift= выражает consing и применяется два раза: 1) к пустому списку чтобы получить текущий ответ и 2) чтобы сконструировать список длинных префиксов.
+
+Продолжение \camline=k= используется два раза в разных контекстах
+\begin{itemize}
+ \item \camline='a list / 'a list list -> 'a list / 'a list list=
+ \item \camline='a list / 'a list -> 'a list / 'a list=
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Пару слов про Prompt и STLC}
+STLC обладает свойством strong normalization: последовательность редукций любого терма завершается. С добавлением delimCC -- уже нет.
+
+\begin{lstlisting}[style={camlstyle1}]
+let loop () =
+  let p = new_prompt () in
+  let delta () = shift p (fun f v -> f v v) () in
+  push_prompt p (fun () -> let r = delta () in
+                           fun v -> r
+                ) delta ;;
+\end{lstlisting}
+Выводится тип \camline=loop : unit -> 'a=, но по сути это функция \camline=fun () -> omega= и она виснет. 
+
+% Факт того, что функция impure затерялся в типе \camline='a=.
+
+% ???
+\end{frame}
+
+\begin{frame}[fragile]{Типобезопасный printf}
+\begin{lstlisting}[style={camlstyle1}]
+let int x = string_of_int x
+let str (x:string) = x
+
+let % to_str = shift (fun k -> fun x -> k (to_str x))
+let sprintf p = reset p
+\end{lstlisting}
+\begin{lstlisting}[style={camlstyle1}]
+sprintf (fun () -> "Hello world!")
+sprintf (fun () -> "Hello " ^ % str ^ "!") "world"
+sprintf (fun () -> "The value " ^ % str ^ " is " ^ % int) "x" 4
+\end{lstlisting} \vspace{1cm}
+
+У \hsinline=sprintf= ''зависимое`` поведение с типом \camline=(unit / string -> string / 'a) -> 'a=. Без полиморфизма так нельзя было.
+\end{frame}
+
+\begin{frame}[fragile]{State monad (1/2)}
+Создание:
+\begin{lstlisting}[style={camlstyle1}]
+reset (fun () -> M) 3
+\end{lstlisting}
+Доступ к состоянию:
+\begin{lstlisting}[style={camlstyle1}]
+# let get () =
+    shift (fun k -> fun state -> k state state) ;;
+get : unit => 'a = <fun>
+\end{lstlisting}
+Запускаем вычисление:
+\begin{lstlisting}[style={camlstyle1}]
+# let run_state thunk =
+    reset (fun k -> let result = think () in
+                    fun state -> result) 0 ;;
+run_state : (unit => 'a) => 'b = <fun>
+\end{lstlisting}
+
+\end{frame} 
+
+
+
+\begin{frame}[fragile]{State monad (2/2)}
+Работаем с состоянием (пример):
+\begin{lstlisting}[style={camlstyle1}]
+# let tick () =
+    shift (fun k -> fun state -> k () (state+1) ) ;;
+tick : unit => unit = <fun>
+\end{lstlisting}
+
+\begin{lstlisting}[style={camlstyle1}]
+# run_state (fun () ->
+     tick ();                   (* state = 1 *)
+     tick ();                   (* state = 2 *)
+     let a = get () in
+     tick ();                   (* state = 3 *)
+     get () - a);;
+- : int = 1
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Вызываем несколько раз}
+\begin{lstlisting}[style={camlstyle1}]
+(* either : 'a -> 'a -> 'a *)
+let either a b () = shift (fun k -> k a; k b)
+\end{lstlisting}
+\vspace{1cm}
+\begin{lstlisting}[style={camlstyle1}]
+# reset (fun () -> 
+    let x = either 0 1 in
+    print_int x
+    print_newline ());;
+0
+1
+- : unit = ()
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Generate\&test}
+\begin{center}
+$(P \vee Q) \wedge (P \vee \neg Q) \wedge (\neg P \vee \neg Q)$
+\end{center}
+\vspace{1cm}
+\begin{lstlisting}[style={camlstyle1}]
+# reset (fun () -> 
+    let p = either true false in
+    let q = either true false in
+    if (p||q) && (p || not q) && (not p || not q)
+    then (print_string (string_of_bool p);
+          print_string ", ";
+          print_string (string_of_bool q);
+          print_newline () );;
+    
+true, false
+- : unit = ()
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Дифференцирование парсеров (1/2)} 
+Подробнее у \href{http://okmij.org/ftp/continuations/differentiating-parsers.html}{Олега }
+
+\begin{lstlisting}[style={camlstyle1}]
+type stream_req = ReqDone 
+                | ReqChar of int * (char option -> stream_req)
+
+let stream_inv p = fun pos -> 
+  shift p (fun sk -> ReqChar (pos,sk))
+val stream_inv : stream_req Delimcc.prompt -> 
+                 int -> char option = <fun>
+
+let cont str (ReqChar (pos,k) as req) = filler str pos req;;
+val cont : string -> stream_req -> stream_req = <fun>
+     
+let finish (ReqChar (pos,k)) = filler "" pos (k None);;
+val finish : stream_req -> stream_req = <fun>
+\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{Дифференцирование парсеров (2/2)} 
+
+\begin{lstlisting}[style={camlstyle1}]
+let rec filler buffer buffer_pos = function 
+  | ReqDone -> ReqDone
+  | ReqChar (pos,k) as req ->
+       let pos_rel = pos - buffer_pos in
+       let _ = 
+         (* we don't accumulate already emptied buffers. We could. *)
+         assert (pos_rel >= 0) 
+       in
+       if pos_rel < String.length buffer then
+         (* desired char is already in buffer *)
+         filler buffer buffer_pos (k (Some buffer.[pos_rel])) 
+       else
+         (* buffer underflow. Ask the user to fill the buffer *)
+         req
+;;
+val filler : string -> int -> stream_req -> stream_req = <fun>
+\end{lstlisting}
+\end{frame}
+
+
+\begin{frame}[fragile]{Синтаксис для $\lambda_{let}^{s/r}$}
+\begin{itemize}
+ \item Значения \\
+ $v$ ::= $c \mid x \mid \lambda x.e \mid $ \verb=fix= $f.x.e$
+ \item Выражения \\
+$e ::= v \mid e_1e_2\mid \mathcal{S}k.e \mid \langle e\rangle \mid$ let $x$ = $e_1$ \verb=in= $e_2 \mid $ \verb=if= $e_1$ \verb=then= $e_2$ \verb=else= $e_3$
+\item Мономорфные типы\\
+$\alpha,\beta,\gamma,\delta ::= t \mid b \mid (\alpha/\gamma \rightarrow \beta/\delta)$
+\item Полиморфные типы\\
+$A::= \alpha \mid \forall t . A$
+
+\item Evaluation context (e-context):\\
+E ::= $[] \mid vE \mid Ee \mid $ 
+\verb=let= $x$ = $E$ \verb=in= $e \mid $
+\verb=if= $E$ \verb=then= $e$ \verb=else= $e \mid
+\langle E\rangle  $
+
+\item Pure e-context:\\
+F ::= $[] \mid vF \mid Fe \mid $ 
+\verb=let= $x$ = $F$ \verb=in= $e \mid $
+\verb=if= $F$ \verb=then= $e$ \verb=else= $e$
+
+\item RedEx:\\ 
+R ::= $(\lambda x.e)v \mid$ \verb=let= $x$ = $F$ \verb=in= $e \mid $
+\verb=if= $F$ \verb=then= $e$ \verb=else= $e$ $\mid \langle E\rangle$ $\mid $ $\langle F[\mathcal{S}k.e]\rangle$
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Правила редукции для $\lambda_{let}^{s/r}$}
+\begin{tabular}{ r  c  l }
+$(\lambda x.e) v$ & $\rightsquigarrow$ & $e[v/x]$ \\
+$($\textbf{fix} $ f.x.e) v$ & $\rightsquigarrow$ & $e[$ \textbf{fix} $ f.x.e/f][v/x]$ \\
+$\langle v\rangle$ & $\rightsquigarrow$ & $v$ \\
+$\langle F[\mathcal{S}k.e]\rangle$ & $\rightsquigarrow$ & $\langle$\textbf{let} $k = \lambda x.\langle F[x]\rangle$ \textbf{in} $e\rangle$ \\
+\textbf{let} $x = v$ \textbf{in} $e$ & $\rightsquigarrow$ & $e[v/x]$ \\
+\textbf{if true  then} $e_1$ \textbf{else} $e_2$ & $\rightsquigarrow$ & $e_1$ \\
+\textbf{if false then} $e_1$ \textbf{else} $e_2$ & $\rightsquigarrow$ & $e_2$ \\
+\end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]{Пример редукции в $\lambda_{let}^{s/r}$}
+\begin{tabular}{ l l }
+                   & \camline=prefix [1;2]= \\
+$\rightsquigarrow$ & $\langle$1 :: $\mathcal{S}k.(k[] :: \langle k($\texttt{visit [2]}$)\rangle)\rangle$ \\
+$\rightsquigarrow$ & $\langle$\texttt{let} k = $\lambda x.\langle1::x\rangle$ \texttt{in} $k$\texttt{[]} :: $\langle k($\texttt{visit [2]}$)\rangle\rangle$ \\
+$\rightsquigarrow$ & $\langle(\lambda x.\langle1::x\rangle)$ \texttt{[]} $:: \langle(\lambda x.\langle1::x\rangle) ($\texttt{visit [2]}$)\rangle\rangle$ \\
+% $\rightsquigarrow^+$ & \camline!<<[1]::<<(\lambda x.<<1::x>>)(2::\mathS k.(k[]::(k visit [])>>)) >> >>! \\ 
+$\rightsquigarrow^+$ & $\langle$\texttt{[1]}$::\langle(\lambda x.\langle 1::x\rangle)(2::\mathcal{S} k.(k$\texttt{[]}$::(k($\texttt{visit []}$)\rangle)) \rangle\rangle$\\ 
+$\rightsquigarrow$ & $\langle$\texttt{[1]}$::\langle$\texttt{let k = }$\lambda x.\langle (\lambda x.\langle 1::x\rangle)(2::x)\rangle$\texttt{ in } \\
+& \texttt{    }$\qquad \quad k$\texttt{[]} $:: \langle k($\texttt{visit []}$)\rangle\rangle\rangle$
+\\
+$\rightsquigarrow$ & $\langle$\texttt{[1]}$::\langle(\lambda x.\langle (\lambda x.\langle 1::x\rangle)(2::x)\rangle)$\texttt{ [] ::} \\
+& $\qquad\quad\langle(\lambda x.\langle (\lambda x.\langle 1::x\rangle)(2::x)\rangle)($\texttt{visit []}$)\rangle\rangle\rangle$
+\\
+$\rightsquigarrow^+$ & $\langle$\texttt{[1]}$::\langle$\texttt{[1;2]} $::\langle(\lambda x.\langle (\lambda x.\langle 1::x\rangle)(2::x)\rangle)(\mathcal{S}h.$\texttt{[]}$)\rangle\rangle\rangle$ \\
+$\rightsquigarrow$ & $\langle$\texttt{[1]}$::\langle$\texttt{[1;2]} $::$ \texttt{let} $h$ = $\lambda x.\langle (\lambda x.\langle 1::x\rangle)(2::x)\rangle)x\rangle$\texttt{ in []}$\rangle\rangle$\\
+$\rightsquigarrow$ & $\langle$\texttt{[1]}$::\langle$\texttt{[1;2]} $::$ \texttt{[]}$\rangle\rangle$\\
+$\rightsquigarrow^+$ & \texttt{[[1]; [1;2]]} \\
+\end{tabular}
+\end{frame}
+
+\begin{frame}[fragile]{Вывод типов}
+
+\begin{center}$\Gamma, \alpha \vdash e:\tau, \beta$\end{center}
+В контексте $\Gamma$ выражение $e$ имеет тип $\tau$ и процесс вычисления $e$ изменяет answer type с $\alpha$ на $\beta$.\vspace{1cm}
+
+При CPS-преобразовании тип у образа $e$ был бы $(\tau^* \rightarrow \alpha^*)\rightarrow \beta^*$. \vspace{1cm}
+
+При добавлении типов хотелось бы сохранить \textit{type preservation property}: при вычислении выражения тип не должен меняться.
+\end{frame}
+
+\begin{frame}[fragile]{Система типов}
+ Мономорфная система типов для \texttt{shift} и \texttt{reset} есть у Danvy \& Filinski \cite{Danvy89afunctional}. \vspace{0.5cm}
+ 
+ Полиморфизм туда можно добавлять разными способами, ограничивая полиморфизм выражения \hsinline!let x = $e_1$ in $e_2$!.
+ 
+ \begin{itemize}
+  \item Value restriction: $e_1$ должно быть значением.
+  \item ``Слабые'' типовые переменные: тип $e_1$ может быть обобщен (generalized) только когда он не связан с побочными эффектами.
+  \item Полиморфизм по имени: вычисление $e_1$ откладывается до тех пор, когда $x$ таки начнет использоваться в $e_2$, это приводит к call-by-name семантикe для $e_1$.
+  \item Pure выражения из \cite{asai2007} .
+ \end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Pure выражения}
+Ограничим  \hsinline!let x = $e_1$ in $e_2$!, чтобы $e_1$ было чисто от эффектов управления, т.е. являлось \textit{pure}.\vspace{0.5cm}
+
+Pure $\sim$ полиморфно по answer types.
+\begin{center}$\Gamma, \alpha \vdash e:\tau, \alpha$\end{center}
+
+Примеры:
+\begin{itemize}
+ \item значения
+ \item $\langle e\rangle$, т.к. все эффекты отделены reset'ом.
+\end{itemize}\vspace{0.5cm}
+
+Обозначать будем так: $\Gamma \vdash_p e:\tau$.\vspace{0.5cm}
+
+\end{frame}
+
+\begin{frame}[fragile]{Правила вывода типов (1/2)}
+$A \succ \tau$: инстанциация полиморфных переменных из $A$ какими-то мономорфными типами. \vspace{0.5cm}
+
+Gen$(\sigma,\Gamma) \sim \forall t_1 ... t_n . \sigma$, где ${t_1 ... t_n}=\mathtt{FTV}(\sigma) - \mathtt{FTV}(\Gamma)$. \vspace{0.5cm}
+\hline
+
+\begin{prooftree}
+\hypo{ (x : \sigma) \in \Gamma }
+\hypo{ \sigma \succ \tau }
+\infer2[(var)]{ \Gamma &\vdash_p x:\tau }
+\end{prooftree}
+\vspace{0.5cm}
+
+% exp
+\begin{prooftree}
+\hypo{ \Gamma &\vdash_p M : \tau }
+\infer1[(exp)]{ \Gamma, \alpha &\vdash_p M : \tau,\alpha }
+\end{prooftree}
+\vspace{0.5cm}
+
+% let
+\begin{prooftree}
+\hypo{ \Gamma &\vdash M_1:\tau_1 }
+\hypo{ \Gamma,x: \mathtt{Gen}(\tau_1,\Gamma),\alpha &\vdash M_2 : \tau_2, \beta}
+\infer2[(let)]{ \Gamma,\alpha &\vdash \mathbf{let~x~=~} M_1 \mathtt{~in~} M_2 : \tau_2, \beta}
+\end{prooftree}
+\end{frame}
+
+\begin{frame}[fragile]{Правила вывода типов (2/2)}
+% shift
+\begin{prooftree}
+\hypo{ \Gamma, k: \forall t . (\tau/t \rightarrow \alpha/t),\gamma &\vdash M:\gamma,\beta}
+\infer1[(shift)]{ \Gamma,\alpha &\vdash \mathcal{S}k.M : \tau, \beta}
+\end{prooftree} \vspace{0.5cm}
+
+% reset
+\begin{prooftree}
+\hypo{ \Gamma, \gamma &\vdash M:\gamma,\tau}
+\infer1[(reset)]{ \Gamma,\alpha &\vdash_p \langle M\rangle:\tau}
+\end{prooftree} \vspace{0.5cm}
+
+% fun
+\begin{prooftree}
+\hypo{ \Gamma, x : \tau_1, \alpha &\vdash M : \tau_2,\beta }
+\infer1[(fun)]{ \Gamma &\vdash_p \lambda x . M : (\tau_1/\alpha \rightarrow \tau_2/\beta) }
+\end{prooftree} \vspace{0.5cm}
+
+% app
+\begin{prooftree}
+\hypo{ \Gamma,\gamma &\vdash M_1:(\tau_1/\alpha \rightarrow \tau_2/\beta),\delta }
+\hypo{ \Gamma,\beta &\vdash M_2 : \tau_1, \gamma}
+\infer2[(app)]{ \Gamma,\alpha &\vdash M_1 M_2 : \tau_2, \delta}
+\end{prooftree}
+\end{frame}
+
+
+\begin{frame}[fragile]{Свойства системы типов (1/2)}
+\begin{block}{Subject reduction}
+Если и $\Gamma; \alpha \vdash e_1:\tau; \beta$ выводимо, и $e_1  \rightsquigarrow^+ e_2$, тогда $\Gamma; \alpha \vdash e_2:\tau; \beta$. Аналогично, если $\Gamma \vdash_p e_1:\tau$, то $\Gamma \vdash_p e_2:\tau$ 
+\end{block}\vspace{0.5cm}
+
+Слабая непротиворечивость системы типов (\emph{weak type soundness}): правильно протипизированные программы работают хорошо. \vspace{0.5cm}
+
+Сильная непротиворечивость системы типов (\emph{strong type soundness}): результат такого же типа, что исходный терм.
+
+\begin{block}{Прогресс и единственность разложения}
+Если выводится $\vdash_p \langle e\rangle:\tau$, то либо  $e$ просто значение, либо $\langle e\rangle$ можно единственным образом разложить в форму $E[R]$, где $E$ -- контекст, а $R$ -- RedEx.
+\end{block}
+Из двух свойств следует непротиворечивость(soundness).
+\end{frame}
+
+\begin{frame}[fragile]{Свойства системы типов (2/2)}
+$W' : (\Gamma,e) \mapsto (\theta; \alpha, \tau, \beta)$ как расширение HM.
+
+\begin{block}{Principal type и вывод типов}
+Можно построить алгоритм $W'$ для $\lambda_{let}^{s/r}$ такой что 
+\begin{enumerate}
+ \item $W'$ завершается
+ \item Если $W'$ вернул $(\theta; \alpha, \tau, \beta)$, то $\Gamma\theta; \alpha \vdash e:\tau, \beta$ выводимо. Кроме этого, для любых таких $(\theta'; \alpha',\tau',\beta')$, что $\Gamma\theta'; \alpha' \vdash e:\tau', \beta'$ выводимо, верно $(\Gamma\theta'; \alpha',\tau',\beta') \equiv (\theta; \alpha, \tau, \beta)\phi$ для некоторой подстановки $\phi$.
+ \item Если $W'$ завершился с ошибкой, то $\Gamma\theta; \alpha \vdash e:\tau, \beta$ не выводимо ни для каких $(\theta; \alpha, \tau, \beta)$.
+\end{enumerate}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{block}{Confluence \& strong normalization}
+\begin{enumerate}
+ \item Редукции $\rightsquigarrow$ в $\lambda_{let}^{s/r}$ не зависят от порядка.
+ \item Редукции $\rightsquigarrow$ в $\lambda_{let}^{s/r}$ без \emph{fix} всегда завершаются.
+\end{enumerate}
+\end{block}
+\end{frame}
+
+
+\begin{frame}[fragile]{}
+\begin{center}
+{\Huge Конец}
+\vspace{0.5cm}
+
+Дальше только список литературы
+\end{center}
+
+\end{frame}
+
+
+
+\begin{frame}[allowframebreaks]
+        \frametitle{Ссылки}
+        \bibliographystyle{amsalpha}
+        \bibliography{talkDelimCC.bib}
 \end{frame}
 
 \end{document}
