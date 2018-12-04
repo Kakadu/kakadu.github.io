@@ -13,7 +13,13 @@
 
 * [.line-through]#https://repl.it[Repl.it!] и там выбрать Haskell. На первых порах хватит.#
 * [.line-through]#Eсть плагин для IntelliJ IDEA#
-* Нужно устанавливать https://github.com/haskell/haskell-ide-engine[Haskell IDE Engine a.k.a. HIE] и в README читать как настроить ваш любимый редактор (VsCode, Emacs, etc.)
+* Нужно устанавливать https://github.com/haskell/haskell-ide-engine[Haskell IDE Engine a.k.a. HIE] и в README читать как настроить ваш любимый редактор (VsCode, Emacs, etc.). Только убедитесь, чтобы версии совпадали.
+----
+➜  haskell-ide-engine git:(master) stack exec ghc -- --version
+The Glorious Glasgow Haskell Compilation System, version 8.4.4
+➜  haskell-ide-engine git:(master) hie --version
+Version 0.4.0.1, Git revision 7e0b19721872d1c8e44f49484ac75f6c61412349 (2220 commits) x86_64 ghc-8.4.4
+----
 * [.line-through]#Самая распостраненый способ уставновить Haskell - это Haskell Platform (http://www.haskell.org/platform).
   Работает для Windows, Linux и Mac. Для курса будет достаточно минимального варианта установки.#
 * [.line-through]#В Haskell Platform есть простые среды разработки GHCi и WinGHCi. http://msimuni.wdfiles.com/local--files/fp4/StartingWithGHC.pdf[Вот] краткая инструкция о том, как начать с ними работать.#
