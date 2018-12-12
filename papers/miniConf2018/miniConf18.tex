@@ -1,0 +1,875 @@
+\documentclass{beamer}
+
+\usepackage{amssymb, amsmath}
+%\usepackage[all]{xy}
+
+\usepackage{alltt}
+\usepackage{pslatex} 
+\usepackage{epigraph}
+\usepackage{verbatim}
+
+\usepackage{graphicx}
+\usepackage{latexsym}
+\usepackage{array}
+\usepackage{comment}
+\usepackage{makeidx}
+\usepackage{listings}
+\usepackage{indentfirst}
+\usepackage{verbatim}
+\usepackage{color}
+\usepackage{url} 
+\usepackage{xspace}
+\usepackage{hyperref}
+
+\usepackage{stmaryrd}
+\usepackage[normalem]{ulem}
+\usepackage{xcolor}
+\usepackage{wasysym}
+\usepackage{cancel} 
+\usepackage{amsmath, amsthm, amssymb}
+\usepackage{graphicx}
+\usepackage{euscript}
+\usepackage{mathtools}
+\usepackage{tikz}
+\usepackage{tikz-qtree}
+\usepackage{bchart}
+
+\definecolor{shadecolor}{gray}{1.00}
+\definecolor{darkgray}{gray}{0.30}
+
+\newcommand{\set}[1]{\{#1\}}
+\newcommand{\angled}[1]{\langle {#1} \rangle}
+\newcommand{\fib}{\rightarrow_{\mathit{fib}}}
+\newcommand{\fibm}{\Rightarrow_{\mathit{fib}}}
+\newcommand{\oo}[1]{{#1}^o}
+\newcommand{\inml}[1]{\mbox{\lstinline{#1}}}
+\newcommand{\goal}{\mathfrak G}
+\newcommand{\inmath}[1]{\mbox{$#1$}}
+\newcommand{\sembr}[1]{\llbracket{#1}\rrbracket}
+
+\newcommand{\withenv}[2]{{#1}\vdash{#2}}
+\newcommand{\ruleno}[1]{\eqno[\textsc{#1}]}
+\newcommand{\trule}[2]{\dfrac{#1}{#2}}
+
+\definecolor{light-gray}{gray}{0.90}
+\definecolor{dark-green}{rgb}{0.30, 0.60, 0.1}
+\definecolor{dark-red}{rgb}{0.80, 0.1, 0.1}
+
+\newcommand{\graybox}[1]{\colorbox{light-gray}{#1}}
+
+\newcommand{\nredrule}[3]{
+  \begin{array}{cl}
+    \textsf{[{#1}]}& 
+    \begin{array}{c}
+      #2 \\
+      \hline
+      \raisebox{-1pt}{\ensuremath{#3}}
+    \end{array}
+  \end{array}}
+
+\newcommand{\naxiom}[2]{
+  \begin{array}{cl}
+    \textsf{[{#1}]} & \raisebox{-1pt}{\ensuremath{#2}}
+  \end{array}}
+
+\lstdefinelanguage{ocaml}{
+keywords={let, begin, end, in, match, type, and, fun, 
+function, try, with, class, object, method, of, rec, repeat, until,
+while, not, do, done, as, val, inherit, module, sig, @type, struct, 
+if, then, else, open, virtual, new, fresh},
+sensitive=true,
+basicstyle=\small,
+commentstyle=\ttfamily,
+keywordstyle=\ttfamily\bfseries,
+identifierstyle=\ttfamily,
+basewidth={0.5em,0.5em},
+columns=fixed,
+fontadjust=true,
+literate={->}{{$\to$}}3,
+morecomment=[s]{(*}{*)}
+}
+
+\lstset{
+mathescape=true,
+basicstyle=\small,
+identifierstyle=\ttfamily,
+keywordstyle=\bfseries, 
+commentstyle=\scriptsize\rmfamily,
+basewidth={0.5em,0.5em},
+fontadjust=true,
+%escapechar=!,
+language=ocaml,
+moredelim=[is][\ttfamily\color{blue}]{(&}{&)}
+}
+
+\sloppy
+
+\newcommand{\miniKanren}{\texttt{miniKanren}\xspace}
+\newcommand{\ocanren}{\texttt{OCanren}\xspace}
+\newcommand{\ocaml}{\texttt{OCaml}\xspace}
+
+\newcommand\redsout{\bgroup\markoverwith{\textcolor{red}{\rule[0.5ex]{2pt}{0.9pt}}}\ULon}
+
+\setbeamertemplate{footline}[frame number]
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{blocks}[rounded][shadow=true] 
+\beamertemplateballitem
+
+
+\mode<presentation>{
+  \usetheme{default}
+}
+
+\theoremstyle{definition}
+
+\newtheorem{thm}{Theorem}[section] % the main one
+% other statement types
+
+% for specifying a name
+\theoremstyle{plain} % just in case the style had changed
+\newcommand{\thistheoremname}{}
+\newtheorem{genericthm}[thm]{\thistheoremname}
+\newenvironment{namedthm}[1]
+  {\renewcommand{\thistheoremname}{#1}%
+   \begin{genericthm}}
+  {\end{genericthm}}
+
+\title{Generic Programming with \\ Combinators and Objects}
+
+\author{ Dmitrii Kosarev }
+
+\institute[]{
+  \textbf{
+  St. Petersburg State University\\
+  JetBrains Research}
+}
+
+\date{
+   \vskip 1cm
+   \small{
+   \textbf{ML-2018}\\
+   September 28, 2018 \\
+   St. Louis, Missouri, the USA}
+}
+
+\begin{document}
+\begin{frame}[plain]
+  \titlepage
+\end{frame}
+
+% ============================== Slide 2 ==================================== %
+
+\begin{frame}[fragile]{Motivation}
+A part 
+\end{frame}
+
+\begin{comment}
+  The main idea in the area of datatype-generic programming is that a type can be used to derive a set of useful
+  transformations of data of that type.
+  
+  A very common approach is to generate the implementation for the transformation of interest directly from the type definition. It's a powerful
+  approach since it allows implementing a wide range of unrelated specific transformations in an ad hoc manner. On the other hand, every
+  transformation has to be implemented in full from the scratch, and abstracting over such transformations is somewhat problematic, since they
+  may not share common properties (for example, type).  
+  
+  Another approach is to develop a common representation for all types and implement a transformation of interest in
+  terms of this representation. Thus, for a concrete type it becomes sufficient to translate the representation of a data in terms of its type
+  into the representation in terms of representation of that type. Making new transformation becomes easier this way, but there is an essential
+  performance penalty for re-encoding data representation (addressed in the relevant literature).
+
+  Both approaches lack the same property: it is not possible to easy derive one transformation from another (or to reuse a part of already
+  existing transformation). We argue, that this is a very frequent and important case, and, in addition, solving this problem would facilitate
+  the application of generative approaches since it would make it possible to generate a wide range of ``default'' very generic transformations to
+  derive the concrete ones from.
+
+  In a parallel world of object-oriented programming this particular problem has long been solved: one just needs to inherit from
+  an existing transformation and redefine it where needed. There are other problems with object-oriented languages (lack of convenient
+  higher-order functions, overuse of objects (objects for abstraction, objects for polymorphism, etc.)), but this concrete problem
+  is dealt with perfectly in object-oriented settings.
+
+  In our work we present a ``happy marriage'' of object-oriented and functional approaches to generic programming in OCaml. Our framework
+  allows to define datatype-generic functions, which can be used in convenient combinator way. However, under the hood the
+  implementation uses object-orientd encoding. Thus, new transformations can be derived from existing ones with a massive
+  reuse. There are also other useful properties --- all transformations are instances of the same scheme, only one
+  generic function per type is required, our approach is compatible with other means of code reuse, such as polymorphic variants.
+\end{comment}
+
+\begin{frame}[fragile]{What and Why}
+  Datatype-generic programming [Gibbons, 2006] --- use types to define transformations  
+  \vskip5mm
+  
+  Two main approaches:
+
+  \begin{itemize}
+    \item generate a transformation from type definition (\lstinline[basicstyle=\large]|deriving|, etc.)
+    \item define a representation for all types, implement a transformation of interest in terms of representation, translate a concrete
+      type into its representation [W.Swierstra, 2008], [Chakravarty \emph{et al}, 2009]
+  \end{itemize}
+  \vskip5mm
+  
+  Observation: in many cases, a transformation of interest is a (small) modification of some other transformation
+  \vskip5mm
+  
+  Approach: utilize object-oriented features to inherit one transformations from others
+\end{frame}
+
+
+% ================================================== Slide 3 ========================================================= %
+
+\begin{comment}
+  In our work we borrow some terminology and a meta-approach from the area of attribute grammars. Attribute grammars were
+  introduced by Knuth as a mean to express a class of syntax-directed transformations, for which regular context-free
+  grammars were not powerful or convenient enough. The similarity between attribute evaluation procedures and datatype-generic
+  transformations was addressed multiple times. However, we do not make use of concrete algorithms for various classes of
+  attribute grammars; we just consider AG terminology and approach very generic and convenient.
+
+  We deal only with the transformations of types $\iota \to t \to \sigma$, where $\iota$ is a type for inherited attribute,
+  $t$~--- a type for transforming data structure, and $\sigma$~--- a type for synthesized attribute. Informally speaking,
+  synthesized attribute is the result of a transformation, while inherited~--- some auxiliary value, which may turn out
+  to be useful is some specific cases. For parametric types this signature is enriched with similar transformations for
+  type parameters. Note, both inherited and synthesized attributes for the transformations of type parameters can
+  be different from each other and from those for the main type.
+
+  This is a very generic scheme of transformations. All transformations, expressible in our framework, are
+  instances of this scheme, and if a transformation does not fit into it, it cannot be implemented.  
+\end{comment}
+
+\begin{frame}[fragile]{Attribute Grammars and Catamorphisms}
+
+  Attribute grammars (AG) [Knuth, 1968] as a way of describing catamorphisms [Fokkinga \emph{et al}, 1990], [Swierstra \emph{et al}, 2000, 2009]
+  
+  \vskip5mm
+  
+  A common shape of all transformations for a type $t$:
+
+\[
+\overbrace{\iota_t}^{\mbox{\scriptsize inherited attribute}} \to \underbrace{t}_{\mbox{\scriptsize transforming value}} \to \overbrace{\sigma_t}^{\mbox{\scriptsize{synthesized attribute}}}
+\]
+\vskip5mm
+For a parametric type $(\alpha\,...)\;t$:
+
+\[
+\overbrace{(\iota_{\alpha} \to \alpha \to \sigma_{\alpha}) \to ...}^{\mbox{\scriptsize transformations for type parameters}}
+\to \overbrace{\iota_t \to (\alpha\,...) t \to \sigma_t}^{\mbox{\scriptsize transformation for the type itself}}
+\]
+
+\end{frame}
+
+% ================================================== Slide 4 ========================================================= %
+
+\begin{comment}
+  For given algebraic datatype $t$ we can define a single transformation function \lstinline|transform$_t$|. This
+  function takes three arguments; two last ones are an inherited attribute and a subject (the data structure of type $t$). The first
+  one is a \emph{transformation object}. This object represents the essense of the transformation on a method-per-constructor
+  basis. The transformation function performs a pattern-matching on the subject and dispatched the control to the corresponding
+  methods, passing as their arguments the matched sub-values and the inherited attribute. Note, the transformation function
+  is not recursive, it performs a shallow traversal.
+\end{comment}
+
+\begin{frame}[fragile]{Transformation Function}
+
+  A type:
+  
+\begin{lstlisting}
+   type ($\alpha\,...$) $t$ = C of $q$ * ... | ...
+\end{lstlisting}
+\vskip5mm
+
+A \emph{transformation function}:
+
+\begin{lstlisting}
+   let transform$_t$ $\omega$ $\iota$ $t$ =
+     match $t$ with
+     | C ($x$, ...) -> $\omega$#C $\iota$ $x$ ...
+     ...
+\end{lstlisting}
+\vskip5mm
+
+A \emph{transformation object} $\omega$: implements a transformation on a method-per-constructor basis
+\vskip5mm
+\end{frame}
+
+% ================================================== Slide 5 ========================================================= %
+
+\begin{comment}
+  Transformation objects potentially can be constructed in any way one would prefer; however, we provide a common
+  base abstract class for all transformation objects (or classes). As it implements the transformation of the shape we
+  dealt with on the slide 3, the transformation class is highly polymorphic~--- it has $3*n+2$ type parameters (where
+  $n$ is the arity of the type (plus one extra parameter for polymorphic variants). The signatures of methods are
+  expressed in terms of the class' type parameters and types of arguments for corresponding constructor. 
+\end{comment}
+
+\begin{frame}[fragile]{Transformation Class}
+An abstract class to mass-produce all transformation objects:
+\vskip1cm
+
+\begin{lstlisting}
+  class virtual [$\overbrace{\iota_\alpha, \alpha, \sigma_\alpha,...,\iota,\sigma}^{\mbox{\scriptsize all type parameters for a transformation}}$] $t_t$ =
+     object
+        method virtual C : ...
+        ...
+     end     
+\end{lstlisting}
+
+\end{frame}
+
+% ================================================== Slide 6 ========================================================= %
+
+\begin{comment}
+  We consider a small observable example right away. For the shown simple type with two constructors the framework
+  automatically generates the following transformation function and the following transformation class. As the type
+  is non-polymorphic, the signature of the class is rather simple: it parameterized only by the types of
+  inherited and synthezised attributes. The signatures of two methods are rather obvious. 
+\end{comment}
+
+\begin{frame}[fragile]{An Observable Example: Generic Definitions}
+  \begin{lstlisting}
+    type expr = Const of int | Add of expr * expr
+
+    
+    let transform$_{expr}$ $\omega$ $\iota$ = function
+    | Const i     -> $\omega$#c_Const $\iota$ i
+    | Add  (x, y) -> $\omega$#c_Add   $\iota$ x y
+
+    
+    class virtual [$\iota$, $\sigma$] expr$_t$ =
+    object
+      method virtual c_Const : $\iota$ -> int -> $\sigma$
+      method virtual c_Add   : $\iota$ -> expr -> expr -> $\sigma$
+    end    
+  \end{lstlisting}
+\end{frame}
+
+% ================================================== Slide 7 ========================================================= %
+
+\begin{comment}
+  Departing from those abstract generic definitions, a concrete transformation~--- show~--- can be implemented.
+  First, we need a transformation object. For this we derive a concrete transformation class (we could
+  construct an immediate object equally). Note, this class is parameterized with an additional argument~--- a
+  function to transform the very same type we deal with. This function is used to implement recursion, and
+  we need a fixpoint operator to tie the knot. Note, the type of class \lstinline|expr$_{show}$|  is not
+  polymorphic any more; it instantiates all the parameters of the base class into ground types. Note also that
+  we reused the generic transformation function~--- there is no pattern matching in the implemetation.
+\end{comment}
+
+\begin{frame}[fragile]{An Observable Example: Concrete Transformation}
+  \begin{lstlisting}
+    class expr$_{show}$ (fself : unit -> expr -> string) =
+    object
+      inherit [unit, string] expr$_t$ 
+      method c_Const () i  =
+        sprintf "Const (%d)" i      
+      method c_Add () x y =
+        sprintf "Add (%s, %s)" (fself x) (fself y)
+    end
+
+    
+    let show$_{expr}$ e =
+      fix (fun f -> transform$_{expr}$ (new expr$_{show}$ f)) () e
+  \end{lstlisting}
+\end{frame}
+
+% ================================================== Slide 8 ========================================================= %
+
+\begin{comment}
+  We now recap/state the major design choices and properties of our framework:
+
+  1. We use open recursion~--- the generic transformation function is shallow and non-recursive, and we tie the
+  knot at the concrete transformation object creation time.
+
+  2. The single generic transformation function is used to implement all concrete transformations.
+
+  3. Neither the generic function nor the generic transformation class are parameterized with transformations for type-parameters.
+  This, again, is done on a concrete transformation class/object implementation level.  
+\end{comment}
+
+\begin{frame}[fragile]{Design Choices and Properties}
+
+  The transformation function is shallow (non-recursive)
+  \vskip5mm
+  The transformation function is \emph{not} parameterized by transformations for type parameters
+  \vskip5mm
+  A single per-type transformation function is used to implement all transformations for the type
+  \vskip5mm
+  All transformation objects can be inherited from a single class
+  \vskip5mm
+  For recursive types the knot has to be tied at the transformation object creation time
+  
+\end{frame}
+
+% ================================================== Slide 9 ========================================================= %
+
+\begin{comment}
+  We swept a number of subtleties under the carpet:
+
+  1. The types of transformation classes/objects can be verbose and scary; it is rather easy to get type parameters
+  wrong, especially for the first few times; the right skill comes later. However, as long as only predefined
+  transformations are used, an end-user never touches the object level.
+
+  2. The described scheme has to be elaborated further to work with polymorphic variants.
+
+  3. The support for extensibility in mutually-recursive case is even more complicated (but doable, and done). 
+
+  4. A naive implementation of \lstinline|fix| creates a transformation object per recursive call; this can be avoided.  
+\end{comment}
+
+\begin{frame}[fragile]{Subtleties}
+  
+  The types of transformation objects can be (and, as a rule, are) scary 
+  \vskip5mm
+
+  The support for polymorphic variants requires extra work
+  \vskip5mm
+
+  The support for mutually-recursive types requires extra extra work
+  \vskip5mm
+
+  The \lstinline[basicstyle=\large]|fix| can be improved to not to create an identical object for each
+  node of the data structure to transform
+\end{frame}
+
+% ================================================== Slide 10 ========================================================= %
+
+\begin{comment}
+  Before starting to show-off the examples, we summarize here the implementation details:
+
+  1. Our framework generates the generic transformation function and abstract transformation class for a wide range
+  of practically important kinds of type definitions.
+
+  2. Moreover, our framework is equipped with a plugin system, which additionally allows to generate a number of
+  concrete transformation classes, implementing transformations, which generally considered useful (like \lstinline|show|, etc.)
+  Again, all these implementations reuse the single generic transformation function. It is interesting that, due to
+  a very generic shape of transformation, chosen from the very beginning, it turned out to be possible to express some
+  transformations, which have to be implemented in an ad hoc manner in other frameworks (for example, \lstinline|compare|
+  and \lstinline|eq|).
+ 
+  3. The plugin subsystem is available for an end user~--- it is possible to add a custom plugin, which will be
+  dynamically loaded along with the standard ones. Due to the general design choices, the implementation of a plugin is
+  easy~--- there is no need to traverse the type definition or to generate a transformation function. A plugin is only
+  responsible for generation of methods-per-constructor bodies.
+
+  4. The framework is available both in terms of \lstinline|ppxlib| and \lstinline|camlp5| syntax extension.  
+\end{comment}
+
+\begin{frame}[fragile]{Implementation Overview}
+  The transformation function and abstract transformation class are generated by the framework from a type declaration
+  \vskip5mm
+  
+  Supported: regular ADTs, type applications, structures, polymorphic variants
+  \vskip5mm
+  
+  Not supported: extensible types (``\lstinline|...|'', ``\lstinline{+=}''), GADTs, module and object types
+  \vskip5mm
+
+  Plugins: predefined (\lstinline[basicstyle=\large]|show|, \lstinline[basicstyle=\large]|map|, \lstinline[basicstyle=\large]|fold|, etc.) and user-defined
+  \vskip5mm
+
+  Available by means of both \lstinline[basicstyle=\large]|camlp5| and \lstinline[basicstyle=\large]|ppxlib|  
+\end{frame}
+
+% ================================================== Slide 11 ========================================================= %
+
+\begin{comment}
+  Now we consider a number of examples; we concentrate on the cases which makes use of the object-oriented layer of the
+  framework.
+
+  The first example is connected with the utilization of the tranformation \lstinline|map|; in our case it is implemented
+  by a plugin \lstinline|gmap|. Here we used a \lstinline|camlp5| syntax extension: \lstinline|@type| makes the type definition
+  visible for the framework, and \lstinline|with gmap| additionally asks to generate the implementation for the corresponding
+  plugin. The construct \lstinline|@expr[gmap]| is expanded into a class name for the generated transformation. For the shown type,
+  this plugin generates no more than a copy transformation (indeed, the type is not polymorphic). 
+  However, we can make use of this transformation, since we can inherit from it and modify its behaviour only for an ``interesting''
+  case. We implemented here a transformation, which substitutes all variables in an expresion tree by their values in given
+  state \lstinline|st| (we used here an immediate object). This example shows, that with object-oriented approach we can make a good
+  use of seemingly useless transformations by reusing a part of their semantics.
+\end{comment}
+
+\begin{frame}[fragile]{Example: \lstinline[basicstyle=\Large]|gmap|}
+
+\begin{lstlisting}
+@type expr =
+  Var   of string
+| Add   of expr * expr
+| Const of int with gmap
+\end{lstlisting}
+\vskip5mm
+
+The default transformation \lstinline[basicstyle=\large]|@expr[gmap]| just makes a copy
+\vskip5mm
+This default behavior can be overriden, obtaining a new transformation:
+\vskip5mm
+
+\begin{lstlisting}
+let substitute st e =
+  fix (fun f ->
+         transform(expr) (object inherit [_] @expr[gmap] f
+                              method c_Var _ x = Const (st x)
+                            end)
+                           ()
+      )
+  e                            
+\end{lstlisting}
+
+\end{frame}
+
+% ================================================== Slide 12 ========================================================= %
+
+\begin{comment}
+  The next example is somewhat similar: this time we reuse another typical transformation, \lstinline|foldr|, which ``folds'' a
+  data structure in a bottom-up manner. Note, the type $t$ is not parametric, so the type of the transformation is
+  $\iota \to t \to \iota$ (the inherited and synthesized attributes have the same type this time). In other words, there is
+  no place for a function ``to fold with'', and the implementation does nothing except for a threading the inherited attribute
+  through all the nodes and returning it back unchanged.
+  Yet we can make use of this seemingly useless transformation: if we properly redefine its behaviour for one constructor (\lstinline|Var|), it
+  will collect all the variables for us. Again, we modified the behaviour only for the ``interesting case''.
+\end{comment}
+
+\begin{frame}[fragile]{Example: \lstinline[basicstyle=\Large]|foldr|}
+  
+\begin{lstlisting}
+@type expr =
+| Var   of string
+| Binop of expr * expr with foldr
+\end{lstlisting}
+
+The default transformation makes nothing (just threads the accumulator value in a bottom-up manner)
+\vskip5mm
+
+Again, by overriding only the ``interesting case'' a new transformation can be constructed:
+\vskip5mm
+
+\begin{lstlisting}
+module S = Set.Make (String)
+                    
+let vars e = fix (fun f ->
+  transform(expr)
+    (object inherit [S.t, expr] @expr[foldr] f
+         method c_Var vs s = S.add s vs
+      end)
+  ) S.empty e
+\end{lstlisting}
+\end{frame}
+
+% ================================================== Slide 13 ========================================================= %
+
+\begin{comment}
+  The previous example can be equally implemented for polymorphic variant types. This time we use an open recursion: our
+  type in not recursive, but polymorphic. We also implemened variable collector as a class, not as an immediate
+  object. Of course, this is a preparation for the ``expression problem'' solution.
+\end{comment}
+
+\begin{frame}[fragile]{Example: Polymorphic Variant Support}
+
+  We can equally use a polymorphic variant version (note, here we define a separate class rather than immediate object):
+  \vskip5mm
+  
+\begin{lstlisting}
+@type 'e base = [`Var of string | `Binop of 'e * 'e] with foldr
+
+class ['e, 's] vars_base fself fe =
+  object inherit ['e, S.t, 's] @base[foldr] fself fe 
+    method c_Var vs s = S.add s vs
+  end
+\end{lstlisting}
+
+\end{frame}
+
+% ================================================== Slide 14 ========================================================= %
+
+\begin{comment}
+  The next step, another polymorphic variant type, this time for a binding construct. Nothing specifically interesting
+  here, just reiteration of the same pattern. 
+\end{comment}
+
+\begin{frame}[fragile]{Example: Polymorphic Variant Support, More}
+
+  We can declare another polymorphic variant type, now representing a binding construct,
+  and implement a custom class:
+  \vskip5mm
+  
+\begin{lstlisting}
+@type 'e lam = [`Lam of string * 'e] with foldr
+
+class ['e, 's] vars_lam fself fe =
+  object inherit ['e, S.t, 's] @lam[foldr] fself fe
+    method c_Lam vs s e = S.union vs (S.remove s @@ fe S.empty e)
+  end
+\end{lstlisting}
+\end{frame}
+
+% ================================================== Slide 15 ========================================================= %
+
+\begin{comment}
+  We can combine the two types into one (no surprise, just the best practices from OCaml world), but we can also
+  combine the transformations in a purely declarative manner using the inheritance. Note, that the instantiation
+  of the type parameter to the same type is done only within the definition of \lstinline|vars|, i.e. in the
+  latest possible moment. The type itself remains polymorphic (= openly recursive), as well as the transformation,
+  and can be extended further.
+\end{comment}
+
+\begin{frame}[fragile]{Example: Polymorphic Variant Support, Even More}
+
+... and combine these two types and those two classes:
+\vskip4mm
+  
+\begin{lstlisting}
+@type 'e expr = ['e base | 'e lam] with foldr
+
+class ['e, 's] vars_expr fself fe =
+  object
+    inherit ['e, 's] vars_base fself fe
+    inherit ['e, 's] vars_lam  fself fe
+  end
+                                              
+let vars e =
+  fix (fun f -> transform(expr) (new vars_expr f f)) S.empty e
+\end{lstlisting}
+
+\end{frame}
+
+% ================================================== Slide 16 ========================================================= %
+
+\begin{comment}
+  Our final example is not for children. We are going to implement an html-based navigation through OCaml compiler IR tree,
+  providing a way to navigate from identifiers to their binding poistions. We need a typed representation for this purpose,
+  and this representation is comprised of 60 mutually-recursive types.
+  Here we import the representation of types from corresponding interface files and generate our generic decorations, including
+  a transformation for generating html (yes, we already have one). This time we use \lstinline|ppxlib| version of our
+  framework. The problem so far is that we can generate html, ok, but there will be no cross-references. The solution, as always,
+  is to take this useless transformation and forge a useful one on its basis. In short, we have to redefine its
+  behavior in two places: in a binding position and in a referencing position.
+\end{comment}
+
+
+% ================ Slide 20 ================================ %
+
+\begin{comment}
+Our library is rather similar to `visitors` library that is being used in so-called 
+`polymorphic mode`. Two main differencies are 1) universal quantification of methods in `visitors` and 2) more explicit manner to specify type parameters of a class
+\end{comment}
+
+\begin{frame}[fragile]{P.S. Alternatives}
+Our work can be compared to \href{https://gitlab.inria.fr/fpottier/visitors}{Visitors} from Fran\c cois Pottier. Two main differencies are:
+\begin{itemize}
+ \item Universal quantification of methods in visitors
+ \item A more explicit way to specify type parameters of a class in our approach
+\end{itemize}
+\end{frame}
+
+% ================ Slide 21 ================================ %
+\begin{comment}
+Although universal quantification of methods in `visitors` enables (it seems to) support 
+of non-regular
+data types, it creates a few issues with type abbrevations. In examples below
+the first one is processed as expected. 
+(NEXT SLIDE) The 2nd and 3rd ones lead to compilation error 
+that we can... let's say repair...  by removing manually quantifiers from the 
+method types in generated code. 
+(NEXT SLIDE)
+Then issue appears only in `polymorphic mode`, in monomorphic mode visitors works as 
+expected. We want these examples to work as it is (because of some legacy code)
+so we decided to upgrade our old work about the topic instead of changing the code
+to make `visitors` applicable.
+
+Also, in `visitors` some transformations (more precisely: `fold`) are available only in monomorphic mode. Our work doesn't have this restriction.
+\end{comment}
+
+\begin{frame}[fragile]{Universal quantification in methods leads to errors}
+\begin{lstlisting}[language=ocaml] 
+(* no error yet *)
+type ('a, 'b) t = Foo of 'a * 'b  
+[@@deriving visitors { variety = "map"; polymorphic = true }]
+\end{lstlisting}
+\pause
+\begin{lstlisting}[language=ocaml] 
+(* Code generation leads to compilation error below *)
+type 'a t2 = ('a, int) t 
+[@@deriving visitors { variety = "map"; polymorphic = true
+                     ; name="map1"}]
+
+(* And here too *)
+type 'a t2 = T2 of ('a, int) t [@@unboxed]
+[@@deriving visitors { variety = "map"; polymorphic = true
+                     ; name="map2" }]
+\end{lstlisting}\pause
+But in \textit{monomorphic mode} visitors library works fine
+\begin{lstlisting}[language=ocaml] 
+type 'a t2 = T2 of ('a, int) t [@@unboxed]
+[@@deriving visitors { variety = "map"; polymorphic = false
+                     ; name="map3" }]
+\end{lstlisting}
+\end{frame}
+
+% ================ Slide 22 ================================ %
+\begin{comment}
+Objects and classes generated by visitors have a very peculiar way to specify type 
+parameters for a class, like this. In our library we generate a lot of type parameters
+but there is an important one: the opened version of type that is being processed. It 
+matters when we are generating `map` transformation (a.k.a. functor) for polymorphic
+variant types. This explicit type parameter allows to take two classes that perform
+transformations of polymorphic variant types and join them using inheritance. The 
+visitors officially doesn't support polymorphic variants but we beleive that with 
+their approach it will be troublesome to implement this.
+
+And the last thing that we want to mention here is that `visitors` library 
+relies on a type checker a lot and it can't
+generate type signatures in the interface file by design. Our work doesn't suffer 
+from this problem which should be better from engineering point of view.
+\end{comment}
+
+\begin{frame}[fragile]{Type parameters of transformation classes}
+\begin{lstlisting}[language=ocaml] 
+type ($\alpha\,...$) $t$ = ...  
+\end{lstlisting}
+In visitors: 
+\begin{lstlisting}[language=ocaml] 
+class ['self] c = object (self: 'self) ... end
+\end{lstlisting}
+\begin{itemize}
+ \item In our library we have many type parameters for a class but there is an important one: the \textit{opened} version of type $t$
+
+$\Rightarrow$ joining of polymorphic variants becomes doable.
+\item Visitors are failing to generate a signature.
+\end{itemize}
+\end{frame}
+
+% ================ Slide 23 ================================ %
+\begin{comment}
+  This is almost all. A number of concluding remarks:
+
+  1. We are near the end of development, there are still some things to improve
+
+  2. We know that there is some performance penalty due to the intensive use of objects. Perhaps, we should
+  investigate this issue more closely and, perhaps, spend some time optimizing (specialization?)
+
+  3. We support only homogenious plugins so far (``\lstinline|show|'' can not use ``\lstinline|compare|''); we are not
+  sure we should go farther in this direction
+
+  4. It is interesting if the framework can be used to implement ad-hoc polymorphism (actually, yes) and existentials (don't know)
+
+  5. Our work gives a good case of using objects when they are really needed  
+\end{comment}
+
+\begin{frame}[fragile]{Concluding Remarks}
+
+  The framework is still in development, but the fixpoint is close
+  \vskip5mm
+  
+  Performance issues: method invocation is slower, than a direct function call
+  \vskip5mm
+  
+  Only homogeneous plugins are supported so far
+  \vskip5mm
+  
+  Ad hoc polymorphism? Existentials?
+  \vskip5mm
+  
+  Object/classes can be good, when cooked properly
+  
+\end{frame}
+
+\begin{frame}[fragile]
+
+  \begin{center}
+    {\textbf{\Large Thank you!}}
+  \end{center}
+
+\end{frame}
+
+\begin{frame}[fragile]{Example: Hyperlinked OCaml Typedtree (18+)}
+\begin{lstlisting}[language=ocaml] 
+type pattern = [%import: Typedtree.pattern]
+and pat_extra = [%import: Typedtree.pat_extra]
+and pattern_desc = [%import: Typedtree.pattern_desc]
+and expression = [%import: Typedtree.expression]
+and expression_desc = [%import: Typedtree.expression_desc]
+and exp_extra = [%import: Typedtree.exp_extra]
+...    
+\end{lstlisting}
+
+(\textbf{53 more} mutually recursive types from the module \lstinline[basicstyle=\large]|Typedtree|)
+
+\begin{lstlisting}
+...   
+and 'a class_infos = [%import: 'a Typedtree.class_infos]
+[@@deriving gt ~options: {html; fmt}]
+\end{lstlisting}
+\end{frame}
+
+% =========================== Slide 17 ====================================== %
+
+\begin{comment}
+  This slide shows the redefinition for a binding position (namely, in patterns). As we said earlier, a full-fledged
+  support for mutually-recursive types is tricky. Here the transformation class is additionally parameterized
+  by a collection of transformation functions for all members of mutually-recursive cluster of types (called here
+  \lstinline|mut_trfs|). Thus, along with \lstinline|fself|, it represents the second level of open recursion. Besides that,
+  nothing is particularly interesting or non-trivial here, just some boring HTML stuff.
+\end{comment}
+
+\begin{frame}[fragile]{Example: Patterns (Hyperlink Destinations)}
+\begin{lstlisting}[language=ocaml] 
+class ['self] pattern_desc_link mut_trfs fself = 
+object
+  inherit ['self] html_pattern_desc_t_stub mut_trfs fself
+  method! c_Tpat_var () { Ident.name } nameloc =
+    let loc_str = 
+      Location.show_location nameloc.Asttypes.loc 
+    in
+    HTML.ul @@ HTML.seq
+        [ HTML.anchor loc_str @@ HTML.string @@ 
+          sprintf "%S from %s" name loc_str
+        ]
+end
+\end{lstlisting}
+\end{frame}
+
+% ================================================== Slide 18 ========================================================= %
+
+\begin{comment}
+  Equally, here we see the redefinition for a referencing position (in expressions). An interesting part is that we do not
+  see a method-per-constructor here; this is because the expression with its environment in a typed tree is represented by a structure, and
+  when a type is a structure we generate a method called \lstinline|do_$\mbox{this type}$|. 
+\end{comment}
+
+\begin{frame}[fragile]{Example: Identifiers (Hyperrefs)}
+\begin{lstlisting}[language=ocaml] 
+class ['self] expression_with_link mut_trfs fself = 
+object
+  inherit ['self] html_expression_t_stub mut_trfs fself as super
+
+  method! do_expression () e =
+    match e.exp_desc with
+    | Texp_ident (p,lloc,vd) ->
+      let where = Location.show_t
+        (Ocaml_common.Env.find_value p e.exp_env).val_loc 
+      in
+      HTML.ref ("#" ^ where) @@ HTML.string @@
+      sprintf "%s  from %s" (Longident.show_t lloc.txt) where
+    | _ -> super#do_expression () e
+end
+\end{lstlisting}
+\end{frame}
+
+% ================================================== Slide 19 ========================================================= %
+
+\begin{comment}
+  Finally, we have to create the desired transformation using two new classes we have just redefined and 58 old classes,
+  generated by our framework. That what we do here. \lstinline|htm_fix_case| is a fixpoint combinator, specific for the given
+  plugin (\lstinline|html|) and given mutually-recursive type declaration.
+\end{comment}
+
+\begin{frame}[fragile]{Example: Tying the Knot}
+\begin{lstlisting}[language=ocaml] 
+let html_structure =
+  let { html_structure } = html_fix_case
+    ~expression0:
+      { html_expression_func = new expression_with_link }
+    ~pattern_desc0:
+      { html_pattern_desc_func = new pattern_desc_with_link }
+    ()
+  in
+  html_structure.html_structure_trf
+\end{lstlisting}
+\end{frame}
+
+\end{document}
