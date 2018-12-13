@@ -145,11 +145,10 @@ moredelim=[is][\ttfamily\color{blue}]{(&}{&)}
 }
 
 \date{
-   \vskip 1cm
+   \vskip 2cm
    \small{
-   \textbf{ML-2018}\\
-   September 28, 2018 \\
-   St. Louis, Missouri, the USA}
+   \textbf{Mini Conference  2018}\\
+   }
 }
 
 \begin{document}
@@ -160,12 +159,20 @@ moredelim=[is][\ttfamily\color{blue}]{(&}{&)}
 % ============================== Slide 2 ==================================== %
 
 \begin{frame}[fragile]{Motivation}
-A part 
+A dependency of \emph{OCanren} which was a topic of last year\vskip5mm
+
+Main idea: extend the technique called \emph{generic programming} with generation of \emph{extensible} code\vskip5mm
+
+Has some attention in community: see Fran\c cois Pottier paper from ICFP2017 \vskip5mm
+
+Our library should be better then others from engineering point view \vskip5mm
+
+Was presented on ML Workshop (colocated with ICFP 2018)
+
 \end{frame}
 
 \begin{comment}
-  The main idea in the area of datatype-generic programming is that a type can be used to derive a set of useful
-  transformations of data of that type.
+  The main idea in the area of datatype-generic programming is that a type can be used to derive a set of useful   transformations of data of that type.
   
   A very common approach is to generate the implementation for the transformation of interest directly from the type definition. It's a powerful
   approach since it allows implementing a wide range of unrelated specific transformations in an ad hoc manner. On the other hand, every
