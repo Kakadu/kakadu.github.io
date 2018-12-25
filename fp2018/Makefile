@@ -15,6 +15,9 @@ all: $(FILES_OUT)
 index.html: index.asciidoc
 	asciidoctor -b $(BACKEND) $(addprefix -a ,$(OPTS)) $<
 
+projects.html: projects.asciidoc
+	asciidoctor -b $(BACKEND) $(addprefix -a ,$(OPTS)) $<
+
 exercises%.html: exercises%.asciidoc
 	asciidoctor -b $(BACKEND)  $<
 

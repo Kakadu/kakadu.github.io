@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<meta name="author" content="Dmitrii Kosarev a.k.a. Kakadu">
+<title>Список курсовых/миникурсовых</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="./pygments-monokai.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Список курсовых/миникурсовых</h1>
+<div class="details">
+<span id="author" class="author">Dmitrii Kosarev a.k.a. Kakadu</span><br>
+<span id="email" class="email"><a href="mailto:Dmitrii.Kosarev@protonmail.ch">Dmitrii.Kosarev@protonmail.ch</a></span><br>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="reasonml">Парсер для ReasonML/OCaml с восстановлением от ошибок</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Так как быдлопрограммисты на быдлоJava не могут никак осилить синтакси нормальных функциональных языков программирования,
+в Bloomberg (а потом и Facebook)
+было предложено совершить ход конём и немного <span class="line-through">исправить</span> испортить синтаксис уже умеющегося языка, что он был более
+похож на привычный синтаксис с фигурными скобками и точками с запятой. Хомячкам, получившийся в результате ReasonML, вроде
+понравился.</p>
+</div>
+<div class="paragraph">
+<p>С таким подходом вроде бы всё хорошо, но есть проблема для чистокровных OCaml программистов: язык действительно сильно похож, но
+непохожести очень сильно бесят, никак не получается выкинуть из головы выученный синтаксис и пользоваться новым, потому что то, что
+видно на экране очень сильно напоминает "старый" синтаксис OCaml. В итоге получаются ошибки, которые очень глупые, но компилятор
+ReasonML всёравно не доволен. Например:</p>
+</div>
+<div class="paragraph">
+<p>Вот пример кода на OCaml:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ocaml"><span class="tok-k">type</span> <span class="tok-k">&#39;</span><span class="tok-n">a</span> <span class="tok-n">expr</span> <span class="tok-o">=</span> <span class="tok-nc">Const</span> <span class="tok-o">:</span> <span class="tok-kt">int</span>     <span class="tok-o">-&gt;</span> <span class="tok-k">&#39;</span><span class="tok-n">a</span> <span class="tok-n">expr</span>
+             <span class="tok-o">|</span> <span class="tok-nc">App</span>   <span class="tok-o">:</span> <span class="tok-k">&#39;</span><span class="tok-n">a</span> <span class="tok-o">*</span> <span class="tok-k">&#39;</span><span class="tok-n">a</span> <span class="tok-o">-&gt;</span> <span class="tok-k">&#39;</span><span class="tok-n">a</span> <span class="tok-n">expr</span>
+             <span class="tok-o">|</span> <span class="tok-nc">Lam</span>   <span class="tok-o">:</span> <span class="tok-kt">string</span> <span class="tok-o">*</span> <span class="tok-k">&#39;</span><span class="tok-n">a</span> <span class="tok-o">-&gt;</span> <span class="tok-k">&#39;</span><span class="tok-n">a</span> <span class="tok-n">expr</span>
+
+<span class="tok-k">let</span> <span class="tok-n">foo</span> <span class="tok-n">e</span> <span class="tok-o">=</span> <span class="tok-k">match</span> <span class="tok-n">e</span> <span class="tok-k">with</span>
+  <span class="tok-o">|</span> <span class="tok-nc">Const</span> <span class="tok-n">n</span> <span class="tok-o">-&gt;</span> <span class="tok-n">n</span>
+  <span class="tok-o">|</span> <span class="tok-nc">App</span> <span class="tok-o">(</span><span class="tok-n">l</span><span class="tok-o">,</span><span class="tok-n">r</span><span class="tok-o">)</span> <span class="tok-o">-&gt;</span>
+      <span class="tok-k">let</span> <span class="tok-bp">()</span> <span class="tok-o">=</span> <span class="tok-n">print_endline</span> <span class="tok-s2">&quot;blabla&quot;</span> <span class="tok-k">in</span>
+      <span class="tok-n">r</span>
+  <span class="tok-o">|</span> <span class="tok-nc">Lam</span> <span class="tok-o">(</span><span class="tok-n">s</span><span class="tok-o">,</span> <span class="tok-n">b</span><span class="tok-o">)</span> <span class="tok-o">-&gt;</span> <span class="tok-n">b</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>А вот, что получается при <a href="https://reasonml.github.io/en/try">трансляции</a> в ReasonML.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ocaml"><span class="tok-k">type</span> <span class="tok-n">expr</span><span class="tok-o">(</span><span class="tok-k">&#39;</span><span class="tok-n">a</span><span class="tok-o">)</span> <span class="tok-o">=</span>
+  <span class="tok-o">|</span> <span class="tok-nc">Const</span><span class="tok-o">(</span><span class="tok-kt">int</span><span class="tok-o">):</span> <span class="tok-n">expr</span><span class="tok-o">(</span><span class="tok-k">&#39;</span><span class="tok-n">a</span><span class="tok-o">)</span>
+  <span class="tok-o">|</span> <span class="tok-nc">App</span><span class="tok-o">(</span><span class="tok-k">&#39;</span><span class="tok-n">a</span><span class="tok-o">,</span> <span class="tok-k">&#39;</span><span class="tok-n">a</span><span class="tok-o">):</span> <span class="tok-n">expr</span><span class="tok-o">(</span><span class="tok-k">&#39;</span><span class="tok-n">a</span><span class="tok-o">)</span>
+  <span class="tok-o">|</span> <span class="tok-nc">Lam</span><span class="tok-o">(</span><span class="tok-kt">string</span><span class="tok-o">,</span> <span class="tok-k">&#39;</span><span class="tok-n">a</span><span class="tok-o">):</span> <span class="tok-n">expr</span><span class="tok-o">(</span><span class="tok-k">&#39;</span><span class="tok-n">a</span><span class="tok-o">);</span>
+
+<span class="tok-k">let</span> <span class="tok-n">foo</span> <span class="tok-o">=</span> <span class="tok-n">e</span> <span class="tok-o">=&gt;</span>
+  <span class="tok-n">switch</span> <span class="tok-o">(</span><span class="tok-n">e</span><span class="tok-o">)</span> <span class="tok-o">{</span>
+  <span class="tok-o">|</span> <span class="tok-nc">Const</span><span class="tok-o">(</span><span class="tok-n">n</span><span class="tok-o">)</span> <span class="tok-o">=&gt;</span> <span class="tok-n">n</span>
+  <span class="tok-o">|</span> <span class="tok-nc">App</span><span class="tok-o">(</span><span class="tok-n">l</span><span class="tok-o">,</span> <span class="tok-n">r</span><span class="tok-o">)</span> <span class="tok-o">=&gt;</span>
+    <span class="tok-k">let</span> <span class="tok-bp">()</span> <span class="tok-o">=</span> <span class="tok-n">print_endline</span><span class="tok-o">(</span><span class="tok-s2">&quot;blabla&quot;</span><span class="tok-o">);</span>
+    <span class="tok-n">r</span><span class="tok-o">;</span>
+  <span class="tok-o">|</span> <span class="tok-nc">Lam</span><span class="tok-o">(</span><span class="tok-n">s</span><span class="tok-o">,</span> <span class="tok-n">b</span><span class="tok-o">)</span> <span class="tok-o">=&gt;</span> <span class="tok-n">b</span>
+  <span class="tok-o">};</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/facebook/reason/blob/master/src/reason-parser/reason_parser.mly">Парсер</a> ReasonML на основе Menhir(?).</p>
+</div>
+<div class="paragraph">
+<p>Хочется в некоторых местах расширить парсер ReasonML, чтобы он мог разбирать также в том случае, если
+куски кода были написаны на OCaml (должно случаться, когда программист не успел ещё перестроиться на новй синтаксис).
+Таким образом парсер будет в некотором смысле восстанавливаться от некоторых ошибок, и в перспективе сообщать
+программисту "нажмите Alt+Enter+Enter, чтобы исправить Ваш OCaml на соответствующий ReasonML".</p>
+</div>
+<div class="paragraph">
+<p>Предлагается расширить парсер(грамматику) ReasonML дуальными правилами для OCaml конструкций и генерировать
+синтаксическое дерево, где куски AST будут отмечены либо как ReasonML, либо как OCaml. Аналогично, можно
+расширять парсер OCaml синтаксом Reason.</p>
+</div>
+<div class="paragraph">
+<p>Главные грабли, связанные с тем, что объединение однозначных языков может быть неоднозначным языком, случиться не должны.</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2018-12-25 21:35:29 MSK
+</div>
+</div>
+</body>
+</html>
