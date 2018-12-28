@@ -59,5 +59,7 @@ Octachron is doing peano arithmetic using types and polymorphic variants in OCam
 [Explicit Effect Subtyping](https://people.cs.kuleuven.be/%7Etom.schrijvers/Research/papers/esop2018.pdf)
 
 
+Fokkinga's PhD [Law and Order in Algorithmics](https://pdfs.semanticscholar.org/7ca8/326eb63f32502c0fc2324b6217a7bc7e8af4.pdf)
 
+Ralph Hinze[Kan Extensions for Program Optimisation Or: Art and Dan Explain an Old Trick](https://www.cs.ox.ac.uk/ralf.hinze/Kan.pdf)
 
