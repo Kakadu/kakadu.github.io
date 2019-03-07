@@ -63,3 +63,5 @@ Fokkinga's PhD [Law and Order in Algorithmics](https://pdfs.semanticscholar.org/
 
 Ralph Hinze[Kan Extensions for Program Optimisation Or: Art and Dan Explain an Old Trick](https://www.cs.ox.ac.uk/ralf.hinze/Kan.pdf)
 
+[A  Graph-Based  Higher-Order  Intermediate  Representation](http://compilers.cs.uni-saarland.de/papers/lkh15_cgo.pdf)
+
