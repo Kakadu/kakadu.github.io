@@ -65,3 +65,5 @@ Ralph Hinze[Kan Extensions for Program Optimisation Or: Art and Dan Explain an O
 
 [A  Graph-Based  Higher-Order  Intermediate  Representation](http://compilers.cs.uni-saarland.de/papers/lkh15_cgo.pdf)
 
+[Accelerating Correctly Rounded Floating-PointDivision When the Divisor is Known in Advance](http://perso.ens-lyon.fr/nicolas.brisebarre/Publi/fpdivision.pdf) 2003
+
