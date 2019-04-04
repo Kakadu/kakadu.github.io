@@ -1,0 +1,158 @@
+\usepackage{xcolor}
+\definecolor{YellowGreen} {HTML}{B5C28C}
+\definecolor{ForestGreen} {HTML}{009B55}
+\definecolor{MyBackground}{HTML}{F0EDAA}
+
+\usepackage{xltxtra} % load xunicode
+\usepackage{polyglossia}
+\setmainlanguage{russian}
+\setotherlanguage{english}
+
+% \usepackage[\eu@zf@math]{fontspec}
+% \usepackage{amsmath}
+% \usepackage{xkeyval}
+% \usepackage{mathstyle}
+% \usepackage{etoolbox}
+% \usepackage{mathspec}
+% \usepackage{inconsolata}
+
+\let\cyrillicfonttt\monofamily
+%\newfontfamily\dejaVuSansMono{DejaVu Sans Mono}
+% Moanco fonts from. Without second links you will not see bold face
+% https://github.com/vjpr/monaco-bold/raw/master/MonacoB/MonacoB.otf
+% https://github.com/vjpr/monaco-bold/raw/master/MonacoB/MonacoB-Bold.otf
+% \newfontfamily\monacoB{MonacoB}
+ \newfontfamily\monacoFamily {MonacoB}[SizeFeatures={Size=8}]
+% \newfontfamily\monacoFamilyB{MonacoB}[SizeFeatures={Size=16},Style=Bold]
+% \setmonofont{MonacoB}[SizeFeatures={Size=10 }]
+% \newfontfamily\codeNewRoman{CodeNewRoman}
+% \newfontfamily\Hack                {Hack}
+% \newfontfamily\HackB[Style=Bold]   {Hack}
+% \newfontfamily\HackI[Style=Italic] {Hack}
+
+\usepackage{listings}
+% \lstdefinestyle{style1}{
+%   language=haskell,
+%   numbers=left,
+%   stepnumber=1,
+%   numbersep=10pt,
+%   tabsize=4,
+%   showspaces=false,
+%   showstringspaces=false
+% }
+\lstdefinestyle{hsstyle1}
+         { showstringspaces=false
+         , language=haskell
+         , keywords={ import,data,type,class,where
+                    , instance,case,of,do,family
+                    , deriving,if,then,else,forall,exists
+                    }
+         , deletekeywords={Int,Bool,Float,String,List,Either,Void,id,tail}
+         %, basicstyle=\monacoB
+%          , showspaces=false
+%          , showstringspaces=false
+%          , columns=fixed 
+%          , breaklines=true
+         %, columns=fullflexible
+          , escapeinside=§§
+%           , escapebegin=\begin{russian}\monacoB\color{DarkGreen}
+%           , escapeend=\end{russian}
+          , escapebegin=\begin{russian}\color{red}
+          , escapeend=\end{russian}
+          , commentstyle=\color{DarkGreen}
+%          , escapebegin=\begin{russian}\monacoB\color{ForestGreen}
+%          , escapeend=\end{russian}
+         , mathescape=true
+%          , backgroundcolor = \color{MyBackground}
+}
+
+\newcommand{\inline}[1]{\lstinline{haskell}{#1}}
+\def\hsinline{\lstinline[style={hsstyle1}]}
+\def\inline{\hsinline}
+\def\myinline{\lstinline[basicstyle=\monacoB]}
+\def\hline{\noindent\makebox[\linewidth]{\rule{\paperwidth}{0.4pt}}}
+
+% \renewcommand{\vskip}{\vspace{1cm}}
+
+
+\lstnewenvironment{hslisting} {
+     \lstset { style={hsstyle1} }
+  }
+  {}
+  
+\lstset
+  { language=haskell
+  , basicstyle  =\ttfamily %\bfseries\monacoFamily
+  , stringstyle =\ttfamily %\bfseries\monacoFamily
+  , keywordstyle=\ttfamily\bfseries %\monacoFamily
+  , showstringspaces=false       % no special string spaces
+  , keywords={ import,data,type,class,where
+             , instance,case,of,do,family
+             , deriving,if,then,else,forall
+             }
+  }
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+\setmainfont[
+ Ligatures=TeX,
+ Extension=.otf,
+ BoldFont=cmunbx,
+ ItalicFont=cmunti,
+ BoldItalicFont=cmunbi,
+]{cmunrm}
+% С засечками (для заголовков)
+\setsansfont[
+ Ligatures=TeX,
+ Extension=.otf,
+ BoldFont=cmunsx,
+ ItalicFont=cmunsi,
+]{cmunss}
+% \setmonofont[]{Hack}
+% next line fixed error
+% (polyglossia) Please define \cyrillicfont with \newfontfamily.
+\newfontfamily{\cyrillicfonttt}{MonacoB}
+% \newfontfamily{\cyrillicfonttt}{\monacoFamily}
+
+\usepackage{times}
+\usepackage{tikz}
+\usetikzlibrary{cd}
+% \usepackage{tikz-cd}
+
+%\DeclareMathOperator{->}{\rightarrow}
+\newcommand\iso{\ensuremath{\cong}}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usetikzlibrary{arrows,shapes}
+\usepackage{verbatimbox} % for verbnobox
+
+\newcommand*{\arr}{\ensuremath{\rightarrow}}
+\newcommand*{\natarr}{\ensuremath{\overset{\text{\normalsize .}}\longrightarrow}}
+
+\usepackage{fontawesome}
+% \newfontfamily{\FA}{Font Awesome 5 Free} % some glyphs missing
+\expandafter\def\csname faicon@facebook\endcsname{{\FA\symbol{"F09A}}}
+\def\faQuestionSign{{\FA\symbol{"F059}}}
+\def\faQuestion{{\FA\symbol{"F128}}}
+\def\faExclamation{{\FA\symbol{"F12A}}}
+\def\faUploadAlt{{\FA\symbol{"F093}}}
+\def\faLemon{{\FA\symbol{"F094}}}
+\def\faPhone{{\FA\symbol{"F095}}}
+\def\faCheckEmpty{{\FA\symbol{"F096}}}
+\def\faBookmarkEmpty{{\FA\symbol{"F097}}}
+
+
+\newcommand{\faGood}{\textcolor{ForestGreen}{\faThumbsUp}}
+\newcommand{\faBad}{\textcolor{red}{\faThumbsODown}}
+\newcommand{\usefulExercise}{\textcolor{red}{\faPlus}}
+
+\usepackage{soul} % for \st that strikes through
+\usepackage[normalem]{ulem} % \sout
+
+% \usepackage{minted}
+% \newcommand{\inline}[1]{\mintinline{haskell}{#1}}
+
+% \hypersetup{%
+%   linkbordercolor=blue
+% }
+% \usepackage[colorlinks=true, linkcolor=blue]{hyperref} 
