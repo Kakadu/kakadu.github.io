@@ -1,0 +1,239 @@
+\documentclass[
+  russian,
+  aspectratio=43,
+  xcolor={svgnames},
+  hyperref={colorlinks,citecolor=DeepPink4,linkcolor=DarkRed,urlcolor=DarkBlue}]{beamer}
+\beamertemplatenavigationsymbolsempty % remove navigation bar
+% \setbeamertemplate{headline}  % remove heading
+
+\usetheme{Madrid}
+\usecolortheme{beaver}
+
+\input{heading.tex}
+
+\usepackage{subcaption}
+\newtheorem{thm}{Theorem}
+
+\newcommand{\naturalto}{%
+  \mathrel{\vbox{\offinterlineskip
+    \mathsurround=0pt
+    \ialign{\hfil##\hfil\cr
+      \normalfont\scalebox{1.5}{.}\cr
+      \noalign{\kern-.15ex}
+      $\longrightarrow$\cr}
+  }}%
+}
+
+
+\title{Генерация расширяемого кода по типам данных на языке OCaml}
+\subtitle{Обобщенное программирования с комбинаторами и объектами}
+\author[Косарев Дмитрий]{Косарев Дмитрий Сергеевич\\
+[2mm]{\small 
+Научный руководитель: \\доктор физико-математических наук, профессор, \\
+Терехов Андрей Николаевич \\ \vspace{1mm} 
+Рецензент: \\
+доктор технических наук, \\Новиков Федор Александрович}
+}
+
+%\institute[]{матмех СПбГУ}
+% 
+% Научный руководитель:
+% доктор физико-математических наук, профессор Терехов Андрей Николаевич
+% 
+% Рецензент:
+% доктор технических наук Новиков Федор Александрович
+
+
+\date{18 июня 2019} %\today 
+
+% \AtBeginSection[]
+% {
+%   \begin{frame}<beamer>
+%     \frametitle{Содержание}
+%     \tableofcontents[currentsection,currentsubsection]
+%   \end{frame}
+% }
+
+\newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}
+\usepackage{verbatimbox}
+
+\usepackage{amssymb,amsmath}
+\usepackage{tikz}
+\usepackage{tikz-cd}
+\usetikzlibrary{arrows}
+\tikzstyle{line}=[draw] % here
+\tikzstyle{startstop} = [rectangle, rounded corners, minimum width=3cm,
+    minimum height=1cm,text centered, draw=black, fill=red!30]
+\usetikzlibrary{babel}
+
+
+\begin{document}
+\maketitle
+
+% For every picture that defines or uses external nodes, you'll have to
+% apply the 'remember picture' style. To avoid some typing, we'll apply
+% the style to all pictures.
+\tikzstyle{every picture}+=[remember picture]
+
+% By default all math in TikZ nodes are set in inline mode. Change this to
+% displaystyle so that we don't get small fractions.
+\everymath{\displaystyle}
+
+% Uncomment these lines for an automatically generated outline.
+% \begin{frame}{Outline}
+%   \tableofcontents
+% \end{frame}
+
+% \section{Предварительные знания о терии категорий}
+
+\begin{frame}[fragile]{Предыстория}
+\begin{itemize}
+ \item Встраиваемый DSL для реляционного (логического) программирования OCanren
+ \item Статья ``Typed Embedding of a Relational Language in OCaml'' \href{http://dx.doi.org/10.4204/EPTCS.285.1}{DOI ссылка}
+ \item Работа раскрыла несовершенство имеющихся подходов к обобщённому программированию
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Обобщённое программирование (1/2)}
+\begin{itemize}
+ \item Свойственно флагманским языкам функционального программирования: Haskell, OCaml
+ \item Скорее не свойственно (но возможно) для статически типизированных ОО языков: Java, C\#, C++.
+ \item Вообще не применимо к динамическим языками, там нет этой проблемы.
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Обобщённое программирование (1/2)}
+Идея: генерировать (во время компиляции) некоторые функции по описаниям типов данных. 
+
+Например, преобразование в строковое понятное человеку представление; сериализация и десериализация; преобразования похожие свёртки и т.д
+
+\vspace{0.5cm}Пример 
+
+\begin{lstlisting}[style=ocaml1]
+type ($\alpha$,$\beta$,$\dots$) t = $\dots$
+
+val show: ($\alpha$->string) -> ($\beta$->string) -> $\dots$ -> 
+          ($\alpha$,$\beta$,...) t -> string
+\end{lstlisting}
+Реализовывать такой однотипный код руками неудобно
+\end{frame}
+
+\begin{frame}[fragile]{Избранные работы про обобщённое программирование}
+
+Ralf Lämmel and Simon Peyton Jones (2003): \textit{Scrap Your Boilerplate: A Practical Design Pattern for Generic Programming}, \href{http://dx.doi.org/10.1145/640136.604179}{doi:10.1145/640136.604179} \vspace{1cm}
+
+Dmitry Boulytchev and Sergey Mechtaev (2011): \textit{Efficiently Scrapping Boilerplate Code in OCaml.} \vspace{1cm}
+
+François Pottier (2017): \textit{Visitors Unchained}. \href{http://dx.doi.org/10.1145/3110272}{doi:10.1145/3110272.}
+\end{frame}
+
+\begin{frame}[fragile]{Основная задача}
+
+Разработка подхода для обобщенного программирования, который позволит 
+порождаться \emph{расширяемые} преобразования\vspace{1cm}
+
+На сегодняшний день такое умеет делать только \textsc{Visitors}
+\end{frame}
+
+\begin{frame}[fragile]{Результаты}
+Библиотека обобщённого программирования \href{https://github.com/Kakadu/GT/tree/ppx/}{GT} (Generic transformers) для языка OCaml
+\begin{itemize}
+ \item Позволяет создавать \emph{расширяемые} трансформации с помощью объектов, как и у \textsc{Visitors}
+ \item По-другому типизируются объекты
+ \item Комбинаторный интерфейс
+ \item Поддерживаются большее многообразие типов
+ \item Нет потенциальных проблем с безопасностью, которые есть у \textsc{Visitors} и \textsc{Scrap Your Boilerplate}
+\end{itemize}
+
+\end{frame}
+
+\begin{frame}[fragile]{Расширяемость с помощью объектов}
+\begin{lstlisting}[style=ocaml1]
+type $\dots$ t = $C_1$ of $\dots$ | $\dots$ | $C_n$ of $\dots$
+class old_transformation = object 
+  method $C_1$ =  $\dots$
+  $\dots$
+end
+\end{lstlisting}
+Конструкторы кодируются в методы один к одному
+\begin{lstlisting}[style=ocaml1]
+class new_transformation = object 
+  inherit old_transformation
+  method $C_i$ =  (* new implementation *)
+end
+\end{lstlisting}
+
+\end{frame}
+
+\begin{frame}[fragile]{Типизация}
+\textsc{Visitors} полагаются на трюк, для сокращения количества типовых параметров до одного
+
+\begin{lstlisting}[style=ocaml1]
+class [$\sigma$]new_transformation = object (this: $\sigma$)
+  $\dots$
+end
+\end{lstlisting}
+
+Недостатки: 
+\begin{itemize}
+ \item Такая типизация \textsc{Visitors} неприменима в файлах интерфейса
+ \item Она не позволяет реализовать поддержку полиморфных вариантных типов языка OCaml
+\end{itemize}\vspace{1cm}
+
+В \textsc{Generic Transformers} используется стандартный способ использования типовых параметров (они указываются явно). Полиморфные вариантные типы поддержаны
+\end{frame}
+
+\begin{frame}[fragile]{Комбинаторный интерфейс}
+В \textsc{Visitors} вызов преобразования типа $(\alpha,...)\tau$ выглядит как 
+\begin{lstlisting}[style=ocaml1]
+(new classname)#visit_$\tau$
+\end{lstlisting}\vspace{1cm}
+
+В то время как все остальные библиотеки используют (комбинаторный интерфейс
+\begin{lstlisting}[style=ocaml1]
+transform$\tau$ transform$\alpha$ ... (x: $\tau$)
+\end{lstlisting}%\vspace{1cm}
+\end{frame}
+
+\begin{frame}[fragile]{Виды методов и безопасность}
+\textsc{SYB} и \textsc{Visitors} позволяют применять преобразования \emph{ко всем вхождениям типа} (например, \texttt{int}) в структуре данных. \vspace{1cm}
+
+Это позволяет преодолевать барьер инкапсуляции.\vspace{1cm}
+
+В \textsc{Generic Transformers} конструкторы алгебраических типов кодируются в методы один к одному. Преобразования типов нельзя переопределить.
+\end{frame}
+
+\begin{frame}[fragile]{Результаты}
+Библиотека обобщённого программирования \href{https://github.com/Kakadu/GT/tree/ppx/}{GT} (Generic transformers) для языка OCaml
+\begin{itemize}
+ \item Позволяет создавать \emph{расширяемые} трансформации с помощью объектов
+ \item Другая типизация объекты, по сравнению с конкурентом
+ \item Комбинаторный интерфейс
+ \item Поддерживаются большее многообразие типов
+ \item Нет потенциальных проблем с безопасностью
+\end{itemize}\pause
+\begin{center}
+  \Huge Конец
+ \end{center}
+\end{frame}
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{Ссылки}
+  \begin{thebibliography}{10}
+  \beamertemplatebookbibitems
+  \bibitem{gadt}
+    Ralf Lämmel \& Simon Peyton Jones (2003): \emph{Scrap Your Boilerplate: A Practical Design Pattern for Generic Programming. }
+    \newblock Доступно по \href{http://dx.doi.org/10.1145/640136.604179}{DOI ссылке}
+   \bibitem{}
+    François Pottier (2017): \emph{Visitors Unchained.}
+    \newblock Доступно по \href{http://doi.acm.org/10.1145/3110272}{DOI ссылке}
+  \bibitem{}
+    Dmitry Boulytchev \& Sergey Mechtaev (2011): \emph{Efficiently Scrapping Boilerplate Code in OCaml.}
+    \newblock Доклад на ML Workshop при ICFP 2011
+   \bibitem{}
+    Dmitry Kosarev \& Dmitry Boulytchev (2016): \emph{Typed Embedding of a Relational Language in OCaml.}
+    \newblock Доступно по \href{http://dx.doi.org/10.4204/EPTCS.285.1}{DOI ссылке}
+ \end{thebibliography}
+\end{frame}
+
+\end{document}
