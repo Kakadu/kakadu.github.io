@@ -1,3 +1,3 @@
 all:
-	logarion_cli convert html
+	logarion_xml convert html
 

@@ -22,6 +22,8 @@ Categories: listed, published
 
 [Base64 encoding with SIMD instructions](http://0x80.pl/notesen/2016-01-12-sse-base64-encoding.html)
 
+[Precise Reasoning with Structured Heaps andCollective Operations à la Map/Reduce](https://pdfs.semanticscholar.org/66a6/8386d002983edf958fb3153d92d1d6a44274.pdf) (What Static Analysis can Learn From High-Performance DSLs) вроде как про рекурсивные схемы
+
 ### Books
 
 [Practical typography book](https://practicaltypography.com/)
@@ -39,3 +41,15 @@ Categories: listed, published
 [Гитлер. Утраченные годы. Воспоминания сподвижника фюрера. 1927-1944](http://militera.lib.ru/memo/german/hanfstaengl_e01/index.html)
 
 [Конструирование языков. От эсперанто до дотракийского](https://www.ozon.ru/context/detail/id/138433007/)
+
+ROTOR
+
+[Мифический человеко-месяц](https://nsu.ru/xmlui/bitstream/handle/nsu/8870/Frederick_Brooks.pdf)
+
+
+###
+
+[Comparing the Same Project in Rust, Haskell, C++, Python, Scala and OCaml](http://thume.ca/2019/04/29/comparing-compilers-in-rust-haskell-c-and-python/) но без кода
+
+[AMD computex](https://www.amd.com/en/events/computex)
+

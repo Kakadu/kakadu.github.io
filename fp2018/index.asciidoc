@@ -67,6 +67,11 @@ https://vimeo.com/153042584[Yaron Minsky - Why OCaml]. Хорошо для об�
 
 http://queue.acm.org/detail.cfm?id=2038036[OCaml for the Masses] Большинстов аргументов переносимо и на Haskell.
 
+https://www.youtube.com/watch?v=zFPEuI8i9Ds[Functional Programming: The Enterprise Edition] Где ФП стреляет в продакшене на примере Scala. Также о том, как пиарить ФП и почему оно медленно взлетает.
+
+https://www.youtube.com/watch?v=uqKxB3eRKlY[Мартин Одерски про Scala 3]
+
+
 https://two-wrongs.com/a-gentle-introduction-to-monad-transformers[Адекватный туториал] про трансформеры
 
 https://ruhaskell.org/links.html

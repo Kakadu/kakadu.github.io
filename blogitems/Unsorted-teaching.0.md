@@ -59,3 +59,9 @@ Haskell Wiki: [OOP vs type classes](https://wiki.haskell.org/OOP_vs_type_classes
 [Presburger Arithmetic: Cooper’s algorithm](http://www2.imm.dtu.dk/courses/02917/Presburger1.pdf)
 
 [Notes on Category Theory and Haskell](https://github.com/jwbuurlage/category-theory-programmers)
+
+[Hyperscan: A Fast Multi-pattern Regex Matcher  for Modern CPUs](https://www.usenix.org/system/files/nsdi19-wang-xiang.pdf)
+
+[Granin's book](https://drive.google.com/drive/folders/0B1Rdr1fbS6M9SjlKUk1zMVNjOVU)
+
+Foundations of Coq [Inductive families](http://www.cse.chalmers.se/~peterd/papers/Inductive_Families.pdf)
