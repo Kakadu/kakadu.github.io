@@ -67,3 +67,8 @@ Ralph Hinze[Kan Extensions for Program Optimisation Or: Art and Dan Explain an O
 
 [Accelerating Correctly Rounded Floating-PointDivision When the Divisor is Known in Advance](http://perso.ens-lyon.fr/nicolas.brisebarre/Publi/fpdivision.pdf) 2003
 
+[Generic Programming with Adjunctions](http://www.cs.ox.ac.uk/ralf.hinze/LN.pdf) by Ralph Hinze 2012
+
+[All publications of Ralph Hinze](http://www.cs.ox.ac.uk/ralf.hinze/publications/index.html)
+
+
