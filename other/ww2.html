@@ -1,0 +1,60 @@
+<html>
+<head>
+
+<link title="timeline-styles" rel="stylesheet" href="https://cdn.knightlab.com/libs/timeline3/latest/css/timeline.css">
+      
+<!-- 2 -->
+<script src="https://cdn.knightlab.com/libs/timeline3/latest/js/timeline.js"></script>
+</head>
+
+<div id='timeline-embed' style="width: 100%; height: 600px"></div>
+
+<script type="text/javascript">
+  // JSON спецификация
+  // https://timeline.knightlab.com/docs/json-format.html
+  var make_the_json = function() {
+    return {
+             events: [ { start_date: { year: 1941, month: 6, day: 22 } 
+		       , end_date : { year: 1945 }
+		       , text: { headline: "Великая отечественная" }
+	               }
+                     , { start_date: { year: 1934, month: 1, day: 26 } 
+                       , text: { headline: "Пакт Пилсудского-Гитлера"}
+		       , media: { url: "https://ru.wikipedia.org/wiki/%D0%94%D0%B5%D0%BA%D0%BB%D0%B0%D1%80%D0%B0%D1%86%D0%B8%D1%8F_%D0%BE_%D0%BD%D0%B5%D0%BF%D1%80%D0%B8%D0%BC%D0%B5%D0%BD%D0%B5%D0%BD%D0%B8%D0%B8_%D1%81%D0%B8%D0%BB%D1%8B_%D0%BC%D0%B5%D0%B6%D0%B4%D1%83_%D0%93%D0%B5%D1%80%D0%BC%D0%B0%D0%BD%D0%B8%D0%B5%D0%B9_%D0%B8_%D0%9F%D0%BE%D0%BB%D1%8C%D1%88%D0%B5%D0%B9"}
+                       }
+                     , { start_date: { year: 1939, month: 8, day: 23 } 
+                       , text: { headline: "Пакт Молотова-Рибентроппа"}
+		       , media: { url: "https://ru.wikipedia.org/wiki/%D0%94%D0%BE%D0%B3%D0%BE%D0%B2%D0%BE%D1%80_%D0%BE_%D0%BD%D0%B5%D0%BD%D0%B0%D0%BF%D0%B0%D0%B4%D0%B5%D0%BD%D0%B8%D0%B8_%D0%BC%D0%B5%D0%B6%D0%B4%D1%83_%D0%93%D0%B5%D1%80%D0%BC%D0%B0%D0%BD%D0%B8%D0%B5%D0%B9_%D0%B8_%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%81%D0%BA%D0%B8%D0%BC_%D0%A1%D0%BE%D1%8E%D0%B7%D0%BE%D0%BC" }
+                       }
+		     , { start_date: { year: 1939, month: 9, day: 1 } 
+		       , end_date : { year: 1945 }
+		       , text: { headline: "Вторая мировая война"}
+	               }
+		     , { start_date: { year: 1939, month: 9, day: 1 } 
+		       , text: { headline: "Нападение Германии на Польшу"}
+	               }
+		     , 
+		     ]
+    };
+  };
+</script>
+
+<script type="text/javascript">
+	      <!--
+        // The TL.Timeline constructor takes at least two arguments:
+        // the id of the Timeline container (no '#'), and
+        // the URL to your JSON data file or Google spreadsheet.
+        // the id must refer to an element "above" this code,
+        // and the element must have CSS styling to give it width and height
+        // optionally, a third argument with configuration options can be passed.
+        // See below for more about options.
+        timeline = new TL.Timeline('timeline-embed',
+          'https://docs.google.com/spreadsheets/d/1cWqQBZCkX9GpzFtxCWHoqFXCHg-ylTVUWlnrdYMzKUI/pubhtml');
+        -->
+	var timeline_json = make_the_json(); // replace make_the_json() with the JSON object you created
+        // two arguments: the id of the Timeline container (no '#')
+        // and the JSON object or an instance of TL.TimelineConfig created from
+        // a suitable JSON object
+        window.timeline = new TL.Timeline('timeline-embed', timeline_json);
+</script>
+</html>
