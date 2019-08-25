@@ -1,0 +1,149 @@
+:source-highlighter: pygments
+:pygments-style: monokai
+:local-css-style: pastie
+
+Функциональное Программирование (матмех, осень 2019)
+====================================================
+:Author: Dmitrii Kosarev a.k.a. Kakadu
+:email:  Dmitrii.Kosarev@protonmail.ch
+
+[[about]]
+Пролог
+-----
+
+* [.line-through]#https://repl.it[Repl.it!] и там выбрать Haskell. На первых порах хватит.#
+* [.line-through]#Eсть плагин для IntelliJ IDEA. Сам не пользовался, говорят, что его мучительно устанавливать.#
+* Для VsCode есть простой плагин `Simple GHC (Haskell) Integration`
+* Можно устанавливать https://github.com/haskell/haskell-ide-engine[Haskell IDE Engine a.k.a. HIE] и в README читать как настроить ваш любимый редактор (VsCode, Emacs, etc.). Убедитесь, что HIE собирается для той версии компилятора, что у вас. Собирать долго, но результат должен быть самый лучший
+----
+➜  haskell-ide-engine git:(master) stack exec ghc -- --version
+The Glorious Glasgow Haskell Compilation System, version 8.4.4
+➜  haskell-ide-engine git:(master) hie --version
+Version 0.4.0.1, Git revision 7e0b19721872d1c8e44f49484ac75f6c61412349 (2220 commits) x86_64 ghc-8.4.4
+----
+
+Туториал по настройке https://www.vacationlabs.com/haskell/environment-setup.html[системы сборки] Stack.
+
+
+
+Книги на английском
+~~~~~~~~~~~~~~~~~~~
+http://learnyouahaskell.com/chapters[Learn You a Haskell for Great Good]
+
+https://www.twirpx.com/file/1674935[Bird R. Thinking Functionally with Haskell]
+
+https://github.com/hmemcpy/milewski-ctfp-pdf[Category Theory for Programmers] (а также видео) хорошая, но может
+ показаться зубодробительной. Короче, не для каждого.
+
+Обзор стандартной библиотеки (english) http://www.cse.chalmers.se/edu/course/TDA452/tourofprelude.html[HTML] http://www.cse.chalmers.se/edu/course/TDA452/Haskell-Prelude-Tour-A4.pdf[PDF]
+
+Книги переведенные
+~~~~~~~~~~~~~~~~~~
+
+"Purely Functional Data Structures" от Chris Okasaki.
+
+Книги на русском
+~~~~~~~~~~~~~~~~
+
+https://dmkpress.com/catalog/computer/programming/functional/978-5-97060-694-0[Will Kurt Get Programming with HASKELL] выглядит достаточно простой. Вот английская версия на https://www.twirpx.com/file/2510569/[Twirpx]
+
+
+https://www.ohaskell.guide/pdf/ohaskell.pdf[Денис Шевченко "О Haskell по-человечески" 2014] Мало страниц, большой шрифт, хорошо рассказанные азы
+на простых примерах
+
+https://anton-k.github.io/ru-haskell-book/files/ru-haskell-book.pdf[По-русски], свиду нормально написано, но проект книги заброшен и
+код местами устарел и не компилится.
+
+Можно также найти Р.Душкина "ФП на языке Haskell". https://wiki.haskell.org/Books[Ещё список на Haskell Wiki] (в том числе и на русском).
+
+А также
+~~~~~~~
+
+http://cheatsheet.codeslower.com/CheatSheet.pdf[Шпаргалка]
+
+Можно донимать хаскеллистов в различных чатиках на просторах IRC или Telegram
+
+Свалка ссылок
+~~~~~~~~~~~~~
+https://vimeo.com/153042584[Yaron Minsky - Why OCaml]. Хорошо для общего развития: какие языки бывают, что от хорошего языка программирования требуется, и т.д.
+
+http://queue.acm.org/detail.cfm?id=2038036[OCaml for the Masses] Большинстов аргументов переносимо и на Haskell.
+
+https://www.youtube.com/watch?v=zFPEuI8i9Ds[Functional Programming: The Enterprise Edition] Где ФП стреляет в продакшене на примере Scala. Также о том, как пиарить ФП и почему оно медленно взлетает.
+
+https://www.youtube.com/watch?v=uqKxB3eRKlY[Мартин Одерски про Scala 3]
+
+
+https://two-wrongs.com/a-gentle-introduction-to-monad-transformers[Адекватный туториал] про трансформеры
+
+https://ruhaskell.org/links.html
+
+http://ideas.cs.uu.nl/HEE/index.html[Трассировка вычисления] функций в Haskell.
+
+Курсы на степике "какие есть": https://stepik.org/course/75/ и https://stepik.org/course/693/ от Д.Москвина
+
+А к январю
+----------
+
+Стоило бы https://stepik.org/join-class/c1c9e25ba893da83ade391c83755dac408b4d90c[сдать]
+второй курс Москвина на Степике, чтобы получить "допуск на вход" на экзамен.
+
+
+[[week1]]
+Неделя 1 (? сентября)
+----------------------
+
+link:01introduction.pdf[слайды]
+
+Про типы
+
+[[week2]]
+Неделя 2 (13 сентября)
+----------------------
+
+link:02typedesign.pdf[слайды]
+
+Про дизайн собственных типов данных
+
+
+
+
+[[questions]]
+Вопросы к экзамену 2018/2019 года
+---------------------------------
+За мямленье в ответ на вопрос с ☦ будет больно.
+
+. Абстрактный спискок и сложность основных операций у него. Какие (минимум две) реализации абстрактных списков Вы знаете и что там со ложностью основных опeраций?
+. ☦ Алгебра типов. Простейшие типы из которых можно много чего построить.
+. Эквивалентность, равенство и изоморфизм. И для типов тоже.
+. Как из простейших типов построить что-то изоморфное данному алгебраическому типу?
+. ☦ Лямда-исчисление. Три правила перобразования лямбда-термов.
+. Стратегии вычисления лямбда-термов: call-by-name, call-by-value, call-by-need.
+  Почему одно лучше/хуже другого?
+. ☦ Унификация и подстановки. ☦ Capture avoiding substitution. Индексы де Брауна.
+. ☦ Функторы. ☦ Законы функторов.
+. ☦ Аппликативные функторы. Законы аппликативов.
+. ☦ Монады. ☦ Законы монад. ☦ Выражение функторов и аппликативов, если монада уже описана.
+  ☦ Стандартные монады: Reader, Writer, ☦ State, ☦ List, ☦ Maybe, Cont, ☦ IO.
+. ☦ Do-нотация. ☦ Преобразование монадического кода из do-нотации и обратно.
+. Преобразования кода с list comprehension в do-нотацию и обратно.
+. Стандартные функции над списками. Будьте готовы написать двухстрочную функцию (map, drop, etc.)
+не отходя от кассы (или типа того).
+. Классы типов. Мотивация.
+. Free monad. Пример.
+. Фантомные типы. Пример.
+. Экзистенциальные типы. Почему такое название?
+. Type families. Мотивация.
+. ☦ Катаморфизм и анаморфизм. Пример.
+. Параморфизм. Хиломорфизм.
+
+
+ifdef::backend-docbook[]
+[index]
+Example Index
+-------------
+////////////////////////////////////////////////////////////////
+The index is normally left completely empty, it's contents being
+generated automatically by the DocBook toolchain.
+////////////////////////////////////////////////////////////////
+endif::backend-docbook[]

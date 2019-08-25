@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.5">
+<meta name="author" content="Dmitrii Kosarev a.k.a. Kakadu">
+<title>Функциональное Программирование (матмех, осень 2019)</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+<link rel="stylesheet" href="./pygments-monokai.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Функциональное Программирование (матмех, осень 2019)</h1>
+<div class="details">
+<span id="author" class="author">Dmitrii Kosarev a.k.a. Kakadu</span><br>
+<span id="email" class="email"><a href="mailto:Dmitrii.Kosarev@protonmail.ch">Dmitrii.Kosarev@protonmail.ch</a></span><br>
+</div>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="about">Пролог</h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><span class="line-through"><a href="https://repl.it">Repl.it!</a> и там выбрать Haskell. На первых порах хватит.</span></p>
+</li>
+<li>
+<p><span class="line-through">Eсть плагин для IntelliJ IDEA. Сам не пользовался, говорят, что его мучительно устанавливать.</span></p>
+</li>
+<li>
+<p>Для VsCode есть простой плагин <code>Simple GHC (Haskell) Integration</code></p>
+</li>
+<li>
+<p>Можно устанавливать <a href="https://github.com/haskell/haskell-ide-engine">Haskell IDE Engine a.k.a. HIE</a> и в README читать как настроить ваш любимый редактор (VsCode, Emacs, etc.). Убедитесь, что HIE собирается для той версии компилятора, что у вас. Собирать долго, но результат должен быть самый лучший</p>
+</li>
+</ul>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>➜  haskell-ide-engine git:(master) stack exec ghc -- --version
+The Glorious Glasgow Haskell Compilation System, version 8.4.4
+➜  haskell-ide-engine git:(master) hie --version
+Version 0.4.0.1, Git revision 7e0b19721872d1c8e44f49484ac75f6c61412349 (2220 commits) x86_64 ghc-8.4.4</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Туториал по настройке <a href="https://www.vacationlabs.com/haskell/environment-setup.html">системы сборки</a> Stack.</p>
+</div>
+<div class="sect2">
+<h3 id="_книги_на_английском">Книги на английском</h3>
+<div class="paragraph">
+<p><a href="http://learnyouahaskell.com/chapters">Learn You a Haskell for Great Good</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://www.twirpx.com/file/1674935">Bird R. Thinking Functionally with Haskell</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://github.com/hmemcpy/milewski-ctfp-pdf">Category Theory for Programmers</a> (а также видео) хорошая, но может
+ показаться зубодробительной. Короче, не для каждого.</p>
+</div>
+<div class="paragraph">
+<p>Обзор стандартной библиотеки (english) <a href="http://www.cse.chalmers.se/edu/course/TDA452/tourofprelude.html">HTML</a> <a href="http://www.cse.chalmers.se/edu/course/TDA452/Haskell-Prelude-Tour-A4.pdf">PDF</a></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_книги_переведенные">Книги переведенные</h3>
+<div class="paragraph">
+<p>"Purely Functional Data Structures" от Chris Okasaki.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_книги_на_русском">Книги на русском</h3>
+<div class="paragraph">
+<p><a href="https://dmkpress.com/catalog/computer/programming/functional/978-5-97060-694-0">Will Kurt Get Programming with HASKELL</a> выглядит достаточно простой. Вот английская версия на <a href="https://www.twirpx.com/file/2510569/">Twirpx</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://www.ohaskell.guide/pdf/ohaskell.pdf">Денис Шевченко "О Haskell по-человечески" 2014</a> Мало страниц, большой шрифт, хорошо рассказанные азы
+на простых примерах</p>
+</div>
+<div class="paragraph">
+<p><a href="https://anton-k.github.io/ru-haskell-book/files/ru-haskell-book.pdf">По-русски</a>, свиду нормально написано, но проект книги заброшен и
+код местами устарел и не компилится.</p>
+</div>
+<div class="paragraph">
+<p>Можно также найти Р.Душкина "ФП на языке Haskell". <a href="https://wiki.haskell.org/Books">Ещё список на Haskell Wiki</a> (в том числе и на русском).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_а_также">А также</h3>
+<div class="paragraph">
+<p><a href="http://cheatsheet.codeslower.com/CheatSheet.pdf">Шпаргалка</a></p>
+</div>
+<div class="paragraph">
+<p>Можно донимать хаскеллистов в различных чатиках на просторах IRC или Telegram</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_свалка_ссылок">Свалка ссылок</h3>
+<div class="paragraph">
+<p><a href="https://vimeo.com/153042584">Yaron Minsky - Why OCaml</a>. Хорошо для общего развития: какие языки бывают, что от хорошего языка программирования требуется, и т.д.</p>
+</div>
+<div class="paragraph">
+<p><a href="http://queue.acm.org/detail.cfm?id=2038036">OCaml for the Masses</a> Большинстов аргументов переносимо и на Haskell.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://www.youtube.com/watch?v=zFPEuI8i9Ds">Functional Programming: The Enterprise Edition</a> Где ФП стреляет в продакшене на примере Scala. Также о том, как пиарить ФП и почему оно медленно взлетает.</p>
+</div>
+<div class="paragraph">
+<p><a href="https://www.youtube.com/watch?v=uqKxB3eRKlY">Мартин Одерски про Scala 3</a></p>
+</div>
+<div class="paragraph">
+<p><a href="https://two-wrongs.com/a-gentle-introduction-to-monad-transformers">Адекватный туториал</a> про трансформеры</p>
+</div>
+<div class="paragraph">
+<p><a href="https://ruhaskell.org/links.html" class="bare">https://ruhaskell.org/links.html</a></p>
+</div>
+<div class="paragraph">
+<p><a href="http://ideas.cs.uu.nl/HEE/index.html">Трассировка вычисления</a> функций в Haskell.</p>
+</div>
+<div class="paragraph">
+<p>Курсы на степике "какие есть": <a href="https://stepik.org/course/75/" class="bare">https://stepik.org/course/75/</a> и <a href="https://stepik.org/course/693/" class="bare">https://stepik.org/course/693/</a> от Д.Москвина</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="_а_к_январю">А к январю</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Стоило бы <a href="https://stepik.org/join-class/c1c9e25ba893da83ade391c83755dac408b4d90c">сдать</a>
+второй курс Москвина на Степике, чтобы получить "допуск на вход" на экзамен.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="week1">Неделя 1 (? сентября)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="01introduction.pdf">слайды</a></p>
+</div>
+<div class="paragraph">
+<p>Про типы</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="week2">Неделя 2 (13 сентября)</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p><a href="02typedesign.pdf">слайды</a></p>
+</div>
+<div class="paragraph">
+<p>Про дизайн собственных типов данных</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="questions">Вопросы к экзамену 2018/2019 года</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>За мямленье в ответ на вопрос с ☦ будет больно.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Абстрактный спискок и сложность основных операций у него. Какие (минимум две) реализации абстрактных списков Вы знаете и что там со ложностью основных опeраций?</p>
+</li>
+<li>
+<p>☦ Алгебра типов. Простейшие типы из которых можно много чего построить.</p>
+</li>
+<li>
+<p>Эквивалентность, равенство и изоморфизм. И для типов тоже.</p>
+</li>
+<li>
+<p>Как из простейших типов построить что-то изоморфное данному алгебраическому типу?</p>
+</li>
+<li>
+<p>☦ Лямда-исчисление. Три правила перобразования лямбда-термов.</p>
+</li>
+<li>
+<p>Стратегии вычисления лямбда-термов: call-by-name, call-by-value, call-by-need.
+Почему одно лучше/хуже другого?</p>
+</li>
+<li>
+<p>☦ Унификация и подстановки. ☦ Capture avoiding substitution. Индексы де Брауна.</p>
+</li>
+<li>
+<p>☦ Функторы. ☦ Законы функторов.</p>
+</li>
+<li>
+<p>☦ Аппликативные функторы. Законы аппликативов.</p>
+</li>
+<li>
+<p>☦ Монады. ☦ Законы монад. ☦ Выражение функторов и аппликативов, если монада уже описана.
+☦ Стандартные монады: Reader, Writer, ☦ State, ☦ List, ☦ Maybe, Cont, ☦ IO.</p>
+</li>
+<li>
+<p>☦ Do-нотация. ☦ Преобразование монадического кода из do-нотации и обратно.</p>
+</li>
+<li>
+<p>Преобразования кода с list comprehension в do-нотацию и обратно.</p>
+</li>
+<li>
+<p>Стандартные функции над списками. Будьте готовы написать двухстрочную функцию (map, drop, etc.)
+не отходя от кассы (или типа того).</p>
+</li>
+<li>
+<p>Классы типов. Мотивация.</p>
+</li>
+<li>
+<p>Free monad. Пример.</p>
+</li>
+<li>
+<p>Фантомные типы. Пример.</p>
+</li>
+<li>
+<p>Экзистенциальные типы. Почему такое название?</p>
+</li>
+<li>
+<p>Type families. Мотивация.</p>
+</li>
+<li>
+<p>☦ Катаморфизм и анаморфизм. Пример.</p>
+</li>
+<li>
+<p>Параморфизм. Хиломорфизм.</p>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2019-08-25 14:40:15 MSK
+</div>
+</div>
+</body>
+</html>
