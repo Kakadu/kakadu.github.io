@@ -1,0 +1,19 @@
+:source-highlighter: pygments
+:pygments-style: monokai
+:local-css-style: pastie
+:toc:
+
+Список курсовых/миникурсовых
+============================
+:Author: Dmitrii Kosarev a.k.a. Kakadu
+:email:  Dmitrii.Kosarev@protonmail.ch
+
+
+Темы и задачи link:../fp2018/projects.html[прошлого года] более-менее актуальны
+
+
+Новые задачи и темы придуманы, но пока не вписаны.
+
+
+Задачи
+------
