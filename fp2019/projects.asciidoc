@@ -74,6 +74,10 @@
 Alt-Ergo (гроб)
 ~~~~~~~~~~~~~~~
 
+[[merlin]]
+merlin
+~~~~~~
+
 
 [[active]]
 Active Patterns в OCaml (вроде как занята)
