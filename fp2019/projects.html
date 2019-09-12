@@ -29,6 +29,7 @@
 <li><a href="#altergo">Alt-Ergo (гроб)</a></li>
 <li><a href="#merlin">merlin</a></li>
 <li><a href="#active">Active Patterns в OCaml (вроде как занята)</a></li>
+<li><a href="#graphparsing">Про парсинг графов с помощью грамматик на Haskell</a></li>
 </ul>
 </li>
 </ul>
@@ -115,7 +116,20 @@ Lambda байткод) по аналогии с проектом js_of_ocaml.
 </div>
 <div class="sect2">
 <h3 id="merlin">merlin</h3>
-
+<div class="paragraph">
+<p>IDE для функциональных языков не очень хорошо развиты по нескольким причинами:
+* за счет другого подхода к программированию потребность в IDE не так сильно ощущается: так как меньше синтаксического мусора, то меньше нужды в автоматических рефакторингах, и прочее.
+* так как потредность в IDE не так ощущается, то мало кто уходит дальше минимальных требований к IDE, которыми явщяются: go-to-definition, показать тип под курсором, подсветка ошибок и прочие мелочи.</p>
+</div>
+<div class="paragraph">
+<p>Следствие: в области разработки IDE для функциональных языков можно много чего сделать.</p>
+</div>
+<div class="paragraph">
+<p>Сейчас стандартом IDE для языка OCaml является merlin, который умеет минимальный набор фич</p>
+</div>
+<div class="paragraph">
+<p>TODO: дописать</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="active">Active Patterns в OCaml (вроде как занята)</h3>
@@ -149,12 +163,29 @@ Lambda байткод) по аналогии с проектом js_of_ocaml.
 <p>На форуме OCaml уже <a href="https://discuss.ocaml.org/t/musings-on-extended-pattern-matching-syntaxes/3600">началось</a> обсуждение правильного синтаксиса.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="graphparsing">Про парсинг графов с помощью грамматик на Haskell</h3>
+<div class="paragraph">
+<p>Есть статья <code>Efficient Parallel and Incremental Parsing of Practical Context-Free Languages</code> от JEAN-PHILIPPE BERNARDY &amp; KOEN CLAESSEN (pdfку могу выслать), где авторы пишут, что смогли распараллелить синтаксический анализ для некоторых "хороших" грамматик и получить прирост скорости. У доступна <a href="https://github.com/BNFC/bnfc/blob/master/source/runtime/Data/Matrix/Quad.hs">реализация</a> на Haskell.</p>
+</div>
+<div class="paragraph">
+<p>Хотелось бы
+* вначале проверить что всё действительно работает так хорошо, как написано
+* применить подход для синтаксического анализа графов</p>
+</div>
+<div class="paragraph">
+<p>Если на пальцах, то синтаксический анализ направленных графов отличается от анализа строк только тем, что в некоторых местах строка может неоднозначно разветвиться, и парсеру надо проверить все способы разветвления. Для строк такого разветвления нет (последовательность символов в некотором смысле однозанчна).</p>
+</div>
+<div class="paragraph">
+<p>Руководители <a href="mailto:rsdpisuy@gmail.com">Семен Григорьев</a> (может быть и <a href="mailto:Dmitrii.Kosarev@protonmail.ch">Дмитрий Косарев</a> подключится).</p>
+</div>
+</div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-09-06 01:16:52 MSK
+Last updated 2019-09-12 14:49:05 MSK
 </div>
 </div>
 </body>
