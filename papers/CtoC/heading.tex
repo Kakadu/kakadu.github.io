@@ -1,0 +1,103 @@
+\usepackage{xcolor}
+\definecolor{YellowGreen} {HTML}{B5C28C}
+\definecolor{ForestGreen} {HTML}{009B55}
+\definecolor{MyBackground}{HTML}{F0EDAA}
+
+
+\usepackage{xltxtra} % load xunicode
+\usepackage{polyglossia}
+\setmainlanguage{russian}
+\setotherlanguage{english}
+
+\let\cyrillicfonttt\monofamily
+
+\newfontfamily\dejaVuSansMono{DejaVu Sans Mono}
+% https://github.com/vjpr/monaco-bold/raw/master/MonacoB/MonacoB.otf
+\newfontfamily\monacoB{MonacoB}
+
+\usepackage{listings}
+\lstdefinestyle{style1}{
+  language=haskell,
+  numbers=left,
+  stepnumber=1,
+  numbersep=10pt,
+  tabsize=4,
+  showspaces=false,
+  showstringspaces=false
+}
+\lstdefinestyle{hsstyle1}
+{ language=haskell
+%          , basicstyle=\monacoB
+         , deletekeywords={Int,Float,String,List,Void}
+         , breaklines=true
+         , columns=fullflexible
+         , commentstyle=\color{ForestGreen}
+         , escapeinside=§§
+         , escapebegin=\begin{russian}\commentfont
+         , escapeend=\end{russian}
+         , commentstyle=\color{ForestGreen}
+         , escapeinside=§§
+         , escapebegin=\begin{russian}\color{ForestGreen}
+         , escapeend=\end{russian}
+         , mathescape=true
+%          , backgroundcolor = \color{MyBackground}
+}
+
+\newcommand{\inline}[1]{\lstinline{haskell}{#1}}
+\def\hsinline{\mintinline{haskell}}
+\def\inline{\hsinline}
+
+\lstnewenvironment{hslisting} {
+    \lstset { style={hsstyle1} }
+  }
+  {}
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+\setmainfont[
+ Ligatures=TeX,
+ Extension=.otf,
+ BoldFont=cmunbx,
+ ItalicFont=cmunti,
+ BoldItalicFont=cmunbi,
+]{cmunrm}
+% С засечками (для заголовков)
+\setsansfont[
+ Ligatures=TeX,
+ Extension=.otf,
+ BoldFont=cmunsx,
+ ItalicFont=cmunsi,
+]{cmunss}
+% \setmonofont[Scale=0.6]{Monaco}
+
+\usefonttheme{professionalfonts}
+\usepackage{times}
+\usepackage{tikz}
+\usetikzlibrary{cd}
+% \usepackage{tikz-cd}
+\usepackage{amsmath}
+%\DeclareMathOperator{->}{\rightarrow}
+\newcommand\iso{\ensuremath{\cong}}
+\usepackage{verbatim}
+\usepackage{graphicx}
+\usetikzlibrary{arrows,shapes}
+
+\usepackage{fontawesome}
+% \newfontfamily{\FA}{Font Awesome 5 Free} % some glyphs missing
+\expandafter\def\csname faicon@facebook\endcsname{{\FA\symbol{"F09A}}}
+\def\faQuestionSign{{\FA\symbol{"F059}}}
+\def\faQuestion{{\FA\symbol{"F128}}}
+\def\faExclamation{{\FA\symbol{"F12A}}}
+\def\faUploadAlt{{\FA\symbol{"F093}}}
+\def\faLemon{{\FA\symbol{"F094}}}
+\def\faPhone{{\FA\symbol{"F095}}}
+\def\faCheckEmpty{{\FA\symbol{"F096}}}
+\def\faBookmarkEmpty{{\FA\symbol{"F097}}}
+
+\newcommand{\faGood}{\textcolor{ForestGreen}{\faThumbsUp}}
+\newcommand{\faBad}{\textcolor{red}{\faThumbsODown}}
+\newcommand{\faWrong}{\textcolor{red}{\faTimes}}
+\newcommand{\faMaybe}{\textcolor{blue}{\faQuestion}}
+\newcommand{\faCheckGreen}{\textcolor{ForestGreen}{\faCheck}}
+
+\usepackage{soul} % for \st that strikes through
+\usepackage[normalem]{ulem} % \sout

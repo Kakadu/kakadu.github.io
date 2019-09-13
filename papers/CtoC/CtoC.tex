@@ -1,0 +1,136 @@
+\documentclass[aspectratio=169
+  , xcolor={svgnames}
+  , hyperref={ colorlinks,citecolor=DeepPink4
+             , linkcolor=DarkRed,urlcolor=DarkBlue}
+  , russian
+  ]{beamer}
+\usetheme{CambridgeUS}
+\beamertemplatenavigationsymbolsempty % remove navigation bar
+
+\usefonttheme{professionalfonts}
+\input{heading.tex}
+\usepackage{tabulary}
+% \usepackage{tabularx}  % for 'tabularx' environment
+% \usepackage{ragged2e} % for \Centering macro
+% \newcolumntype{C}{>{\Centering\arraybackslash}X}
+
+% sudo aptget install ttf-mscorefonts-installer
+\defaultfontfeatures{Ligatures={TeX}} 
+\setmainfont{Times New Roman}
+\setsansfont{CMU Sans Serif}
+
+\setmonofont[Scale=1.0,
+    BoldFont=lmmonolt10-bold.otf,
+    ItalicFont=lmmono10-italic.otf,
+    BoldItalicFont=lmmonoproplt10-boldoblique.otf
+]{lmmono9-regular.otf}
+
+\usepackage[cache=true]{minted}
+
+%%%%%%%%%%%%%%%%%%
+\makeatletter
+\newenvironment{tabminted}{%
+  \let\FV@ListVSpace\relax  
+  \minted
+}{%
+  \endminted
+  \unskip   
+  \aftergroup\@tabmintedend
+}
+\newcommand*{\tabminted@finalstrut}[1]{%
+  \ifdim\prevdepth>0pt
+    \ifdim\dp#1>\prevdepth
+      \vskip\dimexpr(\dp#1)-\prevdepth\relax
+    \fi
+  \else
+    \vskip\dimexpr(\dp#1)\relax
+  \fi
+}
+\newcommand*{\@tabmintedend}{%
+  \let\@finalstrut\tabminted@finalstrut
+}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%5
+\title[]{Compiling to Categories}
+\author{Косарев Дмитрий }
+
+\institute{матмех СПбГУ}
+
+\date{\today}
+ 
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Оглавление}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+\newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}
+\usepackage{verbatimbox}
+\begin{document}
+\maketitle
+
+% For every picture that defines or uses external nodes, you'll have to
+% apply the 'remember picture' style. To avoid some typing, we'll apply
+% the style to all pictures.
+\tikzstyle{every picture}+=[remember picture] 
+
+% By default all math in TikZ nodes are set in inline mode. Change this to
+% displaystyle so that we don't get small fractions.
+\everymath{\displaystyle}
+
+% Uncomment these lines for an automatically generated outline.
+\begin{frame}{Оглавление}
+  \tableofcontents
+\end{frame}
+
+\begin{frame}{В этих слайдах}
+\begin{itemize}
+ \item Cинтаксис \emph{алгебраических типов данных}
+ \item Несколько примеров того, как превратить предметную область в описание типов
+\end{itemize}\vspace{1cm}
+
+
+N.B. Программирование на типизированных функциональных языках обычно начинается с описаний типов.
+\end{frame}
+
+% \section{Теоретическая часть про типы}
+
+
+
+\begin{frame}[fragile]{Parametricity theorem~\cite{wadler}}
+\begin{theorem}{О параметричности.}
+Чистые функции с параметрическим полиморфизмом работают одинаково для всех возможных типов.\footnote{Для Haskell верна, для strict-языков с некоторыми оговорками.}
+\end{theorem}\vspace{.5cm}
+
+
+\begin{minted}[mathescape, escapeinside=??]{haskell}
+{-# LANGUAGE ExplicitForAll #-}
+
+id :: forall a . a -> a
+id x = x
+\end{minted}
+\end{frame}
+
+
+
+\begin{frame}[allowframebreaks]
+  \frametitle<presentation>{Ссылки}
+  \begin{thebibliography}{10}
+  \bibitem{paper}
+    \href{http://conal.net/papers/compiling-to-categories/compiling-to-categories.pdf}{paper}
+    \newblock {\em Conal Elliot }    
+  \bibitem{conal}
+    Slides
+    \newblock {\em Conal Elliot }
+    \newblock \href{http://conal.net/talks/compiling-to-categories.pdf}{ссылка}
+  \bibitem{video}    
+    \href{http://podcasts.ox.ac.uk/compiling-categories}{ICFP 2017 video}
+    \newblock {\em Conal Elliot }
+  \bibitem{}
+    \href{https://github.com/conal/concat}{Project repo}
+  \end{thebibliography}
+\end{frame}
+
+\end{document}
