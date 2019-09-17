@@ -1,0 +1,182 @@
+\documentclass[aspectratio=169
+  , xcolor={svgnames}
+  , hyperref={ colorlinks,citecolor=DeepPink4
+             , linkcolor=DarkRed,urlcolor=DarkBlue}
+  , russian
+  ]{beamer}
+\usetheme{CambridgeUS}
+\beamertemplatenavigationsymbolsempty % remove navigation bar
+
+\usefonttheme{professionalfonts}
+\input{heading.tex}
+\usepackage{tabulary}
+\usepackage{verbatim}
+% \usepackage{tabularx}  % for 'tabularx' environment
+% \usepackage{ragged2e} % for \Centering macro
+% \newcolumntype{C}{>{\Centering\arraybackslash}X}m
+% sudo aptget install ttf-mscorefonts-installer
+\defaultfontfeatures{Ligatures={TeX}} 
+\setmainfont{Times New Roman}
+\setsansfont{CMU Sans Serif}
+
+\setmonofont[Scale=1.0,
+    BoldFont=lmmonolt10-bold.otf,
+    ItalicFont=lmmono10-italic.otf,
+    BoldItalicFont=lmmonoproplt10-boldoblique.otf
+]{lmmono9-regular.otf}
+
+\usepackage[cache=true]{minted}
+\usepackage{amsthm}
+\newtheorem*{remark}{Remark}
+
+\usepackage{tikz}
+\usetikzlibrary{trees}
+
+%%%%%%%%%%%%%%%%%%
+\makeatletter
+\newenvironment{tabminted}{%
+  \let\FV@ListVSpace\relax  
+  \minted
+}{%
+  \endminted
+  \unskip   
+  \aftergroup\@tabmintedend
+}
+\newcommand*{\tabminted@finalstrut}[1]{%
+  \ifdim\prevdepth>0pt
+    \ifdim\dp#1>\prevdepth
+      \vskip\dimexpr(\dp#1)-\prevdepth\relax
+    \fi
+  \else
+    \vskip\dimexpr(\dp#1)\relax
+  \fi
+}
+\newcommand*{\@tabmintedend}{%
+  \let\@finalstrut\tabminted@finalstrut
+}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%5
+\title[]{Чисто функциональные структуры данных}
+\author{Косарев Дмитрий }
+
+\institute{матмех СПбГУ}
+
+\date{\today}
+ 
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Оглавление}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+\newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}
+
+\usepackage{verbatimbox}
+
+\begin{document}
+\maketitle
+
+% For every picture that defines or uses external nodes, you'll have to
+% apply the 'remember picture' style. To avoid some typing, we'll apply
+% the style to all pictures.
+\tikzstyle{every picture}+=[remember picture] 
+
+% By default all math in TikZ nodes are set in inline mode. Change this to
+% displaystyle so that we don't get small fractions.
+\everymath{\displaystyle}
+
+% Uncomment these lines for an automatically generated outline.
+\begin{frame}{Оглавление}
+  \tableofcontents
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{figure}[h]
+%	\centering
+	\input{figures/fig.2.4.before.tex}\par
+	(до)\par
+%	\vspace{0.5cm}
+	\input{figures/fig.2.4.after.tex}\par
+	(после)\par
+%	\vspace{0.5cm}
+	\caption{Выполнение xs concat ys в императивной среде. Эта операция уничтожает списки-аргументы xs и ys.}
+	\label{fig:2.4}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}[fragile]{}
+\begin{figure}[h]
+	\centering
+	\input{figures/fig.2.5.before.tex}\par
+	(до)\par
+	\vspace{0.5cm}
+	\input{figures/fig.2.5.after.tex}\par
+	(после)\par
+	\vspace{0.5cm}
+	\caption{Выполнение \texttt{zs = xs ++ ys} в функциональной среде. Заметим, что списки-аргументы \texttt{xs} и \texttt{ys} не затронуты операцией.
+	}
+	\label{fig:2.5}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{figure}[h]
+	\centering
+	\input{figures/fig.2.6.before.tex}\par
+	(до)\par
+	\vspace{0.5cm}
+	\input{figures/fig.2.6.after.tex}\par
+	(после)\par
+	\vspace{0.5cm}	
+	\caption{Выполнение \texttt{ys = update(xs, 2, 7)}. Обратите
+		внимание на совместное использование структуры списками \texttt{xs} и \texttt{ys}.}
+	\label{fig:2.6}
+\end{figure}
+\end{frame}
+
+\begin{frame}
+\begin{remark}
+	Такой стиль программирования очень сильно упрощается при наличии
+	автоматической сборки мусора. Очень важно освободить память от тех
+	копий, которые больше не нужны, но многочисленные совместно используемые
+	узлы делают ручную сборку мусора нетривиальной задачей.
+\end{remark}
+\end{frame}
+
+\section{Двоичные деревья поиска}
+
+\begin{frame}[fragile]{}
+\begin{minipage}{.48\textwidth}
+		\input{figures/fig.2.8.before.tex}\par
+\end{minipage}
+\begin{minipage}{.48\textwidth}
+	\input{figures/fig.2.8.after.tex}
+\end{minipage}
+Выполнение \texttt{ys = insert("e", xs)}. Как и прежде,
+обратите внимание на совместное использвание структуры деревьями \texttt{xs} и \texttt{ys}.
+\end{frame}
+
+
+% 
+% \begin{frame}[allowframebreaks]
+%   \frametitle<presentation>{Ссылки}
+%   \begin{thebibliography}{10}
+%   \bibitem{paper}
+%     \href{http://conal.net/papers/compiling-to-categories/compiling-to-categories.pdf}{paper}
+%     \newblock {\em Conal Elliot }    
+%   \bibitem{conal}
+%     Slides
+%     \newblock {\em Conal Elliot }
+%     \newblock \href{http://conal.net/talks/compiling-to-categories.pdf}{ссылка}
+%   \bibitem{video}    
+%     \href{http://podcasts.ox.ac.uk/compiling-categories}{ICFP 2017 video}
+%     \newblock {\em Conal Elliot }
+%   \bibitem{}
+%     \href{https://github.com/conal/concat}{Project repo}
+%   \end{thebibliography}
+% \end{frame}
+
+\end{document}
