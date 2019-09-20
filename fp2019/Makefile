@@ -18,8 +18,8 @@ index.html: index.asciidoc
 projects.html: projects.asciidoc
 	asciidoctor -b $(BACKEND) $(addprefix -a ,$(OPTS)) $<
 
-exercises%.html: exercises%.asciidoc
-	asciidoctor -b $(BACKEND)  $<
+hw.html: hw.asciidoc
+	asciidoctor -b $(BACKEND) $(addprefix -a ,$(OPTS)) $<
 
 celan: clean
 
