@@ -177,12 +177,114 @@ Haskell), то это нужно предварительно согласова
 </div>
 <div class="paragraph">
 <p> <details><summary> 
-TODO: <strong>написать подробнее под спойлер</strong>
+<span class="underline"><strong>Подробнее (спойлер)</strong></span>
  </summary><div> </p>
 </div>
 <div class="paragraph">
-<p>TODO:
- </div></details> </p>
+<p>Необходимо реализовать минисистему баз данных. Программа должна уметь дампить информацию в файл, восстанавливать из файла и выполнять (парсер + интерпретатор) запросы к базе данных в интерактивном режиме. Для ввода-вывода данных в/из файл парсер и принтер писать не обязательно, можно обойтись более прямолинейными способами; парсер нужен только для языка запросов SQL. Список запросов возьмем сокращенно-стандартный. Конкретный синтаксис посмотрите в документации к, например, mySQL, здесь я напишу только несколько примеров.</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Создание таблиц. Из типов давайте оставим только Int и String (который в базах данных обычно называется VarChar)</p>
+<div class="openblock">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>CREATE TABLE table1 ( String FirstName
+                    , String LastName
+                    , Int Id
+                    , Int Age)</pre>
+</div>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>Добавление данных в таблицу. Если кто-то добавляет Int туда, где ожидался тип String&#8201;&#8212;&#8201;выругиваться.</p>
+<div class="openblock">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>INSERT INTO table1 VALUES ('vasya','pupkin',1,2),
+                          ('ivan', 'ivanov',2,2)</pre>
+</div>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>Выбор данных из таблицы с выдачей табличного результата</p>
+<div class="openblock">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>SELECT * FROM  table1</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>или</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>SELECT (FirstName,LastName) FROM table1 WHERE Age&gt;18</pre>
+</div>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>Удаление данных из таблицы</p>
+<div class="listingblock">
+<div class="content">
+<pre>REMOVE FROM table1 WHERE Age&gt;18</pre>
+</div>
+</div>
+</li>
+<li>
+<p>Join (он же inner join) таблиц, который формально является декартовом перемножением всех строчек в таблицах с последующей фильтрацией. Можно также поддержать другие JOIN&#8217;ы (LEFT, OUTER, CROSS). Они работают чуть-чуть по-другому.</p>
+<div class="openblock">
+<div class="content">
+<div class="listingblock">
+<div class="content">
+<pre>SELECT (a, tableX.id, tableY.id) FROM tableX
+   JOIN tableY
+   ON table1.id = table2.somekey</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>или даже вложенные join&#8217;ы</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>SELECT * FROM A
+  JOIN (B JOIN C ON B.fkC = C.pk)
+  ON A.optionalfkB = B.pk</pre>
+</div>
+</div>
+</div>
+</div>
+</li>
+<li>
+<p>Хранимые процедуры (у всех есть, и тут пусть будут)</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>В качестве задачи 4 будут какие-то оптимизации запросов, например</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Вложенные join&#8217;ы должен вычисляться не в стиле generate&amp;filter, а как-нибудь более оптимально.</p>
+</li>
+<li>
+<p>Что-то ещё, пока не придумал.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p> </div></details> </p>
 </div>
 </div>
 <div class="sect2">
@@ -192,7 +294,7 @@ TODO: <strong>написать подробнее под спойлер</strong>
 </div>
 <div class="paragraph">
 <p> <details><summary> 
-Подробнее <strong>под спойлером</strong>
+<span class="underline"><strong>Подробнее (спойлер)</strong></span>
  </summary><div> </p>
 </div>
 <div class="paragraph">
@@ -434,7 +536,7 @@ MOV  EAX ← [y]       |         MOV  EBX ← [x]</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-09-26 20:14:48 MSK
+Last updated 2019-09-26 23:38:42 MSK
 </div>
 </div>
 </body>
