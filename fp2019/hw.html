@@ -30,18 +30,18 @@
 </li>
 <li><a href="#hw1234">Домашки 1-4</a>
 <ul class="sectlevel2">
+<li><a href="#_lua_цириков">Lua (Цириков)</a></li>
+<li><a href="#_sql_погожельская">SQL (Погожельская)</a></li>
+<li><a href="#_bourne_again_shell_абзалов">Bourne Again SHell (Абзалов)</a></li>
 <li><a href="#_python">Python</a></li>
 <li><a href="#_ruby">Ruby</a></li>
 <li><a href="#_javascript">Javascript</a></li>
 <li><a href="#_kotlin">Kotlin</a></li>
-<li><a href="#_sql">SQL</a></li>
 <li><a href="#_haskell_1_2_человека">Haskell (1-2 человека)</a></li>
 <li><a href="#_lisp">LISP</a></li>
 <li><a href="#_scala_1_2_человека">Scala (1-2 человека)</a></li>
 <li><a href="#_ocaml_with_objects_2_человека">OCaml with objects (2 человека)</a></li>
 <li><a href="#_ocaml_haskell_with_gadt_2_человека">OCaml/Haskell with GADT (2 человека)</a></li>
-<li><a href="#_lua_цириков">Lua (Цириков?)</a></li>
-<li><a href="#_bourne_again_shell">Bourne Again SHell</a></li>
 <li><a href="#_awk">AWK</a></li>
 <li><a href="#_ideal_parallel_algol_1_человек">Ideal Parallel Algol (1 человек)</a></li>
 <li><a href="#_cи">Cи</a></li>
@@ -163,6 +163,74 @@ Haskell), то это нужно предварительно согласова
 <p>Проверяться будет как программа работает, а также будут вопросы по коду программы (потому что все задачи гуглятся).</p>
 </div>
 <div class="sect2">
+<h3 id="_lua_цириков">Lua (Цириков)</h3>
+<div class="paragraph">
+<p>Интересный минималистичный язык, где в качестве универсальной структуры данных используется помесь
+массива с хэш-таблицей, а для оптимизации вместо целых чисел используеются Double&#8217;ы.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_sql_погожельская">SQL (Погожельская)</h3>
+<div class="paragraph">
+<p>Язык запросов к реляционным базам данных, давал в том году на экзамене. Различные конструкции можно погуглить. Задачей номер 4 будет скорее
+всего какая-то оптимизация запросов.</p>
+</div>
+<div class="paragraph">
+<p> <details><summary> 
+TODO: <strong>написать подробнее под спойлер</strong>
+ </summary><div> </p>
+</div>
+<div class="paragraph">
+<p>TODO:
+ </div></details> </p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_bourne_again_shell_абзалов">Bourne Again SHell (Абзалов)</h3>
+<div class="paragraph">
+<p>Все, кто трогал линукс, видели эту штуку.</p>
+</div>
+<div class="paragraph">
+<p> <details><summary> 
+Подробнее <strong>под спойлером</strong>
+ </summary><div> </p>
+</div>
+<div class="paragraph">
+<p>В качестве BASH можно попробовать делать другой shell, если Вам он будет больше нравиться или Вы им постоянно пользуетесь на компьютере. В итоге хочется получить как минимум интерактивный интерпретатор shell, который можно
+попробовать запустить вместо того, что у вас запускается сейчас на входе в GNU/Linux. Обратите внимание, что
+те слова, которые есть в программе, bash впервую очередь пытается интерпретировать как вызов системной утилиты
+(например, у меня на компьютере есть <code>/usr/bin/[</code>, но нет <code>/usr/bin/[[</code>), а только потом интерпретировать по-своему. Из этого следует, что Ваш интепретатор должен уметь по ходу делать и выполнять IO действия, и поддерживать в каком-то виде сообщения об ошибках. Обратите также внимание, что системный bash работает, как интепретатор, т.е. перемежает исполнение с синтаксическим анализом.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ cat /tmp/1.sh
+printf "1\n"
+if [[[[ asdfasdf ]]]]; then echo 33; fi
+printf "2\n"
+$ bash /tmp/1.sh
+1
+/tmp/1.sh: ligne 2: [[[[ : commande introuvable
+2</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Для тестирования программ часто используют квайны&#8201;&#8212;&#8201;программы печатающие сами себя. Протестируйте интерпретатор на десятке квайнов, реализуйте те функции интерпретатора, которые нужна для запуска этих квайнов. Например,
+<a href="https://frishit.wordpress.com/2010/04/26/paradoxes-self-reproducing-code-and-bash/">это</a>, или</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre>$ s='s=\47%s\47; printf "$s" "$s"'; printf "$s" "$s"
+s='s=\47%s\47; printf "$s" "$s"'; printf "$s" "$s"
+$ echo 'echo $BASH_COMMAND'
+echo $BASH_COMMAND</pre>
+</div>
+</div>
+<div class="paragraph">
+<p>Разумеется, нужно поддержать объявления функций и прочие управляющие конструкции, числа, ветвления, строки
+ </div></details> </p>
+</div>
+</div>
+<div class="sect2">
 <h3 id="_python">Python</h3>
 <div class="paragraph">
 <p>Функции, переменные, присваивания, циклы, ветвления, анонимные функции&#8201;&#8212;&#8201;стандартный набор большого количества языков. Потом какие-то языково-специфичные фичи.
@@ -186,13 +254,6 @@ Haskell), то это нужно предварительно согласова
 <h3 id="_kotlin">Kotlin</h3>
 <div class="paragraph">
 <p>Тут из языково-специфичных фич обязательно должна быть какая-то поддержка ООП и вызова методов.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_sql">SQL</h3>
-<div class="paragraph">
-<p>Язык запросов к реляционным базам данных, давал в том году на экзамене. Различные конструкции можно погуглить. Задачей номер 4 будет скорее
-всего какая-то оптимизация запросов.</p>
 </div>
 </div>
 <div class="sect2">
@@ -242,19 +303,6 @@ Haskell), то это нужно предварительно согласова
 </div>
 <div class="paragraph">
 <p>Наверное, тут тоже можно парочку.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_lua_цириков">Lua (Цириков?)</h3>
-<div class="paragraph">
-<p>Интересный минималистичный язык, где в качестве универсальной структуры данных используется помесь
-массива с хэш-таблицей, а для оптимизации вместо целых чисел используеются Double&#8217;ы.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_bourne_again_shell">Bourne Again SHell</h3>
-<div class="paragraph">
-<p>Все, кто трогал линукс, видели эту штуку.</p>
 </div>
 </div>
 <div class="sect2">
@@ -386,7 +434,7 @@ MOV  EAX ← [y]       |         MOV  EBX ← [x]</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-09-25 21:15:02 MSK
+Last updated 2019-09-26 20:14:48 MSK
 </div>
 </div>
 </body>
