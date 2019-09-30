@@ -9,4 +9,4 @@ instance Stack Stack where
   head       Nil   = Nothing
   head (Cons x xs) = Just x
   tail       Nil    = Nothing
-  tial (Cons _ xs) = Just xs
+  tail (Cons _ xs) = Just xs
