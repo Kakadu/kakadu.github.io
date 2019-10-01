@@ -33,17 +33,16 @@
 <li><a href="#_lua_цириков">Lua (Цириков)</a></li>
 <li><a href="#_sql_погожельская">SQL (Погожельская)</a></li>
 <li><a href="#_bourne_again_shell_абзалов">Bourne Again SHell (Абзалов)</a></li>
-<li><a href="#_python">Python</a></li>
-<li><a href="#_ruby">Ruby</a></li>
-<li><a href="#_javascript">Javascript</a></li>
-<li><a href="#_kotlin">Kotlin</a></li>
+<li><a href="#_python_мирзазянов">Python (Мирзазянов)</a></li>
+<li><a href="#_ruby_привалихин">Ruby (Привалихин)</a></li>
+<li><a href="#_javascript_рагимов">Javascript (Рагимов)</a></li>
+<li><a href="#_kotlin_влаев">Kotlin (Влаев)</a></li>
+<li><a href="#_awk_афонина">AWK (Афонина)</a></li>
 <li><a href="#_haskell_1_2_человека">Haskell (1-2 человека)</a></li>
 <li><a href="#_lisp">LISP</a></li>
 <li><a href="#_scala_1_2_человека">Scala (1-2 человека)</a></li>
 <li><a href="#_ocaml_with_objects_2_человека">OCaml with objects (2 человека)</a></li>
 <li><a href="#_ocaml_haskell_with_gadt_2_человека">OCaml/Haskell with GADT (2 человека)</a></li>
-<li><a href="#_awk">AWK</a></li>
-<li><a href="#_ideal_parallel_algol_1_человек">Ideal Parallel Algol (1 человек)</a></li>
 <li><a href="#_cи">Cи</a></li>
 <li><a href="#_assembler">Assembler</a></li>
 <li><a href="#_datalog">Datalog</a></li>
@@ -52,6 +51,7 @@
 <li><a href="#_forth">Forth</a></li>
 <li><a href="#_promela">Promela</a></li>
 <li><a href="#_yacc">YACC</a></li>
+<li><a href="#_ideal_parallel_algol_1_человек">Ideal Parallel Algol (1 человек)</a></li>
 </ul>
 </li>
 <li><a href="#hw5">Домашки №5</a></li>
@@ -333,29 +333,47 @@ echo $BASH_COMMAND</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_python">Python</h3>
+<h3 id="_python_мирзазянов">Python (Мирзазянов)</h3>
 <div class="paragraph">
-<p>Функции, переменные, присваивания, циклы, ветвления, анонимные функции&#8201;&#8212;&#8201;стандартный набор большого количества языков. Потом какие-то языково-специфичные фичи.
-Смотрите также на <a href="https://chocopy.org/">ChocoPy</a>.</p>
+<p>Функции, переменные, присваивания, циклы, ветвления, анонимные функции, массивы/списки&#8201;&#8212;&#8201;стандартный набор большого количества языков. Смотрите также на <a href="https://chocopy.org/">ChocoPy</a>.</p>
+</div>
+<div class="paragraph">
+<p>Из языково-специфичных фич, я предлагаю
+<a href="http://codeblog.dhananjaynene.com/2010/01/dynamically-adding-methods-with-metaprogramming-ruby-and-python/">динамическое дополнение методов</a>.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ruby">Ruby</h3>
+<h3 id="_ruby_привалихин">Ruby (Привалихин)</h3>
 <div class="paragraph">
-<p>Примерно как в Питоне.</p>
+<p>Примерно как в Питоне. Функции, переменные, присваивания, циклы, ветвления, анонимные функции.</p>
+</div>
+<div class="paragraph">
+<p>Из языково-специфичных фич, я предлагаю динамическое дополнение методов
+<a href="http://codeblog.dhananjaynene.com/2010/01/dynamically-adding-methods-with-metaprogramming-ruby-and-python/">(как в питоне)</a></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_javascript">Javascript</h3>
+<h3 id="_javascript_рагимов">Javascript (Рагимов)</h3>
 <div class="paragraph">
-<p>Стандартный набор языковых конструкций, прототипное наследование. Реализовать все фичи из
+<p>Стандартный набор языковых конструкций. Реализовать все фичи из
 известного <a href="https://www.destroyallsoftware.com/talks/wat">видеообзора</a> Javascript</p>
 </div>
+<div class="paragraph">
+<p>Из специфичного для Javascript: прототипное наследование.</p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_kotlin">Kotlin</h3>
+<h3 id="_kotlin_влаев">Kotlin (Влаев)</h3>
 <div class="paragraph">
-<p>Тут из языково-специфичных фич обязательно должна быть какая-то поддержка ООП и вызова методов.</p>
+<p>Тут из языково-специфичных фич обязательно должна быть какая-то поддержка ООП и вызова методов (ну вы его сдавали, думаю вопросов пока нет).</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_awk_афонина">AWK (Афонина)</h3>
+<div class="paragraph">
+<p>Предшественник языка Perl. Тут будет стандартный набор фич, плюс вещи специфичные для AWK.
+Думаю, что стоит почитать <a href="http://www.grymoire.com/Unix/Awk.html">умную ссылку</a> про то, когда надо применять AWK,
+а также подергать оттуда тестовых примеров.</p>
 </div>
 </div>
 <div class="sect2">
@@ -405,52 +423,6 @@ echo $BASH_COMMAND</pre>
 </div>
 <div class="paragraph">
 <p>Наверное, тут тоже можно парочку.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_awk">AWK</h3>
-<div class="paragraph">
-<p>Предшественник языка Perl</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_ideal_parallel_algol_1_человек">Ideal Parallel Algol (1 человек)</h3>
-<div class="paragraph">
-<p>Стандартный модельный язык для использования в научных ситуациях. Числа, ветвления, присваивания, барьеры
-для чтения и записи, а также операция запуска N кусков кода параллельно.
-Функции и циклы не добавляю, а хочу, чтобы были реализованы
-несколько <em>моделей памяти</em> для данной программы.</p>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>sequentional consistency (SC). Исполнение программы произвольно перемежается между параллельными
-участками и выполняет по одной инструкции. Самая интуитивная реализация, ни один процессор такой не соответствует.</p>
-</li>
-<li>
-<p>TSO&#8201;&#8212;&#8201;модель процессоров x86. В ней возможны интересные поведения.
-Если изначально <code>x = EAX = y = EBX = 0</code>, то после выполнения этих двух участков параллельного кода,
-  x86 может остановиться в состоянии <code>EAX == 0 &amp;&amp; EBX == 0</code></p>
-</li>
-</ul>
-</div>
-<div class="literalblock">
-<div class="content">
-<pre>#  Proc 1                           Proc 2
-MOV  [x] ← 1         |         MOV  [y] ← 1
-MOV  EAX ← [y]       |         MOV  EBX ← [x]</pre>
-</div>
-</div>
-<div class="ulist">
-<ul>
-<li>
-<p>может быть ещё какая-то модель памяти.</p>
-</li>
-</ul>
-</div>
-<div class="paragraph">
-<p>Вот <a href="https://people.mpi-sws.org/~viktor/wmc/operational.pdf">это</a> будет хорошей ссылкой, если уметь разбираться
-в исчислениях (я планирую про это как-то рассказывать).</p>
 </div>
 </div>
 <div class="sect2">
@@ -515,6 +487,46 @@ MOV  EAX ← [y]       |         MOV  EBX ← [x]</pre>
 Расширениями генерации можно выбрать, например, устранение левой рекурсии.</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_ideal_parallel_algol_1_человек">Ideal Parallel Algol (1 человек)</h3>
+<div class="paragraph">
+<p>Стандартный модельный язык для использования в научных ситуациях. Числа, ветвления, присваивания, барьеры
+для чтения и записи, а также операция запуска N кусков кода параллельно.
+Функции и циклы не добавляю, а хочу, чтобы были реализованы
+несколько <em>моделей памяти</em> для данной программы.</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>sequentional consistency (SC). Исполнение программы произвольно перемежается между параллельными
+участками и выполняет по одной инструкции. Самая интуитивная реализация, ни один процессор такой не соответствует.</p>
+</li>
+<li>
+<p>TSO&#8201;&#8212;&#8201;модель процессоров x86. В ней возможны интересные поведения.
+Если изначально <code>x = EAX = y = EBX = 0</code>, то после выполнения этих двух участков параллельного кода,
+  x86 может остановиться в состоянии <code>EAX == 0 &amp;&amp; EBX == 0</code></p>
+</li>
+</ul>
+</div>
+<div class="literalblock">
+<div class="content">
+<pre>#  Proc 1                           Proc 2
+MOV  [x] ← 1         |         MOV  [y] ← 1
+MOV  EAX ← [y]       |         MOV  EBX ← [x]</pre>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>может быть ещё какая-то модель памяти.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Вот <a href="https://people.mpi-sws.org/~viktor/wmc/operational.pdf">это</a> будет хорошей ссылкой, если уметь разбираться
+в исчислениях (я планирую про это как-то рассказывать).</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -536,7 +548,7 @@ MOV  EAX ← [y]       |         MOV  EBX ← [x]</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-09-26 23:38:42 MSK
+Last updated 2019-10-01 12:56:58 MSK
 </div>
 </div>
 </body>
