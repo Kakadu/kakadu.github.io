@@ -50,9 +50,9 @@
 <li><a href="#_extended_regexps">Extended Regexps</a></li>
 <li><a href="#refal">РеФаЛ</a></li>
 <li><a href="#forth">Forth (Ахметьянов)</a></li>
-<li><a href="#promela">Promela</a></li>
-<li><a href="#_yacc">YACC</a></li>
-<li><a href="#_ideal_parallel_algol_1_человек">Ideal Parallel Algol (1 человек)</a></li>
+<li><a href="#promela">Promela (Лунёв)</a></li>
+<li><a href="#yacc">YACC</a></li>
+<li><a href="#algol">Ideal Parallel Algol (1 человек)</a></li>
 </ul>
 </li>
 <li><a href="#hw5">Домашки №5</a></li>
@@ -543,13 +543,15 @@ echo $BASH_COMMAND</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="promela">Promela</h3>
+<h3 id="promela">Promela (Лунёв)</h3>
 <div class="paragraph">
-<p>Входной язык для утилиты верификации <a href="https://en.wikipedia.org/wiki/Promela">Promela</a>.</p>
+<p>Входной язык для утилиты верификации <a href="https://en.wikipedia.org/wiki/Promela">Promela</a>. Думаю, что все
+фичи описаны в <a href="http://www.lacl.fr/dima/melo/spin.pdf">слайдах</a>. Весь "язык" компилируется (с помощью <code>pan</code>) в
+конечный автомат, который умеет моделировать в том числе параллельные потоки. Короче, надо написать интерпретатор программ Promela, там в слайдах есть примеры, за одно разберетесь с примитивами синхронизации параллельных потоков.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_yacc">YACC</h3>
+<h3 id="yacc">YACC</h3>
 <div class="paragraph">
 <p>Язык описания синтаксических анализаторов (парсеров). Скорее всего его придется сильно упростить
 (без action code&#8217;а, описания ассоциативности и приоритетов операций).
@@ -559,7 +561,7 @@ echo $BASH_COMMAND</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ideal_parallel_algol_1_человек">Ideal Parallel Algol (1 человек)</h3>
+<h3 id="algol">Ideal Parallel Algol (1 человек)</h3>
 <div class="paragraph">
 <p>Стандартный модельный язык для использования в научных ситуациях. Числа, ветвления, присваивания, барьеры
 для чтения и записи, а также операция запуска N кусков кода параллельно.
@@ -619,7 +621,7 @@ MOV  EAX ← [y]       |         MOV  EBX ← [x]</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-10-04 14:42:57 MSK
+Last updated 2019-10-04 17:36:28 MSK
 </div>
 </div>
 </body>
