@@ -30,27 +30,26 @@
 </li>
 <li><a href="#hw1234">Домашки 1-4</a>
 <ul class="sectlevel2">
-<li><a href="#_lua_цириков">Lua (Цириков)</a></li>
-<li><a href="#_sql_погожельская">SQL (Погожельская)</a></li>
+<li><a href="#sql">SQL (Погожельская)</a></li>
 <li><a href="#_bourne_again_shell_абзалов">Bourne Again SHell (Абзалов)</a></li>
-<li><a href="#_python_мирзазянов">Python (Мирзазянов)</a></li>
-<li><a href="#_ruby_привалихин">Ruby (Привалихин)</a></li>
-<li><a href="#_javascript_рагимов">Javascript (Рагимов)</a></li>
-<li><a href="#_kotlin_влаев_ещё_кто_то">Kotlin (Влаев + ещё кто-то)</a></li>
-<li><a href="#_awk_афонина">AWK (Афонина)</a></li>
-<li><a href="#_haskell_1_2_человека">Haskell (1-2 человека)</a></li>
-<li><a href="#_lisp">LISP</a></li>
+<li><a href="#python">Python (Мирзазянов)</a></li>
+<li><a href="#ruby">Ruby (Привалихин)</a></li>
+<li><a href="#javascript">Javascript (Рагимов)</a></li>
+<li><a href="#kotlin">Kotlin (Влаев + ещё кто-то)</a></li>
+<li><a href="#awk">AWK (Афонина)</a></li>
+<li><a href="#haskell">Haskell (1-2 человека)</a></li>
+<li><a href="#lisp">LISP</a></li>
 <li><a href="#_scala_1_2_человека">Scala (1-2 человека)</a></li>
 <li><a href="#_ocaml_with_objects_2_человека">OCaml with objects (2 человека)</a></li>
 <li><a href="#_ocaml_haskell_with_gadt_2_человека">OCaml/Haskell with GADT (2 человека)</a></li>
-<li><a href="#_cи">Cи</a></li>
-<li><a href="#_assembler">Assembler</a></li>
-<li><a href="#_datalog">Datalog</a></li>
-<li><a href="#_nfa">NFA</a></li>
+<li><a href="#C">Cи</a></li>
+<li><a href="#asm">Assembler</a></li>
+<li><a href="#datalog">Datalog</a></li>
+<li><a href="#nfa">NFA (Дулетов)</a></li>
 <li><a href="#_extended_regexps">Extended Regexps</a></li>
 <li><a href="#refal">РеФаЛ</a></li>
-<li><a href="#_forth">Forth</a></li>
-<li><a href="#_promela">Promela</a></li>
+<li><a href="#forth">Forth (Ахметьянов)</a></li>
+<li><a href="#promela">Promela</a></li>
 <li><a href="#_yacc">YACC</a></li>
 <li><a href="#_ideal_parallel_algol_1_человек">Ideal Parallel Algol (1 человек)</a></li>
 </ul>
@@ -163,15 +162,16 @@ Haskell), то это нужно предварительно согласова
 <div class="paragraph">
 <p>Проверяться будет как программа работает, а также будут вопросы по коду программы (потому что все задачи гуглятся).</p>
 </div>
-<div class="sect2">
-<h3 id="_lua_цириков">Lua (Цириков)</h3>
+<div class="paragraph">
+<p>[[lua]
+=== Lua (Цириков)</p>
+</div>
 <div class="paragraph">
 <p>Интересный минималистичный язык, где в качестве универсальной структуры данных используется помесь
 массива с хэш-таблицей, а для оптимизации вместо целых чисел используеются Double&#8217;ы.</p>
 </div>
-</div>
 <div class="sect2">
-<h3 id="_sql_погожельская">SQL (Погожельская)</h3>
+<h3 id="sql">SQL (Погожельская)</h3>
 <div class="paragraph">
 <p>Язык запросов к реляционным базам данных, давал в том году на экзамене. Различные конструкции можно погуглить. Задачей номер 4 будет скорее
 всего какая-то оптимизация запросов.</p>
@@ -334,7 +334,7 @@ echo $BASH_COMMAND</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_python_мирзазянов">Python (Мирзазянов)</h3>
+<h3 id="python">Python (Мирзазянов)</h3>
 <div class="paragraph">
 <p>Функции, переменные, присваивания, циклы, ветвления, анонимные функции, массивы/списки&#8201;&#8212;&#8201;стандартный набор большого количества языков. Смотрите также на <a href="https://chocopy.org/">ChocoPy</a>.</p>
 </div>
@@ -344,7 +344,7 @@ echo $BASH_COMMAND</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_ruby_привалихин">Ruby (Привалихин)</h3>
+<h3 id="ruby">Ruby (Привалихин)</h3>
 <div class="paragraph">
 <p>Примерно как в Питоне. Функции, переменные, присваивания, циклы, ветвления, анонимные функции.</p>
 </div>
@@ -354,7 +354,7 @@ echo $BASH_COMMAND</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_javascript_рагимов">Javascript (Рагимов)</h3>
+<h3 id="javascript">Javascript (Рагимов)</h3>
 <div class="paragraph">
 <p>Стандартный набор языковых конструкций. Реализовать все фичи из
 известного <a href="https://www.destroyallsoftware.com/talks/wat">видеообзора</a> Javascript</p>
@@ -364,7 +364,12 @@ echo $BASH_COMMAND</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_kotlin_влаев_ещё_кто_то">Kotlin (Влаев + ещё кто-то)</h3>
+<h3 id="kotlin">Kotlin (Влаев + ещё кто-то)</h3>
+<div class="paragraph">
+<p> <details><summary> 
+<span class="underline"><strong>Подробнее (спойлер)</strong></span>
+ </summary><div> </p>
+</div>
 <div class="paragraph">
 <p>AST делаете вместе, из языково-специфичных фич обязательно должны быть:</p>
 </div>
@@ -422,13 +427,16 @@ echo $BASH_COMMAND</pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>напишу потом.</p>
+<p>напишу потом</p>
 </li>
 </ol>
 </div>
+<div class="paragraph">
+<p> </div></details> </p>
+</div>
 </div>
 <div class="sect2">
-<h3 id="_awk_афонина">AWK (Афонина)</h3>
+<h3 id="awk">AWK (Афонина)</h3>
 <div class="paragraph">
 <p>Предшественник языка Perl. Тут будет стандартный набор фич, плюс вещи специфичные для AWK.
 Думаю, что стоит почитать <a href="http://www.grymoire.com/Unix/Awk.html">умную ссылку</a> про то, когда надо применять AWK,
@@ -436,7 +444,7 @@ echo $BASH_COMMAND</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_haskell_1_2_человека">Haskell (1-2 человека)</h3>
+<h3 id="haskell">Haskell (1-2 человека)</h3>
 <div class="paragraph">
 <p>Числа, списки, функции, ленивая стратегия вычислений. Без пользовательских типов данных. В качестве пункта 4&#8201;&#8212;&#8201;хитрые оптимизации. Алгоритм вывода типов пока не включаю, но написать
 <a href="http://okmij.org/ftp/ML/generalization.html"><em>эффективный</em></a> (почти линейный) алгоритм вывода типов может быть
@@ -447,7 +455,7 @@ echo $BASH_COMMAND</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_lisp">LISP</h3>
+<h3 id="lisp">LISP</h3>
 <div class="paragraph">
 <p>LISP известен своими встроенными макросами. Посмотрите примерный синтаксис Scheme (или Common Lisp, и т.д.)
 и напишите интерпретатор, который по дороге дает объявлять и использовать макросы. Вдруг у вас получатся
@@ -485,14 +493,14 @@ echo $BASH_COMMAND</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_cи">Cи</h3>
+<h3 id="C">Cи</h3>
 <div class="paragraph">
 <p>Интерпретатор языка с поддержкой арфиметики указателей. Наверное будет несложно сделать, есть куча проектов в
 интернетике про реализацию минималистичного компилятора Си в несколько сотен строчек.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_assembler">Assembler</h3>
+<h3 id="asm">Assembler</h3>
 <div class="paragraph">
 <p>Выберите вид ассемблера, который хорошо работает на вашем компьютере/процессоре и почитайте
 виды регистров в данной архитектуре. Реализуйте интерпретатор. Преобразование программ из
@@ -501,14 +509,14 @@ echo $BASH_COMMAND</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_datalog">Datalog</h3>
+<h3 id="datalog">Datalog</h3>
 <div class="paragraph">
 <p>Простейший представитель логического программирования. Спека должна быть легко находима
 в интернетах</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_nfa">NFA</h3>
+<h3 id="nfa">NFA (Дулетов)</h3>
 <div class="paragraph">
 <p>Язык задания недетерминированных конченых автоматов, реализовать вычислитель таких автоматов,
 а такжен загрузку из файла (наверняка уже придумали какой-то стандартный формат для представления автоматов,
@@ -528,14 +536,14 @@ echo $BASH_COMMAND</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_forth">Forth</h3>
+<h3 id="forth">Forth (Ахметьянов)</h3>
 <div class="paragraph">
 <p>Так называемый стековый язык программирования, мало похож на всё остальное. Считается
 языком с легко расширяемым синтаксисом.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_promela">Promela</h3>
+<h3 id="promela">Promela</h3>
 <div class="paragraph">
 <p>Входной язык для утилиты верификации <a href="https://en.wikipedia.org/wiki/Promela">Promela</a>.</p>
 </div>
@@ -611,7 +619,7 @@ MOV  EAX ← [y]       |         MOV  EBX ← [x]</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-10-04 13:54:11 MSK
+Last updated 2019-10-04 13:58:55 MSK
 </div>
 </div>
 </body>
