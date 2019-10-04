@@ -196,7 +196,7 @@ http://codeblog.dhananjaynene.com/2010/01/dynamically-adding-methods-with-metapr
 Из специфичного для Javascript: прототипное наследование.
 
 [[kotlin]]
-=== Kotlin (Влаев + ещё кто-то)
+=== Kotlin (Влаев + Кузиванов)
 
 +++ <details><summary> +++
 [.underline]#*Подробнее (спойлер)*#
