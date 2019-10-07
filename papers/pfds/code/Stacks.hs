@@ -11,10 +11,8 @@ class STACK s where
   empty    :: s a
   isEmpty  :: s a -> Bool
   cons     :: a -> s a -> s a
-  head     :: s a -> Maybe a
-  tail     :: s a -> Maybe (s a)
-  head_exn :: s a -> a
-  tail_exn :: s a -> s a
+  head     :: s a -> a
+  tail     :: s a -> s a
 
 instance STACK [] where
   empty    = []
@@ -22,14 +20,15 @@ instance STACK [] where
   isEmpty _  = False
   cons   x xs = x:xs
   
-  head   []    = Nothing
-  head  (x:xs) = Just x
-  tail   []    = Nothing
-  tail  (_:xs) = Just xs
-  head_exn [] = error "empty list"
-  head_exn (x:_) = x
-  tail_exn [] = error "empty list"
-  tail_exn (_:xs) = xs
+  head [] = error "empty list"
+  head (x:_) = x
+  tail [] = error "empty list"
+  tail (_:xs) = xs
+  
+  
+  
+  
+  
   
 data Stack a = Nil | Cons a (Stack a)
 
@@ -55,13 +54,13 @@ instance STACK Stack where
   else cons (head_exn xs) (tail_exn xs ++ ys)
 
 _ = (++) where 
-  (++) [] ys = ys
+  (++) []     ys = ys
   (++) (x:xs) ys = x:(xs ++ ys)
 
-update_exn :: ([] ~ l) => l a -> Int -> a -> l a
-update_exn [] _ _ = error "subscript"
-update_exn (x:xs) 0 y = y:xs
-update_exn (_:xs) n y = update_exn xs (n-1) y
+update :: [a] -> Int -> a -> [a]
+update []     _ _ = error "subscript"
+update (x:xs) 0 y = y : xs
+update (_:xs) n y = x : (update xs (n-1) y)
 
 main :: IO ()
 main = return ()

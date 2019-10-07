@@ -2,20 +2,20 @@
 module Heap (Heap(..)) where
 
 class HEAP h where
+  empty       :: Ord a => h a
+  isEmpty     :: Ord a => h a -> Bool
+
+  insert      :: Ord a => a -> h a -> h a
+  merge       :: Ord a => h a -> h a -> h a
+
+  findMin     :: Ord a => h a -> a
+  deleteMin   :: Ord a => h a -> h a
   type Elem h a :: * 
-  empty       :: Ord (Elem h a) => h a
-  isEmpty     :: Ord (Elem h a) => h a -> Bool
-
-  insert      :: Ord (Elem h a) => Elem h a -> h a -> h a
-  merge       :: Ord (Elem h a) => h a -> h a -> h a
-
-  findMin_exn :: Ord (Elem h a) => h a -> Elem h a
-  deleteMin   :: Ord (Elem h a) => h a -> h a
 
 -- А не является ли ML более синтаксически чистым?
+-- А то тут по идее надо везде Ord (Elem h a) писать
 
-
-datatype Heap e = E | T Int e Heap Heap
+data Heap e = E | T Int e Heap Heap
 
 instance HEAP heap where
   type Elem Heap e = e

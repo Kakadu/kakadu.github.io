@@ -9,22 +9,23 @@ module SearchTree where
 
 data Tree a = E | T (Tree a) a (Tree a)
 
-class SET (s:: * -> *) where 
-  type Elem s a :: * 
+class SET s where 
   empty :: s a
   insert :: (Ord a) => a -> s a -> s a
   member :: (Ord a) => a -> s a -> Bool
+  type Elem s a :: * 
   
 instance SET Tree where
   type Elem Tree a = a
   empty = E
 
-  member _ E = False
+  member _ E               = False
   member x (T l y _) | x<y = member x l
   member x (T _ y r) | x>y = member x r
-  member _ _                 = True
+  member _ _               = True
   
-  insert x E = T E x E
+  insert :: a -> Tree a -> Tree a
+  insert x E                 = T E x E
   insert x s@(T l y r) | x<y = T (insert x l) y r
   insert x s@(T l y r) | x>y = T l y (insert x l) 
   insert _ t                 = t

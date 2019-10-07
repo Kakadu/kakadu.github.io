@@ -1,10 +1,10 @@
-instance Stack [] where
-  empty    = []
-  isEmpty [] = true
-  isEmpty _  = false
+instance STACK [] where
+  empty       = []
+  isEmpty []  = True
+  isEmpty _   = False
   cons   x xs = x:xs
   
-  head   []    = Nothing
-  head  (x:xs) = Just x
-  tail   []    = Nothing
-  tial  (_:xs) = Just xs
+  head []     = error "empty"
+  head (x:_)  = x
+  tail []     = error "empty"
+  tial (_:xs) = xs

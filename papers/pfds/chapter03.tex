@@ -1,12 +1,29 @@
-\chap{Некоторые известные структуры данных в функциональном
-  окружении}
+\begin{frame}[fragile]{Устойчивоcть (persistence)}
+Отличительной особенностью функциональных структур данных является то,
+что они всегда \term{устойчивы}{persistent}~--- обновление
+функциональной структуры не уничтожает старую версию, а создает
+новую, которая с ней сосуществует. \\
+
+Устойчивость достигается путем
+\emph{копирования} затронутых узлов структуры данных, и все изменения
+проводятся на копии, а не на оригинале. \\
+
+Поскольку узлы никогда
+напрямую не модифицируются, все незатронутые узлы могут
+\term{совместно использоваться}{be shared} между старой и новой версией структуры
+данных без опасения, что изменения одной версии непроизвольно окажутся
+видны другой.
+
+\end{frame}
+
+%\chap{Некоторые известные структуры данных в функциональном окружении}
 
 \section{Левоориентированные кучи}
 \label{sc:3.1}
 
 \begin{frame}[fragile]{Сигнатура Stack. Реализация через встроенные списки}
 \begin{minipage}{.48\textwidth}
-\inputminted{haskell}{code/Stack.hs}
+\inputminted[firstline=10,lastline=15]{haskell}{code/Stacks.hs}
 \end{minipage}
 \begin{minipage}{.48\textwidth}
 \inputminted{haskell}{code/ListStack.hs}
@@ -15,7 +32,7 @@
 
 \begin{frame}[fragile]{Сигнатура Stack. Реализация через новый тип данных}
 \begin{minipage}{.48\textwidth}
-  \inputminted{haskell}{code/Stack.hs}
+  \inputminted[firstline=10,lastline=15]{haskell}{code/Stacks.hs}
 \end{minipage}
 \begin{minipage}{.48\textwidth}
   \inputminted{haskell}{code/CustomStack.hs}
@@ -24,7 +41,7 @@
 
 \begin{frame}[fragile]{Конкатенация списков}
 \begin{minted}{haskell}
-(++) :: Stack l => l a -> l a -> l a
+(++) :: STACK l => l a -> l a -> l a
 \end{minted}
 В императивной среде легко сделать за O(1), если хранить указатель на конец.
 \end{frame}
@@ -38,7 +55,7 @@
 	\input{figures/fig.2.4.after.tex}\par
 	(после)\par
 %	\vspace{0.5cm}
-	\caption{Выполнение xs concat ys в императивной среде. Эта операция уничтожает списки-аргументы xs и ys (их использовать больше нельзя)}
+	\caption{Выполнение \texttt{xs concat ys} в императивной среде. Эта операция уничтожает списки-аргументы \texttt{xs} и \texttt{ys} (их использовать больше нельзя)}
 	\label{fig:2.4}
 \end{figure}
 \end{frame}
@@ -52,14 +69,16 @@
 \item и т.д.
 \end{itemize}
 
-\inputminted[firstline=43,lastline=47] {haskell}{code/Stacks.hs}
+\inputminted[firstline=50,lastline=54] {haskell}{code/Stacks.hs}
+Если нам доступно внутреннее представление, то можно написать более короткий идиоматичный код
+\inputminted[firstline=57,lastline=58,gobble=2] {haskell}{code/Stacks.hs}
 \end{frame}
 
-\begin{frame}[fragile]{}
-\inputminted[firstline=43,lastline=47] {haskell}{code/Stacks.hs}
-Если нам доступно внутреннее представление, то можно написать более короткий идиоматичный код
-\inputminted[firstline=50,lastline=51] {haskell}{code/Stacks.hs}
-\end{frame}
+%\begin{frame}[fragile]{}
+%\inputminted[firstline=50,lastline=54] {haskell}{code/Stacks.hs}
+%Если нам доступно внутреннее представление, то можно написать более короткий идиоматичный код
+%\inputminted[firstline=57,lastline=58,gobble=2] {haskell}{code/Stacks.hs}
+%\end{frame}
 
 \begin{frame}[fragile]{Конкатенация}
 \begin{figure}[h]
@@ -78,7 +97,7 @@
 \end{frame}
 
 \begin{frame}[fragile]{Update}
-\inputminted[firstline=61,lastline=64] {haskell}{code/Stacks.hs}
+\inputminted[firstline=60,lastline=64] {haskell}{code/Stacks.hs}
 %Если нам доступно внутреннее представление, то можно написать более короткий идиоматичный код
 Здесь мы не копируем весь список-аргумент.\\
 
@@ -106,7 +125,7 @@
 	\input{figures/fig.2.6.after.tex}\par
 	(после)\par
 	\vspace{0.5cm}	
-	\caption{Выполнение \texttt{ys = update(xs, 2, 7)}. Обратите
+	\caption{Выполнение \texttt{ys = update xs 2 7}. Обратите
 		внимание на совместное использование структуры списками \texttt{xs} и \texttt{ys}.}
 	\label{fig:2.6}
 \end{figure}
@@ -152,43 +171,42 @@
 \begin{frame}[fragile]{}
 \begin{figure}[h]
   \centering
-  \inputminted[firstline=12, lastline=16] {haskell}{code/SearchTree.hs}
+  \inputminted[firstline=12, lastline=15]{haskell}{code/SearchTree.hs}
   \caption{Сигнатура для множеств.}
 \label{fig:2.7}
 \end{figure}
 
-На Рис.~\ref{fig:2.7} показана минимальная сигнатура для множеств. Она
-содержит значение <<пустое множество>>, а также функции добавления
+Cигнатура для множеств значение <<пустое множество>>, а также функции добавления
 нового элемента и проверки на членство.  В более практической
 реализации, вероятно, будут присутствовать и многие другие функции,
 например, для удаления элемента или перечисления всех элементов.
 \end{frame}
 
-\begin{frame}[fragile]{Функция member}
-  \inputminted[firstline=22, lastline=25] {haskell}{code/SearchTree.hs}
+\begin{frame}[fragile]{Функция \hsinline{member}}
+Ищет в дереве, сравнивая запрошенный элемент с находящимся в корне дерева. 
+\inputminted[firstline=22, lastline=25] {haskell}{code/SearchTree.hs}
 
-Функция \texttt{member} ищет в дереве, сравнивая запрошенный
-элемент с находящимся в корне дерева. Если запрошенный элемент меньше
-корневого, мы рекурсивно ищем в левом поддереве.
-
- Если он больше,
-рекурсивно ищем в правом поддереве. 
-
-Наконец, в оставшемся случае
-запрошенный элемент равен корневому, и мы возвращаем значение
-<<истина>>. \\
 
 Если мы когда-либо натыкаемся на пустое дерево, значит,
 запрашиваемый элемент не является членом множества, и мы возвращаем
-значение <<ложь>>. 
+значение <<ложь>>. \\
+
+Если запрошенный элемент \textbf{меньше}
+корневого, мы рекурсивно ищем в левом поддереве.
+
+Если он \textbf{больше}, рекурсивно ищем в правом поддереве. 
+
+Наконец, в оставшемся случае
+запрошенный элемент \textbf{равен} корневому, и мы возвращаем значение
+<<истина>>. 
 \end{frame}
 
 \begin{frame}[fragile]{Функция insert}
-\inputminted[firstline=27, lastline=30] {haskell}{code/SearchTree.hs}
+\inputminted[firstline=27, lastline=31] {haskell}{code/SearchTree.hs}
 
-Функция \lstinline{insert} проводит поиск в дереве по той же стратегии,
-что и \lstinline{member}, но только по пути она копирует каждый
-элемент.
+Функция \hsinline{insert} проводит поиск в дереве по той же стратегии,
+что и \hsinline{member}, но только по пути она копирует каждый
+элемент. \\
 
 Когда, наконец, оказывается достигнут пустой узел, он
 заменяется на узел, содержащий новый элемент.
@@ -202,7 +220,7 @@
 \begin{minipage}{.48\textwidth}
 	\input{figures/fig.2.8.after.tex}
 \end{minipage}
-Выполнение \texttt{ys = insert("e", xs)}. 
+Выполнение \texttt{ys = insert "e" xs}. 
 %Как и прежде,
 %обратите внимание на совместное использвание структуры деревьями \texttt{xs} и \texttt{ys}.
 
@@ -231,7 +249,10 @@
   копирования с помощью исключений. Установите только один обработчик
   исключений для всей операции поиска, а не по обработчику на итерацию.
 \end{exercise}
+\end{frame}
 
+\ifanswers
+\begin{frame}
 \begin{exercise}\label{ex:2.4}
   Совместите улучшения из предыдущих двух упражнений, и получите
   версию \lstinline{insert}, которая не делает ненужного копирования и
@@ -265,6 +286,7 @@
 \end{exercise}
 \end{frame}
 
+
 \begin{frame}
 \begin{exercise}\label{ex:2.6}
   Измените функтор \texttt{UnbalancedSet} так, чтобы он служил
@@ -278,8 +300,8 @@
   если все конечные отображения будут использовать одно и то же
   исключение.)
 \end{exercise}
-
 \end{frame}
+\fi 
 
 \section{Левоориентированные кучи}
 
@@ -290,7 +312,7 @@
 поддерживающая такой режим доступа, называется \term{очередь с
 приоритетами}{priority queue} или \term{куча}{heap}.
 
-\inputminted[firstline=3, lastline=11] {haskell}{code/Heap.hs}
+\inputminted[firstline=4, lastline=12] {haskell}{code/Heap.hs}
 \end{frame}
 
 \begin{frame}[fragile]{}
@@ -309,17 +331,16 @@
 периферия любого узла~--- кратчайший путь от него к пустому узлу.
 \end{frame}
 
-\begin{frame}[fragile]
-Если у нас есть некоторая структура упорядоченных элементов
-\mintinline{haskell}{Elem}, 
+\begin{frame}[fragile]{Левоориентированные кучи}
+Если у нас есть некоторый тип упорядоченных элементов
+\mintinline{haskell}{e}, 
 мы можем представить левоориентированные кучи как
 двоичные деревья, снабженные информацией о ранге.
-\begin{minted}{haskell}
-datatype Heap = E | T Int  Elem.T  Heap Heap
-\end{minted}
+\inputminted[firstline=18, lastline=18] {haskell}{code/Heap.hs}
 
 Заметим, что элементы правой периферии левоориентированной кучи (да и
-любого дерева с порядком кучи) расположены в порядке возрастания.
+любого дерева с порядком кучи) расположены в порядке возрастания.\\
+
 Главная идея левоориентированной кучи заключается в том, что для
 слияния двух куч достаточно слить их правые периферии как
 упорядоченные списки, а затем вдоль полученного пути обменивать
@@ -331,41 +352,45 @@ datatype Heap = E | T Int  Elem.T  Heap Heap
 \begin{frame}[fragile]{}
 \inputminted[firstline=23, lastline=26] {haskell}{code/Heap.hs}
 
-где \lstinline!makeT!~--- вспомогательная функция, вычисляющая ранг
-вершины \lstinline!T! и, если необходимо, меняющая местами ее
+где \hsinline{makeT}~--- вспомогательная функция, вычисляющая ранг
+вершины \hsinline{T} и, если необходимо, меняющая местами ее
 поддеревья.
 
 \inputminted[firstline=30, lastline=35] {haskell}{code/Heap.hs}
 
 Поскольку длина правой периферии любой вершины в худшем случае
-логарифмическая, \lstinline!merge! выполняется за время $O(\log n)$.
+логарифмическая, \hsinline{merge} выполняется за время $O(\log n)$.
 \end{frame}
 
 \begin{frame}[fragile]{}
 \inputminted[firstline=36, lastline=38] {haskell}{code/Heap.hs}
 
-Поскольку \lstinline!merge! выполняется за время $O(\log n)$, столько
-же занимают и \lstinline!insert! с \lstinline!deleteMin!. Очевидно,
-что \lstinline!findMin! выполняется за $O(1)$. 
+Поскольку \hsinline{merge} выполняется за время $O(\log n)$, столько
+же занимают и \hsinline{insert} с \hsinline{deleteMin}.
+
+ Очевидно,
+что \hsinline{findMin} выполняется за $O(1)$. 
 \end{frame}
 
+\ifanswers
 \begin{frame}[fragile]{}
 \begin{exercise}\label{ex:3.2}
-  Определите \lstinline!insert! напрямую, а не через обращение к \lstinline!merge!.
+  Определите \hsinline{insert} напрямую, а не через обращение к \hsinline{merge}.
 \end{exercise}
 
 \begin{exercise}\label{ex:3.3}
-  Реализуйте функцию \lstinline!fromList! типа \lstinline!Elem.T list $\to$ Heap!,
+  Реализуйте функцию \hsinline{fromList} типа \hsinline{Elem.T list $\to$ Heap},
   порождающую левоориентированную кучу из неупорядоченного списка
   элементов путем преобразования каждого элемента в одноэлементную
   кучу, а затем слияния получившихся куч, пока не останется
   одна. Вместо того, чтобы сливать кучи проходом слева направо или
-  справа налево при помощи \lstinline!foldr! или \lstinline!foldl!,
+  справа налево при помощи \hsinline{foldr} или \hsinline{foldl},
   слейте кучи за $\lceil \log n \rceil$ проходов, где на каждом
   проходе сливаются пары соседних куч. Покажите, что
-  \lstinline!fromList! требует всего $O(n)$ времени.
+  \hsinline{fromList} требует всего $O(n)$ времени.
 \end{exercise}
 \end{frame}
+\fi 
 
 \begin{frame}[fragile]{}
 \begin{exercise}\label{ex:3.4}
@@ -395,19 +420,24 @@ datatype Heap = E | T Int  Elem.T  Heap Heap
 \section{Биномиальные кучи}
 \label{sc:3.2}
 
-\begin{frame}[fragile]{}
+\begin{frame}{Биномиальные кучи}
 Биномиальные очереди \cite{Vuillemin1978, Brown1978}, которые мы,
 чтобы избежать путаницы с очередями FIFO, будем называть \term{ биномиальными
   кучами}{binomial heaps}~--- ещё одна распространенная реализация
-куч. Биномиальные кучи устроены сложнее, чем левоориентированные, и, на
+куч. \\
+
+Биномиальные кучи устроены сложнее, чем левоориентированные, и, на
 первый взгляд, не возмещают эту сложность никакими
-преимуществами. Однако в последующих главах мы увидим, как в различных
-вариантах биномиальных куч можно заставить \lstinline!insert! и
-\lstinline!merge! выполняться за время $O(1)$.
+преимуществами. \\
+
+Однако, с помощью дополнительных хитростей (амортизация\cite{sc:5.3}), можно заставить \hsinline{insert} и
+\hsinline{merge} выполняться за время $O(1)$.
+
+
 
 \end{frame}
 
-\begin{frame}[fragile]{}
+\begin{frame}{Биномиальные деревья}
 Биномиальные кучи строятся из более простых объектов, называемых
 биномиальными деревьями. Биномиальные деревья индуктивно определяются
 так:
@@ -418,12 +448,13 @@ datatype Heap = E | T Int  Elem.T  Heap Heap
   что одно из них становится самым левым потомком второго.
 \end{itemize}
 Из этого определения видно, что биномиальное дерево ранга $r$ содержит
-ровно $2^r$ элементов.  Существует второе, эквивалентное первому,
+ровно $2^r$ элементов.  \\
+
+Существует второе, эквивалентное первому,
 определение биномиальных деревьев, которым иногда удобнее
 пользоваться: биномиальное дерево ранга $r$ представляет собой узел
 с $r$ потомками $t_1\ldots t_r$, где каждое $t_i$ является
-биномиальным деревом ранга $r-i$.  На Рис.~\ref{fig:3.3} показаны
-биномиальные деревья рангов от 0 до 3.
+биномиальным деревом ранга $(r-i)$.
 \end{frame}
 
 
@@ -435,17 +466,21 @@ datatype Heap = E | T Int  Elem.T  Heap Heap
   \label{fig:3.3}
 \end{figure}
 
-\inputminted[firstline=5, lastline=6] {haskell}{code/BinomialHeap.lhs}
+%\inputminted[firstline=5, lastline=6] {haskell}{code/BinomialHeap.lhs}
 
 \end{frame}
 
 
 \begin{frame}[fragile]{}
-\inputminted[firstline=5, lastline=6] {haskell}{code/BinomialHeap.lhs}
-Каждый список потомков хранится в убывающем порядке рангов, а элементы
-хранятся с порядком кучи.  Чтобы сохранять этот порядок, мы всегда
-привязываем дерево с большим корнем к дереву с меньшим корнем.
-\inputminted[firstline=11, lastline=14] {haskell}{code/BinomialHeap.lhs}
+\inputminted[firstline=5, lastline=5] {haskell}{code/BinomialHeap.lhs}
+
+Каждый список потомков хранится в \emph{убывающем} (sic!) порядке рангов, а элементы
+хранятся вместе с рангом кучи.  Чтобы сохранять этот порядок рангов, мы всегда
+привязываем дерево с большим корнем к дереву с меньшим.
+
+\inputminted[firstline=11, lastline=15] {haskell}{code/BinomialHeap.lhs}
+
+Будем привязывать деревья только с одинаковым рангом
 \end{frame}
 
 
@@ -456,7 +491,8 @@ datatype Heap = E | T Int  Elem.T  Heap Heap
   \item каждое из которых имеет порядок кучи
   \item никакие два дерева не совпадают по рангу
 \end{itemize} 
-Например, список деревьев в в порядке возрастания ранга.
+
+Например, список деревьев в порядке возрастания ранга.
 \inputminted[firstline=6, lastline=6] {haskell}{code/BinomialHeap.lhs}
 \end{frame}
 
@@ -490,7 +526,7 @@ $\lfloor log(n+1) \rfloor$ деревьев.
 \end{frame}
 
 
-\begin{frame}[fragile]{\hsinline{insert} и \hsinline{merge} -- аналогично сложению}
+\begin{frame}[fragile]{\hsinline{insert} -- аналогично сложению}
 % (Мы укрепим эту аналогию в Главе~\ref{ch:9}.). \\
 
 Чтобы внести элемент в кучу,
@@ -500,41 +536,41 @@ $\lfloor log(n+1) \rfloor$ деревьев.
 связывание соответствует переносу в двоичной арифметике.
 
 \inputminted[firstline=8,lastline=8] {haskell}{code/BinomialHeap.lhs}
-\inputminted[firstline=16,lastline=18] {haskell}{code/BinomialHeap.lhs}
-
+\inputminted[firstline=17,lastline=19] {haskell}{code/BinomialHeap.lhs}
+\inputminted[firstline=38,lastline=38,gobble=2] {haskell}{code/BinomialHeap.lhs}
 В худшем случае, при вставке в кучу размера $n = 2^k -1$, требуется
 $k$ связываний и $O(k) = O(\log n)$ времени.
 \end{frame}
 
 
-\begin{frame}[fragile]{Merge}
+\begin{frame}[fragile]{\hsinline{merge} -- аналогично сложению}
 При слиянии двух куч мы проходим через оба списка деревьев в порядке
 возрастания ранга и связываем по пути деревья равного ранга. Как и
 прежде, каждое связывание соответствует переносу в двоичной
 арифметике.
 
-\inputminted[firstline=20,lastline=25] {haskell}{code/BinomialHeap.lhs}
+\inputminted[firstline=21,lastline=26] {haskell}{code/BinomialHeap.lhs}
 
-\inputminted[firstline=38,lastline=38,gobble=2] {haskell}{code/BinomialHeap.lhs}
+\inputminted[firstline=39,lastline=39,gobble=2] {haskell}{code/BinomialHeap.lhs}
 
 \end{frame}
 
 \begin{frame}[fragile]{}
-Функции \lstinline!findMin! и \lstinline!deleteMin! вызывают
-вспомогательную функцию \lstinline!removeMinTree!, которая находит
+Функции \hsinline{findMin} и \hsinline{deleteMin} вызывают
+вспомогательную функцию \hsinline{removeMinTree}, которая находит
 дерево с минимальным корнем, исключает его из списка и возвращает как
 это дерево, так и список оставшихся деревьев.
 
-\inputminted[firstline=27,lastline=31] {haskell}{code/BinomialHeap.lhs}
+\inputminted[firstline=28,lastline=32]{haskell}{code/BinomialHeap.lhs}
 
-Функция \lstinline!findMin! просто возвращает корень найденного дерева
+Функция \hsinline{findMin} просто возвращает корень найденного дерева
 
-\inputminted[firstline=39,lastline=40,gobble=2] {haskell}{code/BinomialHeap.lhs}
-
+\inputminted[firstline=40,lastline=41,gobble=2] {haskell}{code/BinomialHeap.lhs}
+\inputminted[firstline=9,lastline=9] {haskell}{code/BinomialHeap.lhs}
 \end{frame}
 
 \begin{frame}[fragile]{}
-Функция \lstinline!deleteMin! устроена немного похитрее. \\
+Функция \hsinline{deleteMin} устроена немного похитрее. \\
 
  Отбросив
 корень найденного дерева, мы ещё должны вернуть его потомков в список
@@ -545,7 +581,7 @@ $k$ связываний и $O(k) = O(\log n)$ времени.
 образом, обратив список потомков, мы преобразуем его в биномиальную
 кучу, а затем сливаем с оставшимися деревьями.
 
-\inputminted[firstline=42,lastline=43] {haskell}{code/BinomialHeap.lhs}
+\inputminted[firstline=43,lastline=44,gobble=2] {haskell}{code/BinomialHeap.lhs}
 \end{frame}
 
 \ifanswers
@@ -576,13 +612,14 @@ $k$ связываний и $O(k) = O(\log n)$ времени.
 \label{sc:3.3}
 
 \begin{frame}[fragile]{Красно-чёрные деревья}
-В разделе~\ref{sc:2.2} мы описали двоичные деревья поиска. Такие
-деревья хорошо ведут себя на случайных или неупорядоченных данных,
+Двоичные деревья поиска хорошо ведут себя на случайных или неупорядоченных данных,
 однако на упорядоченных данных их производительность резко падает, и
-каждая операция может занимать до $O(n)$  времени.  Решение этой
+каждая операция может занимать до $O(n)$  времени. \\
+
+ Решение этой
 проблемы состоит в том, чтобы каждое дерево поддерживать в
 приблизительно сбалансированном состоянии. Тогда каждая операция
-выполняется не хуже, чем за время $O(\log n)$. 
+выполняется не хуже, чем за время $O(\log n)$. \\
 
  Одним из наиболее
 популярных семейств сбалансированных двоичных деревьев поиска являются
@@ -592,15 +629,15 @@ $k$ связываний и $O(k) = O(\log n)$ времени.
 \begin{frame}[fragile]{}
 Красно-чёрное дерево представляет собой двоичное дерево поиска, в
 котором каждый узел окрашен либо красным, либо чёрным. Мы добавляем
-поле цвета в тип двоичных деревьев поиска из раздела~\ref{sc:2.2}.
+поле цвета в тип двоичных деревьев поиска %из раздела~\ref{sc:2.2}.
 
 \inputminted[firstline=6,lastline=7] {haskell}{code/RedBlackSet.lhs}
 Все пустые узлы считаются чёрными, поэтому пустой конструктор
-\lstinline!E! в поле цвета не нуждается.
+\hsinline{E} в поле цвета не нуждается.
 
 \end{frame}
 
-\begin{frame}[fragile]{}
+\begin{frame}[fragile]{Красно-чёрные деревья. Инварианты}
 Мы требуем, чтобы всякое красно-чёрное дерево соблюдало два
 инварианта:
 \begin{itemize}
@@ -622,16 +659,16 @@ $k$ связываний и $O(k) = O(\log n)$ времени.
 \end{frame}
 
 \begin{frame}[fragile]{}
-Функция \lstinline!member! для красно-чёрных деревьев не обращает
+Функция \hsinline{member} для красно-чёрных деревьев не обращает
 внимания на цвета. За исключением wildcard в варианте для конструктора
-\lstinline!T!, она не отличается от функции \lstinline!member! для
+\hsinline{T}, она не отличается от функции \hsinline{member} для
 несбалансированных деревьев.
 \inputminted[firstline=18,lastline=21] {haskell}{code/RedBlackSet.lhs}
 \end{frame}
 
 
 \begin{frame}[fragile]{}
-Функция \lstinline!insert! интереснее: она должна
+Функция \hsinline{insert} интереснее: она должна
 поддерживать два инварианта балансировки.
 
 \inputminted[firstline=23,lastline=29] {haskell}{code/RedBlackSet.lhs}
@@ -656,7 +693,7 @@ $k$ связываний и $O(k) = O(\log n)$ времени.
 случае, если отец нового узла тоже красный, нарушается Инвариант 1. Мы
 временно позволяем существовать одному такому нарушению, и переносим
 его снизу вверх по мере перебалансирования. Функция
-\lstinline!balance! обнаруживает и исправляет красно-красные нарушения,
+\hsinline{balance} обнаруживает и исправляет красно-красные нарушения,
 когда обрабатывает чёрного родителя красного узла с красным
 ребёнком. Такая чёрно-красно-красная цепочка может возникнуть в
 четырёх различных конфигурациях, в зависимости от того, левым или
@@ -709,8 +746,9 @@ $k$ связываний и $O(k) = O(\log n)$ времени.
 \begin{frame}[fragile]{}
 \begin{remark}
   Одна из причин, почему наша реализация выглядит настолько проще, чем
-  типичное описание красно-чёрных деревьев (напр., Глава~14 в
-  книге~\cite{CormenLeisersonRivest1990}), состоит в том, что мы
+  типичное описание красно-чёрных деревьев 
+%  (напр., Глава~14 в книге~\cite{CormenLeisersonRivest1990})
+  , состоит в том, что мы
   используем несколько другие преобразования перебалансировки. В
   императивных реализациях обычно наши четыре проблематичных случая
   разбиваются на восемь, в зависимости от цвета узла, соседствующего с

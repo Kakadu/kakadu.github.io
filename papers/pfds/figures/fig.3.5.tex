@@ -53,17 +53,17 @@
             child { node {d} };
     \end{scope}
     
-    \begin{scope}[yshift=-\ystep]
-        \node[tblack] {x}
-            child { node {a} }
-            child { node[tred] {z}
-                child { node[tred] {y}
-                    child {node {b}}
-                    child {node {c}}
-                }
-                child { node {d} }
-            };
-    \end{scope}
+%    \begin{scope}[yshift=-\ystep]
+%        \node[tblack] {x}
+%            child { node {a} }
+%            child { node[tred] {z}
+%                child { node[tred] {y}
+%                    child {node {b}}
+%                    child {node {c}}
+%                }
+%                child { node {d} }
+%            };
+%    \end{scope}
     
     \begin{scope}[yshift=-1.5cm]
         \tikzstyle{level 1}=[sibling distance=3cm]
@@ -80,10 +80,8 @@
     \end{scope}
     \Huge
     \draw (0, 0.5cm) node[rotate=-90] {$\Rightarrow$};
-    \draw (0, -8cm) node[rotate=90] {$\Rightarrow$};
+%    \draw (0, -8cm) node[rotate=90] {$\Rightarrow$};
     \draw (-4cm, -4cm) node[rotate=0] {$\Rightarrow$};
     \draw (4cm, -4cm) node[rotate=180] {$\Rightarrow$};
-
-
     
 \end{tikzpicture}
