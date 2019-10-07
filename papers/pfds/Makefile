@@ -1,3 +1,4 @@
+.PHONY: debs
 .SUFFIXES: .tex .pdf
 
 TARGET=pfds_talk
@@ -23,4 +24,7 @@ clean:
 
 cleanminted:
 	@$(RM) -r _minted* *.pdf
+
+debs:
+	sudo apt install texlive-lang-cyrillic fonts-cmu python3-pygments
 
