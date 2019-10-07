@@ -4,9 +4,8 @@ type Nat = [Int] -- increasing number of weight, each is power of two
 
 carry w [] = [w]
 carry w ws@(w_:ws_) = if w<w_ then w:ws else carry (2*w) ws_
-  
 borrow w ws@(w_:ws_) = if w==w_ then ws_ else w : borrow (2*w) ws
-  
+
 inc ws = carry 1 ws
 dec ws = borrow 1 ws
 
