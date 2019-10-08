@@ -95,7 +95,7 @@
  
 \AtBeginSection[]
 {
-  \begin{frame}<beamer>[allowframebreaks]
+  \begin{frame}<beamer>%[allowframebreaks]
     \frametitle{Оглавление}
     \tableofcontents[currentsection]
   \end{frame}
@@ -123,16 +123,22 @@
 \everymath{\displaystyle}
 
 % Uncomment these lines for an automatically generated outline.
-\begin{frame}[allowframebreaks]{Оглавление}
+\begin{frame}{Оглавление}
   \tableofcontents
 \end{frame}
 
 \begin{frame}[fragile]{Чисто функциональные структуры данных}
 \begin{itemize}
   \item Следуя книге Okasaki "Pure Functional Data Structures"
+  \item Чисто функциональные -- это 
+    \begin{itemize}
+      \item используя только чистые функции
+      \item проектируя с помощью индуктивных (алгебраических) типов
+    \end{itemize}
   \item С примерами кода на языке Haskell
   \item В принципе, можно бы и на Python, но оно будет выглядеть отвратительно
-  \item Поэтому сначала gentle introduction to Haskell (с)
+  \item Поэтому сначала gentle introduction to Haskell \textcopyright\vspace{.5cm}
+  
   \item Будет непонятно -- кричите!
 \end{itemize}
 \end{frame}
@@ -306,11 +312,14 @@ data Nat =
 \input{chapter09.tex}
 
 
-
-
-\begin{frame}[fragile]{}
-1
+\begin{frame}
+\begin{center}
+  {\Huge Конец.}\\
+  
+  Подробнее в книге Окасаки "Чисто функциональные структуры данных".
+\end{center}
 \end{frame}
+
 
 % \begin{frame}[allowframebreaks]
 %   \frametitle<presentation>{Ссылки}

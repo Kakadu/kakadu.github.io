@@ -55,7 +55,7 @@
 	\input{figures/fig.2.4.after.tex}\par
 	(после)\par
 %	\vspace{0.5cm}
-	\caption{Выполнение \texttt{xs concat ys} в императивной среде. Эта операция уничтожает списки-аргументы \texttt{xs} и \texttt{ys} (их использовать больше нельзя)}
+	\caption{Выполнение \texttt{xs ++ ys} в императивной среде. Эта операция уничтожает списки-аргументы \texttt{xs} и \texttt{ys} (их использовать больше нельзя)}
 	\label{fig:2.4}
 \end{figure}
 \end{frame}
@@ -65,7 +65,7 @@
 В функциональной среде мы не можем деструктивно модифицировать. Поэтому
 \begin{itemize}
 \item добавляем последний элемент первого списка ко второму
-\item добавляем \emph{пред}последний элемент первого списка к резульату
+\item добавляем \emph{пред}последний элемент первого списка к результату
 \item и т.д.
 \end{itemize}
 
@@ -168,22 +168,25 @@
 поддереве.
 \end{frame}
 
-\begin{frame}[fragile]{}
+\begin{frame}[fragile]{Сигнатура для множеств упорядоченных элементов}
 \begin{figure}[h]
   \centering
   \inputminted[firstline=12, lastline=15]{haskell}{code/SearchTree.hs}
-  \caption{Сигнатура для множеств.}
+%  \caption{Сигнатура для множеств.}
 \label{fig:2.7}
 \end{figure}
 
 Cигнатура для множеств значение <<пустое множество>>, а также функции добавления
-нового элемента и проверки на членство.  В более практической
+нового элемента и проверки на членство. \\
+
+ В более практической
 реализации, вероятно, будут присутствовать и многие другие функции,
 например, для удаления элемента или перечисления всех элементов.
 \end{frame}
 
 \begin{frame}[fragile]{Функция \hsinline{member}}
 Ищет в дереве, сравнивая запрошенный элемент с находящимся в корне дерева. 
+\inputminted[firstline=15, lastline=15] {haskell}{code/SearchTree.hs}
 \inputminted[firstline=22, lastline=25] {haskell}{code/SearchTree.hs}
 
 
@@ -201,8 +204,9 @@ Cигнатура для множеств значение <<пустое мно
 <<истина>>. 
 \end{frame}
 
-\begin{frame}[fragile]{Функция insert}
-\inputminted[firstline=27, lastline=31] {haskell}{code/SearchTree.hs}
+\begin{frame}[fragile]{Функция \hsinline{insert}}
+\inputminted[firstline=10, lastline=10] {haskell}{code/SearchTree.hs}
+\inputminted[firstline=27, lastline=31,gobble=2] {haskell}{code/SearchTree.hs}
 
 Функция \hsinline{insert} проводит поиск в дереве по той же стратегии,
 что и \hsinline{member}, но только по пути она копирует каждый
@@ -389,7 +393,6 @@ Cигнатура для множеств значение <<пустое мно
   \hsinline{fromList} требует всего $O(n)$ времени.
 \end{exercise}
 \end{frame}
-\fi 
 
 \begin{frame}[fragile]{}
 \begin{exercise}\label{ex:3.4}
@@ -413,8 +416,9 @@ Cигнатура для множеств значение <<пустое мно
     условиях ленивого вычисления? Параллельного?
   \end{enumerate}
 \end{exercise}
-
 \end{frame}
+\fi 
+
 
 \section{Биномиальные кучи}
 \label{sc:3.2}
@@ -432,11 +436,21 @@ Cигнатура для множеств значение <<пустое мно
 Однако, с помощью дополнительных хитростей (амортизация\cite{sc:5.3}), можно заставить \hsinline{insert} и
 \hsinline{merge} выполняться за время $O(1)$.
 
+\end{frame}
 
+\begin{frame}[fragile]{Биномиальные деревья. Пример}
+\begin{figure}[h]
+  \centering
+  \input{figures/fig.3.3.tex}
+  \caption{Биномиальные деревья рангов 0--3.}
+  \label{fig:3.3}
+\end{figure}
+
+%\inputminted[firstline=5, lastline=6] {haskell}{code/BinomialHeap.lhs}
 
 \end{frame}
 
-\begin{frame}{Биномиальные деревья}
+\begin{frame}{Биномиальные деревья. Определение}
 Биномиальные кучи строятся из более простых объектов, называемых
 биномиальными деревьями. Биномиальные деревья индуктивно определяются
 так:
@@ -457,17 +471,6 @@ Cигнатура для множеств значение <<пустое мно
 \end{frame}
 
 
-\begin{frame}[fragile]{}
-\begin{figure}[h]
-  \centering
-  \input{figures/fig.3.3.tex}
-  \caption{Биномиальные деревья рангов 0--3.}
-  \label{fig:3.3}
-\end{figure}
-
-%\inputminted[firstline=5, lastline=6] {haskell}{code/BinomialHeap.lhs}
-
-\end{frame}
 
 
 \begin{frame}[fragile]{}
@@ -554,7 +557,7 @@ $k$ связываний и $O(k) = O(\log n)$ времени.
 
 \end{frame}
 
-\begin{frame}[fragile]{}
+\begin{frame}[fragile]{Поиск минимального элемента}
 Функции \hsinline{findMin} и \hsinline{deleteMin} вызывают
 вспомогательную функцию \hsinline{removeMinTree}, которая находит
 дерево с минимальным корнем, исключает его из списка и возвращает как
@@ -568,7 +571,7 @@ $k$ связываний и $O(k) = O(\log n)$ времени.
 \inputminted[firstline=9,lastline=9] {haskell}{code/BinomialHeap.lhs}
 \end{frame}
 
-\begin{frame}[fragile]{}
+\begin{frame}[fragile]{Удаление минимального элемента}
 Функция \hsinline{deleteMin} устроена немного похитрее. \\
 
  Отбросив
@@ -699,7 +702,7 @@ $k$ связываний и $O(k) = O(\log n)$ времени.
 правым ребёнком является каждая из красных вершин. Однако в каждом из
 этих случаев решение одно и то же: нужно преобразовать
 чёрно-красно-красный путь в красную вершину с двумя чёрными детьми,
-как показано на Рис.~\ref{fig:3.5}.
+как показано на рисунке ниже.
 \end{frame}
 
 
@@ -742,13 +745,15 @@ $k$ связываний и $O(k) = O(\log n)$ времени.
 \end{frame}
 
 
-\begin{frame}[fragile]{}
+\begin{frame}[fragile]{Почему это выглядит короче императивной реализации?}
 \begin{remark}
   Одна из причин, почему наша реализация выглядит настолько проще, чем
   типичное описание красно-чёрных деревьев 
 %  (напр., Глава~14 в книге~\cite{CormenLeisersonRivest1990})
   , состоит в том, что мы
-  используем несколько другие преобразования перебалансировки. В
+  используем несколько другие преобразования перебалансировки. \\
+  
+  В
   императивных реализациях обычно наши четыре проблематичных случая
   разбиваются на восемь, в зависимости от цвета узла, соседствующего с
   красной вершиной с красным ребёнком.  Знание цвета этого узла в

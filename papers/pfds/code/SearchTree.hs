@@ -25,10 +25,10 @@ instance SET Tree where
   member _ _               = True
   
   insert :: a -> Tree a -> Tree a
-  insert x E                 = T E x E
-  insert x s@(T l y r) | x<y = T (insert x l) y r
-  insert x s@(T l y r) | x>y = T l y (insert x l) 
-  insert _ t                 = t
+  insert x E               = T E x E
+  insert x (T l y r) | x<y = T (insert x l) y r
+  insert x (T l y r) | x>y = T l y (insert x l) 
+  insert _ t               = t
   
 {-
 Чтобы можно было и хэшмапу сделать

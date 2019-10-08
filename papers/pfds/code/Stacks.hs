@@ -49,9 +49,9 @@ instance STACK Stack where
 
 (++) :: STACK l => l a -> l a -> l a
 (++) xs ys = 
-  if isEmpty xs 
-  then ys 
-  else cons (head_exn xs) (tail_exn xs ++ ys)
+  if isEmpty xs
+  then ys
+  else cons (head xs) (tail xs ++ ys)
 
 _ = (++) where 
   (++) []     ys = ys
