@@ -6,16 +6,16 @@ import Prelude hiding ( (++) )
 
 
 
-
+-- a la interface
 class STACK s where
   empty    :: s a
   isEmpty  :: s a -> Bool
   cons     :: a -> s a -> s a
   head     :: s a -> a
   tail     :: s a -> s a
-
+-- a la interface implementation
 instance STACK [] where
-  empty    = []
+  empty      = []
   isEmpty [] = True
   isEmpty _  = False
   cons   x xs = x:xs

@@ -23,7 +23,7 @@
 
 \begin{frame}[fragile]{Сигнатура Stack. Реализация через встроенные списки}
 \begin{minipage}{.48\textwidth}
-\inputminted[firstline=10,lastline=15]{haskell}{code/Stacks.hs}
+\inputminted[firstline=9,lastline=15]{haskell}{code/Stacks.hs}
 \end{minipage}
 \begin{minipage}{.48\textwidth}
 \inputminted{haskell}{code/ListStack.hs}
@@ -366,10 +366,9 @@ Cигнатура для множеств значение <<пустое мно
 \inputminted[firstline=36, lastline=38] {haskell}{code/Heap.hs}
 
 Поскольку \hsinline{merge} выполняется за время $O(\log n)$, столько
-же занимают и \hsinline{insert} с \hsinline{deleteMin}.
+же занимают и \hsinline{insert} с \hsinline{deleteMin}.\\
 
- Очевидно,
-что \hsinline{findMin} выполняется за $O(1)$. 
+Очевидно, что \hsinline{findMin} выполняется за $O(1)$. 
 \end{frame}
 
 \ifanswers
