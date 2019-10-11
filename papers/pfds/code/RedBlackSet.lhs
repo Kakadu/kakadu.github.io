@@ -1,3 +1,4 @@
+\begin{code}
 {-# LANGUAGE MultiParamTypeClasses, FlexibleInstances #-}
 module RedBlackSet (RedBlackSet) where
 
@@ -18,7 +19,7 @@ instance Ord a => Set RedBlackSet a where
   member x E = False
   member x (T _ a y b) = if x < y then member x a
                          else if x > y then member x b
-                         else True
+                              else True
 
   insert x s = T B a y b
     where ins E = T R E x E
@@ -27,3 +28,4 @@ instance Ord a => Set RedBlackSet a where
             else if x > y then balance color a y (ins b)
                  else s
           T _ a y b = ins s -- guaranteed to be non-empty
+\end{code}

@@ -1,0 +1,43 @@
+name:                simple
+version:             0.1.0.0
+github:              "githubuser/simple"
+license:             BSD3
+author:              "Author name here"
+maintainer:          "example@example.com"
+copyright:           "2019 Author name here"
+
+
+# Metadata used when publishing your package
+# synopsis:            Short description of your package
+# category:            Web
+
+# To avoid duplicated efforts in documentation and dealing with the
+# complications of embedding Haddock markup inside cabal files, it is
+# common to point users to the README.md file.
+description:         Please see the README on GitHub at <https://github.com/githubuser/simple#readme>
+
+dependencies:
+- base >= 4.7 && < 5
+- process
+- graphviz >= 2999.20.0.3
+- text
+- fgl
+- temporary
+
+
+executables:
+  LeftistHeap-exe:
+    main:                LeftistHeapTest.hs
+    source-dirs:         .
+    ghc-options:
+    - -threaded
+    - -rtsopts
+    - -with-rtsopts=-N
+    # modules:
+    # - LeftistHeap.hs
+    # - Heap.hs
+    # exposed-modules:
+    # - LeftistHeap.hs
+    # - Heap.hs
+    dependencies:
+    - text

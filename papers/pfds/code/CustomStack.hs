@@ -1,3 +1,7 @@
+module CustomStack where
+
+import           Stack
+
 data Stack a = Nil | Cons a (Stack a)
 
 instance STACK Stack where
@@ -5,7 +9,7 @@ instance STACK Stack where
   isEmpty Nil = True
   isEmpty _   = False
   cons   x xs = Cons x xs
-  
+
   head Nil         = error "empty"
   head (Cons x _)  = x
   tail Nil         = error "empty"

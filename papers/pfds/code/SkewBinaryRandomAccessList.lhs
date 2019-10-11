@@ -1,3 +1,4 @@
+\begin{code}
 module SkewBinaryRandomAccessList (SkewList) where
 
 import Prelude hiding (head, tail, lookup)
@@ -25,13 +26,15 @@ instance RandomAccessList SkewList where
   lookup i (SL ts) = look i ts
     where
       look i [] = error "bad subscript"
-      look i ((w, t):ts) = if i < w then lookTree w i t else look (i-w) ts
+      look i ((w, t):ts) =
+        if i < w then lookTree w i t else look (i-w) ts
 
       lookTree 1 0 (Leaf x) = x
       lookTree 1 i (Leaf x) = error "bad subscript"
       lookTree w 0 (Node x t1 t2) = x
-      lookTree w i (Node x t1 t2) = if i <= w' then lookTree w' (i-1) t1
-                                    else lookTree w' (i-1-w') t2
+      lookTree w i (Node x t1 t2) =
+        if i <= w' then lookTree w' (i-1) t1
+        else lookTree w' (i-1-w') t2
         where w' = w `div` 2
 
   update i y (SL ts) = SL (upd i ts)
@@ -48,3 +51,4 @@ instance RandomAccessList SkewList where
         if i <= w' then Node x (updTree w' (i-1) t1) t2
         else Node x t1 (updTree w' (i-1-w') t2)
         where w' = w `div` 2
+\end{code}

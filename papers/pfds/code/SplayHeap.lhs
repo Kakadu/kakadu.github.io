@@ -1,3 +1,4 @@
+\begin{code}
 module SplayHeap (SplayHeap) where
 
 import Heap
@@ -47,3 +48,4 @@ instance Heap SplayHeap where
   deleteMin (T E x b) = b
   deleteMin (T (T E x b) y c) = T b y c
   deleteMin (T (T a x b) y c) = T (deleteMin a) x (T b y c)
+\end{code}

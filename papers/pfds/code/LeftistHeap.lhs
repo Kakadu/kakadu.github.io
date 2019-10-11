@@ -1,5 +1,5 @@
 \begin{code}
-module LeftistHeap (LeftistHeap) where
+module LeftistHeap where
 
 import Heap
 
@@ -17,8 +17,6 @@ instance Heap LeftistHeap where
   isEmpty E = True
   isEmpty _ = False
 
-  insert x h = merge (T 1 x E E) h
-
   merge h E = h
   merge E h = h
   merge h1@(T _ x a1 b1) h2@(T _ y a2 b2) =
@@ -26,6 +24,7 @@ instance Heap LeftistHeap where
     then makeT x a1 (merge b1 h2)
     else makeT y a2 (merge h1 b2)
 
+  insert x h = merge (T 1 x E E) h
   findMin E = error "empty heap"
   findMin (T _ x a b) = x
 

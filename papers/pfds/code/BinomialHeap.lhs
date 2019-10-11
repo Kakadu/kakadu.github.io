@@ -1,3 +1,4 @@
+\begin{code}
 module BinomialHeap (BinomialHeap) where
 
 import Heap
@@ -5,25 +6,24 @@ import Heap
 data Tree a = Node Int a [Tree a]
 newtype BinomialHeap a = BH [Tree a]
 
-rank (Node r _ _) = r
+rank (Node r x c) = r
 root (Node r x c) = x
 
-link :: Tree a -> Tree a -> Tree a
 link t1@(Node r x1 c1) t2@(Node _ x2 c2) =
   if x1 <= x2
   then Node (r+1) x1 (t2 : c1)
   else Node (r+1) x2 (t1 : c2)
 
 insTree t [] = [t]
-insTree t ts@(t' : ts') | rank t < rank t' = t:ts
-insTree t    (t' : ts')                    = insTree (link t t') ts'
+insTree t ts@(t' : ts') =
+  if rank t < rank t' then t:ts else insTree (link t t') ts'
 
 mrg ts1 [] = ts1
 mrg [] ts2 = ts2
-mrg ts1@(t1:ts1') ts2@(t2:ts2')
-  | rank t1 < rank t2   =   t1 : mrg ts1' ts2
-  | rank t2 < rank t1   =   t2 : mrg ts1  ts2'
-  | otherwise           =   insTree (link t1 t2) (mrg ts1' ts2')
+mrg ts1@(t1:ts'1) ts2@(t2:ts'2)
+  | rank t1 < rank t2 = t1 : mrg ts'1 ts2
+  | rank t2 < rank t1 = t2 : mrg ts1 ts'2
+  | otherwise = insTree (link t1 t2) (mrg ts'1 ts'2)
 
 removeMinTree [] = error "empty heap"
 removeMinTree [t] = (t, [])
@@ -42,3 +42,4 @@ instance Heap BinomialHeap where
 
   deleteMin (BH ts) = BH (mrg (reverse ts1) ts2)
     where (Node _ x ts1, ts2) = removeMinTree ts
+\end{code}

@@ -1,4 +1,4 @@
-{-# LANGUAGE TypeFamilies #-}
+{-# LANGUAGE TypeFamilies, InstanceSigs #-}
 module SearchTree where
 
 
@@ -9,27 +9,28 @@ module SearchTree where
 
 data Tree a = E | T (Tree a) a (Tree a)
 
-class SET s where 
+class SET s where
   empty :: s a
   insert :: (Ord a) => a -> s a -> s a
   member :: (Ord a) => a -> s a -> Bool
-  type Elem s a :: * 
-  
+  type Elem s a :: *
+
 instance SET Tree where
   type Elem Tree a = a
   empty = E
 
+  member :: (Ord a) => a -> Tree a -> Bool
   member _ E               = False
   member x (T l y _) | x<y = member x l
   member x (T _ y r) | x>y = member x r
   member _ _               = True
-  
-  insert :: a -> Tree a -> Tree a
+
+  insert :: (Ord a) =>  a -> Tree a -> Tree a
   insert x E               = T E x E
   insert x (T l y r) | x<y = T (insert x l) y r
-  insert x (T l y r) | x>y = T l y (insert x l) 
+  insert x (T l y r) | x>y = T l y (insert x l)
   insert _ t               = t
-  
+
 {-
 Чтобы можно было и хэшмапу сделать
 Alexander Vershilov, [01.10.19 00:44]

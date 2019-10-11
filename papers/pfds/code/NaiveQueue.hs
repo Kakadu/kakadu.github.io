@@ -1,13 +1,13 @@
-module NaiveQueue where 
+module NaiveQueue where
 
-
+import Prelude (reverse)
 
 data Queue a = Queue [a] [a]
-  
 
 
 
-checkf ([], r) = (rev r, [])
+
+checkf ([], r) = (reverse r, [])
 checkf q       = q
 
 snoc (f,  r) x = checkf (f, x:r)

@@ -35,15 +35,15 @@ instance RandomAccessList BinaryList where
     where
       look i [] = error "bad subscript"
       look i (Zero : ts) = look i ts
-      look i (One t : ts) = if i < size t then lookTree i t
-                            else look (i - size t) ts
+      look i (One t : ts) =
+        if i < size t then lookTree i t
+        else look (i - size t) ts
 
       lookTree 0 (Leaf x) = x
       lookTree i (Leaf x) = error "bad subscript"
-      lookTree i (Node w t1 t2) = if i < w `div` 2 then lookTree i t1
-                                  else lookTree (i - w `div` 2) t2
-
-
+      lookTree i (Node w t1 t2) =
+        if i < w `div` 2 then lookTree i t1
+        else lookTree (i - w `div` 2) t2
 
   update i y (BL ts) = BL (upd i ts)
     where
@@ -58,4 +58,4 @@ instance RandomAccessList BinaryList where
       updTree i (Node w t1 t2) =
         if i < w `div` 2 then Node w (updTree i t1) t2
         else Node w t1 (updTree (i - w `div` 2) t2)
-
+\end{code}
