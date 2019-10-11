@@ -18,24 +18,24 @@
 
 %\chap{Некоторые известные структуры данных в функциональном окружении}
 
-\section{Левоориентированные кучи}
+\section{Списки и их конкатенация}
 \label{sc:3.1}
 
 \begin{frame}[fragile]{Сигнатура Stack. Реализация через встроенные списки}
 \begin{minipage}{.48\textwidth}
-\inputminted[firstline=9,lastline=15]{haskell}{code/Stacks.hs}
+\inputminted[firstline=3,lastline=8]{haskell}{code/Stack.hs}
 \end{minipage}
 \begin{minipage}{.48\textwidth}
-\inputminted{haskell}{code/ListStack.hs}
+  \inputminted[firstline=21,lastline=30]{haskell}{code/Stacks.hs}
 \end{minipage}
 \end{frame}
 
 \begin{frame}[fragile]{Сигнатура Stack. Реализация через новый тип данных}
 \begin{minipage}{.48\textwidth}
-  \inputminted[firstline=10,lastline=15]{haskell}{code/Stacks.hs}
+  \inputminted[firstline=3,lastline=8]{haskell}{code/Stack.hs}
 \end{minipage}
 \begin{minipage}{.48\textwidth}
-  \inputminted{haskell}{code/CustomStack.hs}
+  \inputminted[firstline=37,lastline=48]{haskell}{code/Stacks.hs}
 \end{minipage}
 \end{frame}
 
@@ -186,13 +186,13 @@ Cигнатура для множеств значение <<пустое мно
 
 \begin{frame}[fragile]{Функция \hsinline{member}}
 Ищет в дереве, сравнивая запрошенный элемент с находящимся в корне дерева. 
-\inputminted[firstline=15, lastline=15] {haskell}{code/SearchTree.hs}
-\inputminted[firstline=22, lastline=25] {haskell}{code/SearchTree.hs}
+
+\inputminted[firstline=22, lastline=26] {haskell}{code/SearchTree.hs}
 
 
 Если мы когда-либо натыкаемся на пустое дерево, значит,
 запрашиваемый элемент не является членом множества, и мы возвращаем
-значение <<ложь>>. \\
+значение \hsinline{False}. \\
 
 Если запрошенный элемент \textbf{меньше}
 корневого, мы рекурсивно ищем в левом поддереве.
@@ -201,12 +201,12 @@ Cигнатура для множеств значение <<пустое мно
 
 Наконец, в оставшемся случае
 запрошенный элемент \textbf{равен} корневому, и мы возвращаем значение
-<<истина>>. 
+\hsinline{True}.
 \end{frame}
 
 \begin{frame}[fragile]{Функция \hsinline{insert}}
-\inputminted[firstline=10, lastline=10] {haskell}{code/SearchTree.hs}
-\inputminted[firstline=27, lastline=31,gobble=2] {haskell}{code/SearchTree.hs}
+%\inputminted[firstline=10, lastline=10] {haskell}{code/SearchTree.hs}
+\inputminted[firstline=28, lastline=32,gobble=2] {haskell}{code/SearchTree.hs}
 
 Функция \hsinline{insert} проводит поиск в дереве по той же стратегии,
 что и \hsinline{member}, но только по пути она копирует каждый
@@ -316,23 +316,30 @@ Cигнатура для множеств значение <<пустое мно
 поддерживающая такой режим доступа, называется \term{очередь с
 приоритетами}{priority queue} или \term{куча}{heap}.
 
-\inputminted[firstline=4, lastline=12] {haskell}{code/Heap.hs}
+\inputminted[firstline=4, lastline=12] {haskell}{code/Heap.lhs}
 \end{frame}
 
 \begin{frame}[fragile]{}
-Часто кучи реализуются через деревья \term{с порядком
-  кучи}{heap-ordered}, т.~е., в которых элемент при каждой вершине не
-больше элементов в поддеревьях. При таком упорядочении минимальный
-элемент дерева всегда находится в корне.\vspace{1cm}
+\begin{definition}[\term{Порядок кучи}{heap-ordered}]
+Элемент при каждой вершине не больше элементов в поддеревьях.
+\end{definition}
+При таком упорядочении минимальный элемент дерева всегда находится в корне.
+
+\begin{definition}[\term{Правая периферия}{right spine} узла]
+Самого правого пути от данного узла до пустого 
+\end{definition}
+ Ранг узла определяется как длина его правой периферии. 
+\begin{definition}[Свойство \term{левоориентированности}{leftist property}]
+Ранг любого левого поддерева не меньше ранга его сестринской правой вершины. 
+\end{definition}
+ Простым
+следствием свойства левоориентированности является то, что правая
+периферия любого узла~--- кратчайший путь от него к пустому узлу.\\
 
 Левоориентированные кучи \cite{Crane1972, Knuth1973a} представляют
 собой двоичные деревья с порядком кучи, обладающие свойством
-\term{левоориентированности}{leftist property}: ранг любого левого поддерева
-не меньше ранга его сестринской правой вершины.  Ранг узла
-определяется как длина его \term{правой периферии}{right spine}
-(т.~е., самого правого пути от данного узла до пустого).  Простым
-следствием свойства левоориентированности является то, что правая
-периферия любого узла~--- кратчайший путь от него к пустому узлу.
+левоориентированности.
+
 \end{frame}
 
 \begin{frame}[fragile]{Левоориентированные кучи}
@@ -340,7 +347,7 @@ Cигнатура для множеств значение <<пустое мно
 \mintinline{haskell}{e}, 
 мы можем представить левоориентированные кучи как
 двоичные деревья, снабженные информацией о ранге.
-\inputminted[firstline=18, lastline=18] {haskell}{code/Heap.hs}
+\inputminted[firstline=6, lastline=6] {haskell}{code/LeftistHeap.lhs}
 
 Заметим, что элементы правой периферии левоориентированной кучи (да и
 любого дерева с порядком кучи) расположены в порядке возрастания.\\
@@ -354,20 +361,20 @@ Cигнатура для множеств значение <<пустое мно
 \end{frame}
 
 \begin{frame}[fragile]{}
-\inputminted[firstline=23, lastline=26] {haskell}{code/Heap.hs}
+\inputminted[firstline=20, lastline=25] {haskell}{code/LeftistHeap.lhs}
 
 где \hsinline{makeT}~--- вспомогательная функция, вычисляющая ранг
 вершины \hsinline{T} и, если необходимо, меняющая местами ее
 поддеревья.
 
-\inputminted[firstline=30, lastline=35] {haskell}{code/Heap.hs}
+\inputminted[firstline=8, lastline=13] {haskell}{code/LeftistHeap.lhs}
 
 Поскольку длина правой периферии любой вершины в худшем случае
 логарифмическая, \hsinline{merge} выполняется за время $O(\log n)$.
 \end{frame}
 
 \begin{frame}[fragile]{}
-\inputminted[firstline=36, lastline=38] {haskell}{code/Heap.hs}
+\inputminted[firstline=27, lastline=32] {haskell}{code/LeftistHeap.lhs}
 
 Поскольку \hsinline{merge} выполняется за время $O(\log n)$, столько
 же занимают и \hsinline{insert} с \hsinline{deleteMin}.\\
