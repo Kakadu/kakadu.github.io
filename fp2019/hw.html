@@ -31,21 +31,21 @@
 <li><a href="#javascript">Javascript (Рагимов)</a></li>
 <li><a href="#kotlin">Kotlin (Влаев + Кузиванов)</a></li>
 <li><a href="#awk">AWK (Афонина)</a></li>
-<li><a href="#haskell">Haskell (1-2 человека)</a></li>
-<li><a href="#lisp">LISP</a></li>
-<li><a href="#_scala_1_2_человека">Scala (1-2 человека)</a></li>
-<li><a href="#_ocaml_with_objects_2_человека">OCaml with objects (2 человека)</a></li>
-<li><a href="#_ocaml_haskell_with_gadt_2_человека">OCaml/Haskell with GADT (2 человека)</a></li>
+<li><a href="#haskell">Haskell (Канашин + Смирнов)</a></li>
+<li><a href="#lisp">LISP (Гордиенко)</a></li>
 <li><a href="#C">Cи (Шапошников)</a></li>
-<li><a href="#asm">Assembler</a></li>
-<li><a href="#datalog">Datalog</a></li>
+<li><a href="#asm">Assembler (Суханова)</a></li>
+<li><a href="#datalog">Datalog (Логунов)</a></li>
 <li><a href="#nfa">NFA (Дулетов)</a></li>
-<li><a href="#_extended_regexps">Extended Regexps</a></li>
-<li><a href="#refal">РеФаЛ</a></li>
-<li><a href="#forth">Forth (Ахметьянов)</a></li>
 <li><a href="#promela">Promela (Лунёв)</a></li>
+<li><a href="#forth">Forth (Ахметьянов)</a></li>
+<li><a href="#ocaml_oop">OCaml with objects (Гамаонов)</a></li>
+<li><a href="#refal">РеФаЛ (Малец)</a></li>
 <li><a href="#yacc">YACC</a></li>
 <li><a href="#algol">Ideal Parallel Algol (1 человек)</a></li>
+<li><a href="#_extended_regexps">Extended Regexps</a></li>
+<li><a href="#_ocaml_haskell_with_gadt_2_человека">OCaml/Haskell with GADT (2 человека)</a></li>
+<li><a href="#_scala_1_2_человека">Scala (1-2 человека)</a></li>
 </ul>
 </li>
 <li><a href="#hw5">Домашки №5</a></li>
@@ -391,52 +391,25 @@ echo $BASH_COMMAND</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="haskell">Haskell (1-2 человека)</h3>
+<h3 id="haskell">Haskell (Канашин + Смирнов)</h3>
 <div class="paragraph">
-<p>Числа, списки, функции, ленивая стратегия вычислений. Без пользовательских типов данных. В качестве пункта 4&#8201;&#8212;&#8201;хитрые оптимизации. Алгоритм вывода типов пока не включаю, но написать
+<p>Числа, списки, функции, ленивая стратегия вычислений. Без пользовательских типов данных. В качестве пункта 4&#8201;&#8212;&#8201;хитрые оптимизации. Алгоритм вывода типов склоее всегл писать придется, так как вас двое. Написать
 <a href="http://okmij.org/ftp/ML/generalization.html"><em>эффективный</em></a> (почти линейный) алгоритм вывода типов может быть
 <span class="line-through">сложной</span> интересной задачей.</p>
 </div>
 <div class="paragraph">
-<p>Тут легко можно договориться на 2 человека.</p>
+<p>Из первых программ для тестирования нужны факториал и фибоначчи. Потом придется разобраться как применять
+Scott (или кто там ещё) encoding, чтобы эмулировать индуктивные типы данных, которые в миниязык не добавлены.
+Скорее всего будет ещё добавлено CPS преобразование программ и какие-то Haskell-специфичные оптимизации
+(вот <a href="https://www.microsoft.com/en-us/research/uploads/prod/2019/03/eta.pdf">пример</a>).</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="lisp">LISP</h3>
+<h3 id="lisp">LISP (Гордиенко)</h3>
 <div class="paragraph">
 <p>LISP известен своими встроенными макросами. Посмотрите примерный синтаксис Scheme (или Common Lisp, и т.д.)
 и напишите интерпретатор, который по дороге дает объявлять и использовать макросы. Вдруг у вас получатся
 гигиенические?</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_scala_1_2_человека">Scala (1-2 человека)</h3>
-<div class="paragraph">
-<p>Функции, числа и прочий стандартный набор фич. Специфичная для Scala часть языка&#8201;&#8212;&#8201;traits. Вообще, чтобы сделать это правильно там нужно прикручивать движок перебора с возвратами a la Datalog.</p>
-</div>
-<div class="paragraph">
-<p>Наверное, можно притянуть на 2х человек, если алгоритм под капотом будет годный.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_ocaml_with_objects_2_человека">OCaml with objects (2 человека)</h3>
-<div class="paragraph">
-<p>Числа, списки, присваивание, объекты и их рекурсивные методы вместо рекурсивных функций.
-Наверное, единственный язык, где ООП сделано нормально (за счет структурной типизации и
-так называемого row-полиморфизма).</p>
-</div>
-<div class="paragraph">
-<p>Думаю, что тут проще всего будет меня уговорить назначить на двоих.</p>
-</div>
-</div>
-<div class="sect2">
-<h3 id="_ocaml_haskell_with_gadt_2_человека">OCaml/Haskell with GADT (2 человека)</h3>
-<div class="paragraph">
-<p>Числа, функции и обобщенные алгебраические типы данных, паттерн-матчинг, проверка типов для паттерн-мэтчинга
-с использованием GADT.</p>
-</div>
-<div class="paragraph">
-<p>Наверное, тут тоже можно парочку.</p>
 </div>
 </div>
 <div class="sect2">
@@ -467,7 +440,7 @@ echo $BASH_COMMAND</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="asm">Assembler</h3>
+<h3 id="asm">Assembler (Суханова)</h3>
 <div class="paragraph">
 <p>Выберите вид ассемблера, который хорошо работает на вашем компьютере/процессоре и почитайте
 виды регистров в данной архитектуре. Реализуйте интерпретатор. Преобразование программ из
@@ -476,7 +449,7 @@ echo $BASH_COMMAND</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="datalog">Datalog</h3>
+<h3 id="datalog">Datalog (Логунов)</h3>
 <div class="paragraph">
 <p>Простейший представитель логического программирования, подмножество Prolog. Итого там должны быть</p>
 </div>
@@ -520,14 +493,11 @@ echo $BASH_COMMAND</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="_extended_regexps">Extended Regexps</h3>
-
-</div>
-<div class="sect2">
-<h3 id="refal">РеФаЛ</h3>
+<h3 id="promela">Promela (Лунёв)</h3>
 <div class="paragraph">
-<p>Отечественный язык программирования. Вдохновения черпать
-<a href="https://github.com/bmstu-iu9/refal-5-lambda">отсюда</a>.</p>
+<p>Входной язык для утилиты верификации <a href="https://en.wikipedia.org/wiki/Promela">Promela</a>. Думаю, что все
+фичи описаны в <a href="http://www.lacl.fr/dima/melo/spin.pdf">слайдах</a>. Весь "язык" компилируется (с помощью <code>pan</code>) в
+конечный автомат, который умеет моделировать в том числе параллельные потоки. Короче, надо написать интерпретатор программ Promela, там в слайдах есть примеры, за одно разберетесь с примитивами синхронизации параллельных потоков.</p>
 </div>
 </div>
 <div class="sect2">
@@ -538,11 +508,45 @@ echo $BASH_COMMAND</pre>
 </div>
 </div>
 <div class="sect2">
-<h3 id="promela">Promela (Лунёв)</h3>
+<h3 id="ocaml_oop">OCaml with objects (Гамаонов)</h3>
 <div class="paragraph">
-<p>Входной язык для утилиты верификации <a href="https://en.wikipedia.org/wiki/Promela">Promela</a>. Думаю, что все
-фичи описаны в <a href="http://www.lacl.fr/dima/melo/spin.pdf">слайдах</a>. Весь "язык" компилируется (с помощью <code>pan</code>) в
-конечный автомат, который умеет моделировать в том числе параллельные потоки. Короче, надо написать интерпретатор программ Promela, там в слайдах есть примеры, за одно разберетесь с примитивами синхронизации параллельных потоков.</p>
+<p>Наверное, единственный язык, где ООП сделано нормально (за счет структурной типизации и
+так называемого row-полиморфизма).</p>
+</div>
+<div class="paragraph">
+<p>Подробнее:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Числа, списки, строки и операции над ними</p>
+</li>
+<li>
+<p>Объекты и их рекурсивные методы вместо рекурсивных функций, поля объектов (мутабельные или нет)</p>
+</li>
+<li>
+<p>Ветвления, first class functions</p>
+</li>
+<li>
+<p>Создание (так называемых immediate) объектов, вызов методов, проверка до исполнения, что метод есть (другими словами&#8201;&#8212;&#8201;проверка типов)</p>
+</li>
+<li>
+<p>Классы и наследование поддерживать не обязательно</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Ещё подробнее прочиать и посмотреть какие-нибудь примеры программ и синтаксиса можно
+<a href="https://ocaml.org/learn/tutorials/objects.html">тут</a>,
+<a href="https://caml.inria.fr/pub/docs/manual-ocaml/objectexamples.html">тут</a> или
+<a href="https://dev.realworldocaml.org/objects.html">тут</a>.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="refal">РеФаЛ (Малец)</h3>
+<div class="paragraph">
+<p>Отечественный язык программирования. Вдохновения черпать
+<a href="https://github.com/bmstu-iu9/refal-5-lambda">отсюда</a>.</p>
 </div>
 </div>
 <div class="sect2">
@@ -595,6 +599,29 @@ MOV  EAX ← [y]       |         MOV  EBX ← [x]</pre>
 в исчислениях (я планирую про это как-то рассказывать).</p>
 </div>
 </div>
+<div class="sect2">
+<h3 id="_extended_regexps">Extended Regexps</h3>
+
+</div>
+<div class="sect2">
+<h3 id="_ocaml_haskell_with_gadt_2_человека">OCaml/Haskell with GADT (2 человека)</h3>
+<div class="paragraph">
+<p>Числа, функции и обобщенные алгебраические типы данных, паттерн-матчинг, проверка типов для паттерн-мэтчинга
+с использованием GADT.</p>
+</div>
+<div class="paragraph">
+<p>Наверное, тут тоже можно парочку.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_scala_1_2_человека">Scala (1-2 человека)</h3>
+<div class="paragraph">
+<p>Функции, числа и прочий стандартный набор фич. Специфичная для Scala часть языка&#8201;&#8212;&#8201;traits. Вообще, чтобы сделать это правильно там нужно прикручивать движок перебора с возвратами a la Datalog.</p>
+</div>
+<div class="paragraph">
+<p>Наверное, можно притянуть на 2х человек, если алгоритм под капотом будет годный.</p>
+</div>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -616,7 +643,7 @@ MOV  EAX ← [y]       |         MOV  EBX ← [x]</pre>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-10-11 13:51:41 MSK
+Last updated 2019-10-11 23:35:21 MSK
 </div>
 </div>
 </body>
