@@ -321,12 +321,14 @@ LISP известен своими встроенными макросами. П
 Так называемый стековый язык программирования, мало похож на всё остальное. Считается
 языком с легко расширяемым синтаксисом.
 
+Думаю, что в качестве задачи 4 можно писать супероптимизатор такой, как
+http://sovietov.com/app/forthwiz.html[тут]. Интерпретатор и парсер можно писать с прицелом на конструкции, используемые в супероптимизаторе
+
 // sovietov's paper
 // https://elibrary.ru/item.asp?id=39242589
 // Haskellish
 // https://groups.google.com/forum/?hl=en-GB#!searchin/comp.lang.forth/funforth%7Csort:date/comp.lang.forth/i9P8T97QDgw/_wxwpqMZlJwJ
-// Superoptimizer
-// http://sovietov.com/app/forthwiz.html
+
 //
 
 [[ocaml_oop]]
