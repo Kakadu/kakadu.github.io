@@ -1,0 +1,346 @@
+\newif\ifanswers
+%\answerstrue % comment out to hide answers
+% hack from https://tex.stackexchange.com/questions/33576/conditional-typesetting-build
+
+\documentclass[aspectratio=169
+  , xcolor={svgnames}
+  , hyperref={ colorlinks,citecolor=DeepPink4
+             , linkcolor=DarkRed,urlcolor=DarkBlue}
+  , russian
+  ]{beamer}
+\usetheme{CambridgeUS}
+\beamertemplatenavigationsymbolsempty % remove navigation bar
+\setbeamertemplate{headline}{}
+
+\usefonttheme{professionalfonts}
+\input{heading.tex}
+\usepackage{tabulary}
+\usepackage{verbatim}
+% \usepackage{tabularx}  % for 'tabularx' environment
+% \usepackage{ragged2e} % for \Centering macro
+% \newcolumntype{C}{>{\Centering\arraybackslash}X}m
+% sudo aptget install ttf-mscorefonts-installer
+\defaultfontfeatures{Ligatures={TeX}} 
+\setmainfont{CMU Serif Roman}
+\setsansfont{CMU Sans Serif}
+
+\setmonofont[Scale=1.0,
+    BoldFont=lmmonolt10-bold.otf,
+    ItalicFont=lmmono10-italic.otf,
+    BoldItalicFont=lmmonoproplt10-boldoblique.otf
+]{lmmono9-regular.otf}
+
+\newcommand{\term}[2]{\textit{#1} (#2)}
+
+\usepackage[cache=true]{minted}
+\usepackage{amsthm}
+
+\newtheorem{remark}{\textbf{Замечание}}[section]
+\newtheorem{hint}{\textbf{Указание разработчикам}}[section]
+
+\newtheoremstyle{exerciseStyle1}
+{}                % Space above
+{}                % Space below
+{}                % Theorem body font % (default is "\upshape")
+{}                % Indent amount
+{\bfseries}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{ }               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{exerciseStyle1}
+\newtheorem{exercise}{\textbf{Упражнение}}[section]
+
+
+\deftranslation[to=russian]{Theorem}{Теорема}
+\deftranslation[to=russian]{theorem}{теорема}
+
+\usepackage{tikz}
+\usetikzlibrary{trees}
+\usepackage{subcaption}
+
+%%%%%%%%%%%%%%%%%%
+\makeatletter
+\newenvironment{tabminted}{%
+  \let\FV@ListVSpace\relax  
+  \minted
+}{%
+  \endminted
+  \unskip   
+  \aftergroup\@tabmintedend
+}
+\newcommand*{\tabminted@finalstrut}[1]{%
+  \ifdim\prevdepth>0pt
+    \ifdim\dp#1>\prevdepth
+      \vskip\dimexpr(\dp#1)-\prevdepth\relax
+    \fi
+  \else
+    \vskip\dimexpr(\dp#1)\relax
+  \fi
+}
+\newcommand*{\@tabmintedend}{%
+  \let\@finalstrut\tabminted@finalstrut
+}
+\renewcommand{\cite}[1]{}
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%5
+\title[]{Register Allocation by Puzzle Solving}
+%\subtitle{С примерами кода на Haskell}
+\author{Косарев Дмитрий }
+
+\institute{матмех СПбГУ}
+
+\date{\today}
+ 
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>%[allowframebreaks]
+    \frametitle{Оглавление}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}
+\setcounter{tocdepth}{1}  % part,chapters,sections 
+\newcommand\chap[1]{
+%  \chapter*{#1}
+  \addcontentsline{toc}{chapter}{#1}
+}
+
+\usepackage{verbatimbox}
+
+\begin{document}
+\maketitle
+
+% For every picture that defines or uses external nodes, you'll have to
+% apply the 'remember picture' style. To avoid some typing, we'll apply
+% the style to all pictures.
+\tikzstyle{every picture}+=[remember picture] 
+
+% By default all math in TikZ nodes are set in inline mode. Change this to
+% displaystyle so that we don't get small fractions.
+\everymath{\displaystyle}
+
+% Uncomment these lines for an automatically generated outline.
+\begin{frame}{Оглавление}
+  \tableofcontents
+\end{frame}
+
+\begin{frame}[fragile]{Чисто функциональные структуры данных}
+\begin{itemize}
+  \item Следуя книге Okasaki "Pure Functional Data Structures"
+  \item Чисто функциональные -- это 
+    \begin{itemize}
+      \item используя только чистые функции
+      \item проектируя с помощью индуктивных (алгебраических) типов
+    \end{itemize}
+  \item С примерами кода на языке Haskell
+  \item В принципе, можно бы и на Python, но оно будет выглядеть отвратительно
+  \item Поэтому сначала gentle introduction to Haskell \textcopyright\vspace{.5cm}
+  
+  \item Будет непонятно -- кричите!
+\end{itemize}
+\end{frame}
+
+{
+\setbeamertemplate{headline}{}
+\setbeamertemplate{footline}{}
+\usebackgroundtemplate{
+  \includegraphics[width=\paperwidth]{munch2.jpg}
+}
+\begin{frame}
+\end{frame}
+}
+
+\section{Введение в Haskell}
+
+\begin{frame}[fragile]{Чистые функции}
+\begin{definition}{Чистая функция -- это}
+  \begin{itemize}
+    \item Детерминированная
+    \item В процессе работы не совершающая ``побочных эффектов''
+  \end{itemize}
+\end{definition}
+Т.е. запрещены: ввод-вывод, случайные значения, присваивания\\
+
+N.B. Это свойство \emph{функции}, а не языка программирования
+
+% TODO: referential transparency?
+\end{frame}
+
+
+\begin{frame}[fragile]{Индуктивные типы данных}
+По сути: объединение enum'ов и  record'ов в единый способ описания типов.\\
+
+\begin{minipage}{.58\textwidth}
+\begin{minted}{c}
+// C or C++
+enum typ {
+  A, B
+}
+struct a_contents {
+  Int    first;
+  String second;
+};
+struct b_contents {
+};
+
+size_t foo(typ tag, (void*)cntnts );
+\end{minted}
+\end{minipage}
+\begin{minipage}{.38\textwidth}
+\begin{minted}{haskell}
+-- Haskell
+data Typ = A Int String
+         | B
+         
+         
+  -- A and B are called 
+  -- `constructors` 
+         
+         
+         
+         
+foo :: Typ -> Size         
+\end{minted}
+\end{minipage}
+\end{frame}
+
+\begin{frame}[fragile]{Индуктивные типы данных (2/2). Использование}
+
+
+\begin{minipage}{.65\textwidth}
+  \begin{minted}[gobble=2]{c}
+  /* C */
+  size_t foo(typ tag, (void*)cntnts ) {
+    switch (tag) {
+    case A: 
+      int x    = ((a_contents*)cntnts).first;
+      String s = ((a_contents*)cntnts).second;
+      ...
+      break;
+    case B:
+      ...
+      break;
+    }    
+    assert(0); /* unreachable */
+    return 0;
+  }
+  \end{minted}
+\end{minipage}
+\begin{minipage}{.3\textwidth}
+  \begin{minted}[gobble=2]{haskell}
+  -- Haskell
+  foo (A x s) = ...
+  foo B       = ...
+
+
+  -- A and B are called 
+  -- `constructors`
+  
+  
+  
+  
+  -- compiler warns if some
+  -- cases are not taken
+  -- care of
+  \end{minted}
+\end{minipage}
+\end{frame}
+
+\begin{frame}[fragile]{Индуктивные типы данных. Важные примеры.}
+\begin{minted}{haskell}
+data Nat = 
+   Zero                                -- Zero :: Nat
+ | Succ Nat                            -- Succ :: Nat -> Nat
+
+data List a =                              -- Nil :: List a
+    Nil                                    -- Cons :: a -> List a -> List a
+ | Cons a (List a)                         -- Cons 5 Nil :: List Int
+
+data Tree  a = 
+    Leaf                         -- Leaf :: Tree a
+  | Node (Tree a) a (Tree a)     -- Node :: Tree a -> a -> Tree a -> Tree a
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Индуктивные типы данных. Встроенный список Haskell}
+\begin{minted}{haskell}
+-- user-defined linked list in Haskell
+data List a =                              -- Nil :: List a
+    Nil                                    -- Cons :: a -> List a -> List a
+  | Cons a (List a)                        -- Cons 5 Nil :: List Int
+
+-- built-in linked list in Haskell
+data [] a = [] | a : [a]               -- [] :: [a]
+                                       -- (:) :: a -> [a] -> [a]
+                                       -- 1:2:3:[] :: [Int]
+                                       -- [1,2,3,4] :: [Int]
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Индуктивные типы данных и множества}
+\begin{minted}{haskell}
+data Nat = 
+    Zero                                -- Zero :: Nat
+  | Succ Nat                            -- Succ :: Nat -> Nat
+\end{minted}
+Тип \hsinline{Nat} описывает индуктивное множество значений, населяющих тип \hsinline{Nat}, такое, что оно:
+\begin{enumerate}
+  \item содержит значение \hsinline{Zero}
+  \item замкнуто относительно операции \hsinline{Succ :: Nat -> Nat}
+  \item минимально
+\end{enumerate}
+
+Для остальных индуктивных типов данных (связные списки, деревья) рассуждения аналогичны.
+\end{frame}
+
+\begin{frame}[fragile]{Классы типов $\sim$ интерфейсы}
+\begin{minipage}{.48\textwidth}
+  \inputminted[firstline=9,lastline=15]{haskell}{code/Stacks.hs}
+\end{minipage}
+\begin{minipage}{.48\textwidth}
+  \inputminted[firstline=16,lastline=26]{haskell}{code/Stacks.hs}
+\end{minipage}
+\end{frame}
+
+%\input{chapter03.tex}
+%
+%\input{chapter05.tex}
+%
+%\input{chapter09.tex}
+
+
+\begin{frame}
+\begin{center}
+  {\Huge Конец.}\\
+  
+  Подробнее в книге Окасаки "Чисто функциональные структуры данных".
+\end{center}
+\end{frame}
+
+
+ \begin{frame}[allowframebreaks]
+   \frametitle<presentation>{Ссылки}
+   \begin{thebibliography}{10}
+   \bibitem{paper}
+     Register Allocation by Puzzle Solving (PLDI 2008)
+     \newblock {\em Fernando Magno Quint\~ao Pereira  \& Jens Palsberg }
+     \newblock \href{http://conal.net/papers/compiling-to-categories/compiling-to-categories.pdf}{PDF}
+           
+   \bibitem{slides1}
+     Slides from Compiler Construction course of Northeastern University
+     \newblock \href{https://users.cs.northwestern.edu/~robby/courses/322-2016-spring/puzzle_solving.pdf}{PDF}
+   \bibitem{thesis}    
+     \href{http://compilers.cs.ucla.edu/fernando/publications/papers/PhdDiss.pdf}{PhD thesis}
+     \newblock {\em Fernando Magno Quint\~ao Pereira}
+   \bibitem{ssabook}    
+      SSA book
+     \href{http://ssabook.gforge.inria.fr/latest/book.pdf}{PDF} 
+%   \bibitem{}
+%     \href{https://github.com/conal/concat}{Project repo}
+   \end{thebibliography}
+ \end{frame}
+
+\end{document}
