@@ -127,83 +127,137 @@
   \tableofcontents
 \end{frame}
 
-\begin{frame}[fragile]{Чисто функциональные структуры данных}
+\begin{frame}{Распределение по регистрам (reguster allocation)}
 \begin{itemize}
-  \item Следуя книге Okasaki "Pure Functional Data Structures"
-  \item Чисто функциональные -- это 
+  \item Назначение физических локаций переменным в программе
     \begin{itemize}
-      \item используя только чистые функции
-      \item проектируя с помощью индуктивных (алгебраических) типов
+      \item регистры быстрые, но их мало
+      \item памяти много, но она медленная
     \end{itemize}
-  \item С примерами кода на языке Haskell
-  \item В принципе, можно бы и на Python, но оно будет выглядеть отвратительно
-  \item Поэтому сначала gentle introduction to Haskell \textcopyright\vspace{.5cm}
-  
-  \item Будет непонятно -- кричите!
+  \item Ограничение: переменные, которые \emph{живы одновременно}, должны быть назначены в разные регистры
+  \item Если регистров не хватает, то некоторые переменные должны храниться в памяти (spilling)
 \end{itemize}
 \end{frame}
 
-{
-\setbeamertemplate{headline}{}
-\setbeamertemplate{footline}{}
-\usebackgroundtemplate{
-  \includegraphics[width=\paperwidth]{munch2.jpg}
-}
-\begin{frame}
-\end{frame}
-}
+%{
+%\setbeamertemplate{headline}{}
+%\setbeamertemplate{footline}{}
+%\usebackgroundtemplate{
+%  \includegraphics[width=\paperwidth]{munch2.jpg}
+%}
+%\begin{frame}
+%\end{frame}
+%}
 
-\section{Введение в Haskell}
-
-\begin{frame}[fragile]{Чистые функции}
-\begin{definition}{Чистая функция -- это}
-  \begin{itemize}
-    \item Детерминированная
-    \item В процессе работы не совершающая ``побочных эффектов''
-  \end{itemize}
-\end{definition}
-Т.е. запрещены: ввод-вывод, случайные значения, присваивания\\
-
-N.B. Это свойство \emph{функции}, а не языка программирования
-
-% TODO: referential transparency?
-\end{frame}
-
-
-\begin{frame}[fragile]{Индуктивные типы данных}
-По сути: объединение enum'ов и  record'ов в единый способ описания типов.\\
-
-\begin{minipage}{.58\textwidth}
-\begin{minted}{c}
-// C or C++
-enum typ {
-  A, B
-}
-struct a_contents {
-  Int    first;
-  String second;
-};
-struct b_contents {
-};
-
-size_t foo(typ tag, (void*)cntnts );
-\end{minted}
+\begin{frame}{Период жизни переменной}
+\noindent{
+\begin{minipage}{.5\textwidth}
+\begin{figure}[h]
+  \input{figures/liveness.tex}\par
+\end{figure}
+\end{minipage}}
+\begin{minipage}{.48\textwidth}
+\begin{itemize}
+\item Переменная \emph{живая}, если она может быть использована в будущем
+\item \emph{Период жизни (live range)} переменной -- это коллекция точек программы, где она жива.
+\end{itemize}
 \end{minipage}
+
+\end{frame}
+
+\begin{frame}[fragile]{}
+quiz 1?
+\end{frame}
+
+\begin{frame}[fragile]{Раскладка по регистрам и графы}
+\noindent{
+\begin{minipage}{.5\textwidth}
+\begin{figure}[h]
+  \input{figures/liveness.tex}\par
+\end{figure}
+\end{minipage}}
+\begin{minipage}{.48\textwidth}
+\begin{center}
+  \begin{tikzpicture}[bullet/.style={circle, fill, inner sep=2pt}]
+    \foreach \lab [count=\c 
+                  ,evaluate=\c as \ang using {18+72*\c}
+%                  ,evaluate=\c as \next using {mod(1+\c, 5)}
+                  ] 
+    in {b,c,d,e,a} {
+       \node[bullet] (\c) at (\ang:10mm) {};
+       \node at (\ang:14mm){$\lab$};
+    }
+    % it should be doable in a loop but I don't know how
+    \draw (1) -- (2)  -- (3) -- (4) -- (5) --  (1);
+  \end{tikzpicture}
+\end{center}
+SFRA = Graph Coloring. 
+
+SRFA - NP complete
+\end{minipage}
+
+\end{frame}
+
+\begin{frame}[fragile]{}
+quiz 1?
+\end{frame}
+\begin{frame}[fragile]{}
+quiz 1?
+\end{frame}
+\begin{frame}[fragile]{}
+quiz 1?
+\end{frame}
+
+\begin{frame}[fragile]{}
+\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt   
+\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%uncomment if require: \path (0,94.5); %set diagram left start at 0, and has height of 94.5
+
+%Shape: Rectangle [id:dp06294366710675758] 
+\draw   (99.76,20) -- (139.65,20) -- (140,40) -- (100.11,40) -- cycle ;
+%Shape: Rectangle [id:dp2425421243241267] 
+\draw   (20,20) -- (60,20) -- (60,60) -- (20,60) -- cycle ;
+%Shape: Rectangle [id:dp944866032756623] 
+\draw   (100,60) -- (139.89,60) -- (140.24,80) -- (100.35,80) -- cycle ;
+
+% Text Node
+\draw (119.88,30) node  [align=left] {X};
+% Text Node
+\draw (120.12,70) node  [align=left] {Z};
+% Text Node
+\draw (40,40) node  [align=left] {Y};
+
+
+\end{tikzpicture}
+\end{frame}
+
+\begin{frame}[fragile]{Контр-пример 1}
+\includegraphics[width=0.9\paperwidth]{figures/ce1.png}
+Lesson: use a size-2 piece before two size-1 pieces
+\end{frame}
+
+\begin{frame}[fragile]{Контр-пример 2}
+\includegraphics[width=0.9\paperwidth]{figures/ce2.png}
+Lesson: statements 7-10 must come before statements 11-14
+\end{frame}
+
+\begin{frame}[fragile]{Контр-пример 3}
+\includegraphics[width=0.9\paperwidth]{figures/ce3.png}
+Lesson: statement 15 must come before statements 11-14
+\end{frame}
+
+\begin{frame}[fragile]{Контр-пример 4}
+\includegraphics[width=0.9\paperwidth]{figures/ce4.png}
+Lesson: the order in statement 11-14 is crucial
+\end{frame}
+
+\begin{frame}[fragile]
+\noindent{
+\begin{minipage}{.6\textwidth}
+\includegraphics[height=0.9\paperheight]{figures/vis-lang.png}
+\end{minipage}}
 \begin{minipage}{.38\textwidth}
-\begin{minted}{haskell}
--- Haskell
-data Typ = A Int String
-         | B
-         
-         
-  -- A and B are called 
-  -- `constructors` 
-         
-         
-         
-         
-foo :: Typ -> Size         
-\end{minted}
+Визуальный язык для программирования решателей паззлов.
 \end{minipage}
 \end{frame}
 
@@ -265,44 +319,28 @@ data Tree  a =
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{Индуктивные типы данных. Встроенный список Haskell}
-\begin{minted}{haskell}
--- user-defined linked list in Haskell
-data List a =                              -- Nil :: List a
-    Nil                                    -- Cons :: a -> List a -> List a
-  | Cons a (List a)                        -- Cons 5 Nil :: List Int
-
--- built-in linked list in Haskell
-data [] a = [] | a : [a]               -- [] :: [a]
-                                       -- (:) :: a -> [a] -> [a]
-                                       -- 1:2:3:[] :: [Int]
-                                       -- [1,2,3,4] :: [Int]
-\end{minted}
+\begin{frame}[fragile]{}
+1
 \end{frame}
 
-\begin{frame}[fragile]{Индуктивные типы данных и множества}
-\begin{minted}{haskell}
-data Nat = 
-    Zero                                -- Zero :: Nat
-  | Succ Nat                            -- Succ :: Nat -> Nat
-\end{minted}
-Тип \hsinline{Nat} описывает индуктивное множество значений, населяющих тип \hsinline{Nat}, такое, что оно:
-\begin{enumerate}
-  \item содержит значение \hsinline{Zero}
-  \item замкнуто относительно операции \hsinline{Succ :: Nat -> Nat}
-  \item минимально
-\end{enumerate}
-
-Для остальных индуктивных типов данных (связные списки, деревья) рассуждения аналогичны.
+\begin{frame}[fragile]{}
+1
 \end{frame}
 
-\begin{frame}[fragile]{Классы типов $\sim$ интерфейсы}
-\begin{minipage}{.48\textwidth}
-  \inputminted[firstline=9,lastline=15]{haskell}{code/Stacks.hs}
-\end{minipage}
-\begin{minipage}{.48\textwidth}
-  \inputminted[firstline=16,lastline=26]{haskell}{code/Stacks.hs}
-\end{minipage}
+\begin{frame}[fragile]{}
+1
+\end{frame}
+
+\begin{frame}[fragile]{}
+1
+\end{frame}
+
+\begin{frame}[fragile]{}
+1
+\end{frame}
+
+\begin{frame}[fragile]{}
+1
 \end{frame}
 
 %\input{chapter03.tex}
