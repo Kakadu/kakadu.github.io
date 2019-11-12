@@ -20,7 +20,7 @@
 % \usepackage{ragged2e} % for \Centering macro
 % \newcolumntype{C}{>{\Centering\arraybackslash}X}m
 % sudo aptget install ttf-mscorefonts-installer
-\defaultfontfeatures{Ligatures={TeX}} 
+\defaultfontfeatures{Ligatures={TeX}}
 \setmainfont{CMU Serif Roman}
 \setsansfont{CMU Sans Serif}
 
@@ -83,6 +83,7 @@
 \renewcommand{\cite}[1]{}
 \makeatother
 
+%\tikzset{every picture/.style={/utils/exec={\rmfamily}}}
 
 %%%%%%%%%%%%%%%%%%%%%5
 \title[]{Register Allocation by Puzzle Solving}
@@ -198,14 +199,100 @@ SRFA - NP complete
 
 \end{frame}
 
-\begin{frame}[fragile]{}
-quiz 1?
+\begin{frame}[fragile]{Пример}
+\noindent{
+\begin{minipage}{.2\textwidth}
+\begin{verbatim}
+a := 1
+
+b := 2
+
+c := a
+
+d := b
+
+e := c
+
+a := d
+
+ret a + e
+\end{verbatim}
+\end{minipage}}
+\noindent{
+\begin{minipage}{.48\textwidth}
+\begin{center}
+Three registers: R1, R2 и R3
+
+\begin{tikzpicture}[bullet/.style={circle, fill, inner sep=2pt}]
+  \foreach \lab [count=\c 
+                ,evaluate=\c as \ang using {18+72*\c}
+%                  ,evaluate=\c as \next using {mod(1+\c, 5)}
+                ] 
+  in {b(R2),c(R1),d(R3),e(R2),a(R1)} {
+     \node[bullet] (\c) at (\ang:10mm) {};
+     \node at (\ang:16mm){$\lab$};
+  }
+  % it should be doable in a loop but I don't know how
+  \draw (1) -- (2)  -- (3) -- (4) -- (5) --  (1);
+\end{tikzpicture}
+\end{center}
+\end{minipage}}
+\begin{minipage}{.2\textwidth}
+\begin{verbatim}
+R1 := 1
+
+R2 := 2
+
+R1 := R1
+
+R3 := R2
+
+R2 := R1
+
+R1 := R3
+
+ret R1 + R2
+\end{verbatim}
+\end{minipage}
 \end{frame}
-\begin{frame}[fragile]{}
-quiz 1?
+
+\begin{frame}[fragile]{Live range splitting}
+%\begin{figure}[h]
+%  \input{figures/range-splitting.tex}
+%\end{figure}
+Вставка инструкций копирования для упрощения interference graph
+\begin{minipage}[t]{0.48\textwidth}
+  \input{figures/range-splitting.tex}
+\end{minipage}
+\begin{minipage}[t]{0.4\textwidth}
+  \input{figures/range-splitting2.tex}
+\end{minipage}
 \end{frame}
+
 \begin{frame}[fragile]{}
-quiz 1?
+\begin{figure}
+\centering
+\includegraphics[width=0.9\paperwidth]{figures/quiz2}
+%\caption{}
+%\label{fig:quiz2}
+\end{figure}
+
+\end{frame}
+
+\begin{frame}[fragile]{}
+1
+\end{frame}
+
+\begin{frame}[fragile]{}
+1
+\end{frame}
+
+\begin{frame}[fragile]{}
+1
+\end{frame}
+
+\begin{frame}[fragile]{}
+1
 \end{frame}
 
 \begin{frame}[fragile]{}
@@ -303,20 +390,8 @@ Lesson: the order in statement 11-14 is crucial
 \end{minipage}
 \end{frame}
 
-\begin{frame}[fragile]{Индуктивные типы данных. Важные примеры.}
-\begin{minted}{haskell}
-data Nat = 
-   Zero                                -- Zero :: Nat
- | Succ Nat                            -- Succ :: Nat -> Nat
-
-data List a =                              -- Nil :: List a
-    Nil                                    -- Cons :: a -> List a -> List a
- | Cons a (List a)                         -- Cons 5 Nil :: List Int
-
-data Tree  a = 
-    Leaf                         -- Leaf :: Tree a
-  | Node (Tree a) a (Tree a)     -- Node :: Tree a -> a -> Tree a -> Tree a
-\end{minted}
+\begin{frame}[fragile]{}
+1
 \end{frame}
 
 \begin{frame}[fragile]{}
