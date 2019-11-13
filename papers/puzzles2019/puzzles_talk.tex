@@ -279,13 +279,124 @@ ret R1 + R2
 
 \end{frame}
 
-\begin{frame}[fragile]{}
-1
+
+\begin{frame}[fragile]{Static Single Assignment (SSA)}
+
+\begin{definition}[SSA form]
+``A program is defined to be in SSA form if each variable is a target of exactly one assignment statement in the program text.``
+\end{definition}
+
+Плюсы:
+\begin{itemize}
+\item ссылочная прозрачность (referential transparency)
+\item значение переменной не зависит от позиции вхождения её идентификатора в программу
+\end{itemize}
 \end{frame}
 
-\begin{frame}[fragile]{}
-1
+
+\begin{frame}[fragile]{(SSA) Пример}
+\noindent{
+  \begin{minipage}[t]{0.48\linewidth}
+  \begin{minted}[]{c}
+  /* not a SSA */
+  x = 1;
+  y = x + 1;
+  x = 2;
+  z = x + 1;
+  \end{minted}
+\end{minipage}}
+\hfill
+\begin{minipage}[t]{0.48\linewidth}
+  \begin{minted}[]{c}
+  /* SSA */
+  x1 = 1;
+  y = x1 + 1;
+  x2 = 2;
+  z = x2 + 1;
+  \end{minted}
+\end{minipage}\vspace{1em}
+
+В примере выше хочется соптимизировать и написать \mintinline{c}{z = y;} так как правые части синтаксически одинаковые.
+
+Но это сделать нельзя так как в \mintinline{c}{x} присваивается новое значение, т.е. содержимое перемернной \mintinline{c}{z} зависит от контекста.
 \end{frame}
+
+\tikzstyle{basic block} = [rectangle, rounded corners=3mm, align=left]
+\tikzstyle{large bb} = [draw, text width=3cm]
+\tikzstyle{very large bb} = [draw, text width=4cm]
+\tikzstyle{normal bb} = [draw, text width=2cm]
+
+\begin{frame}[fragile]{Разветвление потока управления}
+\noindent{
+\begin{minipage}[t]{0.48\linewidth}
+\begin{minted}[]{c}
+  x = input();
+  if (x==42)
+  then 
+    y = 1; /* A */
+  else 
+    y = x+2; /* B */
+  end
+  print(y);
+\end{minted}
+\end{minipage}}
+\begin{minipage}[t]{0.48\linewidth}
+\begin{figure}
+\input{figures/ssa-phi.tikz}
+\end{figure}
+\end{minipage}\vspace{1em}
+
+\end{frame}
+
+\begin{frame}[fragile]{$\varphi$-функции}
+$\varphi$-функции вставляются в точках слияния потоков управления и позволяют выбирать значение переменной
+
+\noindent{
+\begin{minipage}[t]{0.48\linewidth}
+\begin{minted}[escapeinside=??]{c}
+  x = input();
+  if (x==42)
+  then 
+    ?$y_1$? = 1; /* A */
+  else 
+    ?$y_2$? = x+2; /* B */
+  end
+  ?$y_3$? = ?$\varphi(y_1,y_2);$?
+  print(?$y_3$?);
+\end{minted}
+\end{minipage}}
+\begin{minipage}[t]{0.48\linewidth}
+\begin{figure}
+\input{figures/ssa-phi2.tex}
+\end{figure}
+\end{minipage}
+
+\end{frame}
+
+
+\begin{frame}[fragile]{Static Single Information (SSI)}
+По умолчанию SSA связывает некоторую информацию с парой переменная $\times$ позиция в программе.\\
+
+Для некоторых видов анализа будет удобнее связывать иметь общую информацию по всей программе с конкретной переменной, а не каждым её вхождением. Это удобно для таких анализов:
+\begin{itemize}
+\item вывод классов с виртуальными методами по классам-таблицам (Python, Javascript, Ruby \& Lua)
+\item Null pointer анализ
+\item интервалы значений (далее будет пример)
+\end{itemize}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{}
+\begin{figure}
+\centering
+\includegraphics[height=.85\textheight]{figures/dense-range-analysis}
+\end{figure}
+An example of a dense data-flow analysis that finds the range of possible values associated
+with each variable at each program point.
+
+\end{frame}
+
 
 \begin{frame}[fragile]{}
 1

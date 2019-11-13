@@ -1,0 +1,17 @@
+\kern1cm
+\begin{tikzpicture}[node distance=1.2cm and -.8cm]
+    % Place nodes
+    \path (0,0) node  [basic block, large bb] (l1) 
+                       {$x \leftarrow input()$\\$(x=42)?$ }
+    +(-1.8,-2.2) node [basic block, normal bb] (l3) {$y_1 \leftarrow 1$}
+    +(+1.8,-2.2) node [basic block, normal bb] (l5) {$y_2 \leftarrow x+2$}
+    +(0,-4) node [basic block, very large bb] (l7)
+        {$y3\leftarrow \varphi(A:y_1, B:y_2)$\\$print(y_3)$};
+
+    % Draw edges
+    \path [] (l1) edge (l3) edge (l5);
+    \path [] (l3) edge (l7);
+    \path [] (l5) edge (l7);
+
+%    \increaseshadowboundingbox
+\end{tikzpicture}
