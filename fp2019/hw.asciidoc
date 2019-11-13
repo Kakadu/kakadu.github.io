@@ -180,6 +180,9 @@ echo $BASH_COMMAND
 Из языково-специфичных фич, я предлагаю
 http://codeblog.dhananjaynene.com/2010/01/dynamically-adding-methods-with-metaprogramming-ruby-and-python/[динамическое дополнение методов].
 
+В 2020м году надо будет добавить интернирование строк для усложнения парсера
+
+
 [[ruby]]
 === Ruby (Привалихин)
 
@@ -391,6 +394,10 @@ MOV  EAX ← [y]       |         MOV  EBX ← [x]
 в исчислениях (я планирую про это как-то рассказывать).
 
 === Extended Regexps
+
+=== Visual Basic
+
+=== Gallina
 
 === OCaml/Haskell with GADT (2 человека)
 
