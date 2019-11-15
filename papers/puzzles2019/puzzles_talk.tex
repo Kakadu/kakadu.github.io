@@ -140,17 +140,26 @@
 \end{itemize}
 \end{frame}
 
-%{
-%\setbeamertemplate{headline}{}
-%\setbeamertemplate{footline}{}
-%\usebackgroundtemplate{
-%  \includegraphics[width=\paperwidth]{munch2.jpg}
-%}
-%\begin{frame}
-%\end{frame}
-%}
 
-\begin{frame}{Период жизни переменной}
+\begin{frame}{Нерегулярные архитектуры. Pre-coloring}
+\end{frame}
+
+
+\begin{frame}[fragile]{Нерегулярные архитектуры. Aliasing}
+\begin{figure}[h]
+\includegraphics[scale=.35]{figures/x86-registers.png}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Некоторый жаргон}
+Spilling\\
+
+Coalesing (объединение)
+\end{frame}
+
+
+
+\begin{frame}{Терминология. Период жизни переменной}
 \noindent{
 \begin{minipage}{.5\textwidth}
 \begin{figure}[h]
@@ -170,7 +179,66 @@
 quiz 1?
 \end{frame}
 
-\begin{frame}[fragile]{Раскладка по регистрам и графы}
+
+
+\begin{frame}[fragile]{Live range splitting}
+%\begin{figure}[h]
+%  \input{figures/range-splitting.tex}
+%\end{figure}
+Вставка инструкций копирования для упрощения interference graph
+\begin{minipage}[t]{0.48\textwidth}
+  \input{figures/range-splitting.tex}
+\end{minipage}
+\begin{minipage}[t]{0.4\textwidth}
+  \input{figures/range-splitting2.tex}
+\end{minipage}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{figure}
+\centering
+\includegraphics[width=0.9\paperwidth]{figures/quiz2}
+%\caption{}
+%\label{fig:quiz2}
+\end{figure}
+
+\end{frame}
+
+
+\begin{frame}{Стандартные алгоритмы TODO}
+\begin{itemize}
+\item Раскраска вершин графа в k цветов (Chaitin et al. 1982)
+\begin{itemize}
+\item NP-полная задача
+\item требудет live range splitting, иначе spillится слишком много
+\item переменная, которая не spilled, всегда находится в одном регистре
+\item алгоритмы для оптимизации coalescing слишком консервативны (Briggs)
+\end{itemize}
+
+\item Linear Scan Rgister Allocation (2я половина 1990х) -- жадный алгоритм\\
+  появился из-за критики консервативных подходов к coalescing
+\begin{itemize}
+\item Изначально работал существенное быстре, но выдавал не такой хороший код
+\item Позже это улучшили с помощью binpacking (Traub et al., 1998)
+\item Дальнейшее: выбор более оптимальных место для live range splitting
+\item \emph{Extended linear scan} -- вставка дополнительных инструкций для уменьшения spilling
+\end{itemize}\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{itemize}
+\item Linear Programming -- слишком медленный, даже по сравнению с раскраской графа
+\item Register allocation via Partitioned Quadratic Programming\\
+  дает оптимальное решение (если оно есть) за $O(\mid V\mid K^3)$, где $V$ -- переменные, а $K$ -- количество регистров
+  % Хз что там с нерегулярными архитектурами
+  
+\item Register allocation via Multi-Flow of Commodities\\
+  Умеет порождать более маленький код, чем раскраска графа
+
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Раскладка по регистрам и графы. Пример (1/2)}
 \noindent{
 \begin{minipage}{.5\textwidth}
 \begin{figure}[h]
@@ -199,7 +267,7 @@ SRFA - NP complete
 
 \end{frame}
 
-\begin{frame}[fragile]{Пример}
+\begin{frame}[fragile]{Пример (2/2)}
 \noindent{
 \begin{minipage}{.2\textwidth}
 \begin{verbatim}
@@ -256,26 +324,27 @@ ret R1 + R2
 \end{minipage}
 \end{frame}
 
-\begin{frame}[fragile]{Live range splitting}
-%\begin{figure}[h]
-%  \input{figures/range-splitting.tex}
-%\end{figure}
-Вставка инструкций копирования для упрощения interference graph
-\begin{minipage}[t]{0.48\textwidth}
-  \input{figures/range-splitting.tex}
-\end{minipage}
-\begin{minipage}[t]{0.4\textwidth}
-  \input{figures/range-splitting2.tex}
-\end{minipage}
+\begin{frame}[fragile]{Раскладка по регистрам на основе SSA представления (2005)}
+\begin{itemize}
+\item Существенный прогресс
+\item Из-за SSA представления программ interference graph можно сделать хордальным
+\item Тогда алгоритм раскраски графа становится полиномиальным
+\end{itemize}
+
+\begin{definition}[Хордальный граф (сhordal graph)]
+Граф называется \emph{хордальным}, если каждый из его циклов, имеющих четыре ребра и более, имеет хорду (ребро, соединяющее две вершины цикла, но не являющееся его частью)
+\end{definition}
 \end{frame}
 
+
 \begin{frame}[fragile]{}
-\begin{figure}
-\centering
-\includegraphics[width=0.9\paperwidth]{figures/quiz2}
-%\caption{}
-%\label{fig:quiz2}
-\end{figure}
+Тут может быть картинка в 48й страницы
+
+Chordal graphs have several useful properties. Problems such as minimum
+coloring, maximum clique, maximum independent set and minimum covering by
+cliques, which are NP-complete in general, can be solved in polynomial time for
+chordal graphs [37]. In particular, optimal coloring of a chordal graph G = (V, E)
+can be done in O(|E| + |V |) time.
 
 \end{frame}
 
@@ -294,7 +363,12 @@ ret R1 + R2
 \end{frame}
 
 
-\begin{frame}[fragile]{(SSA) Пример}
+\begin{frame}[fragile]{}
+Тут может стоит вставить картинка с 46й страницы
+\end{frame}
+
+
+\begin{frame}[fragile]{Static Single Assignment (SSA). Пример}
 \noindent{
   \begin{minipage}[t]{0.48\linewidth}
   \begin{minted}[]{c}
@@ -326,7 +400,7 @@ ret R1 + R2
 \tikzstyle{very large bb} = [draw, text width=4cm]
 \tikzstyle{normal bb} = [draw, text width=2cm]
 
-\begin{frame}[fragile]{Разветвление потока управления}
+\begin{frame}[fragile]{Разветвление потока управления (1/2)}
 \noindent{
 \begin{minipage}[t]{0.48\linewidth}
 \begin{minted}[]{c}
@@ -348,7 +422,7 @@ ret R1 + R2
 
 \end{frame}
 
-\begin{frame}[fragile]{$\varphi$-функции}
+\begin{frame}[fragile]{Разветвление потока управления (2/2)}
 $\varphi$-функции вставляются в точках слияния потоков управления и позволяют выбирать значение переменной
 
 \noindent{
@@ -371,6 +445,38 @@ $\varphi$-функции вставляются в точках слияния �
 \end{figure}
 \end{minipage}
 
+\end{frame}
+
+
+\begin{frame}[fragile]%{}
+\begin{figure}
+\centering
+\includegraphics[width=\textwidth]{figures/regalloc-ssa}
+\caption{}
+\label{fig:regalloc-ssa}
+\end{figure}
+%Figure 2.16: (a) SSA-form program taken from Pereira and Palsberg [73]. (b)
+%Program after the SSA elimination phase. (c) Interference graph and sequence
+%of register assignments.
+\end{frame}
+
+
+\begin{frame}[fragile]{Про NP-полноту}
+Задача Spill Free Register Allocation имеет полиномиальное решение, но NP-полно в общем случае.
+% Any program can be converted into SSA-form via a polynomial time
+%transformation [27]. However, a register assignment for a SSA-form program can-
+%not be converted back to an optimal register assignment of the original program
+%in polynomial time unless P=NP.
+
+Большое количество полезных задач NP-полно для SSA формы, а следовательно NP-полно для всех программ
+\begin{itemize}
+\item Spill minimization
+\item (Optimal) Coalescing
+\item (Optimal) Live range splitting 
+\item (Optimal) aliasing
+\item Pre-coloring
+\end{itemize}
+Можно попробовать использовать более простое представление программ, чтобы получались полиномиальные алгоритмы
 \end{frame}
 
 
