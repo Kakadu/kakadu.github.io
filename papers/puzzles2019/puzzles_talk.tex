@@ -23,12 +23,13 @@
 \defaultfontfeatures{Ligatures={TeX}}
 \setmainfont{CMU Serif Roman}
 \setsansfont{CMU Sans Serif}
+\setmonofont{CMU Typewriter Text} % cyrillic issues
 
-\setmonofont[Scale=1.0,
-    BoldFont=lmmonolt10-bold.otf,
-    ItalicFont=lmmono10-italic.otf,
-    BoldItalicFont=lmmonoproplt10-boldoblique.otf
-]{lmmono9-regular.otf}
+%\setmonofont[Scale=1.0,
+%    BoldFont=lmmonolt10-bold.otf,
+%    ItalicFont=lmmono10-italic.otf,
+%    BoldItalicFont=lmmonoproplt10-boldoblique.otf
+%]{lmmono9-regular.otf}
 
 \newcommand{\term}[2]{\textit{#1} (#2)}
 
@@ -86,19 +87,25 @@
 %\tikzset{every picture/.style={/utils/exec={\rmfamily}}}
 
 %%%%%%%%%%%%%%%%%%%%%5
-\title[]{Register Allocation by Puzzle Solving}
-%\subtitle{С примерами кода на Haskell}
+\title[]{Распределение регистров и решение головоломок}
+\subtitle{Register Allocation by Puzzle Solving}
 \author{Косарев Дмитрий }
 
 \institute{матмех СПбГУ}
 
-\date{\today}
- 
+\date{18 ноября 2019}
+%\date{\today}
+
 \AtBeginSection[]
 {
   \begin{frame}<beamer>%[allowframebreaks]
     \frametitle{Оглавление}
-    \tableofcontents[currentsection]
+    \tableofcontents
+      [currentsection
+      ,currentsubsection
+%      ,sectionstyle=show/hide
+%      ,  subsectionstyle=show/shaded 
+      ]
   \end{frame}
 }
 
@@ -125,10 +132,12 @@
 
 % Uncomment these lines for an automatically generated outline.
 \begin{frame}{Оглавление}
-  \tableofcontents
+  \tableofcontents[]
 \end{frame}
 
-\begin{frame}{Распределение по регистрам (reguster allocation)}
+\section{Задача распределения регистров}
+
+\begin{frame}{Задача распределения регистров (register allocation)}
 \begin{itemize}
   \item Назначение физических локаций переменным в программе
     \begin{itemize}
@@ -136,30 +145,123 @@
       \item памяти много, но она медленная
     \end{itemize}
   \item Ограничение: переменные, которые \emph{живы одновременно}, должны быть назначены в разные регистры
-  \item Если регистров не хватает, то некоторые переменные должны храниться в памяти (spilling)
+  \item Если регистров не хватает, то некоторые переменные должны храниться в памяти
 \end{itemize}
 \end{frame}
 
+\section{Особенности, осложняющие задачу}
 
-\begin{frame}{Нерегулярные архитектуры. Pre-coloring}
+\begin{frame}[fragile]{Распределение регистров: что происходит?}
+\begin{minipage}{.48\textwidth}
+Исходная программа:
+\begin{verbatim}
+MyVar1  = 2
+MyVar2  = 40
+MyVar3  = 0
+MyVar3 += MyVar1
+MyVar3 += MyVar2
+print(MyVar3)
+\end{verbatim}
+\end{minipage}
+\begin{minipage}{.48\textwidth}
+\begin{figure}
+\centering
+\includegraphics[width=1.\linewidth]{figures/regalloc-demo1}
+\end{figure}
+\vspace{1cm}
+Результат:
+\begin{verbatim}
+MyVar1  -> stack 
+MyVar2  -> r8
+MyVar3  -> r9
+\end{verbatim}
+\end{minipage}
+
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{minipage}{.48\textwidth}
+Исходная программа:
+\begin{verbatim}
+MyVar1  = 2
+MyVar2  = 40
+MyVar3  = 0
+MyVar3 += MyVar1
+MyVar3 += MyVar2
+print(MyVar3)
+\end{verbatim}
+\end{minipage}
+\begin{minipage}{.48\textwidth}
+\begin{figure}
+\centering
+\includegraphics[width=1\linewidth]{figures/regalloc-demo2}
+\end{figure}
+\vspace{1cm}
+Иерархия регистров (aliasing):
+\begin{itemize}
+\item  r8 может хранить одно 64-битное число или два 32-битных
+\item  r9 может хранить 64-битное число
+\end{itemize}
+\end{minipage}
 \end{frame}
 
 
-\begin{frame}[fragile]{Нерегулярные архитектуры. Aliasing}
+\begin{frame}[fragile]{Нерегулярные архитектуры. Pre-coloring}
+\begin{minipage}{.48\textwidth}
+Вызов функций (PowerPC):
+\begin{minted}[escapeinside=??]{text}
+a := 10;
+b := 2;
+?\textcolor{teal}{R0}? := a;
+?\textcolor{teal}{R1}? := b;
+call(?\textcolor{teal}{R0}?, ?\textcolor{teal}{R1}?);
+\end{minted}
+\end{minipage}
+\begin{minipage}{.48\textwidth}
+Деление (x86)
+\begin{minted}[escapeinside=??]{text}
+a := 10;
+b := 2;
+?\textcolor{teal}{AX}? := a;
+(?\textcolor{teal}{AL}?,?\textcolor{teal}{AH}?) := DIV ?\textcolor{teal}{AX}?, b;
+d := ?\textcolor{teal}{AL}?; // частное
+r := ?\textcolor{teal}{AH}?; // остаток
+\end{minted}
+\end{minipage}
+\vspace{1em}
+
+Некоторые переменные должны быть связаны с конкретными регистрами из-за соглашений о вызовах, деления и т.п.
+\end{frame}
+
+
+\begin{frame}[fragile]{Нерегулярные архитектуры. Иерархия регситров(aliasing)}
+\begin{minipage}{.4\textwidth}
+Вложенные регистры могут использоваться как независимо, так и в комбинации с другими\\
+
+Встречается в архитектурах: x86, Sun SPARC, MIPS у чисел плавающей точкой, и т.д.
+\end{minipage}
+\begin{minipage}{.58\textwidth}
+
 \begin{figure}[h]
 \includegraphics[scale=.35]{figures/x86-registers.png}
+\caption{Пример: иерархия регистров у Pentium}
 \end{figure}
+\end{minipage}
 \end{frame}
 
-\begin{frame}{Некоторый жаргон}
-Spilling\\
+\section{Терминология}
 
-Coalesing (объединение)
+\begin{frame}{Терминология (1/3). Spilling \& coalescing}
+\emph{Spilling}\\
+Если регистров не хватает для всех переменных, то некоторые должны храниться в памяти.
+Обращение к этим переменным \textbf{неэффективно}\vspace{1cm}
+
+Если области использования переменных \emph{не пересекаются} и они \emph{связаны инструкцией копирования} $v_1=v_2$, то их следует хранить в одном регистре, и это называется \emph{coalesing (объединение)}.
 \end{frame}
 
 
 
-\begin{frame}{Терминология. Период жизни переменной}
+\begin{frame}{Терминология (2/3). Период жизни переменной}
 \noindent{
 \begin{minipage}{.5\textwidth}
 \begin{figure}[h]
@@ -172,73 +274,28 @@ Coalesing (объединение)
 \item \emph{Период жизни (live range)} переменной -- это коллекция точек программы, где она жива.
 \end{itemize}
 \end{minipage}
-
 \end{frame}
 
-\begin{frame}[fragile]{}
-quiz 1?
-\end{frame}
-
-
-
-\begin{frame}[fragile]{Live range splitting}
-%\begin{figure}[h]
-%  \input{figures/range-splitting.tex}
-%\end{figure}
-Вставка инструкций копирования для упрощения interference graph
-\begin{minipage}[t]{0.48\textwidth}
-  \input{figures/range-splitting.tex}
-\end{minipage}
-\begin{minipage}[t]{0.4\textwidth}
-  \input{figures/range-splitting2.tex}
-\end{minipage}
-\end{frame}
-
-\begin{frame}[fragile]{}
-\begin{figure}
-\centering
-\includegraphics[width=0.9\paperwidth]{figures/quiz2}
-%\caption{}
-%\label{fig:quiz2}
+\begin{frame}[fragile]{Распределение регистров  и графы. Пример (1/3)}
+\noindent{
+\begin{minipage}{.5\textwidth}
+\begin{figure}[h]
+  \input{figures/liveness.tex}\par
 \end{figure}
-
-\end{frame}
-
-
-\begin{frame}{Стандартные алгоритмы TODO}
+\end{minipage}}
+\begin{minipage}{.48\textwidth}
+Вопросы:
 \begin{itemize}
-\item Раскраска вершин графа в k цветов (Chaitin et al. 1982)
-\begin{itemize}
-\item NP-полная задача
-\item требудет live range splitting, иначе spillится слишком много
-\item переменная, которая не spilled, всегда находится в одном регистре
-\item алгоритмы для оптимизации coalescing слишком консервативны (Briggs)
+\item Сколько нужно регистров для этой программы?
+\item Существует ли универсальный алгоритм?
+\item P или NP?
 \end{itemize}
 
-\item Linear Scan Rgister Allocation (2я половина 1990х) -- жадный алгоритм\\
-  появился из-за критики консервативных подходов к coalescing
-\begin{itemize}
-\item Изначально работал существенное быстре, но выдавал не такой хороший код
-\item Позже это улучшили с помощью binpacking (Traub et al., 1998)
-\item Дальнейшее: выбор более оптимальных место для live range splitting
-\item \emph{Extended linear scan} -- вставка дополнительных инструкций для уменьшения spilling
-\end{itemize}\end{itemize}
+\end{minipage}
 \end{frame}
 
-\begin{frame}[fragile]{}
-\begin{itemize}
-\item Linear Programming -- слишком медленный, даже по сравнению с раскраской графа
-\item Register allocation via Partitioned Quadratic Programming\\
-  дает оптимальное решение (если оно есть) за $O(\mid V\mid K^3)$, где $V$ -- переменные, а $K$ -- количество регистров
-  % Хз что там с нерегулярными архитектурами
-  
-\item Register allocation via Multi-Flow of Commodities\\
-  Умеет порождать более маленький код, чем раскраска графа
 
-\end{itemize}
-\end{frame}
-
-\begin{frame}[fragile]{Раскладка по регистрам и графы. Пример (1/2)}
+\begin{frame}[fragile]{Распределение регистров и графы. Пример (2/3)}
 \noindent{
 \begin{minipage}{.5\textwidth}
 \begin{figure}[h]
@@ -247,6 +304,7 @@ quiz 1?
 \end{minipage}}
 \begin{minipage}{.48\textwidth}
 \begin{center}
+Граф несовместимости (interference graph)
   \begin{tikzpicture}[bullet/.style={circle, fill, inner sep=2pt}]
     \foreach \lab [count=\c 
                   ,evaluate=\c as \ang using {18+72*\c}
@@ -259,15 +317,17 @@ quiz 1?
     % it should be doable in a loop but I don't know how
     \draw (1) -- (2)  -- (3) -- (4) -- (5) --  (1);
   \end{tikzpicture}
+
+Spill-free Register Allocation = SFRA
+  
+SFRA $\sim$ Graph Coloring. 
+
+SFRA -- NP-полна
 \end{center}
-SFRA = Graph Coloring. 
-
-SRFA - NP complete
 \end{minipage}
-
 \end{frame}
 
-\begin{frame}[fragile]{Пример (2/2)}
+\begin{frame}[fragile]{Распределение регистров  и графы. Пример (3/3)}
 \noindent{
 \begin{minipage}{.2\textwidth}
 \begin{verbatim}
@@ -287,9 +347,9 @@ ret a + e
 \end{verbatim}
 \end{minipage}}
 \noindent{
-\begin{minipage}{.48\textwidth}
+\begin{minipage}{.56\textwidth}
 \begin{center}
-Three registers: R1, R2 и R3
+Нужно три регистра: R1, R2 и R3\\
 
 \begin{tikzpicture}[bullet/.style={circle, fill, inner sep=2pt}]
   \foreach \lab [count=\c 
@@ -324,35 +384,111 @@ ret R1 + R2
 \end{minipage}
 \end{frame}
 
-\begin{frame}[fragile]{Раскладка по регистрам на основе SSA представления (2005)}
+\begin{frame}[fragile]{Терминология (3/3). Live range splitting}
+%\begin{figure}[h]
+%  \input{figures/range-splitting.tex}
+%\end{figure}
+Вставка инструкций копирования для упрощения interference graph
+\begin{minipage}[t]{0.48\textwidth}
+  \input{figures/range-splitting.tex}
+\end{minipage}
+\begin{minipage}[t]{0.4\textwidth}
+  \input{figures/range-splitting2.tex}
+\end{minipage}
+\end{frame}
+
+%\begin{frame}[fragile]{}
+%\begin{figure}
+%\centering
+%\includegraphics[width=0.9\paperwidth]{figures/quiz2}
+%\end{figure}
+%\end{frame}
+
+\section{Стандартные алгоритмы (prior work)} 
+
+
+\begin{frame}{Стандартные алгоритмы (1/2)}
+\begin{itemize}
+\item Раскраска вершин графа в k цветов (Chaitin et al. 1982)
+\begin{itemize}
+\item NP-полная задача
+\item требудет live range splitting, иначе spillится слишком много
+\item переменная, которая не spilled, всегда находится в одном регистре
+\item алгоритмы для оптимизации coalescing слишком консервативны (Briggs)
+\end{itemize}
+
+\item Linear Scan Rgister Allocation (2я половина 1990х) -- жадный алгоритм\\
+  появился из-за критики консервативных подходов к coalescing
+\begin{itemize}
+\item Изначально работал существенное быстре, но выдавал не такой хороший код
+\item Позже это улучшили с помощью binpacking (Traub et al., 1998)
+\item Дальнейшее: выбор более оптимальных место для live range splitting
+\item \emph{Extended linear scan} -- вставка дополнительных инструкций для уменьшения spilling
+\end{itemize}\end{itemize}
+\end{frame}
+
+\begin{frame}{Стандартные алгоритмы (2/2)}
+\begin{itemize}
+\item Linear Programming -- слишком медленный, даже по сравнению с раскраской графа
+\item Register allocation via Partitioned Quadratic Programming\\
+  дает оптимальное решение (если оно есть) за $O(\mid\!V\!\mid\cdot K^3)$, где $V$~-- переменные, а $K$~-- количество регистров
+  % Хз что там с нерегулярными архитектурами
+  
+\item Register allocation via Multi-Flow of Commodities\\
+  Умеет порождать более маленький код, чем раскраска графа
+\item Распределение регистров на основе SSA представления (2005)
+\item Распределение регистров с помощью решения паззлов (2008)
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Распределение регистров на основе SSA представления (2005)}
 \begin{itemize}
 \item Существенный прогресс
-\item Из-за SSA представления программ interference graph можно сделать хордальным
+\item Из-за SSA представления программ interference graph можно сделать хордовым
 \item Тогда алгоритм раскраски графа становится полиномиальным
 \end{itemize}
 
 \begin{definition}[Хордальный граф (сhordal graph)]
-Граф называется \emph{хордальным}, если каждый из его циклов, имеющих четыре ребра и более, имеет хорду (ребро, соединяющее две вершины цикла, но не являющееся его частью)
+Граф называется \emph{хордовым (chordal)}, если каждый из его циклов, имеющих четыре ребра и более, имеет хорду (ребро, соединяющее две вершины цикла, но не являющееся его частью)
 \end{definition}
 \end{frame}
 
 
 \begin{frame}[fragile]{}
-Тут может быть картинка в 48й страницы
+\begin{figure}
+\centering
+\includegraphics[width=0.9\linewidth]{figures/hordes}
+\caption{(a) Хордовый граф. (b-c) Нехордовые графы}
+\end{figure}
 
-Chordal graphs have several useful properties. Problems such as minimum
-coloring, maximum clique, maximum independent set and minimum covering by
-cliques, which are NP-complete in general, can be solved in polynomial time for
-chordal graphs [37]. In particular, optimal coloring of a chordal graph G = (V, E)
-can be done in O(|E| + |V |) time.
 
+Ходовые графы имеют хорошие свойства. Задачи \emph{минимальной раскраски},
+\emph{поиска максимальной клики} и \emph{минимального покрытия кликами} NP-полны, но решаются за полиномиальное время для хордовых графов. 
+%In particular, optimal coloring of a chordal graph G = (V, E)
+%can be done in O(|E| + |V |) time.
 \end{frame}
 
+\section{Построение элементарных программ}
+
+\begin{frame}[fragile]{Из программ в кусочки паззлов}
+\begin{enumerate}
+\item[1.] Преобразуем в программу в более простой вид
+  \begin{enumerate}
+  \item[A.] Преобразуем исходную программу в SSA
+  \item[B.] Преобразуем A в SSI форму
+  \item[C.] Вставляем в В параллельное копирование между каждой парой инструкций
+  \end{enumerate}
+\item[2.] Отображаем элементарные программы в кусочки паззлов.
+\end{enumerate}
+\end{frame}
+
+\subsection{SSA}
 
 \begin{frame}[fragile]{Static Single Assignment (SSA)}
 
-\begin{definition}[SSA form]
-``A program is defined to be in SSA form if each variable is a target of exactly one assignment statement in the program text.``
+\begin{definition}[SSA форма]
+Программа находится в SSA форме, если для всякой переменной только одна инструкция (statement) присваивания в тесте программы присваивает значение этой переменной
 \end{definition}
 
 Плюсы:
@@ -364,11 +500,18 @@ can be done in O(|E| + |V |) time.
 
 
 \begin{frame}[fragile]{}
-Тут может стоит вставить картинка с 46й страницы
+\begin{figure}
+%\centering
+\includegraphics[width=1.0\linewidth]{figures/ssa-compilation-scheme}
+\caption{(a) Классическое распределение регистров, (b) Распределение регистров на основе SSA}
+\label{fig:ssa-compilation-scheme}
+\end{figure}
 \end{frame}
 
 
+
 \begin{frame}[fragile]{Static Single Assignment (SSA). Пример}
+Переменной присваивается значение только один раз
 \noindent{
   \begin{minipage}[t]{0.48\linewidth}
   \begin{minted}[]{c}
@@ -390,9 +533,18 @@ can be done in O(|E| + |V |) time.
   \end{minted}
 \end{minipage}\vspace{1em}
 
-В примере выше хочется соптимизировать и написать \mintinline{c}{z = y;} так как правые части синтаксически одинаковые.
+В примере выше хочется соптимизировать и написать \mintinline{c}{z = y;} так как правые части синтаксически одинаковые.\\
 
-Но это сделать нельзя так как в \mintinline{c}{x} присваивается новое значение, т.е. содержимое перемернной \mintinline{c}{z} зависит от контекста.
+Но это сделать нельзя так как в \mintinline{c}{x} присваивается новое значение, т.е. содержимое перемернной \mintinline{c}{z} зависит от контекста.\vspace{1em}
+
+\textbf{Мотивация}: хотим \emph{хранить} некоторую информацию \emph{в каждой точке} программы
+
+\end{frame}
+
+\begin{frame}[fragile]{Пример: храним в каждой точке программы информацию о константах}
+\begin{center}
+\includegraphics[width=.9\textwidth]{figures/ssa-search-for-constants}
+\end{center}
 \end{frame}
 
 \tikzstyle{basic block} = [rectangle, rounded corners=3mm, align=left]
@@ -423,10 +575,16 @@ can be done in O(|E| + |V |) time.
 \end{frame}
 
 \begin{frame}[fragile]{Разветвление потока управления (2/2)}
-$\varphi$-функции вставляются в точках слияния потоков управления и позволяют выбирать значение переменной
+\begin{itemize}
+\item Добавляем $\varphi$-функции ($\varphi$-узлы), чтобы смоделировать слияние потоков управления
+
+\item Операционно: выбираем один из аргументов в зависимости откуда пришли
+\item Несколько присваиваний $\varphi$-функций должны выполняться \emph{параллельно} (одновременно)
+\item При кодогенерации от $\varphi$ надо будет избавляться
+\end{itemize}
 
 \noindent{
-\begin{minipage}[t]{0.48\linewidth}
+\begin{minipage}[t]{0.4\linewidth}
 \begin{minted}[escapeinside=??]{c}
   x = input();
   if (x==42)
@@ -439,7 +597,7 @@ $\varphi$-функции вставляются в точках слияния �
   print(?$y_3$?);
 \end{minted}
 \end{minipage}}
-\begin{minipage}[t]{0.48\linewidth}
+\begin{minipage}[t]{0.52\linewidth}
 \begin{figure}
 \input{figures/ssa-phi2.tex}
 \end{figure}
@@ -448,21 +606,41 @@ $\varphi$-функции вставляются в точках слияния �
 \end{frame}
 
 
-\begin{frame}[fragile]%{}
+\begin{frame}[fragile]
 \begin{figure}
 \centering
-\includegraphics[width=\textwidth]{figures/regalloc-ssa}
-\caption{}
-\label{fig:regalloc-ssa}
+\includegraphics[width=.9\textwidth]{figures/regalloc-ssa}
+\caption{ (a) SSA-форма программы . 
+(b) Программа после избавления от SSA. 
+(c) Граф несовместимости и последовательность присвоений в регистры }
 \end{figure}
-%Figure 2.16: (a) SSA-form program taken from Pereira and Palsberg [73]. (b)
-%Program after the SSA elimination phase. (c) Interference graph and sequence
-%of register assignments.
+\end{frame}
+
+\begin{frame}[fragile]{Избавляемся от  $\varphi$-функций}
+Основная идея: $\varphi$ обозначает тот факт, что значение при слиянии потоков управления может прийти по различным путям управления
+\begin{itemize}
+\item Сделаем присваивание на каждом пути управления
+\item Несколько присваиваний $\varphi$-функций выполняется одновременно
+\end{itemize}
+\begin{figure}
+\centering
+\input{figures/ssa-elim.tex}
+\end{figure}
+\end{frame}
+
+\begin{frame}[fragile]{Избавляемся от $\varphi$ на практике}
+\begin{itemize}
+\item Копирования из-за $\varphi$ могут быть бесполезны
+\item Объединенное (joined) значение может быть не нужно далее в программе (зачем его оставлять?)
+\item Воспользуемся dead code elimination, чтобы убрать бесполезные $\varphi$
+\item Затем будет заниматься распределением регистров
+\end{itemize}
 \end{frame}
 
 
 \begin{frame}[fragile]{Про NP-полноту}
-Задача Spill Free Register Allocation имеет полиномиальное решение, но NP-полно в общем случае.
+Задача Spill Free Register Allocation (SFRA) для SSA формы имеет полиномиальное решение, но NP-полно в общем случае.\\
+
 % Any program can be converted into SSA-form via a polynomial time
 %transformation [27]. However, a register assignment for a SSA-form program can-
 %not be converted back to an optimal register assignment of the original program
@@ -479,197 +657,501 @@ $\varphi$-функции вставляются в точках слияния �
 Можно попробовать использовать более простое представление программ, чтобы получались полиномиальные алгоритмы
 \end{frame}
 
+\subsection{SSI}
 
 \begin{frame}[fragile]{Static Single Information (SSI)}
-По умолчанию SSA связывает некоторую информацию с парой переменная $\times$ позиция в программе.\\
+По умолчанию SSA связывает некоторую информацию с парой переменная $\times$ позиция в программе -- это \emph{плотный (dense) анализ}.\\
 
-Для некоторых видов анализа будет удобнее связывать иметь общую информацию по всей программе с конкретной переменной, а не каждым её вхождением. Это удобно для таких анализов:
+Для некоторых видов анализа будет удобнее связывать иметь общую информацию по всей программе с конкретной переменной, а не каждым её вхождением (\emph{sparse анализ}). \\
+
+Это удобно для таких анализов:
 \begin{itemize}
-\item вывод классов с виртуальными методами по классам-таблицам (Python, Javascript, Ruby \& Lua)
+\item вывод классов с виртуальными методами по классам-таблицам (Python, Javascript, Ruby) % \& Lua)
 \item Null pointer анализ
 \item интервалы значений (далее будет пример)
+\item live range splitting (важно в контексте выделения регистров)
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{Пример плотного data-flow анализа: интервальный анализ}
+\begin{figure}
+\centering
+\includegraphics[height=.85\textheight]{figures/dense-range-analysis}
+\end{figure}
+%An example of a dense data-flow analysis that finds the range of possible values associated
+%with each variable at each program point.
+\end{frame}
+
+\begin{frame}[fragile]{Static Single Information (SSI) форма}
+Программа в SSI форме:
+\begin{itemize}
+\item Каждый базовый блок заканчивается π-функцией, которая переименовывает переменные, которые ``живы`` на выходе из базового блока
+\end{itemize}
+
+\begin{figure}
+\centering
+\input{figures/ssa2ssi.tex}
+\end{figure}
+\emph{Базовый блок} -- это последовательность инструкций с только одной точкой входа и только одной точкой выхода.
+\end{frame}
+
+\begin{frame}[fragile]{Примеры SSA и SSI}
+\begin{figure}
+\centering
+\input{figures/ssa-ssi-example.tex}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}[fragile]{Параллельное копирование}
+По тем же причинам, по которым несколько $\varphi$-функций должны исполняться параллельно, копирование тоже должно происходить параллельно
+\begin{figure}
+\centering
+\input{figures/par-copy.tex}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}[fragile]{}
+\begin{center}
+\includegraphics[width=1\linewidth]{figures/elementare-form-example}
+\end{center}
+
+\end{frame}
+
+\section{Отображение элементарных программ в фигурки паззлов}
+
+\begin{frame}[fragile]{Виды паззлов}
+\noindent{
+\begin{minipage}{.66\textwidth}
+\includegraphics[width=1\linewidth]{figures/puzzle-types}
+\end{minipage}}
+\begin{minipage}{.32\textwidth}
+\begin{itemize}
+\item Тип 0: PowerPC \& ARM integers
+\item Тип 1: ARM float
+\item Тип 2: SPARC V8
+\item Гибрид 0+1: x86
+\item Гибрид 1+2: SPARC V9
+\end{itemize}
+
+\end{minipage}
+\end{frame}
+
+%\begin{frame}[fragile]{Add puzzle boards}
+%\begin{center}
+%\includegraphics[width=1\linewidth]{figures/add-puzzle-board}
+%\end{center}
+%
+%\end{frame}
+
+
+\begin{frame}[fragile]{Абстракция паззлов}
+\begin{itemize}
+\item Паззл = доска (зоны = регистры)  + фигурки (переменные)
+\begin{center}
+\includegraphics[width=10cm]{figures/puzzle-pieces2.png}
+\end{center}
+\item  Фигурки не могут перекрываться
+\item  Некоторые фигурки могут быть уже выложены на доску
+\item  Задача: уместить оставшиеся фигурки на доску (\textbf{register allocation})
+\begin{center}
+\includegraphics[width=5cm]{figures/puzzle-pieces1.png}
+\end{center}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Создание фигурок паззла}
+\noindent{
+\begin{minipage}{.65\textwidth}
+\includegraphics[width=1\linewidth]{figures/puzzle-types}
+\end{minipage}}
+\begin{minipage}{.33\textwidth}
+Для каждой инструкции в программе $i$:
+\begin{itemize} 
+\item Создать по одной фигурке для live-in и live-out переменных
+\item Если переменная перестает быть живой ниже $i$, тогда тип фигурки  X
+\item Если переменная начинает быть живой в $i$, тогда Z
+\item Иначе Y
+\end{itemize}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[fragile]{Пример. Создание фигурок}
+\noindent{
+\begin{minipage}{.48\textwidth}
+\begin{figure}
+\includegraphics[width=1\linewidth]{figures/someprogram}
+\end{figure}
+\end{minipage}}
+\begin{minipage}{.48\textwidth}
+\begin{center}
+\includegraphics[width=1\linewidth]{figures/creating-pieces}
+\end{center}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[fragile]{Пример. Padding}
+\noindent{
+\begin{minipage}{.48\textwidth}
+\begin{figure}
+\includegraphics[width=1\linewidth]{figures/someprogram2}
+\end{figure}
+\end{minipage}}
+\begin{minipage}{.48\textwidth}
+\begin{center}
+\includegraphics[width=1\linewidth]{figures/dummyname1}
+\end{center}
+\end{minipage}
+\end{frame}
+
+
+\section{Решаем паззлы}
+
+\begin{frame}[fragile]{Решение паззлов типа 1}
+\begin{itemize}
+\item Предлагаемый подход: заполнять по одной клетке за раз
+\item Ддя каждого квадрата:
+  \begin{itemize}
+\item Заполняем фигурками X или Z  пока не заполнится вся доска
+\end{itemize}
+\item Решить задачу
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}[fragile]{Решаем паззлы типа 1 визуальным языком (1/3)}
+\noindent{
+\begin{minipage}{.5\textwidth}
+\includegraphics[height=0.85\paperheight]{figures/vis-lang.png}
+\end{minipage}}
+\begin{minipage}{.48\textwidth}
+\begin{itemize}
+\item Правило = как заполнять зоны
+\item Правилл состоит из
+\begin{itemize}
+\item шаблона: что уже заполнено (подходит/неподходить под зону)
+\item стратегии: какие виды фигурок класть и куда 
+\end{itemize}
+\item Правило $r$ можно применить на зоне $a$ iff
+\begin{itemize}
+\item  $r$ подходить к $a$
+\item  доступны фигурки для данной стратегии 
+\end{itemize}
+\includegraphics[width=1.5cm]{figures/area-a}
+\end{itemize}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}[fragile]{Решаем паззлы типа 1 визуальным языком (2/3)}
+\noindent{
+\begin{minipage}{.5\textwidth}
+\includegraphics[height=0.85\paperheight]{figures/vis-lang.png}
+\end{minipage}}
+\begin{minipage}{.48\textwidth}
+Условие успешного завершения:
+\begin{itemize}
+\item Программа успешно завершается iff все утверждения завершаются
+\item Правило $r$ можно применить на зоне $a$ iff
+\begin{itemize}
+\item  $r$ подходить к $a$
+\item  доступны фигурки для данной стратегии 
+\end{itemize}
+\item Условие $(r:s)$ успешно завершается iff
+\begin{itemize}
+\item r успешно завершается or
+\item s успешно завершается
+\end{itemize}
+\begin{center}
+\includegraphics[width=2.5cm]{figures/someurule1}
+\end{center}
+\end{itemize}
+\end{minipage}
+\end{frame}
+
+\begin{frame}[fragile]{Решаем паззлы типа 1 визуальным языком (3/3)}
+\noindent{
+\begin{minipage}{.5\textwidth}
+\includegraphics[height=0.85\paperheight]{figures/vis-lang.png}
+\end{minipage}}
+\begin{minipage}{.48\textwidth}
+Исполнение решателя паззлов
+\begin{itemize}
+\item Для каждой инструкции $s_1, \dots, s_n$
+\begin{itemize}
+\item Для каждой зоны $a$, такой что паттерн $s_i$ подходит к $a$
+\begin{itemize}
+\item Применить $s_i$ к $a$
+\item Если $s_i$ закончилось и ошибкой, прерваться и сообщить об ошибке
+\end{itemize}
+\end{itemize}
+\end{itemize}
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Исполнение решателя паззлов: пример}
+\noindent{
+\begin{minipage}{.5\textwidth}
+\begin{itemize}
+\item Визуальная программа-решатель
+\includegraphics[width=7cm]{figures/puz-example2}
+\item Паззл
+\includegraphics[width=7cm]{figures/puz-example1}
+\end{itemize}
+\end{minipage}}
+\begin{minipage}{.48\textwidth}
+\begin{itemize}
+\item s1 подходит только к a1 
+\item Применение s1 к a1 завершается успешно и выдает результат
+
+\includegraphics[width=6.5cm]{figures/puz-example3}
+\item s2 подходит только к a2
+\item Применяем s2 к a2
+\begin{itemize}
+\item Примение первое правило s2: неудача
+\item Применим второе правило s2: успех
+\end{itemize}
+\end{itemize}
+\end{minipage}
+\end{frame}
+
+\begin{frame}[fragile]{Исполнение решателя паззлов: другой пример}
+\noindent{
+\begin{minipage}{.5\textwidth}
+\begin{itemize}
+\item Визуальная программа-решатель
+\includegraphics[width=6cm]{figures/puz-example4}
+\item Паззл
+\includegraphics[width=6cm]{figures/puz-example5}
+\end{itemize}
+\end{minipage}}
+\begin{minipage}{.48\textwidth}
+\begin{itemize}
+\item  s1 подходит только к a1 
+\item Применяем s1 к a1 
+  \begin{itemize}
+  \item  Применяем первое правило к s1: победа
+    \begin{center}
+    \includegraphics[width=\linewidth]{figures/puz-example6}
+    \end{center}  
+  \end{itemize}
+\item s2 подходит и к  a2, и к a3
+\item Применяем s2 к a2
+
+\includegraphics[width=3.5cm]{figures/puz-example7}
+\item Применяем s2 к a3
+\end{itemize}
+\end{minipage}
+\end{frame}
+
+\begin{frame}[fragile]{Исполнение решателя паззлов: ещё один пример}
+\noindent{
+\begin{minipage}{.45\textwidth}
+\begin{itemize}
+\item Визуальная программа-решатель
+\includegraphics[width=6cm]{figures/puz-example9}
+
+\item Паззл
+\includegraphics[width=6cm]{figures/puz-example10}
+\textcolor{teal}{Построение правильной визуальной программы-решателя существенно!}
+
+\end{itemize}
+\end{minipage}}
+\begin{minipage}{.53\textwidth}
+\begin{itemize}
+\item  s1 подходит только к a1 
+\item Применяем s1 к a1 
+  \begin{itemize}
+  \item  Применяем первое правило к s1: победа
+    \includegraphics[width=6cm]{figures/puz-example8}
+  \end{itemize}
+\item s2 подходит и к a2, и к a3
+\item Применяем s2 to a2: \textcolor{red}{неудача}\\
+Не осталось фигур типа X размера 1: мы использовали их всех
+\end{itemize}
+\end{minipage}
+\end{frame}
+
+\begin{frame}[fragile]{Программа-решатель паззлов типа 1}
+\noindent{
+\begin{minipage}{.5\textwidth}
+\includegraphics[width=7cm]{figures/type-1-algo}
+\end{minipage}}
+\begin{minipage}{.48\textwidth}
+\begin{theorem}
+Задача типа 1 решаема iff эта программа завершается успешно
+\end{theorem}
+
+\textcolor{red}{Не решили ли мы  NP задачу за полиномиальное время?}\\
+
+
+Выделение регистров $\sim$ заполнение всех клеток.\\
+
+Решена более простая задача: заполнение одной клетки за единицу времени
+\end{minipage}
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Решение паззлов типа  1: сложность}
+\begin{theorem}
+Задача spill-free register allocation (SFRA) с предсраскраской
+для элементарной программы $P$ и $K$ регистров решается за $O(\mid\!P\!\mid \times K)$ времени.
+\end{theorem}
+Для одной инструкции из $P$:
+\begin{itemize}
+\item Применение правила к зоне: $O(1)$
+\item Применяется константное количество правиль к каждой зоне
+\item Исполнение на поле с $K$ зонами занимает $O(K)$ времени
 \end{itemize}
 \end{frame}
 
 
 
-\begin{frame}[fragile]{}
-\begin{figure}
-\centering
-\includegraphics[height=.85\textheight]{figures/dense-range-analysis}
-\end{figure}
-An example of a dense data-flow analysis that finds the range of possible values associated
-with each variable at each program point.
-
-\end{frame}
-
-
-\begin{frame}[fragile]{}
-1
-\end{frame}
-
-\begin{frame}[fragile]{}
-1
-\end{frame}
-
-\begin{frame}[fragile]{}
-\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt   
-\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
-%uncomment if require: \path (0,94.5); %set diagram left start at 0, and has height of 94.5
-
-%Shape: Rectangle [id:dp06294366710675758] 
-\draw   (99.76,20) -- (139.65,20) -- (140,40) -- (100.11,40) -- cycle ;
-%Shape: Rectangle [id:dp2425421243241267] 
-\draw   (20,20) -- (60,20) -- (60,60) -- (20,60) -- cycle ;
-%Shape: Rectangle [id:dp944866032756623] 
-\draw   (100,60) -- (139.89,60) -- (140.24,80) -- (100.35,80) -- cycle ;
-
-% Text Node
-\draw (119.88,30) node  [align=left] {X};
-% Text Node
-\draw (120.12,70) node  [align=left] {Z};
-% Text Node
-\draw (40,40) node  [align=left] {Y};
-
-
-\end{tikzpicture}
-\end{frame}
-
-\begin{frame}[fragile]{Контр-пример 1}
-\includegraphics[width=0.9\paperwidth]{figures/ce1.png}
-Lesson: use a size-2 piece before two size-1 pieces
-\end{frame}
-
-\begin{frame}[fragile]{Контр-пример 2}
-\includegraphics[width=0.9\paperwidth]{figures/ce2.png}
-Lesson: statements 7-10 must come before statements 11-14
-\end{frame}
-
-\begin{frame}[fragile]{Контр-пример 3}
-\includegraphics[width=0.9\paperwidth]{figures/ce3.png}
-Lesson: statement 15 must come before statements 11-14
-\end{frame}
-
-\begin{frame}[fragile]{Контр-пример 4}
-\includegraphics[width=0.9\paperwidth]{figures/ce4.png}
-Lesson: the order in statement 11-14 is crucial
-\end{frame}
-
-\begin{frame}[fragile]
+\begin{frame}[fragile]{Решаем паззлы  типа 0 (SFRA)}
 \noindent{
 \begin{minipage}{.6\textwidth}
-\includegraphics[height=0.9\paperheight]{figures/vis-lang.png}
+\includegraphics[width=1\linewidth]{figures/puzzles-types}
 \end{minipage}}
 \begin{minipage}{.38\textwidth}
-Визуальный язык для программирования решателей паззлов.
+\begin{itemize}
+\item Уложить все Y-фигурки
+\includegraphics[width=2cm]{figures/puzzles-types-figures}
+\item Затем уложить все X и Z фигурки
+\end{itemize}
 \end{minipage}
 \end{frame}
 
-\begin{frame}[fragile]{Индуктивные типы данных (2/2). Использование}
 
+\subsection{Spilling в общем случае}
 
-\begin{minipage}{.65\textwidth}
-  \begin{minted}[gobble=2]{c}
-  /* C */
-  size_t foo(typ tag, (void*)cntnts ) {
-    switch (tag) {
-    case A: 
-      int x    = ((a_contents*)cntnts).first;
-      String s = ((a_contents*)cntnts).second;
-      ...
-      break;
-    case B:
-      ...
-      break;
-    }    
-    assert(0); /* unreachable */
-    return 0;
-  }
-  \end{minted}
-\end{minipage}
-\begin{minipage}{.3\textwidth}
-  \begin{minted}[gobble=2]{haskell}
-  -- Haskell
-  foo (A x s) = ...
-  foo B       = ...
+\begin{frame}{Spilling в общем случае}
+\begin{itemize}
+\item Если алгоритм для решения SFRA не может решить паззл, (т.е. количество имеющихся регистров не достаточно) => spill
+\item Наблюжение: преобразование программы в элементарную форму создаёт семейства переменных для каждой оригинальной переменной % one per original variable
+\item Чтобы сделать spill:
+\begin{itemize}
+\item Выбираем переменную $v$ в оригинальной программе
+\item Spillим все переменные из элементарной формы, которые относятся к тому же семейству, что и $v$
+\item Для паззлов это будет означать выкидывание фигурок паззла
+\end{itemize}
+\end{itemize}
 
-
-  -- A and B are called 
-  -- `constructors`
-  
-  
-  
-  
-  -- compiler warns if some
-  -- cases are not taken
-  -- care of
-  \end{minted}
-\end{minipage}
+\begin{theorem}[Сложность]
+Выделение регистров в присутствии предраскрашивания (pre-coloring) и spilling семейства переменных для элементарного представления -- NP-полная задача.
+\end{theorem}
 \end{frame}
+
+
 
 \begin{frame}[fragile]{}
-1
-\end{frame}
+\noindent{
+\begin{minipage}{.48\textwidth}
+Ещё один метод выделения регистров\\
 
-\begin{frame}[fragile]{}
-1
-\end{frame}
-
-\begin{frame}[fragile]{}
-1
-\end{frame}
-
-\begin{frame}[fragile]{}
-1
-\end{frame}
-
-\begin{frame}[fragile]{}
-1
-\end{frame}
-
-\begin{frame}[fragile]{}
-1
-\end{frame}
-
-\begin{frame}[fragile]{}
-1
-\end{frame}
-
-%\input{chapter03.tex}
-%
-%\input{chapter05.tex}
-%
-%\input{chapter09.tex}
-
-
-\begin{frame}
+Генерирует сходный по качеству код, но существенно быстрее, чем использовавшийся до этого в LLVM graph coloring with iterated coalescing.\\
 \begin{center}
-  {\Huge Конец.}\\
-  
-  Подробнее в книге Окасаки "Чисто функциональные структуры данных".
+  {\Huge Конец}\\
 \end{center}
+
+\end{minipage}}
+\begin{minipage}{.48\textwidth}
+\begin{center}
+\includegraphics[width=1\linewidth]{figures/all-methods-comparison}
+\end{center}
+
+\end{minipage}
+
 \end{frame}
 
 
- \begin{frame}[allowframebreaks]
+
+%\begin{frame}[fragile]{}
+%\tikzset{every picture/.style={line width=0.75pt}} %set default line width to 0.75pt   
+%\begin{tikzpicture}[x=0.75pt,y=0.75pt,yscale=-1,xscale=1]
+%%uncomment if require: \path (0,94.5); %set diagram left start at 0, and has height of 94.5
+%
+%%Shape: Rectangle [id:dp06294366710675758] 
+%\draw   (99.76,20) -- (139.65,20) -- (140,40) -- (100.11,40) -- cycle ;
+%%Shape: Rectangle [id:dp2425421243241267] 
+%\draw   (20,20) -- (60,20) -- (60,60) -- (20,60) -- cycle ;
+%%Shape: Rectangle [id:dp944866032756623] 
+%\draw   (100,60) -- (139.89,60) -- (140.24,80) -- (100.35,80) -- cycle ;
+%
+%% Text Node
+%\draw (119.88,30) node  [align=left] {X};
+%% Text Node
+%\draw (120.12,70) node  [align=left] {Z};
+%% Text Node
+%\draw (40,40) node  [align=left] {Y};
+%\end{tikzpicture}
+%\end{frame}
+
+%\begin{frame}[fragile]{Контр-пример 1}
+%\includegraphics[width=0.9\paperwidth]{figures/ce1.png}
+%Lesson: use a size-2 piece before two size-1 pieces
+%\end{frame}
+%
+%\begin{frame}[fragile]{Контр-пример 2}
+%\includegraphics[width=0.9\paperwidth]{figures/ce2.png}
+%Lesson: statements 7-10 must come before statements 11-14
+%\end{frame}
+%
+%\begin{frame}[fragile]{Контр-пример 3}
+%\includegraphics[width=0.9\paperwidth]{figures/ce3.png}
+%Lesson: statement 15 must come before statements 11-14
+%\end{frame}
+%
+%\begin{frame}[fragile]{Контр-пример 4}
+%\includegraphics[width=0.9\paperwidth]{figures/ce4.png}
+%Lesson: the order in statement 11-14 is crucial
+%\end{frame}
+
+%\begin{frame}[fragile]
+%\noindent{
+%\begin{minipage}{.6\textwidth}
+%\includegraphics[height=0.9\paperheight]{figures/vis-lang.png}
+%\end{minipage}}
+%\begin{minipage}{.38\textwidth}
+%Визуальный язык для программирования решателей паззлов.
+%\end{minipage}
+%\end{frame}
+
+%
+%
+%\begin{frame}
+%\begin{center}
+%  {\Huge Конец}\\
+%  
+%\end{center}
+%\end{frame}
+
+
+ \begin{frame}%[allowframebreaks]
    \frametitle<presentation>{Ссылки}
    \begin{thebibliography}{10}
    \bibitem{paper}
      Register Allocation by Puzzle Solving (PLDI 2008)
      \newblock {\em Fernando Magno Quint\~ao Pereira  \& Jens Palsberg }
-     \newblock \href{http://conal.net/papers/compiling-to-categories/compiling-to-categories.pdf}{PDF}
+     \newblock \href{https://llvm.org/pubs/2008-06-PLDI-PuzzleSolving.pdf}{PDF}
            
-   \bibitem{slides1}
-     Slides from Compiler Construction course of Northeastern University
-     \newblock \href{https://users.cs.northwestern.edu/~robby/courses/322-2016-spring/puzzle_solving.pdf}{PDF}
    \bibitem{thesis}    
      \href{http://compilers.cs.ucla.edu/fernando/publications/papers/PhdDiss.pdf}{PhD thesis}
      \newblock {\em Fernando Magno Quint\~ao Pereira}
+
+   \bibitem{slides1}
+     Slides from Compiler Construction course of Northeastern University
+     \newblock \href{https://users.cs.northwestern.edu/~robby/courses/322-2016-spring/puzzle_solving.pdf}{PDF}
+
    \bibitem{ssabook}    
       SSA book
      \href{http://ssabook.gforge.inria.fr/latest/book.pdf}{PDF} 
-%   \bibitem{}
-%     \href{https://github.com/conal/concat}{Project repo}
    \end{thebibliography}
  \end{frame}
 
