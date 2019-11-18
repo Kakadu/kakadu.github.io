@@ -87,7 +87,7 @@
 %\tikzset{every picture/.style={/utils/exec={\rmfamily}}}
 
 %%%%%%%%%%%%%%%%%%%%%5
-\title[]{Распределение регистров и решение головоломок}
+\title[]{Распределение регистров и решение паззлов}
 \subtitle{Register Allocation by Puzzle Solving}
 \author{Косарев Дмитрий }
 
@@ -234,7 +234,7 @@ r := ?\textcolor{teal}{AH}?; // остаток
 \end{frame}
 
 
-\begin{frame}[fragile]{Нерегулярные архитектуры. Иерархия регситров(aliasing)}
+\begin{frame}[fragile]{Нерегулярные архитектуры. Иерархия регистров (aliasing)}
 \begin{minipage}{.4\textwidth}
 Вложенные регистры могут использоваться как независимо, так и в комбинации с другими\\
 
@@ -385,9 +385,6 @@ ret R1 + R2
 \end{frame}
 
 \begin{frame}[fragile]{Терминология (3/3). Live range splitting}
-%\begin{figure}[h]
-%  \input{figures/range-splitting.tex}
-%\end{figure}
 Вставка инструкций копирования для упрощения interference graph
 \begin{minipage}[t]{0.48\textwidth}
   \input{figures/range-splitting.tex}
