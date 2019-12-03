@@ -1,0 +1,1299 @@
+\newcommand{\complScheme}{\mathsf{compl}}
+\newcommand{\lwsync}{\mathsf{lwsync}}
+\newcommand{\hwsync}{\mathsf{hwsync}}
+\newcommand{\opt}{\mathsf{opt}}
+\newcommand{\correctOpt}{\mathsf{CorrectOpt}}
+\newcommand{\MM}{\mathcal{M}}
+\newcommand{\LL}{\mathsf{L}}
+\newcommand{\LowLL}{\mathsf{L'}}
+\newcommand{\LowMM}{\mathcal{M'}}
+\newcommand{\PP}{\mathsf{P}}
+
+\newcommand{\valuecom}[1]{\textcolor{green!60!black}{// #1}}
+\newcommand{\valuefail}[1]{\textcolor{red!60!black}{// #1}}
+\newcommand{\valueneg}[1]{\valuefail{#1}}
+\newcolumntype{L}{>{$}l<{$}} % math-mode version of "l" column type
+
+\declaretheorem[name=Теорема,style=default,numberwithin=section]{thm}
+\declaretheorem[name=Лемма,style=default,numberwithin=section]{lem}
+%% \declaretheorem[name=Определение,style=default,sibling=thm]{mydefinition}
+\declaretheorem[name=Определение,style=definition,numbered=no]{mydefinition}
+
+% environments
+%% \theoremstyle{plain}
+\theoremstyle{definition}
+%% \newtheorem{notation}[theorem]{Notation}
+\newtheorem{notation}{Notation}
+\newtheorem*{notation*}{Notation}
+
+\newtheorem{definition}{Определение}
+\newtheorem*{definition*}{Определение}
+\newtheorem{proposition}{Утверждение}
+\newtheorem*{proposition*}{Утверждение}
+\newtheorem{theorem}{Теорема}
+\newtheorem*{theorem*}{Теорема}
+\newtheorem{lemma}{Лемма}
+\newtheorem*{lemma*}{Лемма}
+
+\crefformat{section}{#2\S{}#1#3}
+\Crefname{section}{Section}{Section}
+\Crefformat{section}{Section #2#1#3}
+\Crefname{figure}{\text{Figure}}{\text{Figures}}
+\crefname{corollary}{\text{Corollary}}{\text{corollaries}}
+\Crefname{corollary}{\text{Corollary}}{\text{Corollaries}}
+\crefname{lemma}{\text{Lemma}}{\text{Lemmas}}
+\Crefname{lemma}{\text{Lemma}}{\text{Lemmas}}
+\crefname{proposition}{\text{Prop.}}{\text{Propositions}}
+\Crefname{proposition}{\text{Proposition}}{\text{Propositions}}
+\crefname{definition}{\text{Def.}}{\text{Definitions}}
+\Crefname{definition}{\text{Definition}}{\text{Definitions}}
+\crefname{notation}{\text{Notation}}{\text{Notations}}
+\Crefname{notation}{\text{Notation}}{\text{Notations}}
+\crefname{theorem}{\text{Theorem}}{\text{Theorems}}
+\Crefname{theorem}{\text{Theorem}}{\text{Theorems}}
+
+
+\newenvironment{claim}[1]{\par\noindent\underline{Claim:}\space#1}{}
+\newenvironment{claimproof}[1]{\par\noindent\underline{Proof:}\space#1}
+{\leavevmode\unskip\penalty9999 \hbox{}\nobreak\hfill\quad\hbox{$\square$}}
+
+\newcommand{\textdom}[1]{\mathsf{#1}}
+\newcommand{\textcode}[1]{\texorpdfstring{\texttt{#1}}{#1}}
+\newcommand{\kw}[1]{\textbf{\textcode{#1}}}
+\newcommand{\skipc}{\kw{skip}}
+\newcommand{\ite}[3]{\kw{if}\;#1\:\kw{then}\;#2\;\\ \kw{else}\;#3\;\kw{fi}}
+\newcommand{\itesl}[3]{\kw{if}\;#1\:\kw{then}\;#2\;\kw{else}\;#3\;\kw{fi}}
+\newcommand{\iteml}[3]{
+  \kw{if} \; #1\\
+  \begin{array}[t]{@{}l@{}l}
+    \kw{then}& \begin{array}[t]{l} #2 \end{array} \\
+    \kw{else}& \begin{array}[t]{l} #3 \end{array} \\
+  \end{array}\\
+  \kw{fi}
+}
+\newcommand{\itne}[2]{\kw{if}\;#1\:\kw{then}\\ \quad\;{#2}}
+\newcommand{\while}[2]{\kw{while}\;#1\;\kw{do}\;#2}
+\newcommand{\ALT}{\;\;|\;\;}
+
+\newcommand{\ie}{\emph{i.e.,} }
+\newcommand{\eg}{\emph{e.g.,} }
+\newcommand{\etal}{\emph{et~al.}}
+\newcommand{\wrt}{w.r.t.~}
+
+\newcommand{\inarrC}[1]{\begin{array}{@{}c@{}}#1\end{array}}
+\newcommand{\inpar}[1]{\left(\begin{array}{@{}l@{}}#1\end{array}\right)}
+\newcommand{\inset}[1]{\left\{\begin{array}{@{}l@{}}#1\end{array}\right\}}
+\newcommand{\inarr}[1]{\begin{array}{@{}l@{}}#1\end{array}}
+\newcommand{\inarrII}[2]{\begin{array}{@{}l@{~~}||@{~~}l@{}}\inarr{#1}&\inarr{#2}\end{array}}
+\newcommand{\inarrIII}[3]{\begin{array}{@{}l@{~~}||@{~~}l@{~~}||@{~~}l@{}}\inarr{#1}&\inarr{#2}&\inarr{#3}\end{array}}
+\newcommand{\inarrIV}[4]{\begin{array}{@{}l@{~~}||@{~~}l@{~~}||@{~~}l@{~~}||@{~~}l@{}}\inarr{#1}&\inarr{#2}&\inarr{#3}&\inarr{#4}\end{array}}
+\newcommand{\inarrV}[5]{\begin{array}{@{}l@{~~}||@{~~}l@{~~}||@{~~}l@{~~}||@{~~}l@{~~}||@{~~}l@{}}\inarr{#1}&\inarr{#2}&\inarr{#3}&\inarr{#4}&\inarr{#5}\end{array}}
+
+%% \renewcommand{\comment}[1]{\color{teal}{~~\texttt{/\!\!/}\textit{#1}}}
+
+
+%% \newcommand{\set}[1]{\{{#1}\}}
+\newcommand{\sem}[1]{\llbracket #1 \rrbracket}
+\newcommand{\pfn}{\rightharpoonup}
+\newcommand{\suchthat}{\; | \;}
+\newcommand{\N}{{\mathbb{N}}}
+\newcommand{\dom}[1]{\textit{dom}{({#1})}}
+\newcommand{\codom}[1]{\textit{codom}{({#1})}}
+\newcommand{\before}[2]{{#1}_{#2}^\uparrow}
+\newcommand{\after}[2]{{#1}_{#2}^\downarrow}
+%\newcommand{\fv}[1]{fv{[{#1}]}}
+\newcommand{\tup}[1]{{\langle{#1}\rangle}}
+\newcommand{\nin}{\not\in}
+\newcommand{\suq}{\subseteq}
+\newcommand{\sqsuq}{\sqsubseteq}
+\newcommand{\sqsu}{\sqsubset}
+\newcommand{\sqslq}{\sqsupseteq}
+\newcommand{\size}[1]{|{#1}|}
+\newcommand{\block}[1]{\langle {#1}\rangle}
+\newcommand{\true}{\top}
+\newcommand{\maketil}[1]{{#1}\ldots{#1}}
+\newcommand{\til}{\maketil{,}}
+\newcommand{\cuptil}{\maketil{\cup}}
+\newcommand{\uplustil}{\maketil{\uplus}}
+\renewcommand*{\mathellipsis}{\mathinner{{\ldotp}{\ldotp}{\ldotp}}}
+\newcommand{\rst}[1]{|_{#1}}
+\newcommand{\imm}[1]{{#1}{\rst{\text{imm}}}}
+\renewcommand{\succ}[2]{\text{succ}_{#1}(#2)}
+\newcommand{\aite}[3]{(#1?#2,#3)}
+%\newcommand{\defeq}{\mathrel{\stackrel{\mathsf{def}}{=}}}
+\newcommand{\defeq}{\triangleq}
+\newcommand{\powerset}[1]{\mathcal{P}({#1})}
+\newcommand{\finpowerset}[1]{\mathcal{P}_{<\omega}({#1})}
+\renewcommand{\implies}{\Rightarrow}
+
+
+\colorlet{colorPO}{gray!60!black}
+\colorlet{colorRF}{green!60!black}
+\colorlet{colorMO}{orange!60!black}
+\colorlet{colorFR}{purple}
+\colorlet{colorECO}{red!80!black}
+\colorlet{colorSYN}{green!40!black}
+\colorlet{colorHB}{blue}
+\colorlet{colorPPO}{magenta}
+\colorlet{colorPB}{olive}
+\colorlet{colorSBRF}{olive}
+\colorlet{colorRMW}{olive!70!black}
+\colorlet{colorRSEQ}{blue}
+\colorlet{colorSC}{violet}
+\colorlet{colorPSC}{violet}
+\colorlet{colorREL}{olive}
+\colorlet{colorCONFLICT}{olive}
+\colorlet{colorRACE}{olive}
+\colorlet{colorWB}{orange!70!black}
+\colorlet{colorPSC}{violet}
+\colorlet{colorSCB}{violet}
+\colorlet{colorDEPS}{violet}
+
+\tikzset{
+   every path/.style={>=stealth},
+   sb/.style={->,color=colorSB,thin,shorten >=-0.5mm,shorten <=-0.5mm},
+   sw/.style={->,color=colorSYN,shorten >=-0.5mm,shorten <=-0.5mm},
+   rf/.style={->,color=colorRF,dashed,,shorten >=-0.5mm,shorten <=-0.5mm},
+   hb/.style={->,color=colorHB,thick,shorten >=-0.5mm,shorten <=-0.5mm},
+   mo/.style={->,color=colorMO,dotted,very thick,shorten >=-0.5mm,shorten <=-0.5mm},
+   no/.style={->,dotted,thick,shorten >=-0.5mm,shorten <=-0.5mm},
+   fr/.style={->,color=colorFR,dotted,thick,shorten >=-0.5mm,shorten <=-0.5mm},
+   deps/.style={->,color=colorDEPS,dotted,thick,shorten >=-0.5mm,shorten <=-0.5mm},
+   rmw/.style={->,color=colorRMW,thick,shorten >=-0.5mm,shorten <=-0.5mm},
+}
+
+%% Orders
+\newcommand{\na}{\mathtt{na}}
+\newcommand{\pln}{\mathtt{pln}}
+\newcommand{\rlx}{\mathtt{rlx}}
+\newcommand{\rel}{{\mathtt{rel}}}
+\newcommand{\acq}{{\mathtt{acq}}}
+\newcommand{\con}{{\mathtt{con}}}
+\newcommand{\acqrel}{{\mathtt{acqrel}}}
+\newcommand{\relAcq}{\acqrel}
+\newcommand{\sco}{{\mathtt{sc}}}
+\newcommand{\sto}{{\mathtt{st}}}
+\newcommand{\full}{{\mathtt{sy}}}
+\newcommand{\ld}{{\mathtt{ld}}}
+\newcommand{\isb}{{\mathtt{isb}}}
+
+%% Event labels
+
+\newcommand{\evlab}[4]{{#1}({#3},{#4})}
+\newcommand{\evflab}[1]{{\flab}^{#1}}
+\newcommand{\evulab}[4]{{\ulab}^{#1}({#2},{#3},{#4})}
+\newcommand{\rlab}[3]{{\lR}^{#1}({#2},{#3})}
+\newcommand{\erlab}[4]{{\lR}^{#1}({#2},{#3},{#4})}
+\newcommand{\wlab}[3]{{\lW}^{#1}({#2},{#3})}
+\newcommand{\flab}[1]{{\lF}(#1)}
+%\newcommand{\ulab}[4]{{\lU}^{#1}({#2},{#3},{#4})}
+
+\newcommand{\lE}{{\mathtt{E}}}
+\newcommand{\lC}{{\mathtt{C}}}
+%\newcommand{\lP}{{\mathit{P}}}
+\newcommand{\lM}{{\mathtt{M}}}
+\newcommand{\lS}{{\mathtt{S}}}
+\newcommand{\lR}{{\mathtt{R}}}
+\newcommand{\lW}{{\mathtt{W}}}
+\newcommand{\lA}{{\mathtt{A}}}
+\newcommand{\lQ}{{\mathtt{Q}}}
+\newcommand{\lL}{{\mathtt{L}}}
+\newcommand{\lU}{{\mathtt{RMW}}}
+\newcommand{\lF}{{\mathtt{F}}}
+\newcommand{\lRES}{{\mathtt{Res}}}
+\newcommand{\lAT}{{\mathtt{At}}}
+\newcommand{\lATR}{{\mathtt{AtR}}}
+
+\newcommand{\lLAB}{{\mathtt{lab}}}
+\newcommand{\lTID}{{\mathtt{tid}}}
+\newcommand{\lTYP}{{\mathtt{typ}}}
+\newcommand{\lLOC}{{\mathtt{loc}}}
+\newcommand{\lMOD}{{\mathtt{mod}}}
+\newcommand{\lVALR}{{\mathtt{val_r}}}
+\newcommand{\lVALW}{{\mathtt{val_w}}}
+\newcommand{\lELAB}{{\mathtt{elab}}}
+\newcommand{\lAVALS}{{\mathtt{atvals}}}
+
+%% Relations
+
+\newcommand{\lX}{\mathtt{X}}
+\newcommand{\lPO}{{\color{colorPO}\mathtt{po}}}
+\newcommand{\lRF}{{\color{colorRF} \mathtt{rf}}}
+\newcommand{\lRMW}{{\color{colorRMW} \mathtt{rmw}}}
+\newcommand{\lMO}{{\color{colorMO} \mathtt{mo}}}
+\newcommand{\lMOx}{{\color{colorMO} \mathtt{mo}}_x}
+\newcommand{\lMOy}{{\color{colorMO} \mathtt{mo}}_y}
+%% \newcommand{\lCO}{{\color{colorMO} \mathtt{co}}}
+%% \newcommand{\lCOx}{{\color{colorMO} \mathtt{co}}_x}
+%% \newcommand{\lCOy}{{\color{colorMO} \mathtt{co}}_y}
+\newcommand{\lCO}{\lMO}
+\newcommand{\lCOx}{\lMOx}
+\newcommand{\lCOy}{\lMOy}
+\newcommand{\lFR}{{\color{colorFR} \mathtt{rb}}}
+\newcommand{\lFRx}{{\color{colorFR} \mathtt{rb}}_x}
+\newcommand{\lFRy}{{\color{colorFR} \mathtt{rb}}_y}
+\newcommand{\lECO}{{\color{colorECO} \mathtt{eco}}}
+\newcommand{\lSBRF}{{\color{colorSBRF} \mathtt{sbrf}}}
+\newcommand{\lRSEQ}{{\color{colorRSEQ}\mathtt{rseq}}}
+\newcommand{\lSW}{{\color{colorSYN}\mathtt{sw}}}
+\newcommand{\lASW}{{\color{colorSYN}\mathtt{asw}}}
+\newcommand{\lSO}{{\color{colorSYN}\mathtt{so}}}
+\newcommand{\lHB}{{\color{colorHB}\mathtt{hb}}}
+%\newcommand{\lWB}{{\color{colorWB} \mathtt{wb}}}
+\newcommand{\lDOB}{{\mathtt{dob}}}
+\newcommand{\lBOB}{{\mathtt{bob}}}
+\newcommand{\lAOB}{{\mathtt{aob}}}
+\newcommand{\lOBS}{{\mathtt{obs}}}
+\newcommand{\lEORD}{{\mathtt{eord}}}
+\newcommand{\lTORD}{{\mathtt{tord}}}
+\newcommand{\lSC}{{\color{colorSC}{\mathtt{sc}}}}
+
+\newcommand{\lSCB}{{\color{colorSCB} \mathtt{scb}}}
+\newcommand{\lPSC}{{\color{colorPSC} \mathtt{psc}}}
+\newcommand{\lPSCB}{\lPSC_{\rm base}}
+\newcommand{\lPSCF}{\lPSC_\lF}
+\newcommand{\lCONFLICT}{{\color{colorCONFLICT} \mathtt{conflict}}}
+\newcommand{\lRACE}{{\color{colorRACE} \mathtt{race}}}
+\newcommand{\lNARACE}{{\color{colorRACE} \mathtt{na-race}}}
+
+\newcommand{\lmakeW}[1]{\mathtt{w}#1}
+\newcommand{\lWFR}{\lmakeW{\lFR}}
+\newcommand{\lWECO}{\lmakeW{\lECO}}
+\newcommand{\lWSCB}{\lmakeW{\lSCB}}
+\newcommand{\lWPSCB}{\lmakeW{\lPSCB}}
+\newcommand{\lWPSCF}{\lmakeW{\lPSCF}}
+\newcommand{\lWPSC}{\lmakeW{\lPSC}}
+\newcommand{\lWB}{\lmakeW{\lMO}}
+
+\newcommand{\lDEPS}{{{\color{colorDEPS}\mathtt{deps}}}}
+\newcommand{\lCTRL}{{{\color{colorDEPS}\mathtt{ctrl}}}}
+\newcommand{\lCTRLISYNC}{{{\color{colorDEPS}\mathtt{ctrl_{isync}}}}}
+\newcommand{\lDATA}{{{\color{colorDEPS}\mathtt{data}}}}
+\newcommand{\lADDR}{{{\color{colorDEPS}\mathtt{addr}}}}
+
+\newcommand{\lmakeE}[1]{#1\mathtt{e}}
+\newcommand{\lRFE}{\lmakeE{\lRF}}
+\newcommand{\lCOE}{\lmakeE{\lCO}}
+\newcommand{\lFRE}{\lmakeE{\lFR}}
+\newcommand{\lMOE}{\lmakeE{\lMO}}
+\newcommand{\lmakeI}[1]{#1\mathtt{i}}
+\newcommand{\lRFI}{\lmakeI{\lRF}}
+\newcommand{\lCOI}{\lmakeI{\lCO}}
+\newcommand{\lFRI}{\lmakeI{\lFR}}
+
+%% \newcommand{\Tid}{\mathsf{Tid}}
+%% \newcommand{\Loc}{\mathsf{Loc}}
+\newcommand{\Lab}{\mathsf{Lab}}
+\newcommand{\Mod}{\mathsf{Mod}}
+\newcommand{\Modr}{\mathsf{Mod}_{\lR}}
+\newcommand{\Modw}{\mathsf{Mod}_{\lW}}
+\newcommand{\Modf}{\mathsf{Mod}_{\lF}}
+\newcommand{\Modrmw}{\mathsf{Mod}_{\lU}}
+
+\newcommand{\reorder}[1]{\mathsf{Reorder}({#1})}
+%\newcommand{\deorder}[1]{\mathsf{Deorder}({#1})}
+%% \newcommand{\remove}[1]{\mathsf{RemoveWR}({#1})}
+\newcommand{\reorderWR}[1]{\mathsf{ReorderWR}({#1})}
+
+\newcommand{\travConfigStep}{\rightarrow_{\rm TC}}
+%% \newcommand{\ARM}{\ensuremath{\mathsf{ARM}}\xspace}
+\newcommand{\ARM}{\ensuremath{\text{ARM}}\xspace}
+\newcommand{\correctTmap}{{\rm \bf correct\text{-}tmap}}
+\newcommand{\rmwCovering}{{\rm \bf rmw\text{-}covering}}
+\newcommand{\invWsc}{{\rm \bf write\text{-}sc\text{-}covering}}
+\newcommand{\invViewRel}{\mathcal{I}_{\rm \bf view\text{-}rel}}
+\newcommand{\setView}{{\rm set\text{-}view}}
+\newcommand{\domView}{{\rm dom\text{-}view}}
+\newcommand{\scSet}{{\rm sc\text{-}set}}
+\newcommand{\scSetF}{{\rm sc\text{-}set\text{-}fun}}
+\newcommand{\scSynchSet}{{\rm sc\text{-}synch}}
+\newcommand{\acqSynchSet}{{\rm acq\text{-}synch}}
+\newcommand{\relSynchFSet}{{\rm rel\text{-}synchf}}
+\newcommand{\acqSet}{{\rm acq\text{-}set}}
+\newcommand{\acqSetF}{{\rm acq\text{-}set\text{-}fun}}
+\newcommand{\curSet}{{\rm cur\text{-}set}}
+\newcommand{\curSetF}{{\rm cur\text{-}set\text{-}fun}}
+\newcommand{\relSetFF}{{\rm rel\text{-}setf\text{-}fun}}
+\newcommand{\msgSetF}{{\rm msg\text{-}set\text{-}fun}}
+\newcommand{\msgSet}{{\rm msg\text{-}set}}
+\newcommand{\relFunSet}{{\rm rel\text{-}setf}}
+\newcommand{\lessView}{{\sf \bf less\text{-}view}}
+\newcommand{\TSf}{\ensuremath{\mathcal{TS}}\xspace}
+\newcommand{\TS}{\ensuremath{\mathit{TS}}\xspace}
+\newcommand{\View}{\ensuremath{\mathcal{V}}\xspace}
+\newcommand{\SCview}{\ensuremath{\mathcal{S}}\xspace}
+\newcommand{\letdef}[2]{\kw{let} \; #1 \defeq #2 \; \kw{in}}
+\newcommand{\nextset}{{\sf Next}}
+\newcommand{\coverable}{{\sf Coverable}}
+\newcommand{\promisable}{{\sf Promisable}}
+%% \newcommand{\addToMemory}[2]{#1 \buildrel{\text{A}}\over\hookleftarrow #2}
+\newcommand{\addToMemory}[2]{#1 \cup \{#2\}}
+
+\newcommand{\stepa}{\leadsto_{\ARM}}
+\newcommand{\stepp}{\promStepgen{}}
+%% \leadsto_{\Promise}}
+\newcommand{\stepptid}{\leadsto_{\Promise \; tid}}
+\newcommand{\lISB}{\mathtt{F^{\isb}}}
+\newcommand{\lDMB}{\mathtt{DMB}}
+\newcommand{\lDMBSY}{\flab{\SY}}
+\newcommand{\lDMBLD}{\flab{\LD}}
+\newcommand{\lDMBST}{\flab{\ST}}
+\newcommand{\SY}{\mathtt{sy}}
+\newcommand{\LD}{\mathtt{ld}}
+\newcommand{\ST}{\mathtt{st}}
+\newcommand{\removeCR}[1]{\mathsf{RemoveCR}({#1})}
+%% \spnewtheorem{defn}{Definition}{\bfseries}{}
+%% \crefname{defn}{Definition}{Definitions}
+\newcommand{\Timestamp}{\mathtt{Time}}
+\newcommand{\TimestampMap}{\mathit{TimeMap}}
+
+\newcommand{\Prog}{\ensuremath{Prog}\xspace}
+\newcommand{\ProgARM}{\ensuremath{Prog_\ARM}\xspace}
+
+% Promise definitions
+\newcommand{\msg}[4]{\tup{#1:#2@#3,#4}}
+\newcommand{\Promise}{\ensuremath{\mathsf{Promise}}\xspace}
+\newcommand\PromSet{\mathit{promises}}
+%% \newcommand\PromSet{\mathtt{P}}
+\newcommand\PromState{\mathit{st}}
+\newcommand{\V}{V}
+\newcommand{\view}{view}
+%% \newcommand{\viewCur}{view_{\sf cur}}
+%% \newcommand{\viewAcq}{view_{\sf acq}}
+%% \newcommand{\viewRel}{view_{\sf rel}}
+\newcommand{\viewCur}{{\sf cur}}
+\newcommand{\viewAcq}{{\sf acq}}
+\newcommand{\viewRel}{{\sf rel}}
+\newcommand{\viewfRel}{{\sf rel}}
+\newcommand{\loc}{\ell}
+\newcommand{\val}{v}
+%% \newcommand{\tstamp}{\tau}
+\newcommand{\tstampRange}[2]{(#1,#2]}
+\newcommand{\simRel}{\mathcal{I}}
+\newcommand{\invMemOne}{\mathcal{I}_{\rm \bf mem1}}
+\newcommand{\invMemTwo}{\mathcal{I}_{\rm \bf mem2}}
+\newcommand{\invMemThree}{\mathcal{I}_{\rm \bf mem3}}
+\newcommand{\invView}{\mathcal{I}_{\rm \bf view}}
+\newcommand{\invState}{\mathcal{I}_{\rm \bf state}}
+\newcommand{\pstate}{\sigma}
+\newcommand{\labelF}{{\rm label}}
+\newcommand{\ltsReq}{{\rm lts\text{-}req}}
+\newcommand{\maxF}{{\rm max}}
+\newcommand{\compileF}{{\rm compile}}
+\newcommand{\compileMod}{{\rm mod\text{-}compile}}
+\newcommand{\compileFenceMod}{{\rm fence\text{-}mod\text{-}compile}}
+%% \newcommand{\writeLbl}[3]{W \; (#1, #2, #3)}
+\newcommand{\writeLbl}[2]{W \; (#1, #2)}
+\newcommand{\writeBlankLbl}{W \; \_}
+\newcommand{\fenceLbl}[1]{F \; #1}
+%% \newcommand{\readLbl}[3]{R \; (#1, #2, #3)}
+\newcommand{\readLbl}[2]{R \; (#1, #2)}
+\newcommand{\readBlankLbl}{R \; \_}
+\newcommand{\casLbl}[5]{U \; (#1, #2, #3, #4, #5)}
+\newcommand{\svaleq}{\asymp}
+\newcommand{\strans}[1]{\xrightarrow{#1}}
+
+%% \newcommand\readWriteTau{\textsf{access-tmap}}
+%% \newcommand\readsView{\textsf{reads-view}}
+
+%\newcommand{\RC}{\ensuremath{\mathsf{RC11}}\xspace}
+%\newcommand{\WRC}{\ensuremath{\mathsf{WRC11}}\xspace}
+
+\newcounter{mylabelcounter}
+
+\makeatletter
+\newcommand{\labelAxiom}[2]{%
+\hfill{\normalfont\textsc{(#1)}}\refstepcounter{mylabelcounter}
+\immediate\write\@auxout{%
+  %% \string\newlabel{#2}{{1}{\thepage}{{#1}}{mylabelcounter.\number\value{mylabelcounter}}{}}
+  \string\newlabel{#2}{{\unexpanded{\normalfont\textsc{#1}}}{\thepage}{{\unexpanded{\normalfont\textsc{#1}}}}{mylabelcounter.\number\value{mylabelcounter}}{}}
+}%
+}
+\makeatother
+
+\newcommand{\squishlist}[1][$\bullet$]{%[$\tinybullet$]{
+ \begin{list}{#1}
+  { \setlength{\itemsep}{0pt}
+     \setlength{\parsep}{0pt}
+     \setlength{\topsep}{1pt}
+     \setlength{\partopsep}{0pt}
+     \setlength{\leftmargin}{1.2em}
+     \setlength{\labelwidth}{0.5em}
+     \setlength{\labelsep}{0.4em} } }
+\newcommand{\squishend}{
+  \end{list}  }
+
+\newcommand{\app}[1]{{\color{blue}\textbf{ANTON: #1}}}
+
+\newcommand{\optarrow}{\rightsquigarrow}
+
+%% Old defs.tex content
+
+%% \newcommand{\excl}[1]{{\color{purple} #1}}
+\newcommand{\ifext}[2]{\ifdefined\extflag{#1}\else{#2}\fi}
+
+\newcommand{\Reads}{{\sf Reads}}
+%% \newcommand{\Reads}{\{ \angled{\tId, \cpath, \loc} \mid \tId, \cpath, \loc \}}
+
+\newcommand{\excl}[1]{}
+\newcommand\tT{\mathbf{t}}
+
+\newcommand{\ListOf}[1]{\mathit{List}\;{#1}}
+\newcommand{\Label}{\mathit{Label}}
+\newcommand{\lab}{\mathit{lab}}
+\newcommand{\Pset}{\mathbb{P}}
+\newcommand{\dep}{\mathit{dep}}
+\newcommand{\regs}{\mathrm{regs}}
+
+\newcommand\viewf{\textbf{\sf viewf}}
+\newcommand{\nthf}{\mathrm{nth}}
+
+\newcommand{\deltaToView}{\delta\textup{\sf -to-view}}
+\newcommand{\deltaHmap}{\textup{\sf comb-time}}
+\newcommand{\invDeltaDefOne}{\inv_{\delta\textup{\sf -con-1}}}
+\newcommand{\invDeltaDefTwo}{\inv_{\delta\textup{\sf -con-2}}}
+\newcommand{\invDeltaDefThree}{\inv_{\delta\textup{\sf -con-3}}}
+\newcommand{\invDeltaDefFour}{\inv_{\delta\textup{\sf -con-4}}}
+
+\newcommand{\tIdState}{\textup{\sf thread-state}}
+\newcommand{\lastCommittedWrite}{\textup{\sf last-write-com}}
+
+\newcommand\certifiableTid{\mathsf{certifiable}_{\tId}}
+\newcommand\certifiable{\mathsf{certifiable}}
+
+\newcommand\lastInstr[1]{#1.\textup{\sf last}}
+
+\newcommand\length{\textup{\sf length}}
+\newcommand\prefix{\textup{\sf prefix}}
+
+\newcommand{\ExclReadType}{\mathit{er}}
+\newcommand{\ExclWriteType}{\mathit{ew}}
+\newcommand{\ComWriteState}{\mathit{im}}
+
+\newcommand\InMemory{im}
+\newcommand{\NotInMemory}{\textup{\sf no-mem}}
+\newcommand{\IssuedToMemory}{\textup{\sf mem}}
+\newcommand{\ExclIssuedToMemory}{\textup{\sf excl-mem}}
+
+\newcommand{\readInst}[3][\ExclReadType]{#2 \;:=_{\excl{#1}}\;[#3]}
+\newcommand{\readExpr}[2]{[#2]_{#1}}
+\newcommand{\readExprF}[3]{[#2]_{#1,#3}}
+\newcommand{\fenceInst}[1]{\fence{#1}}
+\newcommand{\dmbSY}{\fenceInst{\SY}}
+\newcommand{\dmbST}{\fenceInst{\ST}}
+\newcommand{\dmbLD}{\fenceInst{\LD}}
+
+\newcommand{\readInstParam}[3]{#2 \;:=_{#1}\;[#3]}
+\newcommand{\writeInstParam}[3]{[#2] \;:=_{#1}\;#3}
+\newcommand{\repeatReadInst}[2]{\kw{repeat} \;[#2]_{#1}\; \kw{end}}
+\newcommand{\casInstParam}[6]{#3\;:=\;\kw{cas}_{#1,#2}(#4, #5, #6)}
+
+\newcommand\ifGoto{\textsf{if}-\textsf{goto}}
+\newcommand{\ifGotoInst}[2]{\textsf{if} \; #1 \; \textsf{goto} \; #2}
+\newcommand{\writeInst}[2]{[#1]\;:=\;#2}
+\newcommand{\writeExclInst}[3]{\textup{\sf atomic-write}(#1, [#2], #3)}
+\newcommand{\assignInst}[2]{#1\;:=\;#2}
+\newcommand{\repeatInst}[1]{\kw{repeat} \;#1\; \kw{end}}
+
+\newcommand{\restrict}[2]{#1{\restriction_{#2}}}
+
+%% \newcommand{\writeRI}[3][, \ExclType]{#2:#3\excl{, #1}}
+\newcommand{\writeRI}[3][]{#2:#3\excl{#1}}
+
+%% \newcommand\ARM{\mathrm{ARM}}
+%% \newcommand\ARMt{\ensuremath{\mathrm{ARM}{+}\tau}}
+\newcommand\ARMt{ARM+\ensuremath{\tau}}
+%% \newcommand\Promise{\mathrm{Promise}}
+
+\newcommand{\tstamp}[1]{\mbox{\small\color{brown!60!black}\bf{#1}}}
+
+\newcommand{\OrdPrevRequest}{\textup{\sf prev-Ord-req}}
+
+\newcommand{\uniqueTimeLoc}{\textup{\sf uniq-time-loc}}
+\newcommand{\ordPrevRequest}{\textup{\sf ord-prev-req}}
+\newcommand{\coherentThread}{\textup{\sf coherent-thread}}
+\newcommand{\timeRangeCondition}{\textup{\sf time-range}}
+\newcommand{\sameMemory}{\textup{\sf same-memory}}
+\newcommand{\instToLbl}{\textup{\sf inst-to-lbl}}
+\newcommand{\cmdsToLbls}{\textup{\sf cmds-to-lbls}}
+\newcommand{\cmdsToLblsAux}{\textup{\sf cmds-to-lbls-aux}}
+
+\newcommand{\instToVrtx}{\textup{\sf inst-to-vertex}}
+\newcommand{\cmdsToVrtxs}{\textup{\sf cmds-to-vertices}}
+\newcommand{\cmdsToVrtxsAux}{\textup{\sf cmds-to-vertices-aux}}
+
+\newcommand{\prevInstrCommitted}{\textup{\sf prev-instr-committed}}
+\newcommand{\prevReadsCommitted}{\textup{\sf prev-reads-committed}}
+\newcommand{\prevFencesCommitted}{\textup{\sf prev-fences-committed}}
+\newcommand{\prevBrCommitted}{\textup{\sf prev-branches-committed}}
+\newcommand{\prevBrFencesCommitted}{\textup{\sf prev-branches-and-fences-committed}}
+\newcommand{\prevCmdDetermined}{\textup{\sf prev-fully-determined}}
+\newcommand{\prevNoRestart}{\textup{\sf no-prev-restartable-reads-from-loc}}
+\newcommand{\prevExclCommitted}{\textup{\sf prev-excl-to-loc-committed}}
+\newcommand{\noFollowingWcom}{\textup{\sf no-following-com-writes-to-loc}}
+
+%% \newcommand\reorderableRel{\leftrightarrow} 
+%% \newcommand\notReorderableRel{\not \leftrightarrow} 
+\newcommand\reorderableRel[2]{#1 \hookrightarrow #2} 
+\newcommand\notReorderableRel[2]{#1 \not \hookrightarrow #2} 
+%% \newcommand\ReorderingFunction{is\_reorderable}
+%% \newcommand{\checkReorderings}[1]{\textup{\sf check-reorderings}(#1)}
+\newcommand{\checkReorderings}[1]{#1 \setminus {\reorderableRel{}{}}}
+
+\newcommand{\deleteUpdReads}{\textup{\sf delete-upd-reads}}
+\newcommand{\acceptRequest}{\textup{\sf accept-request}}
+\newcommand{\acceptExclWrite}{\textup{\sf accept-excl-write}}
+
+\newcommand{\readsBetweenCommitted}{\textup{\sf reads-in-between-committed}}
+\newcommand{\noWritesBetween}{\textup{\sf no-writes-to-loc-in-between}}
+\newcommand{\noDiffReadsBetween}{\textup{\sf no-different-write-reads-in-between}}
+\newcommand{\samePropagated}{\textup{\sf propagated-to-same-threads}}
+\newcommand{\fullyPropagated}{\textup{\sf fully-propagated}}
+\newcommand{\getNewTapeCell}{\textup{\sf get-new-tapecell}}
+\newcommand{\prevReadFromOther}{\textup{\sf prev-read-from-other-write}}
+%\newcommand{\nextPath}{\textup{\sf next-path}}
+\newcommand{\tapeUpdRestart}{\textup{\sf tape-upd-restart}}
+\newcommand{\doesntPreventExcl}{\textup{\sf doesnt-prevent-excl}}
+\newcommand{\tapeUpdWcom}{\textup{\sf tape-upd-Wcom}}
+\newcommand{\tapeUpdRsat}{\textup{\sf tape-upd-Rsat}}
+\newcommand{\tapeUpdIf}{\textup{\sf tape-upd-IfGoto}}
+\newcommand{\noExclInBetween}{\textup{\sf no-excl-in-between}}
+\newcommand{\getLoc}{\textup{\sf get-loc}}
+
+%% PROBLEMS WITH: \C, \next, \a
+  \newcommand\armStepWriteCommit{\armStepgen{\transenv{Write commit} \; \tId \; \cpath \; x \; \stval \; \tau}}
+  \newcommand\armStepWriteCommitLoc{\armStepgen{\transenv{Write commit} \; \tId \; \cpath \; \loc \; \stval \; \tau}}
+  \newcommand\armStepWriteCommitPrime{\armStepgen{\transenv{Write commit} \; \tId' \; \cpath' \; y \; \stval' \; \tau}}
+  \newcommand\armStepWriteCommitP{\armStepPgen{\transenv{Write commit} \; \tId \; \cpath \; x \; \stval}}
+  \newcommand\armStepWriteCommitPLoc{\armStepPgen{\transenv{Write commit} \; \tId \; \cpath \; \loc \; \stval}}
+  \newcommand\armStepWriteCommitPrimeP{\armStepPgen{\transenv{Write commit} \; \tId' \; \cpath' \; y \; \stval'}}
+
+
+  \newcommand\promStepBranch{\promStepgen{\transenv{Branch commit} \; \tId}}
+  \newcommand\promTStepBranch{\promTStepgen{\transenv{Branch commit}}}
+
+  \newcommand\promStepAcquire{\promStepgen{\transenv{Acquire fence commit} \; \tId}}
+  \newcommand\promTStepAcquire{\promTStepgen{\transenv{Acquire fence commit}}}
+  \newcommand\promStepRelease{\promStepgen{\transenv{Release fence commit} \; \tId}}
+  \newcommand\promTStepRelease{\promTStepgen{\transenv{Release fence commit}}}
+
+  \newcommand\promStepRead{\promStepgen{\transenv{Read from memory} \; \tId \; \writeEvt{x}{\stval}{\tau}{\R}}}
+  \newcommand\promTStepRead{\promTStepgen{\transenv{Read from memory} \; \writeEvt{x}{\stval}{\tau}{\R}}}
+  \newcommand\promTStepReadLoc{\promTStepgen{\transenv{Read from memory} \; \writeEvt{\loc}{\stval}{\tau}{\R}}}
+
+  \newcommand\promStepPromise{\promStepgen{\transenv{Promise write} \; \tId \; \writeEvt{x}{\stval}{\tau}{\R}}}
+  \newcommand\promStepPromiseRPrime{\promStepgen{\transenv{Promise write} \; \tId \; \writeEvt{x}{\stval}{\tau}{\R'}}}
+  \newcommand\promTStepPromise{\promTStepgen{\transenv{Promise write} \; \writeEvt{x}{\stval}{\tau}{\R}}}
+  \newcommand\promTStepPromiseLoc{\promTStepgen{\transenv{Promise write} \; \writeEvt{\loc}{\stval}{\tau}{\R}}}
+
+  \newcommand\promStepFulfill{\promStepgen{\transenv{Fulfill promise} \; \tId \; \writeEvt{x}{\stval}{\tau}{\R}}}
+  \newcommand\promTStepFulfill{\promTStepgen{\transenv{Fulfill promise} \; \writeEvt{x}{\stval}{\tau}{\R}}}
+  \newcommand\promTStepFulfillLoc{\promTStepgen{\transenv{Fulfill promise} \; \writeEvt{\loc}{\stval}{\tau}{\R}}}
+
+  \newcommand\promStepAssign{\promStepgen{\transenv{Local variable assignment} \; \tId}}
+  \newcommand\promTStepAssign{\promTStepgen{\transenv{Local variable assignment}}}
+
+  \newcommand\promStepNop{\promStepgen{\transenv{Execution of $\nop$} \; \tId}}
+  \newcommand\promTStepNop{\promTStepgen{\transenv{Execution of $\nop$}}}
+
+  \newcommand{\tapeToCertificate}{\mathsf{tape}\textsf{-}\mathsf{to}\textsf{-}\mathsf{certificate}}
+  %% \newcommand{\Timestamp}{\mathit{Time}}
+
+  \newcommand{\grayhighlightcolor}{gray!40}
+  \newcommand{\graybox}[1]{$\colorbox{\grayhighlightcolor}{$#1\!$}$}
+
+  %\newcommand\Rarm{\R_{\ARM}}
+  \newcommand\Rarm{\mathsf{view}_{\ARM}}
+  %% \newcommand\transenv[1]{\textcolor{darkgray}{\textup{\textsf{\textbf{\mathversion{bold}#1}}}}}
+  \newcommand\transenv[1]{\textbf{#1}}
+
+  \newcommand\promMessage{\mathit{msg}}
+  \newcommand\promMessageSet{\mathit{Msg}}
+
+  \newcommand\FtypeARM{\mathit{fmod}_{\ARM}}
+  \newcommand\Ftype{\FtypeARM}
+  %% \newcommand\FtypeProm{\mathit{ftype}_{\Promise}}
+  \newcommand\FtypeProm{\mathit{fmod}}
+
+  \newcommand\RtypeProm{\mathit{rtype}_{\Promise}}
+  \newcommand\WtypeProm{\mathit{wtype}_{\Promise}}
+
+  %% \newcommand\V{\mathit{V}}
+  \newcommand\R{\mathit{view}}
+  %% \newcommand\View{\mathit{View}}
+  \newcommand\Rsc{\R_{\mathrm{sc}}}
+  \newcommand\Rcur{\R_{\mathrm{cur}}}
+  \newcommand\Racq{\R_{\mathrm{acq}}}
+  \newcommand\Rrel{\R_{\mathrm{rel}}}
+  \newcommand\Rna{\R_{\mathrm{na}}}
+  \newcommand\Rwrite{\R_{\mathrm{write}}}
+  
+  \newcommand\lessUpToDelta[3]{#2 <_{#1} #3}
+
+  \newcommand\StmtARM{S}
+  \newcommand\StmtProm{S_{\Promise}}
+
+
+  %% \newcommand\C{C}
+  \newcommand\Cf{\mathit{Prog}}%\textsf{Prog}
+  \newcommand\Carm{{cmds}}
+  \newcommand\CARM{{Cmds}}
+  \newcommand\Cfarm{\Cf}
+  \newcommand\Cprom{{cmds}}
+  \newcommand\Cfprom{\Cf}
+  %% \newcommand\Carm{\textsf{C}_{\ARM}}
+  %% \newcommand\Cfarm{\Cf_{\ARM}}
+  %% \newcommand\Cprom{\textsf{C}_{\Promise}}
+  %% \newcommand\Cfprom{\Cf_{\Promise}}
+  
+  %% \newcommand\PromSet{\mathit{promises}}
+  %% \newcommand\PromState{\mathit{st}}
+
+  \newcommand\scAcqRead[2]{#1 := [#2]_{\sf LDAR}}
+  \newcommand\scRelWrite[2]{[#1]_{\sf STLR} := #2}
+
+  \newcommand\acqFence{\fence{\acq}}
+  \newcommand\relFence{\fence{\rel}}
+  \newcommand\scFence{\fence{\sf sc}}
+  \newcommand\fence[1]{\mathsf{fence}({#1})}
+
+  \newcommand\syFence{\fence{\sf sy}}
+  \newcommand\ldFence{\fence{\sf ld}}
+  
+  \newcommand\reqInfoRead[1]{{\sf rd} \; #1}
+  \newcommand\reqInfoWrite[2]{{\sf wr} \; #1:#2}
+  \newcommand\reqInfoFence{{\sf dmb}}
+
+  \newcommand\stRequest[3]{\angled{#1, #2, #3}}
+  \newcommand\stRequestWrite[4]{\angled{#1, #2, \reqInfoWrite{#3}{#4}}}
+  \newcommand\stRequestRead[3]{\angled{#1, #2, \reqInfoRead{#3}}}
+  \newcommand\stRequestFence[2]{\angled{#1, #2, \reqInfoFence}}
+
+  \newcommand\moTau{\textsf{tedges}}
+  \newcommand\invTT{\textsf{inv}}
+
+  % \newcommand\opstau{op\_\loc\_\tau}
+  \newcommand\opstau{\textsf{com-writes-time}}
+  \newcommand\readsSatisfiedR{\textsf{sat-reads-view}}
+  \newcommand\readsCommittedR{\textsf{com-reads-view}}
+
+  \newcommand\hmap{\mathit{H}}
+  \newcommand\tmap{\mathit{H}_{\tau}}
+  \newcommand\rmap{\mathit{H}_{\mathsf{view}}}
+  \newcommand\omap{\mathit{H}_{\le}}
+
+  \newcommand\StateARM{\mathsf{State}_{\ARM}}
+  \newcommand\StateARMtau{\mathsf{State}_{\ARMt}}
+  \newcommand\StateProm{\mathsf{State}_{\Promise}}
+  \newcommand\TStateProm{\mathsf{TState}_{\Promise}}
+
+  \newcommand\armStep{\xrightarrow[\ARMt]{}}
+  \newcommand\armStepl{\xrightarrow[\ARMt]{}}
+  \newcommand\armStepgen[1]{\xrightarrow[\ARMt]{#1}}
+  \newcommand\armStepP{\xrightarrow[\ARM]{}}
+  \newcommand\armStepPgen[1]{\xrightarrow[\ARM]{#1}}
+
+  \newcommand\armStepPrSat{\armStepPgen{\transenv{Read satisfy} \; \tId \; \cpath \; \tId' \; \cpath' \; x \; \stval}}
+  \newcommand\armStepPrSatLoc{\armStepPgen{\transenv{Read satisfy} \; \tId \; \cpath \; \tId' \; \cpath' \; \loc \; \stval}}
+  \newcommand\armStepRSat{\armStepgen{\transenv{Read satisfy} \; \tId \; \cpath \; \tId' \; \cpath' \; x \; \stval}}
+  \newcommand\armStepPrSatFail{\armStepPgen{\transenv{Read satisfy (fail)} \; \tId \; \cpath \; \tId' \; \cpath' \; x \; \stval}}
+  \newcommand\armStepPrSatFailLoc{\armStepPgen{\transenv{Read satisfy (fail)} \; \tId \; \cpath \; \tId' \; \cpath' \; \loc \; \stval}}
+  \newcommand\armStepRSatFail{\armStepgen{\transenv{Read satisfy (fail)} \; \tId \; \cpath \; \tId' \; \cpath' \; x \; \stval}}
+  \newcommand\armStepPrInFlightSat{\armStepPgen{\transenv{Read satisfy from in-flight write} \; \tId \; \cpath \; \cpath' \; x \; \stval}}
+  \newcommand\armStepPrInFlightSatLoc{\armStepPgen{\transenv{Read satisfy from in-flight write} \; \tId \; \cpath \; \cpath' \; \loc \; \stval}}
+  \newcommand\armStepRInFlightSat{\armStepgen{\transenv{Read satisfy from in-flight write} \; \tId \; \cpath \; \cpath' \; x \; \stval}}
+
+  \newcommand\promStep{\xrightarrow[\Promise]{}}
+  \newcommand\promStepl{\xrightarrow[\Promise]{}}
+  \newcommand\promStepgen[1]{\xrightarrow[\Promise]{#1}}
+  \newcommand\promTStepgen[1]{\xrightarrow[\Promise \; \tId]{#1}}
+  \newcommand\promTStep{\xrightarrow[\Promise \; \tId]{}}
+
+  \newcommand\semState[2]{\llbracket#1\rrbracket ^{#2}}
+  \newcommand\semf[2]{\llbracket#1\rrbracket ^{#2}}
+  \newcommand\semfcom[2]{\llbracket#1\rrbracket ^{#2}_\mathsf{com}}
+  \newcommand\sembr[1]{\llbracket#1\rrbracket}
+  \newcommand\PreExecutions{{\rm PreExecs}}
+
+  \newcommand\textIf{\text{\underline{if}} \;}
+  \newcommand\textIfRus{\text{\underline{если}} \;}
+  \newcommand\textElif{\text{\underline{elif}} \;}
+  \newcommand\textElse{\text{\underline{else}} \;}
+  \newcommand\textThen{\text{\underline{then}} \;}
+  \newcommand\textLet{\text{\underline{let}} \;}
+  \newcommand\textIn{\text{\underline{in}}}
+
+  %% \newcommand\nextPathCom[3]{nextPath_{com}(#1, #2, #3)}
+  \newcommand\nextPathCom[3]{\mathsf{next}\textsf{-}\mathsf{path}(#1, #2, #3)}
+  \newcommand\nextPathProm{\mathsf{next}\textsf{-}\mathsf{path}_{\Promise}}
+
+  \newcommand\comShift{\phantom{{}_\mathsf{com}}}
+
+  \newcommand\extendExpr{\expr\_extend}
+
+  \newcommand\regst{\mathsf{regf}}
+  \newcommand\regstcom{\mathsf{regf}_\mathsf{com}}
+  \newcommand\regf{\mathit{regf}}
+  
+  \newcommand\Mpop{\mathit{M}_{\mathrm{POP}}}
+  %% \newcommand\Mprom{\mathit{M}_{\mathrm{Promise}}}
+  \newcommand\Mprom{\mathit{M}}
+  \newcommand{\Mcomp}[3]{\angled{#1, #2, #3}}
+
+
+  \newcommand\Request{\textit{req}}
+  \newcommand\RequestSet{\mathit{ReqSet}}
+  \newcommand\RequestInfo{\mathit{reqinfo}}
+  \newcommand\RequestInfoSet{\mathit{ReqInfoSet}}
+  \newcommand\Evt{\mathit{Evt}}
+  \newcommand\Ord{\mathit{Ord}}
+  \newcommand\Prop{\mathit{Prop}}
+  \newcommand\ExclMap{\mathit{Excl}}
+
+  \newcommand\IssuingOrder{\mathit{iord}}
+  \newcommand\IssuingOrderf{\mathit{iordf}}
+
+  \newcommand\Issued[1]{\mathsf{requested} \; #1}
+  \newcommand\Satisfied{\mathsf{sat}}
+  \newcommand\SatisfiedInFlight{\mathsf{inflight}}
+  \newcommand\Committed{\mathsf{com}}
+  \newcommand\Plain{\mathsf{pln}}
+  \newcommand\Exclusive{\mathsf{excl}}
+  \newcommand\None{\mathsf{none}}
+  \newcommand\Any{\mathsf{any}}
+
+  %% \newcommand\LD{\mathsf{LD}}
+  %% \newcommand\SY{\mathsf{SY}}
+  %% \newcommand\ST{\mathsf{ST}}
+
+  \newcommand\tId{\mathit{tid}}
+  \newcommand\tid{\tId}
+  \newcommand\Tid{\mathit{Tid}}
+
+  \newcommand\Tape{\mathit{Tape}}
+  \newcommand\tape{\mathit{tape}}
+  \newcommand\tapef{\mathit{tapef}}
+  \newcommand\TapeCell{\mathit{TapeCell}}
+  \newcommand\tapeCell{\mathit{tapecell}}
+  \newcommand\Taken{\mathsf{taken}}
+  \newcommand\Ignored{\mathsf{ignored}}
+
+  \newcommand\cpath{\mathit{path}}
+  \newcommand\cpathSY{\cpath^{\SY}}
+  \newcommand\cpathLD{\cpath^{\LD}}
+  \newcommand\cpathLDSY{\cpath^{\LD\SY}}
+  \newcommand\Path{Path}
+  
+  \newcommand\tapeRead[1]{\textsf{R} \; #1}
+  \newcommand\tapeFence[2]{\textsf{F} \; #1 \; #2}
+  \newcommand\tapeWrite[1]{\textsf{W} \; #1}
+  \newcommand\tapeIfGoto[2]{\textsf{If} \; #1 \; #2}
+  \newcommand\tapeNop{\textsf{Nop}}
+  \newcommand\tapeAssign{\textsf{Assign}}
+
+  \newcommand\tapeSatisfied[2]{\Satisfied \; #1 \; #2}
+  \newcommand\satisfiedState{\mathit{sat\text{-}state}}
+
+  \newcommand\tapePending[2]{\textsf{pending} \; #1 \; #2}
+  \newcommand\tapeWriteCommitted[3]{\Committed \; #1 \; #2 \; #3}
+
+  \newcommand\Fstate{\mathit{st}_{\textup{\rm fence}}}
+  \newcommand\Rstate{\mathit{st}_{\textup{\rm read}}}
+  \newcommand\Wstate{\mathit{st}_{\textup{\rm write}}}
+  \newcommand\IfState{\mathit{st}_{\textup{\rm ifgoto}}}
+
+  \newcommand\locvar{\iota}
+  %% \newcommand\loc{\ell}
+  \newcommand\Loc{Loc}
+\newcommand{\Val}{\mathit{Val}}
+  \newcommand\Reg{\mathit{Reg}}
+  \newcommand\reg{\mathit{reg}}
+  %% \newcommand\val{\mathit{val}}
+  \newcommand\stval{\mathit{val}}
+  \newcommand\Stval{\mathit{Val}}
+  \newcommand\expr{\mathit{expr}}
+  %% \newcommand\Expr{\mathit{Expr}}
+  \newcommand\z{\mathit{k}}
+
+  \newcommand\dmb{\textsf{dmb}}
+  \newcommand\nop{\textsf{nop}}
+
+  \newcommand\ImmediateEdge{ImmediateEdge}
+   
+  \newcommand\armState[1]{\ARM_{state}(#1)}
+  \newcommand\angled[1]{\langle #1 \rangle}
+  %% \newcommand\TSfprom{TSf}
+  %% \newcommand\TSfprom{TSf_{\Promise}}
+  %% \newcommand\TS{TS_{\Promise}}
+  %% \newcommand\TSfprom{\textsf{tsf}}
+  %% \newcommand\TS{\textsf{ts}}
+  %% \newcommand\TSfprom{\mathit{tsf}}
+  %% \newcommand\TS{\mathit{ts}}
+
+  %% \newcommand\M{M}
+  \newcommand\e{e}
+  \newcommand\w{w}
+  %% \newcommand\dom[1]{\mathsf{dom}(#1)}
+  \newcommand\taumapping{\mathsf{map}_{\tau}}
+
+  \newcommand\Nop{Nop}
+  \newcommand\Write[1]{Write \; #1}
+  \newcommand\WritePending[1]{\Write(\Pending \; #1)}
+  \newcommand\Read[1]{Read \; #1}
+  \newcommand\ReadIssued[1]{Read \; (\Issued \; #1)}
+  \newcommand\ReadSatisfied[4]{Read \; (\Satisfied \; #1 \; #2 \; #3 \; #4)}
+  %% \newcommand\next[2]{next(#1, #2)}
+  \newcommand\nextPath[2]{\mathsf{next}\textsf{-}\mathsf{path}(#1, #2)}
+  \newcommand\lastIndex{\mathsf{last}\textsf{-}\mathsf{index}}
+  \newcommand\last[1]{last(#1)}
+  \newcommand\lastSY{\mathsf{last}\SY}
+  \newcommand\lastCF{\mathsf{lastCF}}
+  \newcommand\lastLD{\mathsf{last}\LD}
+  \newcommand\lastLDSY{\mathsf{last}\LD\SY}
+  \newcommand\Fence[2]{Fence \; #1 \; #2}
+  \newcommand\FenceSY[1]{\Fence{#1}{SY}}
+  \newcommand\FenceLD[1]{\Fence{#1}{LD}}
+  \newcommand\IfGoto[2]{IfGoto \; #1 \; #2}
+  \newcommand\IfGotoK[1]{\IfGoto{#1}{k}}
+  \newcommand\tick{\ding{51}} % ✓
+  \newcommand{\tickP}{\tick}
+  \newcommand{\tickPP}{\tick}
+
+  \newcommand\fail{\ding{55}} % ✗
+  \newcommand\Certificate{certificate}
+  \newcommand\CommandState{instrPlan}
+  %% \newcommand\State{State}
+  \newcommand\writeEvt[4]{\angled{#1:#2@#3,#4}}
+  %% \newcommand\writeEvt[4]{#1:#2@#3,#4}
+  \newcommand\simrel{\mathcal{I}}
+  \newcommand\simrelPre{\mathcal{I}_{\textup{\rm pre}}}
+  \newcommand\simrelBase{\mathcal{I}_{\textup{\rm base}}}
+  \newcommand\inv{\mathcal{I}}
+  \newcommand\s{\mathbf{s}}
+  \newcommand\sfst{\mathbf{s}_0}
+  \newcommand\ssnd{\mathbf{s}_1}
+  \newcommand\aT{\mathbf{a}}
+  \newcommand\afst{\mathbf{a}_0}
+  \newcommand\asnd{\mathbf{a}_1}
+  \newcommand\p{\mathbf{p}}
+  \newcommand\ptid{\mathbf{p}\textsf{-}\tId}
+%  \newcommand\ordPlusMO{S_{\Ord \cup mo}}
+  \newcommand\ordPlusMO{\textsf{S-Ord-mo}}
+
+  \newcommand\finalStateP{\mathsf{Final}^{\ARM}}
+  \newcommand\finalStateA{\mathsf{Final}^{\ARMt}}
+  \newcommand\finalStateProm{\mathsf{Final}^{\Promise}}
+
+  \newcommand\sinit{\mathbf{s}^{\rm init}}
+  \newcommand\ainit{\mathbf{a}^{\rm init}}
+  \newcommand\pinit{\mathbf{p}^{\rm init}}
+
+  \newcommand\invI[1]{\inv_{\textup{\rm #1}}}
+  \newcommand\invARM[1]{\inv^\ARM_{\textup{\rm #1}}}
+
+  \newcommand\invTidWriteComCERT{\inv^{\tId}_{\mathsf{w-cert}}}
+  \newcommand\invStateCERT{\invI{state-cert}}
+  \newcommand\invViewDeltaCERT{\invI{view-cert}}
+  \newcommand\invViewWriteCERT{\invI{view-write-cert}}
+  \newcommand\invViewRelCERT{\invI{write-rel-cert}}
+  \newcommand\invViewReadCERT{\invI{view-read-cert}}
+  \newcommand\invWriteTimestampCERT{\invI{write-time-cert}}
+  %% \newcommand\invViewCERT{\invI{view-cert}}
+  \newcommand\invMemZeroCERT{\invI{mem-1-tid-cert}}
+  \newcommand\invMemOneCERT{\invI{mem-1-com-cert}}
+  \newcommand\invMemTwoCERT{\invI{mem-2-cert}}
+  \newcommand\simrelBaseCERT{\mathcal{I}_{\textup{\rm base-cert}}}
+
+  \newcommand\invCf{\invI{prg}}
+  \newcommand\invTId{\invI{tid}}
+  \newcommand\invPrefix{\invI{prefix}}
+  \newcommand\invSPrefix{\invI{strong prefix}}
+  %% \newcommand\invMemOne{\invI{mem1}}
+  %% \newcommand\invMemTwo{\invI{mem2}}
+  %% \newcommand\invMemThree{\invI{mem3}}
+  %% \newcommand\invView{\invI{view}}
+  %% \newcommand\invState{\invI{state}}
+  \newcommand\invReach{\invI{reach}}
+  \newcommand\invComWrite{\invI{com-SY}}
+  \newcommand\invCert{\invI{cert}} %\Certificate}}
+  \newcommand\invCertTid{\inv_{cert \; \tId}} %\Certificate}}
+  \newcommand\simrelTid{\inv_{exec \; \tId}} %\Certificate}}
+  \newcommand\invApartialOrderOrd{\inv^{ARM}_{\Ord \; \text{is a partial order}}}
+  \newcommand\invAuniqWrite{\invARM{unique write}}
+  \newcommand\invAtransClosedOrd{\invARM{\Ord = transitive\_closure(\Ord)}}
+  \newcommand\invAimmediateEdge{\invARM{Immediate edge}}
+  \newcommand\invAimmediatePath{\invARM{Immediate path}}
+  \newcommand\invAmaxPath{\invARM{max \; \cpath}}
+  \newcommand\invPromUptoARM{\invI{Promise is up to ARM}}
+  \newcommand\invPromUptoARMtId{\inv^{\tId}_{\textup{Promise is up to ARM}}}
+  \newcommand\invPromUptoARMnot{\invI{Promise isn't up to ARM}}
+
+
+  \newcommand\correctStateA{\inv^{\ARMt}_{\textup{\rm correct}}}
+  \newcommand\correctStateP{\invARM{correct}}
+  \newcommand\invATapeCf{\invARM{tape-Prg}}
+  \newcommand\invATapeCfState{\invARM{{tape-Prg-State}}}
+  \newcommand\invAReadWrite{\invARM{{Read-Write}}}
+  \newcommand\invAReadRead{\invARM{{Read-Read}}}
+  \newcommand\invAWriteWriteRead{\invARM{{Write-Write-Read}}}
+  \newcommand\invAReadCommittedWrite{\invARM{{Read-Write-Committed}}}
+  \newcommand\invAview{\invARM{{View}}}
+  \newcommand\invAviewWrite{\invARM{{View-Write}}}
+  \newcommand\invAviewRead{\invARM{{View-Read}}}
+  \newcommand\invAWriteView{\invARM{{Write-View}}}
+  \newcommand\invAnextCommitted{\invARM{{Next-Committed}}}
+  \newcommand\invACf{\invARM{Prg}}
+  \newcommand\invAtId{\invARM{tid}}
+  \newcommand\invAldRead{\invARM{LD-Read}}
+  \newcommand\invAtypePreservation{\invARM{{tape-Type}}}
+  \newcommand\invAcommittedPreservation{\invARM{{Committed-Preserve}}}
+  \newcommand\invAstatePreservation{\invARM{{State-Preserve}}}
+  \newcommand\invAstateCom{\invARM{S-Scom}}
+  \newcommand\invAcomFences{\invARM{{Committed-Fences}}}
+  \newcommand\invAordMOacyclic{\invARM{{Ord-mo-acyclic}}}
+  \newcommand\invAordProp{\invARM{{Ord-Prop}}}
+  \newcommand\invApropOrd{\invARM{{Prop-Ord}}}
+  \newcommand\invAord{\invARM{{Ord-acyclic}}}
+  \newcommand\invAevtTape{\invARM{{Evt-tape}}}
+  \newcommand\invAtapeEvt{\invARM{{tape-Evt}}}
+  \newcommand\invAtapeOrd{\invARM{{tape-Ord}}}
+  \newcommand\invAReadWriteOne{\invARM{{Read-Write-1}}}
+  \newcommand\invAReadWriteTwo{\invARM{{Read-Write-2}}}
+
+  \newcommand\invPMP{\inv^{\Promise}_{\textsf{M-P}}}
+  \newcommand\invPmessageView{\inv^{\Promise}_{\textup{\rm Message-View}}}
+
+  \newcommand\armStepFetch{\overset{fetch \; \tId \; \cpath}{\armStepl}}
+  \newcommand\armStepFetchPrime{\overset{fetch \; \tId' \; \cpath'}{\armStepl}}
+  \newcommand\armStepProp{\overset{e \rightsquigarrow \tId}{\armStepl}}
+  \newcommand\armStepPropPrime{\overset{e' \rightsquigarrow \tId'}{\armStepl}}
+  \newcommand\armStepWritePending{\overset{\dashrightarrow \stRequestWrite{\tId}{ \cpath}{ x}{\stval}}{\armStepl}}
+  \newcommand\armStepWritePendingPrime{\overset{\dashrightarrow \stRequestWrite{\tId'}{ \cpath'}{ y}{\stval'}}{\armStepl}}
+
+  \newcommand\armStepReadRequest{\overset{\dashrightarrow \stRequestRead{\tId}{ \cpath}{ x}}{\armStepl}}
+  \newcommand\armStepReadRequestPrime{\overset{\dashrightarrow \stRequestRead{\tId'}{ \cpath'}{ y}}{\armStepl}}
+  \newcommand\armStepCondBranch{\overset{\dashrightarrow \tId, \cpath, \text{choose branch}}{\armStepl}}
+  \newcommand\armStepCondBranchPrime{\overset{\dashrightarrow \tId', \cpath', \text{choose branch}}{\armStepl}}
+  \newcommand\armStepFenceCommit{\overset{\dashrightarrow \stRequestFence{\tId}{ \cpath}}{\armStepl}}
+  \newcommand\armStepFenceCommitPrime{\overset{\dashrightarrow \stRequestFence{\tId'}{ \cpath'}}{\armStepl}}
+  \newcommand\armStepReadSatisfy{\overset{\dashrightarrow \stRequestRead{\tId}{ \cpath}{ x}, \stRequestWrite{\tId'}{ \cpath'}{ x}{\stval}}{\armStepl}}
+  \newcommand\armStepReadSatisfyPrime{\overset{\dashrightarrow \stRequestRead{\tId'}{ \cpath'}{ y}, \stRequestWrite{\tId''}{ \cpath''}{ y}{\stval'}}{\armStepl}}
+  \newcommand\armStepReadSatisfyFail{\overset{\not \dashrightarrow \stRequestRead{\tId}{ \cpath}{ x}, \stRequestWrite{\tId'}{ \cpath'}{ x}{\stval}}{\armStepl}}
+  \newcommand\armStepReadSatisfyFailPrime{\overset{\not \dashrightarrow \stRequestRead{\tId'}{ \cpath'}{ y}, \stRequestWrite{\tId''}{ \cpath''}{ y}{\stval'}}{\armStepl}}
+  \newcommand\armStepReadSatisfyInF{\overset{\dashrightarrow \stRequestRead{\tId}{ \cpath}{ x}, \stRequestWrite{\tId}{ \cpath'}{ x}{\stval}}{\armStepl}}
+  \newcommand\armStepReadSatisfyInFPrime{\overset{\dashrightarrow \stRequestRead{\tId'}{ \cpath'}{ y}, \stRequestWrite{\tId'}{ \cpath''}{ y}{\stval'}}{\armStepl}}
+  \newcommand\armStepReadCommit{\overset{\dashrightarrow \tId, \cpath, \text{read commit}}{\armStepl}}
+  \newcommand\armStepReadCommitPrime{\overset{\dashrightarrow \tId', \cpath', \text{read commit}}{\armStepl}}
+
+  \newcommand\armStepFetchP{\overset{\text{fetch} \; \tId \; \cpath}{\armStepP}}
+  \newcommand\armStepFetchPrimeP{\overset{\text{fetch} \; \tId' \; \cpath'}{\armStepP}}
+  \newcommand\armStepPropP{\overset{e \rightsquigarrow \tId}{\armStepP}}
+  \newcommand\armStepPropPrimeP{\overset{e' \rightsquigarrow \tId'}{\armStepP}}
+  \newcommand\armStepWritePendingP{\overset{\dashrightarrow \stRequestWrite{\tId}{ \cpath}{ x}{\stval}}{\armStepP}}
+  \newcommand\armStepWritePendingPrimeP{\overset{\dashrightarrow \stRequestWrite{\tId'}{ \cpath'}{ y}{\stval'}}{\armStepP}}
+  \newcommand\armStepReadRequestP{\overset{\dashrightarrow \stRequestRead{\tId}{ \cpath}{ x}}{\armStepP}}
+  \newcommand\armStepReadRequestPrimeP{\overset{\dashrightarrow \stRequestRead{\tId'}{ \cpath'}{ y}}{\armStepP}}
+  \newcommand\armStepCondBranchP{\overset{\dashrightarrow \tId, \cpath, \text{choose branch}}{\armStepP}}
+  \newcommand\armStepCondBranchPrimeP{\overset{\dashrightarrow \tId', \cpath', \text{choose branch}}{\armStepP}}
+  \newcommand\armStepFenceCommitP{\overset{\dashrightarrow \stRequestFence{\tId}{ \cpath}}{\armStepP}}
+  \newcommand\armStepFenceCommitPrimeP{\overset{\dashrightarrow \stRequestFence{\tId'}{ \cpath'}}{\armStepP}}
+  \newcommand\armStepReadSatisfyP{\overset{\dashrightarrow \stRequestRead{\tId}{ \cpath}{ x}, \stRequestWrite{\tId'}{ \cpath'}{ x}{\stval}}{\armStepP}}
+  \newcommand\armStepReadSatisfyPrimeP{\overset{\dashrightarrow \stRequestRead{\tId'}{ \cpath'}{ y}, \stRequestWrite{\tId''}{ \cpath''}{ y}{\stval'}}{\armStepP}}
+  \newcommand\armStepReadSatisfyFailP{\overset{\not \dashrightarrow \stRequestRead{\tId}{ \cpath}{ x}, \stRequestWrite{\tId'}{ \cpath'}{ x}{\stval}}{\armStepP}}
+  \newcommand\armStepReadSatisfyFailPrimeP{\overset{\not \dashrightarrow \stRequestRead{\tId'}{ \cpath'}{ y}, \stRequestWrite{\tId''}{ \cpath''}{ y}{\stval'}}{\armStepP}}
+  \newcommand\armStepReadSatisfyInFP{\overset{\dashrightarrow \stRequestRead{\tId}{ \cpath}{ x}, \stRequestWrite{\tId}{ \cpath'}{ x}{\stval}}{\armStepP}}
+  \newcommand\armStepReadSatisfyInFPrimeP{\overset{\dashrightarrow \stRequestRead{\tId'}{ \cpath'}{ y}, \stRequestWrite{\tId'}{ \cpath''}{ y}{\stval'}}{\armStepP}}
+  \newcommand\armStepReadCommitP{\overset{\dashrightarrow \tId, \cpath, \text{read commit}}{\armStepP}}
+  \newcommand\armStepReadCommitPrimeP{\overset{\dashrightarrow \tId', \cpath', \text{read commit}}{\armStepP}}
+
+
+\newcommand{\event}[3]{#1#2#3}
+\tikzset{
+   every path/.style={>=stealth},
+   po/.style={->,color=brown,,shorten >=-0.5mm,shorten <=-0.5mm},
+   rf/.style={->,color=green!60!black,dashed,,shorten >=-0.5mm,shorten <=-0.5mm},
+   fr/.style={->,color=red,thick,shorten >=-0.5mm,shorten <=-0.5mm},
+   mo/.style={->,color=orange!60!black,dotted,thick,shorten >=-0.5mm,shorten <=-0.5mm},
+   no/.style={->,dotted,thick,shorten >=-0.5mm,shorten <=-0.5mm},
+   deps/.style={->,color=violet,dotted,thick,shorten >=-0.5mm,shorten <=-0.5mm},
+}
+
+\newcommand{\IssuedSet}{I}
+\newcommand{\issuable}{{\sf Issuable}}
+
+%% \newcommand{\comment}[1]{\color{teal}{~~\texttt{/\!\!/}\textit{#1}}}
+
+\newcommand{\lEID}{\lE_{tid}}
+\newcommand{\TransSet}{{\rm Transitions}}
+\newcommand{\LabelSet}{{\rm Labels}}
+
+\newcommand{\pseudoCompileF}{{\rm pseudo\text{-}compile}}
+\newcommand{\pseudoCompileReq}{{\rm pseudo\text{-}compile\text{-}req}}
+\newcommand{\compileReq}{{\rm compile\text{-}req}}
+
+\newcommand{\scRel}{{\rm sc\text{-}rel}}
+\newcommand{\scRelF}{{\rm sc\text{-}rel\text{-}fun}}
+\newcommand{\acqRel}{{\rm acq\text{-}rel}}
+\newcommand{\acqRelF}{{\rm acq\text{-}rel\text{-}fun}}
+\newcommand{\curRel}{{\rm cur\text{-}rel}}
+\newcommand{\curRelF}{{\rm cur\text{-}rel\text{-}fun}}
+\newcommand{\relRelFF}{{\rm rel\text{-}rel\text{-}fun}}
+\newcommand{\relRel}{{\rm rel\text{-}rel}}
+\newcommand{\msgRelF}{{\rm msg\text{-}rel\text{-}fun}}
+\newcommand{\msgRel}{{\rm msg\text{-}rel}}
+
+\newcommand{\step}{\longrightarrow}
+\newcommand{\astep}[1]{\xrightarrow{#1}}
+\newcommand{\bstep}[1]{\xRightarrow{#1}}
+\newcommand{\cstep}[2]{\xrightarrow[{#1}]{{#2}}}
+\newcommand{\dstep}[2]{\dhxrightarrow[{#1}]{{#2}}}
+\newcommand{\Pfin}{\txtsub{P}{final}}
+\newcommand{\fin}{\text{final}}
+\newcommand{\rulename}[1]{{\textsc{({#1})}}}
+\newcommand{\onestep}[2]{{\textsc{({#1}}{({#2})}\textsc{)}}}
+
+\newcommand{\mrel}{R}
+\newcommand{\lmrel}{\texttt{view}}
+\newcommand{\msc}{S}
+
+\newcommand{\I}{{\cal I}}
+
+\newcommand{\tmin}{\in}
+\newcommand{\tmle}{\leqslant}
+\newcommand{\tcom}{{\cal V}}
+%\newcommand{\tcom}{V}
+\newcommand{\gsco}{{\cal S}}
+%\newcommand{\gsco}{F}
+%\newcommand{\mem}{{\cal M}}
+\newcommand{\mem}{M}
+\newcommand{\scmap}{S}
+\newcommand{\msgid}{i}
+\newcommand{\gts}{\mathcal{T\!S}}
+\newcommand{\lts}{\mathit{TS}}
+\newcommand{\tconf}{{\mathbf{TC}}}
+\newcommand{\mconf}{{\mathbf{MS}}}
+\newcommand{\lstate}{\texttt{st}}
+\newcommand{\lview}{\texttt{view}}
+\newcommand{\lprmem}{\texttt{prm}}
+\newcommand{\lmem}{\txtsub{\mem}{p}}
+%\newcommand{\lprom}{{\cal P}}
+\newcommand{\lprom}{P}
+\newcommand{\limitedmem}{{\cal L}}
+\newcommand{\ogts}{\txtsub{\gts}{fut}}
+\newcommand{\ogsco}{\txtsub{\gsco}{future}}
+\newcommand{\olts}{\txtsub{\lts}{fut}}
+\newcommand{\omem}{\txtsub{\mem}{future}}
+\newcommand{\omsc}{\txtsub{\msc}{future}}
+\newcommand{\lr}{{\text{r}}}
+\newcommand{\lw}{{\text{w}}}
+\newcommand{\cur}{cur}
+%% \newcommand{\acq}{acq}
+%% \newcommand{\rel}{rel}
+%% \newcommand{\lsc}{sc}
+%% \newcommand{\lscm}{s\!f}
+
+\newcommand{\suc}{{succ}}
+\newcommand{\lsuc}{\texttt{succ}}
+
+\newcommand{\locprm}{P}
+\newcommand{\llocprm}{\texttt{promise}}
+\newcommand{\SUBS}{\mathit{sub}}
+\newcommand{\lSUBS}{\texttt{sub}}
+
+\newcommand{\relo}{{\texttt{rel}}}
+\newcommand{\acqo}{{\texttt{acq}}}
+%% \newcommand{\sco}{{\texttt{sc}}}
+%% \newcommand{\na}{\texttt{na}}
+%% \newcommand{\pln}{\texttt{pln}}
+%% \newcommand{\atm}{\texttt{atm}}
+\newcommand{\ra}{\texttt{ra}}
+%% \newcommand{\nf}{\texttt{nf}}
+%% \newcommand{\rlx}{\texttt{rlx}}
+%% %\newcommand{\unord}{\texttt{uno}}
+%% \newcommand{\relacqo}{{\texttt{relacq}}}
+
+%% \newcommand{\Typ}{{\textdom{Typ}}}
+%% \newcommand{\Lab}{{\textdom{Lab}}}
+%% \newcommand{\Loc}{{\textdom{Loc}}}
+%% \newcommand{\Val}{{\textdom{Val}}}
+\newcommand{\AVal}{{\textdom{G}}}
+%% \newcommand{\Tid}{{\textdom{Tid}}}
+%% \newcommand{\Ord}{{\textdom{Ord}}}
+%% \newcommand{\Reg}{{\textdom{Reg}}}
+%% \newcommand{\Time}{{\textdom{Time}}}
+%% \newcommand{\Timemap}{{\textdom{Timemap}}}
+%% \newcommand{\Id}{{\textdom{Id}}}
+
+\newcommand{\writeInstVolatile}[2]{[#1]\;:=_{\rm volatile}\;#2}
+\newcommand{\readInstVolatile}[2]{#1 \;:=_{\rm volatile}\;[#2]}
+
+\newcommand{\nullPtr}{\kw{null}}
+\newcommand{\funcSt}[1]{{\rm #1}}
+
+\newcommand{\vName}{\mathsf{x}}
+\newcommand{\op}{{\rm op}}
+\newcommand{\Number}{\mathbb{Z}}
+\newcommand{\Choice}[2]{\kw{choice}~#1~#2}
+\newcommand{\First}[1]{\kw{fst}~#1}
+\newcommand{\Second}[1]{\kw{snd}~#1}
+\newcommand{\EvalContext}{\mathsf{E}}
+\newcommand{\EvalSpecContext}{\mathsf{E}\alpha}
+\newcommand{\EvalEUContext}{\mathsf{EU}}
+\newcommand{\Pair}[2]{(#1,~#2)}
+
+\newcommand{\locVar}{\iota}
+
+\newcommand{\mval}{\mu}
+%\newcommand{\mvalSubst}{\mu^{\text{\scriptsize{\texttt{subst}}}}}
+\newcommand{\mvalSubst}{\text{\emph{v}}}
+\newcommand{\stMu}{\mu}
+\newcommand{\StMu}{M}
+
+%% \newcommand{\stEta}{\eta}
+\newcommand{\stEta}{M}
+\newcommand{\stEtaLoc}{\eta^{\text{\scriptsize{\texttt{loc}}}}}
+\newcommand{\stPsi}{\psi}
+\newcommand{\stPsiRead}{\psi^{\text{\scriptsize{\texttt{rd}}}}}
+\newcommand{\stPsiWrite}{\psi^{\text{\scriptsize{\texttt{wr}}}}}
+%% \newcommand{\Path}{\text{\textsf{path}}}
+\newcommand{\stpath}{\pi}
+\newcommand{\Stpath}{\Pi}
+\newcommand{\Pathf}{\text{\textsf{path}}}
+
+\newcommand{\AppendAlpha}{\text{\textsf{append}}}
+\newcommand{\AppendGraph}{\text{\textsf{addToGraph}}}
+\newcommand{\updateDep}{\text{\textsf{updateDep}}}
+\newcommand{\updateSync}{\text{\textsf{updateSync}}}
+\newcommand{\promote}{\text{\textsf{promote}}}
+\newcommand{\remove}{\text{\textsf{removeAndUpdate}}}
+
+\newcommand{\stIota}{\iota}
+\newcommand{\StIota}{I}
+
+\newcommand{\dd}[1]{dd(#1)}
+\newcommand{\annotateDD}[4]{\text{\textsf{annotate}}(#1,~#2,~#3,~#4)}
+\newcommand{\annotateF}{\text{\textsf{annotate}}()}
+
+\newcommand{\stSigma}{\R}
+\newcommand{\stSigmaDD}{\sigma^{\text{\scriptsize{\texttt{dd}}}}}
+\newcommand{\StSigma}{\Sigma}
+\newcommand{\stSC}{\R^{\text{\scriptsize{\texttt{sc}}}}}
+\newcommand{\stNA}{\R^{\text{\scriptsize{\texttt{na}}}}}
+%% \newcommand{\stSigmaRead}{\sigma_{\text{\scriptsize{\texttt{rd}}}}}
+\newcommand{\stSigmaWrite}{\R_{\text{\scriptsize{\texttt{wr}}}}}
+\newcommand{\stSigmaWriteNew}{\R_{\text{\scriptsize{\texttt{wr}}}}}
+\newcommand{\stSigmaSync}{\R_{\text{\scriptsize{\texttt{sync}}}}}
+\newcommand{\stSigmaEmpty}{()}
+
+\newcommand{\stSigmaRead}{\R_{\text{\scriptsize{\texttt{rd}}}}}
+
+\newcommand{\stTau}{\tau} 
+\newcommand{\StTau}{T} 
+
+\newcommand{\writeDefVal}{0}
+\newcommand{\NextTau}[2]{Next\stTau(#1, #2)}
+\newcommand{\lastt}{\text{\textsf{LastTS}}}
+\newcommand{\LastTau}[2]{\lastt(#1, #2)}
+\newcommand{\cellHistory}{}
+
+\newcommand{\stPhi}{\phi} 
+\newcommand{\stAlpha}{\alpha}
+\newcommand{\stGamma}{\gamma} 
+
+\newcommand{\stPostOp}{\beta}
+\newcommand{\stObservedWrites}{\omega}
+% Shortcuts
+\newcommand{\arrayBlock}[1]{\begin{array}{c}#1\end{array}}
+\newcommand{\auxX}{\xi}
+
+\newcommand{\AST}{\mathsf{s}}
+\newcommand{\RT}{\AST_{\text{\textsf{RT}}}}
+\newcommand{\Expr}{\mathsf{e}}
+
+\newcommand{\RM}{\mathsf{RM}}
+\newcommand{\RMrlx}{\mathsf{rlx}}
+\newcommand{\WM}{\mathsf{WM}}
+\newcommand{\SM}{\mathsf{SM}}
+\newcommand{\FM}{\mathsf{FM}}
+
+\newcommand{\casWord}{\kw{cas}}
+
+\newcommand{\ReadRM}{\mathsf{Read}_{\text{\scriptsize{\texttt{RM}}}}}
+\newcommand{\ReadAcq}{\mathsf{Read}_{\text{\scriptsize{\texttt{acq}}}}}
+\newcommand{\ReadNa}{\mathsf{Read}_{\text{\scriptsize{\texttt{na}}}}}
+\newcommand{\WriteWM}{\mathsf{Write}_{\text{\scriptsize{\texttt{WM}}}}}
+\newcommand{\WriteRel}{\mathsf{Write}_{\text{\scriptsize{\texttt{rel}}}}}
+\newcommand{\WriteNa}{\mathsf{Write}_{\text{\scriptsize{\texttt{na}}}}}
+\newcommand{\CasSMFM}{\casWord_{\text{\scriptsize{\texttt{SM, FM}}}}}
+
+%% \newcommand{\Write}[3]{[#2]_{\mathsf{#1}} := #3}
+%% \newcommand{\Read}[2]{[#2]_{\mathsf{#1}}}
+%% \newcommand{\ReadF}[3]{[#2]_{\mathsf{#1,~#3}}}
+\newcommand{\Cas}[5]{\casWord_{\mathsf{#1}, \mathsf{#2}}(#3, #4, #5)}
+\newcommand{\CasF}[6]{\casWord_{\mathsf{#1}, \mathsf{#2}, \mathsf{#6}}(#3, #4, #5)}
+
+\newcommand{\lstmath}[1]{\text{\lstinline{#1}}}
+
+\newcommand{\Ret}[1]{#1}
+
+\newcommand{\hole}{[~]}
+\newcommand{\IfThenElse}[3]{\itesl{#1}{#2}{#3}}
+\newcommand{\Repeat}[1]{\repeatInst{#1}}
+\newcommand{\Par}[2]{\kw{par}~#1~#2}
+\newcommand{\Spw}[2]{\kw{spw}~#1~#2}
+%% \newcommand{\Spw}[2]{#1~\|~#2}
+%% \newcommand{\Bind}[3]{#1~\leftarrow~#2;~#3}
+\newcommand{\Bind}[3]{{#1} := {#2};~{#3}}
+\newcommand{\Continuation}{\mathsf{K}}
+\newcommand{\ContinuationBody}[2]{\lambda~#1~#2}
+\newcommand{\Stuck}{\kw{stuck}}
+
+%% \newcommand{\seqCstM}{\lstmath{sc}}
+%% \newcommand{\relAcqM}{\lstmath{relAcq}}
+%% \newcommand{\relM}{\lstmath{rel}}
+%% \newcommand{\acqM}{\lstmath{acq}}
+%% \newcommand{\rlxM}{\lstmath{rlx}}
+%% \newcommand{\naM}{\lstmath{na}}
+\newcommand{\conM}{\mathtt{con}}
+
+\newcommand{\spawn}[2]{\text{\textsf{spawn}}(#1,~#2)}
+\newcommand{\joinP}[2]{\text{\textsf{join}}(#1,~#2)}
+
+% syntactic substitution of #1 for #2 in #3
+\newcommand{\subst}[2]{[#1/#2]}
+\newcommand{\mapto}[2]{#1 \to #2}
+\newcommand{\evalsto}{\hookrightarrow}
+
+\newcommand{\prarrow}{\rightharpoonup}
+
+\newcommand{\memoryTitle}{Память}
+\newcommand{\storageFont}{\small}
+\newcommand{\storageTwoThreadsGen}[1]{
+    \draw[fill=red!20] (0,0.5) rectangle (2,1) node [pos=.5] {\storageFont Поток 1};
+    \draw[fill=blue!10] (2.5,0.5) rectangle (4.5,1) node [pos=.5] {\storageFont Поток 2};
+    \draw (1,0.5) -- (1,-0.5) -- (3.5,-0.5) -- (3.5,0.5);
+    \draw (2.25, -0.5) -- (2.25, #1);
+
+  \draw[draw,fill=yellow!20] (0.5, #1) rectangle (4.0, #1 - 1.1) ;
+    \node at (2.25, #1 - 0.25) {\storageFont \memoryTitle};
+    \node at (2.25, #1 - 0.75) {\storageFont $\writeInst{x}{0}; \writeInst{y}{0}$};
+}
+\newcommand{\storageTwoThreads}{\storageTwoThreadsGen{-2}}
+\newcommand{\storageTwoThreadsShort}{\storageTwoThreadsGen{-1.4}}
+\newcommand{\storageTwoThreadsVeryShort}{\storageTwoThreadsGen{-1}}
+\newcommand{\storageThreeThreadsGen}[3]{
+    \draw[fill=red!20] (0,0.5) rectangle (2,1) node [pos=.5] {\storageFont Поток 1};
+    \draw[fill=blue!10] (2.5,0.5) rectangle (4.5,1) node [pos=.5] {\storageFont Поток 2};
+    \draw[fill=green!20] (5.0,0.5) rectangle (7,1) node [pos=.5] {\storageFont Поток 3};
+    \draw (1,0.5) -- (1, 0.5 -#1) -- (3.5, 0.5 -#1) -- (3.5,0.5);
+    \draw (2.25, 0.5 -#1) -- (2.25, 0.5 -#1 - #2) -- (6.0, 0.5 -#1 - #2) -- (6.0, 0.5);
+    \draw (4.125, 0.5 -#1 - #2) -- (4.125, 0.5 -#1 - #2 - #3);
+}
+\newcommand{\storageThreeThreads}{
+  \storageThreeThreadsGen{0.5}{1.5}{0.7}
+  \draw[draw,fill=yellow!20] (2.4,-2.1) rectangle (5.8,-3.0) ;
+  \node at (4.125, -2.3) {\storageFont \memoryTitle};
+}
+\newcommand{\storageThreeThreadsWRC}{\storageThreeThreadsGen{1}{1}{1}
+  \draw[draw,fill=yellow!20] (1.5,-2.4) rectangle (6.7,-3.0) ;
+}
