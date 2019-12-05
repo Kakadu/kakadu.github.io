@@ -50,8 +50,8 @@
 <li><a href="#_scala_1_2_человека">Scala (1-2 человека)</a></li>
 </ul>
 </li>
-<li><a href="#hw5">Домашки №5</a></li>
-<li><a href="#hw6">Домашки №6</a></li>
+<li><a href="#hw5">Домашка №5</a></li>
+<li><a href="#hw6">Домашка №6</a></li>
 </ul>
 </div>
 </div>
@@ -130,6 +130,9 @@ Haskell), то это нужно предварительно согласова
 <div class="paragraph">
 <p>Интересный минималистичный язык, где в качестве универсальной структуры данных используется помесь
 массива с хэш-таблицей, а для оптимизации вместо целых чисел используеются Double&#8217;ы.</p>
+</div>
+<div class="paragraph">
+<p>Задача 4 типичная (смотреть выше).</p>
 </div>
 </div>
 <div class="sect2">
@@ -239,10 +242,10 @@ Haskell), то это нужно предварительно согласова
 <div class="ulist">
 <ul>
 <li>
-<p>Вложенные join&#8217;ы должен вычисляться не в стиле generate&amp;filter, а как-нибудь более оптимально.</p>
+<p>Вложенные join&#8217;ы должен вычисляться не в стиле generate&amp;filter, а как-нибудь более оптимально. Пример можно найти в (<a href="http://okmij.org/ftp/meta-programming/quel.pdf)">разделе 2</a>.</p>
 </li>
 <li>
-<p>Что-то ещё, пока не придумал.</p>
+<p>Думаю, что хватит.</p>
 </li>
 </ul>
 </div>
@@ -305,7 +308,19 @@ echo $BASH_COMMAND</pre>
 <a href="http://codeblog.dhananjaynene.com/2010/01/dynamically-adding-methods-with-metaprogramming-ruby-and-python/">динамическое дополнение методов</a>.</p>
 </div>
 <div class="paragraph">
-<p>В 2020м году надо будет добавить интернирование строк для усложнения парсера</p>
+<p>Задача 4 типичная (смотреть выше).</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note">
+</td>
+<td class="content">
+В 2020м году надо будет добавить интернирование строк для усложнения парсера
+</td>
+</tr>
+</table>
 </div>
 </div>
 <div class="sect2">
@@ -317,6 +332,9 @@ echo $BASH_COMMAND</pre>
 <p>Из языково-специфичных фич, я предлагаю динамическое дополнение методов
 <a href="http://codeblog.dhananjaynene.com/2010/01/dynamically-adding-methods-with-metaprogramming-ruby-and-python/">(как в питоне)</a></p>
 </div>
+<div class="paragraph">
+<p>Задача 4 типичная (смотреть выше).</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="javascript">Javascript (Рагимов)</h3>
@@ -326,6 +344,9 @@ echo $BASH_COMMAND</pre>
 </div>
 <div class="paragraph">
 <p>Из специфичного для Javascript: прототипное наследование.</p>
+</div>
+<div class="paragraph">
+<p>Задача 4 типичная (смотреть выше).</p>
 </div>
 </div>
 <div class="sect2">
@@ -392,7 +413,7 @@ echo $BASH_COMMAND</pre>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>напишу потом</p>
+<p>типичные (смотреть выше).</p>
 </li>
 </ol>
 </div>
@@ -407,6 +428,9 @@ echo $BASH_COMMAND</pre>
 Думаю, что стоит почитать <a href="http://www.grymoire.com/Unix/Awk.html">умную ссылку</a> про то, когда надо применять AWK,
 а также подергать оттуда тестовых примеров.</p>
 </div>
+<div class="paragraph">
+<p>Задача 4 типичная (смотреть выше).</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="haskell">Haskell (Канашин + Смирнов)</h3>
@@ -419,7 +443,8 @@ echo $BASH_COMMAND</pre>
 <p>Из первых программ для тестирования нужны факториал и фибоначчи. Потом придется разобраться как применять
 Scott (или кто там ещё) encoding, чтобы эмулировать индуктивные типы данных, которые в миниязык не добавлены.
 Скорее всего будет ещё добавлено CPS преобразование программ и какие-то Haskell-специфичные оптимизации
-(вот <a href="https://www.microsoft.com/en-us/research/uploads/prod/2019/03/eta.pdf">пример</a>).</p>
+(вот <a href="https://www.microsoft.com/en-us/research/uploads/prod/2019/03/eta.pdf">пример</a>).
+Ну или можно ограничится типичной задачей №4.</p>
 </div>
 </div>
 <div class="sect2">
@@ -428,6 +453,9 @@ Scott (или кто там ещё) encoding, чтобы эмулировать 
 <p>LISP известен своими встроенными макросами. Посмотрите примерный синтаксис Scheme (или Common Lisp, и т.д.)
 и напишите интерпретатор, который по дороге дает объявлять и использовать макросы. Вдруг у вас получатся
 гигиенические?</p>
+</div>
+<div class="paragraph">
+<p>Задача 4 типичная (смотреть выше).</p>
 </div>
 </div>
 <div class="sect2">
@@ -454,7 +482,10 @@ Scott (или кто там ещё) encoding, чтобы эмулировать 
 </ol>
 </div>
 <div class="paragraph">
-<p>Скорее всего будет подзадача про трансляцию этого мини-языка в x86 ассемблер (для простых функций <code>fibonacci</code> и <code>memcpy</code> это должно быть очень просто). Скорее всего будет полезно пообщаться с человеком, который решает задачу про assembler.</p>
+<p>Задача 4 типичная (смотреть выше).</p>
+</div>
+<div class="paragraph">
+<p>TODO: В 2020м году сделать подзадачу про трансляцию этого мини-языка в x86 ассемблер (для простых функций <code>fibonacci</code> и <code>memcpy</code> это должно быть очень просто). Скорее всего будет полезно пообщаться с человеком, который решает задачу про assembler.</p>
 </div>
 </div>
 <div class="sect2">
@@ -462,7 +493,7 @@ Scott (или кто там ещё) encoding, чтобы эмулировать 
 <div class="paragraph">
 <p>Выберите вид ассемблера, который хорошо работает на вашем компьютере/процессоре и почитайте
 виды регистров в данной архитектуре. Реализуйте интерпретатор. Преобразование программ из
-задания 4 скорее всего будет про автоматическую векторизацию. Если по дороге окажется, что
+задания 4 будет про автоматическую векторизацию. Если по дороге окажется, что
 Вы научились генерировать настоящий ELF файл, который потом можно отдельно исполнить&#8201;&#8212;&#8201;вообще будет круто.</p>
 </div>
 </div>
@@ -580,12 +611,18 @@ Scott (или кто там ещё) encoding, чтобы эмулировать 
 <a href="https://caml.inria.fr/pub/docs/manual-ocaml/objectexamples.html">тут</a> или
 <a href="https://dev.realworldocaml.org/objects.html">тут</a>.</p>
 </div>
+<div class="paragraph">
+<p>Задача 4 типичная (смотреть выше).</p>
+</div>
 </div>
 <div class="sect2">
 <h3 id="refal">РеФаЛ (Малец)</h3>
 <div class="paragraph">
 <p>Отечественный язык программирования. Вдохновения черпать
 <a href="https://github.com/bmstu-iu9/refal-5-lambda">отсюда</a>.</p>
+</div>
+<div class="paragraph">
+<p>Задача 4 типичная (смотреть выше).</p>
 </div>
 </div>
 <div class="sect2">
@@ -672,25 +709,43 @@ MOV  EAX ← [y]       |         MOV  EBX ← [x]</pre>
 </div>
 </div>
 <div class="sect1">
-<h2 id="hw5">Домашки №5</h2>
+<h2 id="hw5">Домашка №5</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Скорее всего про структуры данных</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note">
+</td>
+<td class="content">
+Придумать к 2020 году про структуры данных
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 <div class="sect1">
-<h2 id="hw6">Домашки №6</h2>
+<h2 id="hw6">Домашка №6</h2>
 <div class="sectionbody">
-<div class="paragraph">
-<p>Скорее всего про динамическое программирование</p>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<img src="./images/icons/note.png" alt="Note">
+</td>
+<td class="content">
+Придумать к 2020 году про динамическое программирование
+</td>
+</tr>
+</table>
 </div>
 </div>
 </div>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2019-12-04 18:08:17 MSK
+Last updated 2019-12-05 14:06:16 MSK
 </div>
 </div>
 </body>
