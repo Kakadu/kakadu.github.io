@@ -37,6 +37,11 @@ https://github.com/hmemcpy/milewski-ctfp-pdf[Category Theory for Programmers] (�
 
 Обзор стандартной библиотеки (english) http://www.cse.chalmers.se/edu/course/TDA452/tourofprelude.html[HTML] http://www.cse.chalmers.se/edu/course/TDA452/Haskell-Prelude-Tour-A4.pdf[PDF]
 
+От издательства PACKT есть электронные книжки, но они так себе качества и скорее выглядят как конспекты студентов по темам:
+
+* Haskell High Performance Programming (2016)
+* TODO: ещё одна
+
 Книги переведенные
 ~~~~~~~~~~~~~~~~~~
 
@@ -79,6 +84,8 @@ https://two-wrongs.com/a-gentle-introduction-to-monad-transformers[Адеква�
 https://ruhaskell.org/links.html
 
 http://ideas.cs.uu.nl/HEE/index.html[Трассировка вычисления] функций в Haskell.
+
+https://lexi-lambda.github.io/blog/2018/02/10/an-opinionated-guide-to-haskell-in-2018/[Guide to haskell extensions 2018]
 
 Проекты/(полу)курсовые
 ----------------------
