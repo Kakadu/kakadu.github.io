@@ -16,6 +16,8 @@
 .listingblock .pygments .tok-gd { color: #f92672 } /* Generic.Deleted */
 .listingblock .pygments .tok-ge { font-style: italic } /* Generic.Emph */
 .listingblock .pygments .tok-gi { color: #a6e22e } /* Generic.Inserted */
+.listingblock .pygments .tok-go { color: #66d9ef } /* Generic.Output */
+.listingblock .pygments .tok-gp { color: #f92672; font-weight: bold } /* Generic.Prompt */
 .listingblock .pygments .tok-gs { font-weight: bold } /* Generic.Strong */
 .listingblock .pygments .tok-gu { color: #75715e } /* Generic.Subheading */
 .listingblock .pygments .tok-kc { color: #66d9ef } /* Keyword.Constant */
