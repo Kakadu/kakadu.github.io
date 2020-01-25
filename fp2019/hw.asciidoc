@@ -441,6 +441,10 @@ MOV  EAX ← [y]       |         MOV  EBX ← [x]
 
 === Gallina
 
+=== Rebol/RED
+
+https://www.red-lang.org[Red]
+
 === OCaml/Haskell with GADT (2 человека)
 
 Числа, функции и обобщенные алгебраические типы данных, паттерн-матчинг, проверка типов для паттерн-мэтчинга
