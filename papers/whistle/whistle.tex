@@ -1,0 +1,107 @@
+\documentclass[a5paper,12pt]{article}
+\usepackage[cache=true]{minted}
+\usepackage{polyglossia}
+\setmainlanguage{russian}
+\let\cyrillicfonttt\monofamily
+\usepackage{comment}
+\usepackage{stmaryrd}
+
+\usepackage[ left=1cm
+           , right=2cm
+           , top=1cm
+           , bottom=1.5cm
+           ]{geometry}
+\usepackage{amssymb,amsmath,amsthm,amsfonts} 
+
+\usepackage{fontspec}
+% \DeclareMathSizes{22}{30}{24}{20}
+
+%\usefonttheme{professionalfonts}
+\defaultfontfeatures{Ligatures={TeX}}
+%\setmainfont[Scale=1.5]{Times New Roman}
+%\setmainfont{Latin Modern Roman}
+\setmainfont [ Scale=1]{CMU Serif Roman}
+\setsansfont[Scale=1]{CMU Sans Serif}
+
+%\setmonofont[ BoldFont=lmmonolt10-bold.otf
+%			, ItalicFont=lmmono10-italic.otf
+%			, BoldItalicFont=lmmonoproplt10-boldoblique.otf
+%			, Scale=1.5
+%]{lmmono9-regular.otf}
+%\setmonofont[Scale=1.5]{CMU Typewriter Text}
+\setmonofont{CMU Typewriter Text}
+
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}[Scale=1]
+\newcommand*{\arr}{\ensuremath{\rightarrow}}
+
+% Doesn't work?
+\renewcommand{\epsilon}{\ensuremath{\varepsilon}}
+%\renewcommand{\sigma}{\ensuremath{\varsigma}}
+\newcommand{\inbr}[1]{\left<{#1}\right>}
+\newcommand{\ruleno}[1]{\mbox{[\textsc{#1}]}}
+\newcommand{\bigslant}[2]{{\raisebox{.2em}{$#1$}\left/\raisebox{-.2em}{$#2$}\right.}}
+\newcommand{\sem}[1]{\llbracket #1 \rrbracket}
+\begin{document}
+
+
+\section{Свистки}
+
+Свистки на откладывание конъюнкта
+\begin{itemize}
+\item \textit{Имени Розплохаса} Аргументы \textit{нового} вызова более общие, чем аргументы какого-то \textit{предыдущего} вызова.\\
+Критерий расходимости -- этот конъюнкт никогда не досчитается.
+Консервативный (редко свистит) и достаточный (конъюнкт точно расходится)
+
+\item \textit{Гомеоморфное вложение} в текущее дерево стрима, какого-то дерева стрима, полученного до этого.\\
+\textbf{Недостатки}: тормозит.\\
+\textbf{Замечание}: это свисток не на обрыв, а свисток на откладывание вычислений в текущем дереве стрима до тех пор, пока не уточнится подстановка в парном дереве стрима.
+
+\end{itemize}
+
+Свистки на гарантию пустого стрима ответов
+\begin{itemize}
+\item \textit{Имени Kakadu} Аргументы какого-то \textit{старого} вызова более общие, чем аргументы \textit{нового } вызова\\
+Сам по себе ничего не говорит, надо знать об ответах, которые случились между двумя вызовами. Если их не было, то и не будет (можно прерваться). Если они были, то ничего нельзя сказать.
+
+\item \textit{$\alpha$-эквивалентность} Сам по себе без знания ответов детектирует расходимость. При учете ответов похож на мемоизацию
+
+\end{itemize}
+
+\section{Свисток имени Kakadu}
+
+\begin{minted}{ocaml}
+let smart_or f g st = 
+  match f st with 
+  | Nil -> g st 
+  | cons (x,xs) -> cons (x, (g ||| xs st))
+  | Whistle t -> 
+    match g st with 
+    | Nil -> Whistel t
+    | cons (ys, ys) -> cons (y, (f ||| ys st))
+    | Whistle tau -> Whistle (t ||| tau st)
+
+let smart_and f g st = 
+  match f st with 
+  | nil -> nil 
+  | cons (x, xs) -> mplus (g x) ( xs &&& g st)
+  | Whistle t -> nil
+\end{minted}
+
+\textit{Замечание от Петра. } Сейчас не понятно, чтобы будет если две части дизъюнкции свистнули по разным реляциям. Что возвращать наверх? И вообще, что возвращать наверх? Текущее дерево поиска решений: дизъюнкцию конъюнкций гоалов?
+
+
+\section{Параллельная конъюнкция}
+Идея: вычисляем два конъюнкта параллельно (конкурентно), когда один из них досчитается, то приостанавливаем вычисление второго и действуем как с обычной конъюнкцией.\\
+
+Пример ($\bigwedge$ -- параллельная конъюнкция)
+
+$$
+(x\equiv 1) \vee ((1\equiv 1) \wedge (1\equiv 1) \wedge (0\equiv 1)) \bigwedge ( (1\equiv 1) \wedge (x\equiv 1))
+$$
+% Левый конъюнкт выплевывает ответ $(x\equiv 1)$
+Основной вопрос: если левая часть $f$ выдала ответ и continuation для вычислений $c$, то имеем ли мы право продолжать делать параллельную конъюнкцию $c$ с $g$?
+
+В четверг на доске был пример где такое вроде как вызывает дуплицирование ответов, нужно этот пример аккуратненько записать и проверить.
+
+\end{document}
