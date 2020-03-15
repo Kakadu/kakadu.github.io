@@ -1,6 +1,6 @@
-<mxfile host="app.diagrams.net" modified="2020-03-15T16:18:46.301Z" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:73.0) Gecko/20100101 Firefox/73.0" etag="cr_WcoJxSuN8NcQF4Veq" version="12.8.5" type="github">
+<mxfile host="app.diagrams.net" modified="2020-03-15T18:43:45.527Z" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:73.0) Gecko/20100101 Firefox/73.0" etag="ZXY7MqNiOqDrptfFURc4" version="12.8.5" type="github">
   <diagram id="6a731a19-8d31-9384-78a2-239565b7b9f0" name="Page-1">
-    <mxGraphModel dx="1422" dy="1024" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#ffffff" math="0" shadow="0">
+    <mxGraphModel dx="1177" dy="1024" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#ffffff" math="0" shadow="0">
       <root>
         <mxCell id="0" />
         <mxCell id="1" parent="0" />
@@ -154,8 +154,8 @@
         <mxCell id="1515" value="Pattern &lt;br&gt;matching &lt;br&gt;&lt;div&gt;survey&lt;/div&gt;" style="ellipse;whiteSpace=wrap;html=1;shadow=0;fontFamily=Helvetica;fontSize=30;fontColor=#2F5B7C;align=center;strokeColor=#2F5B7C;strokeWidth=6;fillColor=#FFFFFF;fontStyle=1;gradientColor=none;" parent="1" vertex="1">
           <mxGeometry x="980" y="720" width="270" height="270" as="geometry" />
         </mxCell>
-        <mxCell id="8fD-62BuHi758IAnA8GY-1542" value="&lt;div style=&quot;font-size: 19px;&quot;&gt;Мотивация&lt;/div&gt;&lt;div style=&quot;font-size: 19px;&quot;&gt;&lt;br style=&quot;font-size: 19px;&quot;&gt;Расширить сопосатвление с образцом в языке OCaml, так, чтобы было полезно и не сказалось на производительности&lt;/div&gt;&lt;div style=&quot;font-size: 19px;&quot;&gt;&lt;br style=&quot;font-size: 19px;&quot;&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=19;" parent="1" vertex="1">
-          <mxGeometry x="530" y="860" width="331.5" height="190" as="geometry" />
+        <mxCell id="8fD-62BuHi758IAnA8GY-1542" value="&lt;div style=&quot;font-size: 19px;&quot;&gt;Мотивация&lt;/div&gt;&lt;div style=&quot;font-size: 19px;&quot;&gt;&lt;br style=&quot;font-size: 19px;&quot;&gt;Расширить сопосатвление с образцом в языке OCaml, так, чтобы было полезно и не сказалось на производительности&lt;/div&gt;&lt;div style=&quot;font-size: 19px;&quot;&gt;&lt;br style=&quot;font-size: 19px;&quot;&gt;&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;fontSize=19;fontFamily=Comic Sans MS;" parent="1" vertex="1">
+          <mxGeometry x="640" y="770" width="331.5" height="190" as="geometry" />
         </mxCell>
         <mxCell id="8fD-62BuHi758IAnA8GY-1543" value="&lt;div style=&quot;font-size: 24px&quot;&gt;Эффективная&lt;br style=&quot;font-size: 24px&quot;&gt; компиляция&lt;/div&gt;" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;fontFamily=Comic Sans MS;fontSize=20;fontColor=#000000;align=center;strokeWidth=3;fillColor=#F08705;strokeColor=none;gradientColor=none;rounded=1;" parent="1" vertex="1">
           <mxGeometry x="1400" y="810" width="210" height="90" as="geometry" />
@@ -250,17 +250,17 @@
           </mxGeometry>
         </mxCell>
         <UserObject label="Haskell&lt;br style=&quot;font-size: 20px;&quot;&gt;Алгоритм из &lt;span class=&quot;pl-c&quot; style=&quot;font-size: 20px;&quot;&gt;&quot;The Implementation of Functional Programming Languages&quot;&lt;/span&gt;" link="https://github.com/ghc/ghc/blob/master/compiler/deSugar/Match.hs" id="H8tN7Wo9xz4285fO-3Jg-1515">
-          <mxCell style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=10;fontSize=20;" vertex="1" parent="1">
+          <mxCell style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=10;fontSize=20;fontFamily=Comic Sans MS;" vertex="1" parent="1">
             <mxGeometry x="1740" y="616.5" width="350" height="120" as="geometry" />
           </mxCell>
         </UserObject>
         <UserObject label="SML&amp;amp;F#&lt;br style=&quot;font-size: 20px;&quot;&gt;&lt;div style=&quot;font-size: 20px;&quot;&gt;&quot;When do pattern matcing heuristics matter&quot;&lt;/div&gt;" link="https://api.semanticscholar.org/CorpusID:4491805" id="H8tN7Wo9xz4285fO-3Jg-1517">
-          <mxCell style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=10;fontSize=20;" vertex="1" parent="1">
+          <mxCell style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=10;fontSize=20;fontFamily=Comic Sans MS;" vertex="1" parent="1">
             <mxGeometry x="1740" y="770" width="350" height="110" as="geometry" />
           </mxCell>
         </UserObject>
         <UserObject label="OCaml&lt;br&gt;только статья 2001 исп-ся" link="https://api.semanticscholar.org/CorpusID:4491805" id="H8tN7Wo9xz4285fO-3Jg-1518">
-          <mxCell style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=10;fontSize=20;" vertex="1" parent="1">
+          <mxCell style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=10;fontSize=20;fontFamily=Comic Sans MS;" vertex="1" parent="1">
             <mxGeometry x="1740" y="926.5" width="350" height="110" as="geometry" />
           </mxCell>
         </UserObject>
@@ -301,8 +301,8 @@
           </mxGeometry>
         </mxCell>
         <UserObject label="Lisp&lt;br&gt;макросы, макросы..." link="https://api.semanticscholar.org/CorpusID:4491805" id="H8tN7Wo9xz4285fO-3Jg-1527">
-          <mxCell style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=10;fontSize=20;" vertex="1" parent="1">
-            <mxGeometry x="590" y="1330" width="188" height="120" as="geometry" />
+          <mxCell style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=10;fontSize=20;fontFamily=Comic Sans MS;" vertex="1" parent="1">
+            <mxGeometry x="230.5" y="1500" width="188" height="110" as="geometry" />
           </mxCell>
         </UserObject>
         <mxCell id="H8tN7Wo9xz4285fO-3Jg-1529" value="F#&lt;br&gt;проверка на &lt;br&gt;подтипы" style="rounded=1;whiteSpace=wrap;html=1;fontSize=19;fontColor=#000000;fontFamily=Comic Sans MS;" vertex="1" parent="1">
@@ -336,7 +336,7 @@
           </mxGeometry>
         </mxCell>
         <mxCell id="H8tN7Wo9xz4285fO-3Jg-1535" value="Несортированное" style="rounded=1;whiteSpace=wrap;html=1;shadow=0;fontFamily=Comic Sans MS;fontSize=20;fontColor=#000000;align=center;strokeWidth=3;fillColor=#F08705;strokeColor=none;gradientColor=none;rounded=1;" vertex="1" parent="1">
-          <mxGeometry x="720" y="1151" width="210" height="90" as="geometry" />
+          <mxGeometry x="378.5" y="1330" width="210" height="90" as="geometry" />
         </mxCell>
         <mxCell id="H8tN7Wo9xz4285fO-3Jg-1536" value="" style="endArrow=classic;html=1;fontFamily=Comic Sans MS;fontSize=20;" edge="1" parent="1" source="H8tN7Wo9xz4285fO-3Jg-1535" target="H8tN7Wo9xz4285fO-3Jg-1527">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
@@ -380,15 +380,26 @@
             <mxPoint x="1690" y="430.39144736842104" as="targetPoint" />
           </mxGeometry>
         </mxCell>
-        <UserObject label="Scala&lt;br&gt;специальная аннотация&amp;nbsp; компилирует в стиле Maranget 2001" link="https://api.semanticscholar.org/CorpusID:4491805" id="H8tN7Wo9xz4285fO-3Jg-1546">
-          <mxCell style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=10;fontSize=20;" vertex="1" parent="1">
-            <mxGeometry x="1740" y="1100" width="350" height="110" as="geometry" />
+        <UserObject label="Scala&lt;br&gt;Эффективно компилирует только int&#39;ы" link="https://api.semanticscholar.org/CorpusID:4491805" id="H8tN7Wo9xz4285fO-3Jg-1546">
+          <mxCell style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=10;fontSize=20;fontFamily=Comic Sans MS;" vertex="1" parent="1">
+            <mxGeometry x="1735" y="1080" width="220" height="110" as="geometry" />
           </mxCell>
         </UserObject>
         <mxCell id="H8tN7Wo9xz4285fO-3Jg-1547" value="" style="endArrow=classic;html=1;fontFamily=Comic Sans MS;fontSize=20;" edge="1" parent="1" source="8fD-62BuHi758IAnA8GY-1543" target="H8tN7Wo9xz4285fO-3Jg-1546">
           <mxGeometry width="50" height="50" relative="1" as="geometry">
             <mxPoint x="1620" y="897.3963414634147" as="sourcePoint" />
             <mxPoint x="1750" y="937.5060975609756" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <UserObject label="SNOBOL&lt;br&gt;скорее&amp;nbsp; не сопоставление с образцом, а парсер" link="https://api.semanticscholar.org/CorpusID:4491805" id="H8tN7Wo9xz4285fO-3Jg-1548">
+          <mxCell style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=10;fontSize=20;fontFamily=Comic Sans MS;" vertex="1" parent="1">
+            <mxGeometry x="448.5" y="1500" width="216.5" height="110" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="H8tN7Wo9xz4285fO-3Jg-1549" value="" style="endArrow=classic;html=1;fontFamily=Comic Sans MS;fontSize=20;" edge="1" parent="1" source="H8tN7Wo9xz4285fO-3Jg-1535" target="H8tN7Wo9xz4285fO-3Jg-1548">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="454.8243243243244" y="1430" as="sourcePoint" />
+            <mxPoint x="386.0675675675675" y="1510" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
