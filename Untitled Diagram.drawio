@@ -1,4 +1,4 @@
-<mxfile host="app.diagrams.net" modified="2020-03-15T16:06:58.991Z" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:73.0) Gecko/20100101 Firefox/73.0" etag="GwaJc0-TBh_yOalj7-NL" version="12.8.5" type="github">
+<mxfile host="app.diagrams.net" modified="2020-03-15T16:18:46.301Z" agent="Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:73.0) Gecko/20100101 Firefox/73.0" etag="cr_WcoJxSuN8NcQF4Veq" version="12.8.5" type="github">
   <diagram id="6a731a19-8d31-9384-78a2-239565b7b9f0" name="Page-1">
     <mxGraphModel dx="1422" dy="1024" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="1169" pageHeight="827" background="#ffffff" math="0" shadow="0">
       <root>
@@ -378,6 +378,17 @@
           <mxGeometry x="23.5" y="41.5" width="100" height="100" as="geometry">
             <mxPoint x="1610" y="439.1809210526317" as="sourcePoint" />
             <mxPoint x="1690" y="430.39144736842104" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <UserObject label="Scala&lt;br&gt;специальная аннотация&amp;nbsp; компилирует в стиле Maranget 2001" link="https://api.semanticscholar.org/CorpusID:4491805" id="H8tN7Wo9xz4285fO-3Jg-1546">
+          <mxCell style="shape=note;whiteSpace=wrap;html=1;backgroundOutline=1;darkOpacity=0.05;size=10;fontSize=20;" vertex="1" parent="1">
+            <mxGeometry x="1740" y="1100" width="350" height="110" as="geometry" />
+          </mxCell>
+        </UserObject>
+        <mxCell id="H8tN7Wo9xz4285fO-3Jg-1547" value="" style="endArrow=classic;html=1;fontFamily=Comic Sans MS;fontSize=20;" edge="1" parent="1" source="8fD-62BuHi758IAnA8GY-1543" target="H8tN7Wo9xz4285fO-3Jg-1546">
+          <mxGeometry width="50" height="50" relative="1" as="geometry">
+            <mxPoint x="1620" y="897.3963414634147" as="sourcePoint" />
+            <mxPoint x="1750" y="937.5060975609756" as="targetPoint" />
           </mxGeometry>
         </mxCell>
       </root>
