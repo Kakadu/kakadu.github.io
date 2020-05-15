@@ -204,12 +204,14 @@ http://codeblog.dhananjaynene.com/2010/01/dynamically-adding-methods-with-metapr
 Задача 4 типичная (смотреть выше).
 
 [[javascript]]
-=== Javascript (Рагимов)
+=== JavaScript (Рагимов)
 
 Стандартный набор языковых конструкций. Реализовать все фичи из
 известного https://www.destroyallsoftware.com/talks/wat[видеообзора] Javascript
 
-Из специфичного для Javascript: прототипное наследование.
+Из специфичного для JavaScript: прототипное наследование.
+
+Особенности JS: https://github.com/mozilla-spidermonkey/jsparagus/blob/master/js-quirks.md#readme[от Mozilla].
 
 Задача 4 типичная (смотреть выше).
 
@@ -368,8 +370,12 @@ http://sovietov.com/app/forthwiz.html[тут]. Интерпретатор и п�
 
 // sovietov's paper
 // https://elibrary.ru/item.asp?id=39242589
+
 // Haskellish
-// https://groups.google.com/forum/?hl=en-GB#!searchin/comp.lang.forth/funforth%7Csort:date/comp.lang.forth/i9P8T97QDgw/_wxwpqMZlJwJ
+Вот https://groups.google.com/forum/?hl=en-GB#!searchin/comp.lang.forth/funforth%7Csort:date/comp.lang.forth/i9P8T97QDgw/_wxwpqMZlJwJ[тут]
+пытаются написать на форте в хаскельном стиле. Можно использовать как источник тестов.
+
+
 
 //
 
