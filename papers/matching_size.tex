@@ -1,0 +1,90 @@
+\documentclass{article}
+
+\usepackage{hyperref}
+\usepackage{comment}
+\usepackage{polyglossia}
+\setmainlanguage{russian}
+\setotherlanguage{english}
+
+\usepackage{geometry}
+\geometry{
+     top=18pt, bottom=14pt,
+     left=.5cm,right=1cm,
+     paperwidth=5.5in, paperheight=8.5in,
+     }
+
+\setmainfont[
+ Ligatures=TeX,
+ Extension=.otf,
+ BoldFont=cmunbx,
+ ItalicFont=cmunti,
+ BoldItalicFont=cmunbi,
+]{cmunrm}
+% С засечками (для заголовков)
+\setsansfont[
+ Ligatures=TeX,
+ Extension=.otf,
+ BoldFont=cmunsx,
+ ItalicFont=cmunsi,
+]{cmunss}
+\setmonofont[Scale=1.0,
+    BoldFont=lmmonolt10-bold.otf,
+    ItalicFont=lmmono10-italic.otf,
+    BoldItalicFont=lmmonoproplt10-boldoblique.otf
+]{lmmono9-regular.otf}
+
+\usepackage[cache=true]{minted}
+\renewcommand{\epsilon}{\ensuremath{\varepsilon}}
+\usepackage{amsmath}
+
+\begin{document}
+
+\section{Попробую в общем виде}
+Рассматриваем fully abstract типы с рекурсией. Конструкторы -- $C_1\dots C_n$. Количество рекурсивных аргументов в i-м конструкторе -- $a_i$, рекурсивных аргументов во всех конструкторах -- $\sum_{i=1}^{n} a_i$. Таким образом нерекурсивных аргументов как бы нет и новых жителей они не дают. Все типы записываются как полином
+\[
+t(x) = c_0 + c_1*t(x) + \dots + c_n*t^n(x) + ...
+\]
+Здесь степени -- это количество рекурсивных аргументов конструктора
+
+
+$L(h) = \begin{cases}
+O(1) & h=1\\
+\sum{a_i} * L(h-1),&h>1
+\end{cases} = O(c^h)$
+
+Наибольшее влияние оказывает наибольшая степень (где больше всего рекурсивных аргументов)
+
+$S(h) = \sum_{i=1}^{h} L(i)  = O(c^h)$
+
+
+\section{Про количество примеров}
+
+$L(h)$ -- количество жителей высоты $h\ge 1$
+
+$S(h)$ -- количество жителей высоты от 1 до $h$
+
+Очевидно, что на $L(h)$ больше влияет количество конструкторов, а на $S(h)$ -- на сколько сильно они ветвятся
+
+Пару примеров
+\begin{itemize}
+\item Числа Пеано: $p(x) = 1 + p(x)$\\ $L(h) = 1$, $S(h) = h$
+
+\item Числа Пеано с двумя видами листов: $p(x) = 2 + p(x)$\\
+$L(h) = 2$, $S(h) = 2*h$
+\item Деревья: $t(x) = 1 + t^2(x)$\\
+$L(h) = \begin{cases}
+1, & h=1\\
+2*L(h-1),&h>1
+\end{cases} = 2^{h-1}$
+
+$S(h) = \sum_{i=1}^{h} L(i) =\sum_{i=1}^{h} 2^{i-1} =2^h - 1$
+
+\item Деревья с двумя видами листов: $t(x) = 2 + t^2(x)$\\
+$L(h) = 2^h$\\
+
+$S(h) = \sum_{i=1}^{h} L(i) =\sum_{i=1}^{h} 2^{i} =2(2^h - 1)$
+
+\end{itemize}
+
+
+\end{document}
