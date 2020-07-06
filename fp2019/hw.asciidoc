@@ -213,6 +213,8 @@ http://codeblog.dhananjaynene.com/2010/01/dynamically-adding-methods-with-metapr
 
 Особенности JS: https://github.com/mozilla-spidermonkey/jsparagus/blob/master/js-quirks.md#readme[от Mozilla].
 
+Про равенство в JS: https://dorey.github.io/JavaScript-Equality-Table/
+
 Задача 4 типичная (смотреть выше).
 
 [[kotlin]]
