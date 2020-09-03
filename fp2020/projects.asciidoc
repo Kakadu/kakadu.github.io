@@ -9,7 +9,7 @@
 :email:  Dmitrii.Kosarev@pm.me
 
 
-*Темы* преимущественно про функциональное программирование. Во всех темах de facto констультирует mailto:Dmitrii.Kosarev@protonmail.ch[Дмитрий Косарев], а mailto:rsdpisuy@gmail.com[Семен Григорьев] руководит de jure, а de facto читает тексты и презентации.
+*Темы* преимущественно про функциональное программирование. Во всех темах de facto консультирует mailto:Dmitrii.Kosarev@protonmail.ch[Дмитрий Косарев], а mailto:rsdpisuy@gmail.com[Семен Григорьев] руководит de jure, а de facto читает тексты и презентации.
 
 Такой же документ за прошлый год link:../fp2019/projects.html[здесь].
 
