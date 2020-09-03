@@ -9,7 +9,7 @@
 :email:  Dmitrii.Kosarev@pm.me
 
 
-*Темы* преимущественно про функциональное программирование. Во всех темах дэ юре руководит mailto:rsdpisuy@gmail.com[Семен Григорьев], а де факто констультирует mailto:Dmitrii.Kosarev@protonmail.ch[Дмитрий Косарев].
+*Темы* преимущественно про функциональное программирование. Во всех темах de facto констультирует mailto:Dmitrii.Kosarev@protonmail.ch[Дмитрий Косарев], а mailto:rsdpisuy@gmail.com[Семен Григорьев] руководит de jure, а de facto читает тексты и презентации.
 
 Такой же документ за прошлый год link:../fp2019/projects.html[здесь].
 
@@ -289,9 +289,11 @@ Pandoc
 с помощью библиотеки инкрементальных вычислений https://github.com/janestreet/incremental[для языка OCaml])
 и попробовать разобраться, можно ли таким способом ускорить перевычисление при изменении матриц.
 
+*Уровень*: курсовая
+
 В планах лежит попытка это опубликовать на тематическм воркшопе GRAPHS NDA (ну или на нашем родном SEIM).
 
-Руководители mailto:rsdpisuy@gmail.com[Семен Григорьев] и mailto:Dmitrii.Kosarev@protonmail.ch[Дмитрий Косарев]
+// Руководители mailto:rsdpisuy@gmail.com[Семен Григорьев] и mailto:Dmitrii.Kosarev@protonmail.ch[Дмитрий Косарев]
 
 
 
