@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 2.0.10">
+<meta name="author" content="Dmitrii Kosarev a.k.a. Kakadu">
+<title>Список курсовых/миникурсовых</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,300italic,400,400italic,600,600italic%7CNoto+Serif:400,400italic,700,700italic%7CDroid+Sans+Mono:400,700">
+<link rel="stylesheet" href="./asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Список курсовых/миникурсовых</h1>
+<div class="details">
+<span id="author" class="author">Dmitrii Kosarev a.k.a. Kakadu</span><br>
+<span id="email" class="email"><a href="mailto:Dmitrii.Kosarev@pm.me">Dmitrii.Kosarev@pm.me</a></span><br>
+</div>
+<div id="toc" class="toc">
+<div id="toctitle">Table of Contents</div>
+<ul class="sectlevel1">
+<li><a href="#reasonml">Про ReScript/OCaml</a>
+<ul class="sectlevel2">
+<li><a href="#_парсер_синтаксиса_rescript_с_восстановлением_от_ошибок">Парсер синтаксиса ReScript, с восстановлением от ошибок</a></li>
+<li><a href="#rescript-combinators">Парсер ReScript, с использованием подхода парсер-комбинаторов</a></li>
+</ul>
+</li>
+<li><a href="#ocaml-ide">Про интеграцию OCaml с IDE</a>
+<ul class="sectlevel2">
+<li><a href="#semantich-highlighting">Семантическая подсветка (и/или) идентация</a></li>
+<li><a href="#ide-camlp5">Поддержка синтаксических расширений на основе Camlp5</a></li>
+</ul>
+</li>
+<li><a href="#miniKanren">miniKanren</a>
+<ul class="sectlevel2">
+<li><a href="#mk-memoization">Про мемоизацию</a></li>
+</ul>
+</li>
+<li><a href="#pandoc">Pandoc</a></li>
+<li><a href="#incremental">Инкрементальные вычисления с матрицами</a></li>
+</ul>
+</div>
+</div>
+<div id="content">
+<div id="preamble">
+<div class="sectionbody">
+<div class="paragraph">
+<p><strong>Темы</strong> преимущественно про функциональное программирование. Во всех темах de facto консультирует <a href="mailto:Dmitrii.Kosarev@protonmail.ch">Дмитрий Косарев</a>, а <a href="mailto:rsdpisuy@gmail.com">Семен Григорьев</a> руководит de jure, а de facto читает тексты и презентации.</p>
+</div>
+<div class="paragraph">
+<p>Такой же документ за прошлый год <a href="../fp2019/projects.html">здесь</a>.</p>
+</div>
+<div class="paragraph">
+<p>TODO: задачи на допуск к допуску на вход.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="reasonml">Про ReScript/OCaml</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Так как погромисты на Java не могут никак осилить синтаксис нормальных функциональных языков программирования,
+в Bloomberg (а потом и в Facebook)
+было предложено совершить ход конём и немного <span class="line-through">исправить</span> испортить синтаксис уже имеющегося языка
+функционального программирования OCaml, чтобы он был более
+похож на привычный синтаксис с фигурными скобками и точками с запятой. Получившийся в результате <a href="https://rescript-lang.org/">Rescript</a> (ранее известный как BuckleScript/ReasomML), хомячкам вроде понравился.</p>
+</div>
+<div class="paragraph">
+<p>С таким подходом вроде бы всё хорошо, но есть проблема для чистокровных OCaml программистов: язык действительно сильно похож, но
+непохожести очень сильно бесят, никак не получается выкинуть из головы выученный синтаксис и пользоваться новым, потому что то, что
+видно на экране очень сильно напоминает "старый" синтаксис OCaml. В итоге получаются ошибки, которые очень глупые, но компилятор
+ReasonML всёравно не доволен. И, наоборот, с ReScript может быть сложно пересесть на OCaml по сходным причинам.</p>
+</div>
+<div class="paragraph">
+<p>Вот пример кода на OCaml:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ocaml"><span></span><span class="tok-k">type</span> <span class="tok-k">&#39;</span><span class="tok-n">a</span> <span class="tok-n">expr</span> <span class="tok-o">=</span> <span class="tok-nc">Const</span> <span class="tok-o">:</span> <span class="tok-kt">int</span>     <span class="tok-o">-&gt;</span> <span class="tok-k">&#39;</span><span class="tok-n">a</span> <span class="tok-n">expr</span>
+             <span class="tok-o">|</span> <span class="tok-nc">App</span>   <span class="tok-o">:</span> <span class="tok-k">&#39;</span><span class="tok-n">a</span> <span class="tok-o">*</span> <span class="tok-k">&#39;</span><span class="tok-n">a</span> <span class="tok-o">-&gt;</span> <span class="tok-k">&#39;</span><span class="tok-n">a</span> <span class="tok-n">expr</span>
+             <span class="tok-o">|</span> <span class="tok-nc">Lam</span>   <span class="tok-o">:</span> <span class="tok-kt">string</span> <span class="tok-o">*</span> <span class="tok-k">&#39;</span><span class="tok-n">a</span> <span class="tok-o">-&gt;</span> <span class="tok-k">&#39;</span><span class="tok-n">a</span> <span class="tok-n">expr</span>
+
+<span class="tok-k">let</span> <span class="tok-n">foo</span> <span class="tok-n">e</span> <span class="tok-o">=</span> <span class="tok-k">match</span> <span class="tok-n">e</span> <span class="tok-k">with</span>
+  <span class="tok-o">|</span> <span class="tok-nc">Const</span> <span class="tok-n">n</span> <span class="tok-o">-&gt;</span> <span class="tok-n">n</span>
+  <span class="tok-o">|</span> <span class="tok-nc">App</span> <span class="tok-o">(</span><span class="tok-n">l</span><span class="tok-o">,</span><span class="tok-n">r</span><span class="tok-o">)</span> <span class="tok-o">-&gt;</span>
+      <span class="tok-k">let</span> <span class="tok-bp">()</span> <span class="tok-o">=</span> <span class="tok-n">print_endline</span> <span class="tok-s2">&quot;blabla&quot;</span> <span class="tok-k">in</span>
+      <span class="tok-n">r</span>
+  <span class="tok-o">|</span> <span class="tok-nc">Lam</span> <span class="tok-o">(</span><span class="tok-n">s</span><span class="tok-o">,</span> <span class="tok-n">b</span><span class="tok-o">)</span> <span class="tok-o">-&gt;</span> <span class="tok-n">b</span></code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>А вот, что получается при <a href="https://reasonml.github.io/en/try">трансляции</a> в ReScript.</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="pygments highlight"><code data-lang="ocaml"><span></span><span class="tok-k">type</span> <span class="tok-n">expr</span><span class="tok-o">(</span><span class="tok-k">&#39;</span><span class="tok-n">a</span><span class="tok-o">)</span> <span class="tok-o">=</span>
+  <span class="tok-o">|</span> <span class="tok-nc">Const</span><span class="tok-o">(</span><span class="tok-kt">int</span><span class="tok-o">):</span> <span class="tok-n">expr</span><span class="tok-o">(</span><span class="tok-k">&#39;</span><span class="tok-n">a</span><span class="tok-o">)</span>
+  <span class="tok-o">|</span> <span class="tok-nc">App</span><span class="tok-o">(</span><span class="tok-k">&#39;</span><span class="tok-n">a</span><span class="tok-o">,</span> <span class="tok-k">&#39;</span><span class="tok-n">a</span><span class="tok-o">):</span> <span class="tok-n">expr</span><span class="tok-o">(</span><span class="tok-k">&#39;</span><span class="tok-n">a</span><span class="tok-o">)</span>
+  <span class="tok-o">|</span> <span class="tok-nc">Lam</span><span class="tok-o">(</span><span class="tok-kt">string</span><span class="tok-o">,</span> <span class="tok-k">&#39;</span><span class="tok-n">a</span><span class="tok-o">):</span> <span class="tok-n">expr</span><span class="tok-o">(</span><span class="tok-k">&#39;</span><span class="tok-n">a</span><span class="tok-o">);</span>
+
+<span class="tok-k">let</span> <span class="tok-n">foo</span> <span class="tok-o">=</span> <span class="tok-n">e</span> <span class="tok-o">=&gt;</span>
+  <span class="tok-n">switch</span> <span class="tok-o">(</span><span class="tok-n">e</span><span class="tok-o">)</span> <span class="tok-o">{</span>
+  <span class="tok-o">|</span> <span class="tok-nc">Const</span><span class="tok-o">(</span><span class="tok-n">n</span><span class="tok-o">)</span> <span class="tok-o">=&gt;</span> <span class="tok-n">n</span>
+  <span class="tok-o">|</span> <span class="tok-nc">App</span><span class="tok-o">(</span><span class="tok-n">l</span><span class="tok-o">,</span> <span class="tok-n">r</span><span class="tok-o">)</span> <span class="tok-o">=&gt;</span>
+    <span class="tok-k">let</span> <span class="tok-bp">()</span> <span class="tok-o">=</span> <span class="tok-n">print_endline</span><span class="tok-o">(</span><span class="tok-s2">&quot;blabla&quot;</span><span class="tok-o">);</span>
+    <span class="tok-n">r</span><span class="tok-o">;</span>
+  <span class="tok-o">|</span> <span class="tok-nc">Lam</span><span class="tok-o">(</span><span class="tok-n">s</span><span class="tok-o">,</span> <span class="tok-n">b</span><span class="tok-o">)</span> <span class="tok-o">=&gt;</span> <span class="tok-n">b</span>
+  <span class="tok-o">};</span></code></pre>
+</div>
+</div>
+<div class="sect2">
+<h3 id="_парсер_синтаксиса_rescript_с_восстановлением_от_ошибок">Парсер синтаксиса ReScript, с восстановлением от ошибок</h3>
+<div class="paragraph">
+<p>Необходимо,чтобы парсер лучше понимал "камлизмы", и получше восстанавливался от ошибок, связанных с ними.</p>
+</div>
+<div class="paragraph">
+<p>Замечание: в ReScript есть также старый парсер, который разбирает язык похожий на OCaml.
+Можно исправлять его (ссылку найдете сами).</p>
+</div>
+<div class="paragraph">
+<p><strong>Уровень</strong>: курсовая второго-третьего курса; может быть бакалаврская, если откроются много интересных подзадач.</p>
+</div>
+<div class="paragraph">
+<p>С чего начинать: Вот <a href="https://github.com/rescript-lang/syntax">тут</a>  можно найти парсер, написанный рекурсивным спуском. Можно смотреть как он ведет себя на программах, где синтаксис двух языков перемешан.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="rescript-combinators">Парсер ReScript, с использованием подхода парсер-комбинаторов</h3>
+<div class="paragraph">
+<p>На данный момент парсер ReasonML написан методом рекурсивного спуска. Скорее всего от парсер-комбинаторов отказались из-за опасений недостаточной производительности (хотя видео Джонатана Блоу, создателя Brain, я не смотрел). Хочется</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>подтвердить или опровергнуть, что парсер-комбинаторы торомозят.</p>
+</li>
+<li>
+<p>проверять, что с ними писать более удобно не нужно (потому, что это вроде как очевидно).</p>
+</li>
+<li>
+<p>предъявить техники написания парсер-комбинаторов, которые повышают производительность итогового парсера.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Уровень</strong>: курсовая; возможно, последующий апгрейд до бакалаврской.</p>
+</div>
+<div class="paragraph">
+<p>С чего начинать:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>посмотреть на библиотеки парсер-комбинаторов;</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p><a href="https://github.com/inhabitedtype/angstrom">Angstrom</a></p>
+</li>
+<li>
+<p><a href="https://github.com/dboulytchev/ostap/">Ostap</a> и т.п.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p>разобраться с особенностями-недостатками похода: левая рекурсия, longest match first.</p>
+</li>
+<li>
+<p>начать переписывать парсер на основе кодовой базы <a href="https://github.com/rescript-lang/syntax">ReScript</a></p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Требования к обучающемуся:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>желательно знакомство с ФП языками (OCaml, Haskell, Scala 3);</p>
+</li>
+<li>
+<p>желателен общий кругозор в области синтаксического анализа (LL, LR, GLR, GLL, Packrat, Meerkat).</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="ocaml-ide">Про интеграцию OCaml с IDE</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>На данный момент интеграцию с IDE для языка OCaml предоставляет проект <a href="https://github.com/ocaml/merlin/">merlin</a>. Также существует надстройка над ним <a href="https://github.com/ocaml-lsp/ocaml-language-server">OCaml Language Server</a>, реализующая
+<a href="https://microsoft.github.io/language-server-protocol/">Language Server Protocol</a>, которая позволяет соединять бэкэнд интеграции IDE c любимым текстовым редактором. Фронт работ в этой области связан с</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>добавлением новых рефакторингов и т.п.</p>
+</li>
+<li>
+<p>поддержка модификаций синтаксиса, а также восстановление от ошибок синтаксиса.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>TODO: видео с Spb Rust Meetup 2019 от matklad.</p>
+</div>
+<div class="paragraph">
+<p>Публикации из этой области могут выглядеть так:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><a href="https://icfp18.sigplan.org/details/icfp-2018-papers/19/">Merlin, ICFP 2018</a></p>
+</li>
+<li>
+<p><a href="https://dl.acm.org/doi/pdf/10.1109/IWoR.2019.00013">RoToR, IWoR 2019</a></p>
+</li>
+</ul>
+</div>
+<div class="sect2">
+<h3 id="semantich-highlighting">Семантическая подсветка (и/или) идентация</h3>
+<div class="paragraph">
+<p>В функциональном программиовании часто используется паттерн проектирования, заключающийся в создании встраиваемых предметно-ориентированных языков (Embedded Domain Specific languages, EDSLs) для некоторых видов API, например:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>eDSL для создания запросов к реляционной базе данных</p>
+</li>
+<li>
+<p>для описания XML</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Такие встраиваемые языки часто требуют особых правил подстветки и отступов по сравнению с host-языком, куда они встроены.
+Сейчас в LSP уже <a href="https://github.com/microsoft/language-server-protocol/issues/18">ведется работа</a> по добавлению в спецификацию возможностей semantic highlighting.</p>
+</div>
+<div class="paragraph">
+<p>Что надо сделать:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>расширить реализацию <a href="https://github.com/ocaml/ocaml-lsp">OCaml Language Server</a> поддержкой раскрашивания синтаксиса</p>
+</li>
+<li>
+<p>сделать возможность описывать правила подстветки кода библиотекам на OCaml</p>
+</li>
+<li>
+<p>доделать редактор кода, который умеет общаться с LSP сервером (например, <a href="https://marketplace.visualstudio.com/items?itemName=ocamllabs.ocaml-platform">VS Code</a>), чтобы он научился показывать то, что прислал сервер.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Замечание: настраиваемые авто-отступы можно выделить в отдельную похожую тему.</p>
+</div>
+<div class="paragraph">
+<p><strong>Уровень</strong>: курсовая; возможен последующий апгрейд до бакалаврской.</p>
+</div>
+<div class="paragraph">
+<p>Пожелания к обучающемуся:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>знакомство с OCaml;</p>
+</li>
+<li>
+<p>знакомство с eDSL;</p>
+</li>
+<li>
+<p>знакомство с технологией разработки/расширения соответствующего редактора (для VS Code это язык TypeScript);</p>
+</li>
+<li>
+<p>отсутствие страха окунуться в большие проекты.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="ide-camlp5">Поддержка синтаксических расширений на основе Camlp5</h3>
+<div class="paragraph">
+<p>На данный момент в OCaml/Merlin поддерживаются синтаксические расширения на основе PPX. Последовательность обработки примерно такая:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>входной код на OCaml разбирается парсером merlin в абстрактное синтаксическое дерево (AST)</p>
+</li>
+<li>
+<p>merlin&#8217;у объяснены используемые compile-time синтаксические расширения, он их применяет, чтобы преобразовать OCaml AST в другое OCaml AST</p>
+</li>
+<li>
+<p>после всех преобразований запускается проверка типов, поиск рефакторингов и т.п.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Особенности данного подхода:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>синтаксический анализ проводится только над AST OCaml, что не дает расширять синтаксис произвольным способом.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>При этом в экосистеме OCaml присутствует альтернативный способ расширения синтаксиса с помощью <a href="https://github.com/camlp5/camlp5/">Camlp5</a>. Его особенности</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>расширяемый парсер, отличный от используемого в компиляторе OCaml, позволяет описывать модификации синтаксиса на интересном eDSL.</p>
+</li>
+<li>
+<p>позволяет изменять грамматику очень сильно; у этого есть как особенности, так и недостатки.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Что надо сделать</strong>. Необходимо добавить в OCamlMelrin+OCamlLSP поддержку синтаксических расширений на основе Camlp5:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>научить merlin понимать информацию о подключенных синтаксических расширениях Camlp5</p>
+</li>
+<li>
+<p>изменить логику так, чтобы в присутствии Camlp5 сначала применялся парсер Camlp5, который на выходе даст AST компилятора OCaml, уже после это применять расширения синтаксиса на основе PPX.</p>
+</li>
+<li>
+<p>уже после этого запускать поиск рефакторингов и т.п.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p><strong>Уровень</strong>: курсовая; возможен последующий апгрейд до бакалаврской.</p>
+</div>
+<div class="paragraph">
+<p>Пожелания к обучающемуся:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>знакомство с OCaml;</p>
+</li>
+<li>
+<p>отсутствие страха окунуться в большие проекты.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Замечание: если в ходе работы окажется, что парсер Camlp5 плохо восстанавливается от ошибок, то возможно выделение отдельной темы по этому поводу.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="miniKanren">miniKanren</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>У нас в лаборатории есть некоторая "тусовка" на тему реляционного (логического) программирования на
+<a href="http://minikanren.org/">miniKanren</a>. Если кратко,
+то это DSL, чтобы относительно естественно решать переборные задачи, например, "перебери мне все программы, и дай те, которые
+возвращают свой текст". Есть ещё своя реализация miniKanren, которая называется <a href="https://github.com/dboulytchev/ocanren">OCanren</a>,
+на функциональном языке программирования
+OCaml (он более дружелюбен к новичку, чем Haskell, ИМХО, конечно же).</p>
+</div>
+<div class="paragraph">
+<p>Скажу сразу, miniKanren&#8201;&#8212;&#8201;это околонаучная штука на любителя.</p>
+</div>
+<div class="paragraph">
+<p>TODO: добавить мотивирующее видео от Matthew Might&#8217;а с miniKanren Workshop 2020</p>
+</div>
+<div class="sect2">
+<h3 id="mk-memoization">Про мемоизацию</h3>
+<div class="paragraph">
+<p>Евгений Моисеенко сделал tabling (связанные понятия: мемоизация и кеширование) для OCanren некоторым способом, но есть ещё и другой, на основе Substitution Tree Indexing by Peter Graph.
+Разумеется, всё придумали до нас, и нужно только прочитать и реализовать.</p>
+</div>
+<div class="paragraph">
+<p><strong>Уровень</strong>: курсования</p>
+</div>
+<div class="paragraph">
+<p>От студента требуется:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>отсутствия страха читать статьи на английском</p>
+</li>
+<li>
+<p>желание попрограммировать немного на OCaml.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="pandoc">Pandoc</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Сегодня СПбГУ засталвляет преподов создавать документ "РПУД" (Рабочая программа учебной деятельности) в DOCX формате.
+Редактировать такое в Word&#8201;&#8212;&#8201;это боль, поэтому преподы хотели бы использовать LaTeX для этого. Поэтому, надо научиться преобразовывать документы из LaTex в DOCX.</p>
+</div>
+<div class="paragraph">
+<p>Проект <a href="https://github.com/jgm/pandoc">Pandoc</a> (написанный на Haskell) существует как раз для этого. Он уже умеет преобразоывать
+заголовки и прочий кириллический текст в DOCХ (и в большое количество других форматов документов), но, по-видимому, поддержка таблиц и тутульной страницы не реализована никак.</p>
+</div>
+<div class="paragraph">
+<p><strong>Задача</strong>: доработать Pandoc до состояния, при котором можно адекватно преобразовать проект РПУДа из LaTeХ в DOCX.</p>
+</div>
+<div class="paragraph">
+<p>В общем виде преобразовывать произвольный LaTeX нереально, так как там есть даже встроенный язык программирования. Необходимо поддержать только те фичи, которые нужны для преобразования документов РПУД.</p>
+</div>
+<div class="paragraph">
+<p><strong>Уровень</strong>: курсовая.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="incremental">Инкрементальные вычисления с матрицами</h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>Существует некоторая тусовка инженеров-исследователей, которые сводит все задачи (например, синтаксический анализ графов) к перемножению матриц (например, инциденций) на GPU. При этом, если меняется одна ячейка в матрице (доабвляется новое ребро в графе) или появляются новые строки/столбцы в матрице (добавляется новая вершина в
+граф), то новые результаты перемножения матриц получаются <strong>повторным</strong> перемножением на GPU.</p>
+</div>
+<div class="paragraph">
+<p>Есть предложение оптимизировать это стандартными способами, например применением <strong>инкрементальных</strong> вычислений.
+Идея инкрементальных вычислений заключается в том, что по вычисляемой функции строится некоторая модель
+вычисления, зависящая от входных аргументов, и когда меняется один из аргументов, то перевычисляются только
+те подвыражения, которые зависят от этих изменившихся аргументов. Например, для случая изменения одной ячейки
+матрицы, нам нужно перевычислить некоторое количетсво сумм, линейно пропорциональное размерам матрица, в то
+время как перемножение матриц заново имеет квадратичную сложность (пусть и на GPGPU).</p>
+</div>
+<div class="paragraph">
+<p>Задача заключается в том, чтобы поэкспериментировать с инкрементальными вычислениями матриц (например,
+с помощью библиотеки инкрементальных вычислений <a href="https://github.com/janestreet/incremental">для языка OCaml</a>)
+и попробовать разобраться, можно ли таким способом ускорить перевычисление при изменении матриц.</p>
+</div>
+<div class="paragraph">
+<p><strong>Уровень</strong>: курсовая</p>
+</div>
+<div class="paragraph">
+<p>В планах лежит попытка это опубликовать на тематическм воркшопе GRADES NDA (ну или на нашем родном SEIM).</p>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2020-09-03 19:42:49 +0300
+</div>
+</div>
+<link rel="stylesheet" href="./pygments-monokai.css">
+</body>
+</html>
