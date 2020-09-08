@@ -16,6 +16,8 @@ pre.pygments .tok-cs { color: #75715e } /* Comment.Special */
 pre.pygments .tok-gd { color: #f92672 } /* Generic.Deleted */
 pre.pygments .tok-ge { font-style: italic } /* Generic.Emph */
 pre.pygments .tok-gi { color: #a6e22e } /* Generic.Inserted */
+pre.pygments .tok-go { color: #66d9ef } /* Generic.Output */
+pre.pygments .tok-gp { color: #f92672; font-weight: bold } /* Generic.Prompt */
 pre.pygments .tok-gs { font-weight: bold } /* Generic.Strong */
 pre.pygments .tok-gu { color: #75715e } /* Generic.Subheading */
 pre.pygments .tok-kc { color: #66d9ef } /* Keyword.Constant */
