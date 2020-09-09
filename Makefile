@@ -11,8 +11,11 @@ OPTS=theme=readable totop=ui linkcss sidebar=left icons iconsfont=font-awesome #
 
 all: $(FILES_OUT)
 
-index.html: index.asciidoc
-	asciidoctor -b $(BACKEND) $(addprefix -a ,$(OPTS)) $<
+#index.html: index.asciidoc
+#	asciidoctor -b $(BACKEND) $(addprefix -a ,$(OPTS)) $<
+
+%.html: %.asciidoc
+	asciidoctor -b $(BACKEND)  $<
 
 celan: clean
 
