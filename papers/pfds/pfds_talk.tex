@@ -1,18 +1,20 @@
+% !TeX spellcheck = ru_RU
 \newif\ifanswers
 %\answerstrue % comment out to hide answers
 % hack from https://tex.stackexchange.com/questions/33576/conditional-typesetting-build
 
 \documentclass[aspectratio=169
   , xcolor={svgnames}
-  , hyperref={ colorlinks,citecolor=DeepPink4
-             , linkcolor=DarkRed,urlcolor=DarkBlue}
-  , russian
+  , hyperref=
+      { colorlinks
+      , urlcolor=DarkBlue 
+      }  
+  , russian  % This line affects translation of theorem titles
   ]{beamer}
 \usetheme{CambridgeUS}
-\beamertemplatenavigationsymbolsempty % remove navigation bar
-\setbeamertemplate{headline}{}
 
-\usefonttheme{professionalfonts}
+%\setbeamertemplate{headline}{}
+
 \input{heading.tex}
 \usepackage{tabulary}
 \usepackage{verbatim}
@@ -20,15 +22,7 @@
 % \usepackage{ragged2e} % for \Centering macro
 % \newcolumntype{C}{>{\Centering\arraybackslash}X}m
 % sudo aptget install ttf-mscorefonts-installer
-\defaultfontfeatures{Ligatures={TeX}} 
-\setmainfont{Times New Roman}
-\setsansfont{CMU Sans Serif}
 
-\setmonofont[Scale=1.0,
-    BoldFont=lmmonolt10-bold.otf,
-    ItalicFont=lmmono10-italic.otf,
-    BoldItalicFont=lmmonoproplt10-boldoblique.otf
-]{lmmono9-regular.otf}
 
 \newcommand{\term}[2]{\textit{#1} (#2)}
 
@@ -84,7 +78,7 @@
 \makeatother
 
 
-%%%%%%%%%%%%%%%%%%%%%5
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title[PFDS с примерами на Haskell]{Чисто функциональные структуры данных}
 \subtitle{С примерами кода на Haskell}
 \author{Косарев Дмитрий }
