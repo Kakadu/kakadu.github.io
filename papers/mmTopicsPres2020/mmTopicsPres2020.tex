@@ -1,0 +1,86 @@
+% !TeX spellcheck = ru_RU
+\documentclass[aspectratio=169
+  , xcolor={svgnames}
+  , hyperref=
+      { colorlinks
+      , urlcolor=DarkBlue 
+      }  
+  , russian  % This line affects translation of theorem titles
+  ]{beamer}
+\usepackage[svgnames]{xcolor}
+\usetheme{CambridgeUS}
+\usefonttheme{professionalfonts}
+
+\input{heading.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Темы курсовых работ}
+
+\institute{Лаборатория Языковых Инструментов при JetBrains Labs}
+
+\date{17 сентября 2020 г.}
+
+
+\newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}
+\usepackage{verbatimbox}
+
+%\setbeamertemplate{section in toc}{\inserttocsectionnumber.~\inserttocsection}
+\begin{document}
+\maketitle
+
+% For every picture that defines or uses external nodes, you'll have to
+% apply the 'remember picture' style. To avoid some typing, we'll apply
+% the style to all pictures.
+%\tikzstyle{every picture}+=[remember picture] 
+
+% By default all math in TikZ nodes are set in inline mode. Change this to
+% displaystyle so that we don't get small fractions.
+\everymath{\displaystyle}
+
+% Uncomment these lines for an automatically generated outline.
+\begin{frame}{В этих слайдах}
+Галопом \sout{по Европам} по основным особенностям типизированного функционального программирования\\
+
+\tableofcontents
+\end{frame}
+
+\begin{frame}{Положение ФП в мире}
+\Large 
+\begin{itemize}
+\item Источник идей для других языков
+\begin{itemize}
+\item \Large  Область научных исследований в Computer Science (одна из)
+\end{itemize}
+\item Отдушина для программистов, которым не достаточно общепринятых подходов
+\item Практическое применение (непосредственно production)
+\begin{itemize}
+\item \Large  Для "умных" программистов $\downarrow$
+\end{itemize}
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}%[allowframebreaks]
+\frametitle<presentation>{Ссылки}
+\begin{thebibliography}{10}
+%  \bibitem{}
+%    Origami programming
+%    \newblock \href{http://www.cs.ox.ac.uk/people/jeremy.gibbons/publications/origami.pdf}{pdf}
+  \bibitem{blow}
+    Предотвращая коллапс цивилизации (Preventing the Collapse of Civilization), 2019 (in English)
+    \newblock {\em Jonathan Blow}
+    \newblock\href{https://youtu.be/pW-SOdj4Kkk}{YouTube}
+  \bibitem{cheatsheets}
+    Шпаргалки по синтаксису OCaml
+    \newblock {\em OCamlPro}
+    \newblock\href{https://ocaml.org/docs/cheat_sheets.html}{4 PDF online}
+  \bibitem{rwo}
+    Книга Real World OCaml издания 2.0 (есть русский перевод издания 1.0)
+%    \newblock {\em OCamlPro}
+    \newblock\href{https://dev.realworldocaml.org/toc.html}{online}
+
+\end{thebibliography}
+\end{frame}
+
+
+\end{document}
