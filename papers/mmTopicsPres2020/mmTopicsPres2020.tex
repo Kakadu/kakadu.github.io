@@ -3,8 +3,9 @@
   , xcolor={svgnames}
   , hyperref=
       { colorlinks
-      , urlcolor=DarkBlue 
+      , urlcolor=DarkBlue
       }  
+  , 12pt
   , russian  % This line affects translation of theorem titles
   ]{beamer}
 \usepackage[svgnames]{xcolor}
@@ -14,10 +15,10 @@
 \input{heading.tex}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\title{Темы курсовых работ}
+\title{Направления работ на 2020/2021 учебные года}
 
-\institute{Лаборатория Языковых Инструментов при JetBrains Labs}
-
+\institute[]{Лаборатория Языковых Инструментов JetBrains}
+\author[Косарев Дмитрий]{Косарев Дмитрий a.k.a. Kakadu}
 \date{17 сентября 2020 г.}
 
 
@@ -38,49 +39,91 @@
 \everymath{\displaystyle}
 
 % Uncomment these lines for an automatically generated outline.
-\begin{frame}{В этих слайдах}
-Галопом \sout{по Европам} по основным особенностям типизированного функционального программирования\\
+\begin{frame}{Чем занимается Лаборатория Языковых Инструментов}
+\begin{itemize}
+\item Разнообразная верификация программ
+\item Теоретические модели памяти для параллельных программ
+\item [\faGood] Синтаксический анализ и всё связанное с ним
+\item [\faGood] Функциональное программирование
+\item [\faGood] Реляционное (a.k.a. логическое) программирование
+\end{itemize}
+\vspace{3em}
 
-\tableofcontents
+Я занимаюсь тем, что отмечено \faGood
+
+Подробнее тут: \href{http://kakadu.github.io/fp2020/projects.html}{http://kakadu.github.io/fp2020/projects.html}
 \end{frame}
 
-\begin{frame}{Положение ФП в мире}
-\Large 
+\begin{frame}[fragile]{Про функциональный язык программирования OCaml }
+\framesubtitle{и IDE для него на основе Language Server Protocol}
+
 \begin{itemize}
-\item Источник идей для других языков
+\item Семантическая подсветка (и/или) идентация \href{http://kakadu.github.io/fp2020/projects.html\#semantich-highlighting}{\faGithub}
 \begin{itemize}
-\item \Large  Область научных исследований в Computer Science (одна из)
+\item Для встраиваемых языков программирования, оформленных в виде библиотеки
+\item Подход более популярный в функциональном программировании, чем в мейнстриме
+\item Примеры из языка C\#: LINQ, в некоторой степени \mintinline{csharp}{select * from expr}
+\end{itemize}\pause
+
+\item Поддержка compile-time синтаксических расширений языка
+\href{http://kakadu.github.io/fp2020/projects.html#ide-camlp5}{\faGithub}
+\begin{itemize}
+\item Уже работают расширения из синтаксиса OCaml в синтаксис OCaml
+\item Хочется поддержать более могучие расширения
+\begin{itemize}
+\item Например, которые превращают синтаксис Scheme в синтаксис OCaml
 \end{itemize}
-\item Отдушина для программистов, которым не достаточно общепринятых подходов
-\item Практическое применение (непосредственно production)
-\begin{itemize}
-\item \Large  Для "умных" программистов $\downarrow$
 \end{itemize}
+
 \end{itemize}
 \end{frame}
 
 
-\begin{frame}%[allowframebreaks]
-\frametitle<presentation>{Ссылки}
-\begin{thebibliography}{10}
-%  \bibitem{}
-%    Origami programming
-%    \newblock \href{http://www.cs.ox.ac.uk/people/jeremy.gibbons/publications/origami.pdf}{pdf}
-  \bibitem{blow}
-    Предотвращая коллапс цивилизации (Preventing the Collapse of Civilization), 2019 (in English)
-    \newblock {\em Jonathan Blow}
-    \newblock\href{https://youtu.be/pW-SOdj4Kkk}{YouTube}
-  \bibitem{cheatsheets}
-    Шпаргалки по синтаксису OCaml
-    \newblock {\em OCamlPro}
-    \newblock\href{https://ocaml.org/docs/cheat_sheets.html}{4 PDF online}
-  \bibitem{rwo}
-    Книга Real World OCaml издания 2.0 (есть русский перевод издания 1.0)
-%    \newblock {\em OCamlPro}
-    \newblock\href{https://dev.realworldocaml.org/toc.html}{online}
 
-\end{thebibliography}
+
+
+\begin{frame}[fragile]{Про язык ReScript}
+\framesubtitle{диалект OCaml и \sout{испорченным} исправленным синтаксисом}
+
+\begin{itemize}
+\item Парсер ReScript на основе парсер-комбинаторов
+\href{http://kakadu.github.io/fp2020/projects.html#rescript-combinators}{\faGithub}
+\begin{itemize}
+\item Теоретически исследованные подходы на основе грамматик плохо работают на практике
+\item Рекурсивный спуск, используемый на практике, больно писать и поддерживать
+\item Парсер-комбинаторы пытаются совместить лучшее из двух подходов
+\item Надо проверить это заявление в рамках курсовой
+\end{itemize}\pause
+
+\item Восстановление от ошибок для ReScript
+\href{http://kakadu.github.io/fp2020/projects.html#rescript-recovery}{\faGithub}
+\begin{itemize}
+\item В ReScript добавили синтаксис, который сильно напоминает Javascript
+\item Поэтому OCaml программистом пересаживаться на ReScript больно
+\item Необходимо научить парсер ReScript распознавать наиболее частые "камлизмы" и автоматически исправлять их
+\end{itemize}
+\end{itemize}
+
 \end{frame}
 
+
+
+\begin{frame}[fragile]{Мелкие темы (на уровне курсовых) }
+\begin{itemize}
+\item Доработка конвертера документов Pandoc (написан на \textsc{Haskell})
+\begin{itemize}
+\item хочется не писать РПД в Word
+\item а использовать latex/markdown и т.п.
+\item Нужно доработать Pandoc, поддержкой титульной страницы, таблиц и т.п.
+\end{itemize}\pause
+
+\item Ещё одна реализация tabling (кэширования) для \textsc{miniKanren}
+\begin{itemize}
+\item \textsc{miniKanren} -- реинкарнация логического программирования
+\item Нужно будет прочитать статью и реализовать на алгоритм OCaml
+\end{itemize}
+\end{itemize}
+
+\end{frame}
 
 \end{document}

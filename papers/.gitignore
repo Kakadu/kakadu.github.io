@@ -9,7 +9,7 @@
 *.blg
 
 *.synctex.gz
-
+_minted-*
 
 
 
