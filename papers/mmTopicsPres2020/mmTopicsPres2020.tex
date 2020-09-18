@@ -86,6 +86,14 @@
 \framesubtitle{диалект OCaml и \sout{испорченным} исправленным синтаксисом}
 
 \begin{itemize}
+\item Восстановление от ошибок для ReScript
+\href{http://kakadu.github.io/fp2020/projects.html#rescript-recovery}{\faGithub}
+\begin{itemize}
+\item В ReScript добавили синтаксис, который сильно напоминает Javascript
+\item Поэтому OCaml программистом пересаживаться на ReScript больно
+\item Необходимо научить парсер ReScript распознавать наиболее частые "камлизмы" и автоматически исправлять их
+\end{itemize}\pause
+
 \item Парсер ReScript на основе парсер-комбинаторов
 \href{http://kakadu.github.io/fp2020/projects.html#rescript-combinators}{\faGithub}
 \begin{itemize}
@@ -93,14 +101,6 @@
 \item Рекурсивный спуск, используемый на практике, больно писать и поддерживать
 \item Парсер-комбинаторы пытаются совместить лучшее из двух подходов
 \item Надо проверить это заявление в рамках курсовой
-\end{itemize}\pause
-
-\item Восстановление от ошибок для ReScript
-\href{http://kakadu.github.io/fp2020/projects.html#rescript-recovery}{\faGithub}
-\begin{itemize}
-\item В ReScript добавили синтаксис, который сильно напоминает Javascript
-\item Поэтому OCaml программистом пересаживаться на ReScript больно
-\item Необходимо научить парсер ReScript распознавать наиболее частые "камлизмы" и автоматически исправлять их
 \end{itemize}
 \end{itemize}
 
