@@ -87,8 +87,7 @@ let rec $\inbr{show_{expr}}$ e = $\inbr{gcata_{expr}}$
 Вы могли заметить, что оба объекта, необходимые для реализации этих функций, могут быть созданы с помощью общего виртуального класса:
 
 \begin{lstlisting}
-class virtual [$\iota$, $\sigma$] $\inbr{expr}$ =
-object
+class virtual [$\iota$, $\sigma$] $\inbr{expr}$ = object
   method virtual $\inbr{Const}$ : $\iota$ -> int -> $\sigma$
   method virtual $\inbr{Var}\enspace\;\;$ : $\iota$ -> string -> $\sigma$
   method virtual $\inbr{Binop}$ : $\iota$ -> string -> expr -> expr -> $\sigma$  
@@ -126,7 +125,7 @@ let $\inbr{pretty_{expr}}$ e =
   pretty_prio min_int e
 \end{lstlisting}
 
-Также мы может избежать объявления вложенной функции с помощью комбинатора неподвижной точки ``\lstinline{fix}'':
+Также мы можем избежать объявления вложенной функции с помощью комбинатора неподвижной точки ``\lstinline{fix}'':
 
 \begin{lstlisting}
 let $\inbr{pretty_{expr}}$ e =

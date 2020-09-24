@@ -47,19 +47,29 @@
 
 \usepackage{fancyhdr}
 \usepackage{ifthen}
-%% Мы используем компилятор XeLaTex, который дружит с Unicode и True Type/Open Type
-%% шрифтами. Для русификации достаточно подключить пакет fontspec и
-%% выбрать Unicode шрифт в котором есть кириллические глифы. Ниже
-%% основным шрифтом выбирается Unicode версия шрифта Computer Modern с заcечками
-\usepackage{fontspec}
-\setmainfont[Mapping=tex-text]{CMU Serif}
-\setmonofont[Mapping=tex-text]{CMU Typewriter Text}
 
-%% В XeLaTex заменой известного пакета babel является пакет polyglossia.
-%% Теперь у нас будут переносы слов
-\usepackage{polyglossia}
-\setdefaultlanguage{russian}
-\setotherlanguage{english}
+
+\usepackage{iftex}
+\ifXeTeX
+  %% Мы используем компилятор XeLaTex, который дружит с Unicode и True Type/Open Type
+  %% шрифтами. Для русификации достаточно подключить пакет fontspec и
+  %% выбрать Unicode шрифт в котором есть кириллические глифы. Ниже
+  %% основным шрифтом выбирается Unicode версия шрифта Computer Modern с заcечками
+  \usepackage{fontspec}
+  \setmainfont[Mapping=tex-text]{CMU Serif}
+  \setmonofont[Mapping=tex-text]{CMU Typewriter Text}
+  %\setmonofont{Fira Code}[Contextuals=Alternate,Scale=0.9]
+  %\setmonofont{Inconsolata}
+  %\newfontfamily\cyrillicfont{CMU Serif}
+  %% В XeLaTex заменой известного пакета babel является пакет polyglossia.
+  %% Теперь у нас будут переносы слов
+  \usepackage{polyglossia}
+  \setdefaultlanguage{russian}
+  \setotherlanguage{english}
+\else 
+  \PackageError{mypackage}{use XeLaTeX}{}
+\fi
+
 
 % \addto\captionsrussian{%
 %   \renewcommand{\figurename}{Рис.}%
