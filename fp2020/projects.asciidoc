@@ -158,7 +158,7 @@ TODO: видео с Spb Rust Meetup 2019 от matklad.
 - для описания XML
 
 Такие встраиваемые языки часто требуют особых правил подстветки и отступов по сравнению с host-языком, куда они встроены.
-Сейчас в LSP уже https://github.com/microsoft/language-server-protocol/issues/18[ведется работа] по добавлению в спецификацию возможностей semantic highlighting.
+Сейчас в LSP уже https://github.com/microsoft/language-server-protocol/issues/18[ведется работа] по добавлению в спецификацию возможностей semantic highlighting. (P.S. Похоже её таки уже добавили в спецификацию: вот https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_colorPresentation[про цвета] и вот https://microsoft.github.io/language-server-protocol/specifications/specification-current/#textDocument_formatting[про форматирование])
 
 Что надо сделать:
 
