@@ -8,10 +8,7 @@
 \usetheme{CambridgeUS}
 \usefonttheme{professionalfonts}
 
-% get rid of header navigation bar
-\setbeamertemplate{headline}{}
-% get rid of bottom navigation symbols
-\setbeamertemplate{navigation symbols}{}
+
 
 \usepackage{pgfpages}
 %\setbeamertemplate{note page}[plain]
@@ -19,10 +16,8 @@
 
 \usepackage{bibentry}
 \usepackage{cite}
-%\usepackage{natbib}
 \def\newblock{\hskip .11em plus .33em minus .07em}
-% get rid of footer
-%\setbeamertemplate{footline}{}
+
 
 \input{heading.tex}
 
@@ -134,12 +129,19 @@
 }
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-\title{Relational Synthesis for Pattern Matching}
+\title{Реляционный синтез сопоставления с образцом}
+\subtitle{Relational Synthesis for Pattern Matching}
 
-\date{\textsc{miniKanren} Workshop, August 2020}
+\date{9 ноября 2020}
+\author{Косарев Дмитрий} 
+\institute[]{\normalfont
+Будет опубликовано на \\
+Asian Symposium on Programming Languages and Systems (APLAS) 2020
+%\textsuperscript{1} JetBrains Research, Programming Languages and Tools Lab
+% \and \inst{2} Saint-Petersburg University
+ }
 
 
 \newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}
@@ -180,16 +182,16 @@ Efficient compilation of pattern matching is essential for functional programmin
 
 %\includegraphics{pictures/SPbGU_Logo.png}
 
-Two main approaches to compile:
+Два основных подхода:
 \begin{itemize}
-\item decision diagrams
+\item диаграммы решений
 \begin{itemize}
-\item guaranteed amount of checks performed (speed)
+\item минимизируется количество проверок
 \end{itemize}
-\item backtracking automaton
+\item автомат с возвратами
 \begin{itemize}
-\item guaranteed code size
-\end{itemize}\pause
+\item минимизируется размер кода
+\end{itemize}%\pause
 \item \textbf{synthesis} (our approach)
 \end{itemize}
 % \note{}
@@ -197,7 +199,7 @@ Two main approaches to compile:
 \end{frame}
 
 
-\begin{frame}[fragile]{An Example of Pattern Matching and It's Two Compiled Representations}
+\begin{frame}[fragile]{Пример и два скомпилированных представления}
 \begin{figure}[t]
 \begin{subfigure}[t]{0.25\linewidth}
 \begin{lstlisting}

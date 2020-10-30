@@ -1,3 +1,10 @@
+% get rid of header navigation bar
+\setbeamertemplate{headline}{}
+% get rid of bottom navigation symbols
+\setbeamertemplate{navigation symbols}{}
+% get rid of footer
+%\setbeamertemplate{footline}{}
+
 \usepackage{xcolor}
 \definecolor{YellowGreen} {HTML}{B5C28C}
 \definecolor{ForestGreen} {HTML}{009B55}
@@ -102,9 +109,7 @@ language=ocanren
 
 %\usepackage[cache=true]{minted}
 
-\author[Dmitry Kosarev]{\underline{Dmitry Kosarev}  \and Dmitry Boulytchev}
-\institute[]{\textsuperscript{1} JetBrains Research, Programming Languages and Tools Lab
- \and \inst{2} Saint-Petersburg University}
+
 
 \addtobeamertemplate{title page}{}{
   \begin{center}{\tiny Build date: \today}\end{center}
