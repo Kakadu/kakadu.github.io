@@ -8,11 +8,7 @@
 \usetheme{CambridgeUS}
 \usefonttheme{professionalfonts}
 
-
-
 \usepackage{pgfpages}
-%\setbeamertemplate{note page}[plain]
-%\setbeameroption{show notes on second screen=right}
 
 \usepackage{bibentry}
 \usepackage{cite}
@@ -65,31 +61,31 @@
 \newcommand{\ruleno}[1]{\mbox{[\textsc{#1}]}}
 \newcommand{\rulename}[1]{\textsc{#1}}
 \newcommand{\inmath}[1]{\mbox{$#1$}}
-\newcommand{\lfp}[1]{fix_{#1}}
-\newcommand{\gfp}[1]{Fix_{#1}}
+%\newcommand{\lfp}[1]{fix_{#1}}
+%\newcommand{\gfp}[1]{Fix_{#1}}
 \newcommand{\vsep}{\vspace{-2mm}}
 \newcommand{\supp}[1]{\scriptsize{#1}}
 \renewcommand{\sembr}[1]{\llbracket{#1}\rrbracket}
 \newcommand{\cd}[1]{\texttt{#1}}
-\newcommand{\free}[1]{\boxed{#1}}
-\newcommand{\binds}{\;\mapsto\;}
-\newcommand{\dbi}[1]{\mbox{\bf{#1}}}
-\newcommand{\sv}[1]{\mbox{\textbf{#1}}}
-\newcommand{\bnd}[2]{{#1}\mkern-9mu\binds\mkern-9mu{#2}}
-\newcommand{\meta}[1]{{\mathcal{#1}}}
-\newcommand{\dom}[1]{\mathtt{dom}\;{#1}}
+%\newcommand{\free}[1]{\boxed{#1}}
+%\newcommand{\binds}{\;\mapsto\;}
+%\newcommand{\dbi}[1]{\mbox{\bf{#1}}}
+%\newcommand{\sv}[1]{\mbox{\textbf{#1}}}
+%\newcommand{\bnd}[2]{{#1}\mkern-9mu\binds\mkern-9mu{#2}}
+%\newcommand{\meta}[1]{{\mathcal{#1}}}
+%\newcommand{\dom}[1]{\mathtt{dom}\;{#1}}
 %\newcommand{\primi}[2]{\mathbf{#1}\;{#2}}
-\renewcommand{\dom}[1]{\mathcal{D}om\,({#1})}
-\newcommand{\ran}[1]{\mathcal{VR}an\,({#1})}
-\newcommand{\fv}[1]{\mathcal{FV}\,({#1})}
-\newcommand{\tr}[1]{\mathcal{T}r_{#1}}
+%\renewcommand{\dom}[1]{\mathcal{D}om\,({#1})}
+%\newcommand{\ran}[1]{\mathcal{VR}an\,({#1})}
+%\newcommand{\fv}[1]{\mathcal{FV}\,({#1})}
+%\newcommand{\tr}[1]{\mathcal{T}r_{#1}}
 \newcommand{\diseq}{\not\equiv}
-\newcommand{\reprfunset}{\mathcal{R}}
-\newcommand{\reprfun}{\mathfrak{f}}
-\newcommand{\cstore}{\Omega}
-\newcommand{\cstoreinit}{\cstore_\epsilon^{init}}
-\newcommand{\csadd}[3]{add(#1, #2 \diseq #3)}  %{#1 + [#2 \diseq #3]}
-\newcommand{\csupdate}[2]{update(#1, #2)}  %{#1 \cdot #2}
+%\newcommand{\reprfunset}{\mathcal{R}}
+%\newcommand{\reprfun}{\mathfrak{f}}
+%\newcommand{\cstore}{\Omega}
+%\newcommand{\cstoreinit}{\cstore_\epsilon^{init}}
+%\newcommand{\csadd}[3]{add(#1, #2 \diseq #3)}  %{#1 + [#2 \diseq #3]}
+%\newcommand{\csupdate}[2]{update(#1, #2)}  %{#1 \cdot #2}
 \newcommand{\primi}[1]{\mathbf{#1}}
 \newcommand{\sem}[1]{\llbracket #1 \rrbracket}
 \newcommand{\ir}{\ensuremath{\mathcal{S}}}
@@ -119,14 +115,14 @@
 \end{enumerate}
 }
 
-\newcommand{\treeboolsexample}[1] {
-\begin{lstlisting}[basicstyle=\small,belowskip=1em,aboveskip=0em]
-(_, false, true) -> 1
-(false, true, _) -> 2
-(_, _, false) -> 3
-(_, _, true) -> 4
-\end{lstlisting}
-}
+%\newcommand{\treeboolsexample}[1] {
+%\begin{lstlisting}[basicstyle=\small,belowskip=1em,aboveskip=0em]
+%(_, false, true) -> 1
+%(false, true, _) -> 2
+%(_, _, false) -> 3
+%(_, _, true) -> 4
+%\end{lstlisting}
+%}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -147,6 +143,31 @@ Asian Symposium on Programming Languages and Systems (APLAS) 2020
 \newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}
 \usepackage{verbatimbox}
 
+\forestset{
+    .style={
+        for tree={
+            base=bottom,
+            child anchor=north,
+            align=center,
+            s sep+=1cm,
+    straight edge/.style={
+        edge path={\noexpand\path[\forestoption{edge},thick,-{Latex}] 
+        (!u.parent anchor) -- (.child anchor);}
+    },
+    if n children={0}
+        {tier=word, draw, thick, rectangle}
+        {draw, diamond, thick, aspect=2},
+    if n=1{%
+        edge path={\noexpand\path[\forestoption{edge},thick,-{Latex}] 
+        (!u.parent anchor) -| (.child anchor) node[pos=.2, above] {Y};}
+        }{
+        edge path={\noexpand\path[\forestoption{edge},thick,-{Latex}] 
+        (!u.parent anchor) -| (.child anchor) node[pos=.2, above] {N};}
+        }
+        }
+    }
+}
+  
 
 \begin{document}
 {
@@ -199,9 +220,7 @@ Efficient compilation of pattern matching is essential for functional programmin
 \end{frame}
 
 
-\begin{frame}[fragile]{Пример и два скомпилированных представления}
-\begin{figure}[t]
-\begin{subfigure}[t]{0.25\linewidth}
+\defverbatim[colored]{\matchA}{
 \begin{lstlisting}
 match x,y,z with
 | _,F,T -> 1
@@ -209,10 +228,9 @@ match x,y,z with
 | _,_,F -> 3
 | _,_,T -> 4
 \end{lstlisting}
-\caption{Pattern matching}
-\end{subfigure}
-\hspace{0.5cm}
-\begin{subfigure}[t]{0.32\linewidth}
+}
+
+\defverbatim[colored]{\matchB}{
 \begin{lstlisting}
 if x then
   if y then
@@ -224,11 +242,9 @@ else
   else
     if z then 1 else 3
 \end{lstlisting}
-\caption{Correct but semi-optimal compilation}
-\end{subfigure}
-\hspace{0.5cm}
-\begin{subfigure}[t]{0.3\linewidth}
-\centering
+}
+
+\defverbatim[colored]{\matchC}{
 \begin{lstlisting}
 if y then
   if x then
@@ -237,13 +253,146 @@ if y then
 else
   if z then 1 else 3
 \end{lstlisting}
-\caption{Optimal compilation}
-\end{subfigure}
-\caption{Pattern matching compilation can be non-trivial (example from~\cite{maranget2008}).}\label{fig:match-example}
-\end{figure}
- \note{This is an example from Luc Maranget's paper.
- 
- Pattern matchin is on the left. We can start testing from $x$, and then $y$ and $z$, it will give us a program with 6 $if$ constructions. But we can start testing from $y$ and if it is $false$ we can not test $x$. It will give us a program with four tests.}
+}
+
+
+\defverbatim[colored]{\forestB}{
+\begin{forest} 
+[$x$%, tikz={\draw[{Latex}-, thick] (.north) --++ (0,1);}
+    [$y$
+          [$z$
+                [4] 
+                [3] 
+            ]   
+         [$z$
+               [1] 
+               [3] 
+           ]    
+    ]   
+    [$y$
+        [2] 
+        [$z$
+            [1] 
+            [3] 
+        ]   
+    ]   
+] 
+\end{forest}
+}
+
+
+
+\begin{frame}[fragile]{An Example of Pattern Matching and It's Two Compiled Representations}
+
+\begin{minipage}[t]{0.25\linewidth}
+\begin{minipage}{7cm}
+\matchA
+\end{minipage}
+%\caption{Pattern matching}
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[t]{0.32\linewidth}
+\only<1>{\begin{minipage}{7cm}
+\matchB
+\end{minipage}}
+\only<2>{\begin{minipage}{7cm}
+\matchC
+\end{minipage}}
+
+\end{minipage}
+\hspace{0.5cm}
+\begin{minipage}[t]{0.3\linewidth}
+\only<1>{\begin{minipage}{7cm}
+\forestB
+\end{minipage}}
+\only<2>{\begin{minipage}{7cm}
+asdf
+\end{minipage}}
+\end{minipage}
+%\caption{Pattern matching compilation can be non-trivial (example from~\cite{maranget2008}).}\label{fig:match-example}
+\end{frame}
+
+\begin{frame}[fragile]
+\begin{forest} 
+[$x$%, tikz={\draw[{Latex}-, thick] (.north) --++ (0,1);}
+    [$y$
+          [$z$
+                [4] 
+                [3] 
+            ]   
+         [$z$
+               [1] 
+               [3] 
+           ]    
+    ]   
+    [$y$
+        [2] 
+        [$z$
+            [1] 
+            [3] 
+        ]   
+    ]   
+] 
+\end{forest}
+\end{frame}
+
+\begin{frame}[fragile]{Пример: Деревья и DAGи терма $f(g(a, x), g(a,x))$}
+\begin{center}
+\begin{tikzpicture}[->,thick,scale=0.5, every node/.style={scale=0.5}
+  , grow via three points={
+      one child at (0,-2) and 
+      two children at (.8,-2) and (-0.8,-2) 
+  }]
+     \tikzstyle{tnode}=[circle, inner sep=1.5mm]
+     \tikzstyle{var}=[ circle, inner sep=1.5mm,draw]
+     \def\rstep{5cm}
+     \huge
+         
+    \begin{scope}[xshift= \rstep]
+      \node[tnode] {f}
+          child {node[tnode] {g} 
+            child {node[var] {x} }
+            child {node[tnode] {a} }
+          }
+          child[missing] {} 
+          child {node[tnode] {g} 
+            child {node[var] {x} }
+            child {node[tnode] {a} }
+          };
+%        child[missing] {} ;
+      \end{scope}
+      
+    \begin{scope}[xshift=15cm]
+      \node[tnode] {f}
+          child {node[tnode] (gggg) {g} 
+            child[missing] {node[var] {x} }
+            child {node[tnode]  {a} }
+          }
+          child[missing] {}
+          child {node[tnode]  {g} 
+            child {node[var]  (xxxx) {x} }
+            child {node[tnode] {a} }
+          };
+
+      \draw [->,thick](gggg.south)
+              to [out=-90,in=90] (2,-5)
+              to [out=-90,in=0] (1,-6) 
+              to [out=180,in=-45]  (xxxx.south); 
+      \end{scope}
+      
+      \begin{scope}[xshift=23cm]
+        \node[tnode] (ffff) {f}
+            child {node[tnode] (gggg) {g} 
+              child {node[var] {x} }
+              child {node[tnode] {a} }
+            };
+
+        \draw [->,thick](ffff)
+                to [out=0,in=90] (1,-1)
+                to [out=-90,in=45]  (gggg.east); 
+        \end{scope}
+ \end{tikzpicture}
+\end{center}
 \end{frame}
 
 \begin{frame}{Contributions}
