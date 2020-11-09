@@ -658,7 +658,7 @@ eval^o_{\mathcal S}\,v\,\circled{?}\,i
 %\item $\forall i$ -- all possible branches
 \item $match^o\,v\,\,p_1,\dots,p_k\,\,i$ -- интерпретатор языка сопоставления с образцом, для каждого сопоставляемого выражения (scrutinee) $v$ выдает номер ветви $i$ 
 \item $\circled{?}$ -- программа, которую надо синтезировать
-\item $eval^o_{\mathcal S}\,v\,\circled{?}\,i$ -- a интерпретатор скомпилированного представления $\mathcal S$, которая проверяет, что синтезированная программа $\circled{?}$ на примерах $v$ выдает проавильные номера ветвей  $i$
+\item $eval^o_{\mathcal S}\,v\,\circled{?}\,i$ -- a интерпретатор скомпилированного представления $\mathcal S$, которая проверяет, что синтезированная программа $\circled{?}$ на примерах $v$ выдает правильные номера ветвей  $i$
 \end{itemize}
 \vspace{1cm}
 \begin{itemize}
@@ -895,8 +895,8 @@ match (s : unit list) with
 \defverbatim[colored]{\improvementA}{
 \begin{lstlisting}{ocaml}
 match (s : bool * bool * bool) with 
-| (_,_,F) -> 0
-| (_,_,T) -> 1
+| (_,_,F) -> 1
+| (_,_,T) -> 2
 \end{lstlisting}
 }
 
