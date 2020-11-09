@@ -1,42 +1,3 @@
-@book{CPDT,
-  author    = {Adam Chlipala},
-  title     = {Certified Programming with Dependent Types - {A} Pragmatic Introduction
-               to the Coq Proof Assistant},
-  publisher = {{MIT} Press},
-  year      = {2013},
-  url       = {http://mitpress.mit.edu/books/certified-programming-dependent-types},
-  isbn      = {978-0-262-02665-9},
-  timestamp = {Mon, 11 May 2015 16:37:23 +0200},
-  biburl    = {https://dblp.org/rec/bib/books/daglib/0035083},
-  bibsource = {dblp computer science bibliography, https://dblp.org}
-}
-
-@book{Coq,
-  author    = {Yves Bertot and
-               Pierre Cast{\'{e}}ran},
-  title     = {Interactive Theorem Proving and Program Development - Coq'Art: The
-               Calculus of Inductive Constructions},
-  series    = {Texts in Theoretical Computer Science. An {EATCS} Series},
-  publisher = {Springer},
-  year      = {2004},
-  url       = {https://doi.org/10.1007/978-3-662-07964-5},
-  doi       = {10.1007/978-3-662-07964-5},
-  isbn      = {978-3-642-05880-6},
-  timestamp = {Tue, 16 May 2017 14:24:38 +0200},
-  biburl    = {https://dblp.org/rec/bib/series/txtcs/BertotC04},
-  bibsource = {dblp computer science bibliography, https://dblp.org}
-}
-
-@article{TarskiKnaster,
-author = {Tarski, Alfred},
-year = {1955},
-month = {06},
-pages = {},
-title = {A Lattice-Theoretical Fixpoint Theorem and Its Applications},
-volume = {5},
-journal = {Pacific Journal of Mathematics},
-doi = {10.2140/pjm.1955.5.285}
-}
 
 @book{LHM,
   author    = {John W. Lloyd},
@@ -172,7 +133,7 @@ doi = {10.2140/pjm.1955.5.285}
 @article{OCanren,
   author    = {Dmitry Kosarev and
                Dmitry Boulytchev},
-  title     = {Typed Embedding of a Relational Language in OCaml},
+  title     = {Typed Embedding of a Relational Language in \textsc{OCaml}},
   booktitle = {Proceedings {ML} Family Workshop / OCaml Users and Developers workshops,
                {ML/OCAML} 2016, Nara, Japan, September 22-23, 2016},
   pages     = {1--22},
@@ -304,15 +265,11 @@ doi = {10.2140/pjm.1955.5.285}
   note = {}
 }
 
-@inproceedings{moiseenko,
-  author = {Eugene Moiseenko},
-  pages = {},
-  booktitle = {miniKanren and Relational Programming Workshop},
-  title = "Constructive Negation for miniKanren",
-  year = {2019} 
-}
+
+%\defcitealias{RelConversion}{\scshape CalTrans, 2002}
 
 @inproceedings{RelConversion,
+  shorthand = {noCanren},
   author    = {Petr Lozov and
                Andrei Vyatkin and
                Dmitry Boulytchev},
@@ -589,6 +546,7 @@ series = {ML ’08}
 }
 
 @inproceedings{maranget1992,
+  shorthand = {Mar92},
   title={Compiling lazy pattern matching},
   author={Luc Maranget},
   booktitle={LFP '92},

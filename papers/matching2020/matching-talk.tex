@@ -1,4 +1,4 @@
-\def\pgfsysdriver{pgfsys-dvipdfm.def} % required for tress inside
+\def\pgfsysdriver{pgfsys-dvipdfm.def} % required for forests inside
 \documentclass[aspectratio=169
   , xcolor={svgnames}
   , hyperref={ colorlinks,citecolor=Blue
@@ -17,13 +17,27 @@
 
 \input{heading.tex}
 
+\lstdefinelanguage{ocamllambda}{
+keywords={catch, switch, default, case, with, failwith, exit, true, false, ::},
+sensitive=true,
+commentstyle=\small\itshape\ttfamily,
+keywordstyle=\ttfamily\textbf,
+identifierstyle=\ttfamily,
+basewidth={0.5em,0.5em},
+columns=fixed,
+mathescape=true,
+fontadjust=true,
+literate={->}{{$\to$}}3 {===}{{$\equiv$}}1  {Scru}{{$\bullet$}}2,
+morecomment=[s]{(*}{*)}
+}
+
 \usepackage{subcaption}
 \usepackage{etoolbox}
 
 
 \usepackage{exercise}
 \usepackage{tikz}
- \usepackage{tikz-qtree}
+\usepackage{tikz-qtree}
 \usetikzlibrary{trees}
 \usepackage[edges]{forest}
 \forestset{.style={
@@ -35,8 +49,8 @@
 
 \newcommand{\lstquot}[1]{``\lstinline{#1}''}
 \newcommand{\sembr}[1]{\llbracket{#1}\rrbracket}
-\newcommand\false{$f\!alse$}
-\newcommand\myif{i\!f}
+%\newcommand\false{$f\!alse$}
+%\newcommand\myif{i\!f}
 
 
 \def\transarrow{\xrightarrow}
@@ -86,7 +100,7 @@
 %\newcommand{\cstoreinit}{\cstore_\epsilon^{init}}
 %\newcommand{\csadd}[3]{add(#1, #2 \diseq #3)}  %{#1 + [#2 \diseq #3]}
 %\newcommand{\csupdate}[2]{update(#1, #2)}  %{#1 \cdot #2}
-\newcommand{\primi}[1]{\mathbf{#1}}
+\newcommand{\primi}[1]{\ensuremath{\mathbf{#1}}}
 \newcommand{\sem}[1]{\llbracket #1 \rrbracket}
 \newcommand{\ir}{\ensuremath{\mathcal{S}}}
 \usepackage{tikz}
@@ -97,35 +111,23 @@
 \let\eps\varepsilon
 
 % for fancy table
-\newcommand{\lheadl}[2]{\multicolumn{1}{|>{\centering\arraybackslash}m{#1}|}{{#2}}}
-\newcommand{\head}[2]{\multicolumn{1}{>{\centering\arraybackslash}m{#1}}{\textbf{\small #2}}}
-\newcommand{\headll}[2]{\multicolumn{1}{>{\centering\arraybackslash}m{#1}||}{\textbf{\small #2}}}
-\newcommand{\lheadll}[2]{\multicolumn{1}{|>{\centering\arraybackslash}m{#1}||}{\textbf{\small #2}}}
-\newcommand{\headl}[2]{\multicolumn{1}{>{\centering\arraybackslash}m{#1}|}{\textbf{\small #2}}}
-\usepackage{longtable}
-\newcommand{\nodata}{}
-\newcommand{\tablenotemark}[1]{#1}
+%\newcommand{\lheadl}[2]{\multicolumn{1}{|>{\centering\arraybackslash}m{#1}|}{{#2}}}
+%\newcommand{\head}[2]{\multicolumn{1}{>{\centering\arraybackslash}m{#1}}{\textbf{\small #2}}}
+%\newcommand{\headll}[2]{\multicolumn{1}{>{\centering\arraybackslash}m{#1}||}{\textbf{\small #2}}}
+%\newcommand{\lheadll}[2]{\multicolumn{1}{|>{\centering\arraybackslash}m{#1}||}{\textbf{\small #2}}}
+%\newcommand{\headl}[2]{\multicolumn{1}{>{\centering\arraybackslash}m{#1}|}{\textbf{\small #2}}}
+%\usepackage{longtable}
+%\newcommand{\nodata}{}
+%\newcommand{\tablenotemark}[1]{#1}
 
 \newcommand{\contributions}{
 \begin{enumerate}
-\item[I] Synthesis via combination of two relational interpreters
-\item[II] Replacing $\forall$ quantifier by a finite set of examples
-\item[III] Branch and bound optimization of synthesis using \emph{structural constraints}
+\item[I] Спроектировали синтез с помощью комбинации \emph{реляционных интерпретаторов} на \miniKanren{}
+\item[II] Заменили $\forall$ на \emph{конечный} набор примеров
+\item[III] Сделали оптимизацию методом ветвей и границ с помощью нового примитива \miniKanren{}: \emph{ограничение на структуру (structural constraint)}
 %\item[IV] Extension of OCanren called \emph{structural constraint}
 \end{enumerate}
 }
-
-%\newcommand{\treeboolsexample}[1] {
-%\begin{lstlisting}[basicstyle=\small,belowskip=1em,aboveskip=0em]
-%(_, false, true) -> 1
-%(false, true, _) -> 2
-%(_, _, false) -> 3
-%(_, _, true) -> 4
-%\end{lstlisting}
-%}
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
 
 \title{Реляционный синтез сопоставления с образцом}
 \subtitle{Relational Synthesis for Pattern Matching}
@@ -134,10 +136,7 @@
 \author{Косарев Дмитрий} 
 \institute[]{\normalfont
 Будет опубликовано на \\
-Asian Symposium on Programming Languages and Systems (APLAS) 2020
-%\textsuperscript{1} JetBrains Research, Programming Languages and Tools Lab
-% \and \inst{2} Saint-Petersburg University
- }
+Asian Symposium on Programming Languages and Systems (APLAS) 2020}
 
 
 \newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}
@@ -168,6 +167,20 @@ Asian Symposium on Programming Languages and Systems (APLAS) 2020
     }
 }
   
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Оглавление}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+} 
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>
+    \frametitle{Оглавление}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
 
 \begin{document}
 {
@@ -197,8 +210,8 @@ Asian Symposium on Programming Languages and Systems (APLAS) 2020
 \everymath{\displaystyle}
 %\begin{comment}
 % Uncomment these lines for an automatically generated outline.
-\begin{frame}{Pattern Matching}
-Efficient compilation of pattern matching is essential for functional programming
+\begin{frame}{Сопоставление с образцом}
+Существенная часть функционального программирования
 \vspace{1cm}
 
 %\includegraphics{pictures/SPbGU_Logo.png}
@@ -213,12 +226,11 @@ Efficient compilation of pattern matching is essential for functional programmin
 \begin{itemize}
 \item минимизируется размер кода
 \end{itemize}%\pause
-\item \textbf{synthesis} (our approach)
+\item \textbf{синтез программ} (наш подход)
 \end{itemize}
-% \note{}
-
 \end{frame}
 
+\section{Обзор}
 
 \defverbatim[colored]{\matchA}{
 \begin{lstlisting}
@@ -258,20 +270,20 @@ else
 
 \defverbatim[colored]{\forestB}{
 \begin{forest} 
-[$x$%, tikz={\draw[{Latex}-, thick] (.north) --++ (0,1);}
-    [$y$
-          [$z$
+[\texttt{x}%, tikz={\draw[{Latex}-, thick] (.north) --++ (0,1);}
+    [\texttt{y}
+          [\texttt{z}
                 [4] 
                 [3] 
             ]   
-         [$z$
+         [\texttt{z}
                [1] 
                [3] 
            ]    
     ]   
-    [$y$
+    [\texttt{y}
         [2] 
-        [$z$
+        [\texttt{z}
             [1] 
             [3] 
         ]   
@@ -280,9 +292,26 @@ else
 \end{forest}
 }
 
+\defverbatim[colored]{\forestC}{
+\begin{forest} 
+[\texttt{y}%, tikz={\draw[{Latex}-, thick] (.north) --++ (0,1);}
+    [\texttt{x}
+          [\texttt{z}
+                [4] 
+                [3] 
+            ]   
+         [2]    
+    ]
+    [\texttt{z}
+               [1] 
+               [3] 
+           ]
+]
+\end{forest}
+}
 
 
-\begin{frame}[fragile]{An Example of Pattern Matching and It's Two Compiled Representations}
+\begin{frame}[fragile]{Пример: использование диаграмм решений}% (1/2)}
 
 \begin{minipage}[t]{0.25\linewidth}
 \begin{minipage}{7cm}
@@ -306,121 +335,297 @@ else
 \forestB
 \end{minipage}}
 \only<2>{\begin{minipage}{7cm}
-asdf
+\forestC
 \end{minipage}}
 \end{minipage}
 %\caption{Pattern matching compilation can be non-trivial (example from~\cite{maranget2008}).}\label{fig:match-example}
 \end{frame}
 
-\begin{frame}[fragile]
-\begin{forest} 
-[$x$%, tikz={\draw[{Latex}-, thick] (.north) --++ (0,1);}
-    [$y$
-          [$z$
-                [4] 
-                [3] 
-            ]   
-         [$z$
-               [1] 
-               [3] 
-           ]    
-    ]   
-    [$y$
-        [2] 
-        [$z$
-            [1] 
-            [3] 
-        ]   
-    ]   
-] 
-\end{forest}
-\end{frame}
+\defverbatim[colored]{\btCompAone}{
+\begin{lstlisting}[language=ocamllambda]
 
-\begin{frame}[fragile]{Пример: Деревья и DAGи терма $f(g(a, x), g(a,x))$}
-\begin{center}
-\begin{tikzpicture}[->,thick,scale=0.5, every node/.style={scale=0.5}
-  , grow via three points={
-      one child at (0,-2) and 
-      two children at (.8,-2) and (-0.8,-2) 
-  }]
-     \tikzstyle{tnode}=[circle, inner sep=1.5mm]
-     \tikzstyle{var}=[ circle, inner sep=1.5mm,draw]
-     \def\rstep{5cm}
-     \huge
+
+    (switch lx with case []: 1
+      default:     )
+               
+      (switch ly with case []: 2
+        default:     )
+                  
+      (switch lx with
+        case (::):
+          (switch ly with
+            case (::) : 3
+            default:     )
+        default:     )   
+                                
+\end{lstlisting}
+}
+
+\defverbatim[colored]{\btCompA}{
+\begin{lstlisting}[language=ocamllambda]
+catch
+  (catch
+    (switch lx with case []: 1
+      default: exit)
+    with (catch
+      (switch ly with case []: 2
+        default: exit)
+    with (catch
+      (switch lx with
+        case (::):
+          (switch ly with
+            case (::) : 3
+            default: exit)
+        default: exit))))
+with (failwith "Partial match")
+\end{lstlisting}
+}
+
+\defverbatim[colored]{\btCompBone}{
+\begin{lstlisting}[language=ocamllambda]
+      
          
-    \begin{scope}[xshift= \rstep]
-      \node[tnode] {f}
-          child {node[tnode] {g} 
-            child {node[var] {x} }
-            child {node[tnode] {a} }
-          }
-          child[missing] {} 
-          child {node[tnode] {g} 
-            child {node[var] {x} }
-            child {node[tnode] {a} }
-          };
-%        child[missing] {} ;
-      \end{scope}
+    (switch lx with
+      case []: 1
+      case (::) :
+        (switch ly with
+          case (::): 3
+          default:     ))
       
-    \begin{scope}[xshift=15cm]
-      \node[tnode] {f}
-          child {node[tnode] (gggg) {g} 
-            child[missing] {node[var] {x} }
-            child {node[tnode]  {a} }
-          }
-          child[missing] {}
-          child {node[tnode]  {g} 
-            child {node[var]  (xxxx) {x} }
-            child {node[tnode] {a} }
-          };
+    (switch ly with
+       case []: 2
+       default:     )
+                               
+\end{lstlisting}
+}
 
-      \draw [->,thick](gggg.south)
-              to [out=-90,in=90] (2,-5)
-              to [out=-90,in=0] (1,-6) 
-              to [out=180,in=-45]  (xxxx.south); 
-      \end{scope}
-      
-      \begin{scope}[xshift=23cm]
-        \node[tnode] (ffff) {f}
-            child {node[tnode] (gggg) {g} 
-              child {node[var] {x} }
-              child {node[tnode] {a} }
-            };
+\defverbatim[colored]{\btCompB}{
+\begin{lstlisting}[language=ocamllambda]
+catch
+  (catch
+    (switch lx with
+      case []: 1
+      case (::) :
+        (switch ly with
+          case (::): 3
+          default: exit))
+  with
+    (switch ly with
+       case []: 2
+       default: exit)
+with (failwith "Partial match")
+\end{lstlisting}
+}
 
-        \draw [->,thick](ffff)
-                to [out=0,in=90] (1,-1)
-                to [out=-90,in=45]  (gggg.east); 
-        \end{scope}
- \end{tikzpicture}
-\end{center}
+\begin{frame}[fragile]{Пример: Компиляция в автомат с возвратами}
+\begin{minipage}{0.45\linewidth}\vspace{0pt}
+\[
+(P\rightarrow L)=    \begin{pmatrix}
+      \texttt{[]} & \texttt{\_} & \rightarrow & 1 \\
+      \texttt{\_} & \texttt{[]} & \rightarrow & 2  \\
+      \texttt{x::xs} & \texttt{y::ys} & \rightarrow & 3
+    \end{pmatrix}
+\]
+\vspace{1em}
+\uncover<2->{
+\[
+(P_1\rightarrow L_1)=    \begin{pmatrix}
+      \texttt{[]} & \texttt{\_} & \rightarrow & 1 \\
+    \end{pmatrix}
+\]
+\[
+(P_2\rightarrow L_2)=    \begin{pmatrix}
+       \texttt{\_} & \texttt{[]} & \rightarrow & 2  \\
+    \end{pmatrix}
+\]
+\[
+(P_3\rightarrow L_3)=    \begin{pmatrix}
+      \texttt{x::xs} & \texttt{y::ys} & \rightarrow & 3
+    \end{pmatrix}
+\]}
+\end{minipage}\hspace{.3cm}
+\begin{minipage}{0.45\linewidth}%\vspace{-1em}
+\begin{minipage}{0.45\linewidth}
+\only<3>{\btCompAone}
+\only<4>{\btCompA}
+%\vspace{1em}
+\end{minipage}
+\end{minipage}
 \end{frame}
 
-\begin{frame}{Contributions}
+\begin{frame}[fragile]{Пример: Компиляция в автомат с возвратами + оптимизация}
+\begin{minipage}[t]{0.45\linewidth}\vspace{0pt}
+\uncover<1>{
+\[
+(P\rightarrow L)=    \begin{pmatrix}
+      \texttt{[]} & \texttt{\_} & \rightarrow & 1 \\
+      \texttt{\_} & \texttt{[]} & \rightarrow & 2  \\
+      \texttt{x::xs} & \texttt{y::ys} & \rightarrow & 3
+    \end{pmatrix}
+\]}
+%\vspace{1em}
+\uncover<2->{
+\[
+(P\rightarrow L)=    \begin{pmatrix}
+      \texttt{[]} & \texttt{\_} & \rightarrow & 1 \\
+      \texttt{x::xs} & \texttt{y::ys} & \rightarrow & 3\\
+      \texttt{\_} & \texttt{[]} & \rightarrow & 2  
+    \end{pmatrix}
+\]
+}\vspace{1cm}
+\uncover<3->{
+\[
+(P_1\rightarrow L_1)=    \begin{pmatrix}
+      \texttt{[]} & \texttt{\_} & \rightarrow & 1 \\
+      \texttt{x::xs} & \texttt{y::ys} & \rightarrow & 3
+    \end{pmatrix}
+\]
+\[
+(P_2\rightarrow L_2)=    \begin{pmatrix}
+       \texttt{\_} & \texttt{[]} & \rightarrow & 2  \\
+    \end{pmatrix}
+\]
+}
+\end{minipage}\hspace{.5cm}
+\begin{minipage}[t]{0.45\linewidth}\vspace{0pt}
+\begin{minipage}{0.44\linewidth}
+\only<1-2>{\vspace{18em}}
+\only<4>{\btCompBone\vspace{1em}}
+\only<5>{\btCompB}
+\end{minipage}
+\end{minipage}
+\end{frame}
+
+
+\begin{frame}{Ещё оптимизации для автоматов с возвратами}
+\begin{itemize}
+\item Использование информации о полноте
+\item Оптимизация конструкций \lstinline[language=ocamllambda]{exit}, новый синтаксис \lstinline[language=ocamllambda]{exit N}
+\begin{itemize}
+\item Дешёвая поддержка охранных выражений (pattern guards)
+\end{itemize}
+\item Ещё кое-что, для избегания повторных проверок
+\end{itemize}
+\vspace{2em}
+В компиляторе \OCaml{}  используется  реализация из~\cite{maranget2001}.
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\defverbatim[colored]{\haskellDemoHead}{
+\begin{lstlisting}[language=haskell]
+f :: Bool -> Bool
+f True = True 
+f x    = f x 
+
+y :: Bool
+y = f x 
+\end{lstlisting}
+}
+
+\defverbatim[colored]{\haskellDemo}{
+\begin{lstlisting}[language=haskell]
+case x,y of 
+  True, False -> 1
+  True, True  -> 2
+  False,False -> 3
+  False,True  -> 4
+\end{lstlisting}
+}
+
+\begin{frame}[fragile]{Языки с ленивой семантикой}
+\begin{minipage}[t]{0.45\linewidth}
+\begin{minipage}{0.5\linewidth}
+\uncover<2->{\haskellDemoHead}
+
+\haskellDemo
+\end{minipage}
+\end{minipage}\hspace{0.1cm}
+\begin{minipage}[t]{0.45\linewidth}
+\uncover<3>{
+\begin{minipage}{1\linewidth}
+В \textit{ленивых} языках у нас нет свободы в выборе первого столбца $\Rightarrow$ в \textit{строгих} больше простора для оптимизаций
+\end{minipage}}
+\end{minipage}
+\end{frame}
+
+\begin{frame}{Понятие "хорошей" скомпилированной программы}
+\begin{minipage}[t]{0.45\linewidth}
+В литературе упоминаются~\cite{Scott2000WhenDM} следующие эвристики
+\begin{itemize}
+\item Слева-направо
+\item Справа-налево
+\item Small branching factor (малый коэффициент ветвления)
+\item Large branching factor 
+\item Leaf edges 
+\item Arity factor
+\item Artificial rule
+\item и другие
+\end{itemize}
+\end{minipage}\hspace{1cm}
+\begin{minipage}[t]{0.45\linewidth}
+В подавляющем большинстве случаев формально более оптимальные программы показывают сходную производительность
+\end{minipage}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Заслуги работы}
+
+\begin{frame}{Заслуги работы <<Реляционный синтез сопоставления с образцом>>}
 \Large
+%"Реляционный синтез сопоставления с образцом"
 \contributions
 \end{frame}
 
+\subsection{Синтез с помощью реляционных интерпретаторов}
 
-\begin{frame}[fragile]{Pattern Matching Syntax}
+\begin{frame}{Реляционные интерпретаторы}
+Семейство языков \miniKanren{} -- реинкарнация логического программирования\\
+
+Программы представляются как вычислимые отношения ("реляции", англ. relation)
+
+\[
+  \texttt{Interpret}: \texttt{Program} \times \texttt{Input} \times \texttt{Result}
+\]
+
+Их можно запускать\footnote{Если интерпретатор написан достаточно аккуратно} в разные стороны:
+\[
+  \texttt{Interpret}_{\rightarrow}: \texttt{Program} \times \texttt{Input} \rightarrow \texttt{Result}
+\]
+\[
+  \texttt{Synthesize}_{\leftarrow}:   \texttt{Input} \times \texttt{Result} \rightarrow \texttt{Program}
+\]
+\end{frame}
+
+\begin{frame}[fragile]{Синтаксис двух языков сопоставления с образцом}
 \begin{figure}[ht]
 \begin{subfigure}[t]{0.4\linewidth}
-$$
+\uncover<2->{
+\[
+match^o: \mathcal{V}\times \mathcal{P}^* \times  \mathbb{N}
+\]}
+Язык сопоставления с образцом
+\[
  \begin{array}{rcll}
     \mathcal{C} & = & \{ C_1^{k_1}, \dots, C_n^{k_n} \}\\
     \mathcal{V} & = & \mathcal{C}\,\mathcal{V}^*\\  
     \mathcal{P} & = & \_ \mid \mathcal{C}\,\mathcal{P}^*
  \end{array}
-$$
-%TODO: paterrn matching task
-$$
+\]
+
+\[
  \begin{array}{c}
 \trans{\inbr{v;\,p_1,\dots,p_k}}{}{i}\\
 1\leqslant i\leqslant k+1
  \end{array}
-$$
+\]
 \end{subfigure}
 \hspace{0.5cm}
 \begin{subfigure}[t]{0.5\linewidth}
+\uncover<2->{
+\[
+eval^o_{\mathcal S}: \mathcal{V}\times \mathcal{S} \times  \mathbb{N}
+\]}
+Язык скомпилированного представления
 \[
 \begin{array}{rcl}
   \mathcal M & = & \bullet \\
@@ -431,13 +636,12 @@ $$
 \]
 \end{subfigure}
 \end{figure}
-\vspace{0.5cm}
-Things that are omitted for simplicity: guards, pattern variables
+\vspace{2em}
+Опущены для простоты: типы, охранные выражения, переменные в паттернах и т.д.
 
-%TODO: program size here?
 \end{frame}
 
-\begin{frame}{Synthesis Algorithm}
+\begin{frame}{Алгоритм синтеза}
 %High-level description:
 \[
 %depth^o\,v\,n \;\; \wedge \;\;
@@ -452,37 +656,37 @@ eval^o_{\mathcal S}\,v\,\circled{?}\,i
 %\item $depth^o\,v\,n$ generates examples bound by depth $n$
 %\item $\forall v$ -- all possible scrutinees
 %\item $\forall i$ -- all possible branches
-\item $match^o\,v\,\,p_1,\dots,p_k\,\,i$ -- a declarative interpreter of pattern matching, for every  possible scrutinee $v$ returns a single branch $i$ 
-\item $\circled{?}$ is a program to be synthesized
-\item $eval^o_{\mathcal S}\,v\,\circled{?}\,i$ -- a declarative interpreter of $\mathcal S$, ensures that synthesized program $\circled{?}$ on example $v$ returns a correct branch index $i$
+\item $match^o\,v\,\,p_1,\dots,p_k\,\,i$ -- интерпретатор языка сопоставления с образцом, для каждого сопоставляемого выражения (scrutinee) $v$ выдает номер ветви $i$ 
+\item $\circled{?}$ -- программа, которую надо синтезировать
+\item $eval^o_{\mathcal S}\,v\,\circled{?}\,i$ -- a интерпретатор скомпилированного представления $\mathcal S$, которая проверяет, что синтезированная программа $\circled{?}$ на примерах $v$ выдает проавильные номера ветвей  $i$
 \end{itemize}
 \vspace{1cm}
 \begin{itemize}
-\item[\faGood] It's easy to implement $match^o$ and  $eval^o$ (even for extension of pattern matching)
-\item[\faBad]  No universal quantifier in miniKanren with disequality constraints
+\item[\faGood] Интерпретаторы  $match^o$ и $eval^o$ легко реализовать (и для расширений сопоставления с образцом тоже должно быть легко)
+\item[\faBad] \miniKanren{} с disequality constraints не умеет работать с кванторами $\forall$
 \end{itemize}
-
 \end{frame}
 
+\subsection{Создание конечного набора примеров}
 
-\begin{frame}{2Eliminating $\forall$ by Generating a Finite Set of Examples}
-For every concrete pattern matching we know:
+\begin{frame}{Избавление от $\forall$. Создание конечного набора примеров}
+Для каждого сопоставления с образцом  мы знаем:
 \begin{itemize}
-\item the type of scrutinee
-\item all its patterns 
+\item тип сопоставляемого выражения
+\item все образцы, которые используются
 \begin{itemize}
-\item maximal depth of these patterns
+\item можем посчитать максимальную глубину образцов
 \end{itemize}
 \end{itemize}
 
-\begin{alertblock}{\textbf{Idea}}
-Let's generate all inhabitants of the scrutinee's type until certain depth and use them as examples
+\begin{alertblock}{\textbf{Идея}}
+Переберём всех жителей типа сопоставляемого выражения до некоторой глубины, и будем использовать этих жителей как примеры
 \end{alertblock}
 \vspace{1cm}
 
 \begin{itemize}
 %\item[\faGood] Is correct (proved in Coq)
-\item[\faBad] The number of examples is  worst case exponential
+\item[\faBad] В худшем случае ---~экспоненциальное количество примеров
 \end{itemize}
 \end{frame}
 
@@ -503,16 +707,20 @@ Our repo on Github: ~\cite{Repo}.
 \end{comment}
 
 
-
-\begin{frame}[fragile]{Example 1: Three Examples is a Complete Set}
-\centering
-\begin{minipage}{.381\textwidth}
+\defverbatim[colored]{\exampleNotAFullSet}{
 \begin{lstlisting}{ocaml}
 match (s : unit list) with 
 | _ :: _ :: _ -> 1
 | _           -> 2
 \end{lstlisting}
-\end{minipage}
+}
+
+\begin{frame}{Пример 1: Полный набор примеров из трёх штук}
+\centering
+\begin{minipage}{.5\textwidth}
+\begin{minipage}{.5\textwidth}
+\exampleNotAFullSet
+\end{minipage}\end{minipage}
 
 \begin{figure}
 \begin{subfigure}[t]{0.3\linewidth}
@@ -538,7 +746,7 @@ match (s : unit list) with
   \node {\phantom{1}\_\phantom{1}};
 \end{tikzpicture}
 \end{subfigure}
-\caption{Patterns}
+\caption{Два образца}
 \end{subfigure}
 \hspace{1.5cm}
 \begin{subfigure}[t]{0.5\linewidth}
@@ -563,7 +771,7 @@ match (s : unit list) with
     ,top color=white, bottom color=green!20}]]
   \node {Cons}
     child { node {()} }
-    child { node { Nil} } ;
+    child { node {Nil} } ;
 \end{tikzpicture}
 \end{subfigure}
 \hspace{1cm}
@@ -575,13 +783,13 @@ match (s : unit list) with
   \node {Nil};
 \end{tikzpicture}
 \end{subfigure}
-\caption{Three examples}
+\caption{Три примера}
 \end{subfigure}
 \end{figure}
 \end{frame}
 
 
-\begin{frame}[fragile]{Example 2: Not a Complete Set of Examples}
+\begin{frame}[fragile]{Пример 2: Недостаточно полный набор примеров}
 \begin{minipage}{0.4\linewidth}
 \begin{lstlisting}{ocaml}
 match (s : unit list) with 
@@ -590,9 +798,7 @@ match (s : unit list) with
 \end{lstlisting}
 \end{minipage}
 \begin{minipage}{0.55\linewidth}
-%\begin{itemize}
-%\item 
-Two patterns:\\
+Два образца:\\
 \begin{tikzpicture}[sibling distance=3em,
   every node/.style = {shape=rectangle, rounded corners, minimum height=.5cm,
     draw, align=center, font=\ttfamily
@@ -607,7 +813,7 @@ Two patterns:\\
 \end{tikzpicture}
 \vspace{1em}
 
-The set of examples bound by depth 1 is a singleton set\\
+Набор примеров, ограниченных глубиной 1, состоит только из одного примера\\
 \begin{tikzpicture}[sibling distance=2em,
   every node/.style = {shape=rectangle, rounded corners, minimum height=.5cm,
     draw, align=center, font=\ttfamily
@@ -616,145 +822,7 @@ The set of examples bound by depth 1 is a singleton set\\
 \end{tikzpicture}
 \vspace{1em}
 
-This program behave well on the set of examples \\
-$$
- \begin{array}{ll}
-    \primi{switch} \dots \primi{with}   & \\
-    |\ \text{Nil} \rightarrow 1  & \\  
-    |\ \primi{otherwise} \rightarrow  1 & 
- \end{array}
-$$
-%\item 
-but is wrong 
-\end{minipage}
-\end{frame}
-
-\begin{comment}
-\begin{frame}[fragile]{Example 2 (1/2) }
-\centering
-\begin{minipage}{.381\textwidth}
-\begin{lstlisting}{ocaml}
-match (s : unit list) with 
-| []  -> 1
-| _   -> 2
-\end{lstlisting}
-\end{minipage}
-
-
-\begin{figure}
-\begin{subfigure}[b][2cm][b]{0.2\linewidth}
-\begin{subfigure}[t][.5cm][t]{0.2\linewidth}
-\begin{tikzpicture}[sibling distance=3em,
-  every node/.style = {shape=rectangle, rounded corners, minimum height=.5cm,
-    draw, align=center, font=\ttfamily
-    ,top color=white, bottom color=blue!20}]]
-  \node { Nil };
-\end{tikzpicture}
-\end{subfigure}
-\hspace{.5cm}
-\begin{subfigure}[t][.5cm][t]{0.1\linewidth}
-\begin{tikzpicture}[sibling distance=3em,
-  every node/.style = {shape=rectangle, rounded corners, minimum height=.5cm,
-    draw, align=center, font=\ttfamily
-    ,top color=white, bottom color=blue!20}]]
-  \node {\phantom{1}\_\phantom{1}};
-\end{tikzpicture}
-\end{subfigure}
-\caption{Two patterns}
-\end{subfigure}
-\hspace{1cm}
-\begin{subfigure}[b]{0.1\linewidth}
-%\begin{subfigure}[b][.5cm][b]{0.15\linewidth}
-\begin{tikzpicture}[sibling distance=2em,
-  every node/.style = {shape=rectangle, rounded corners, minimum height=.5cm,
-    draw, align=center, font=\ttfamily
-    , top color=white, bottom color=green!20}]]
-  \node {Nil};
-\end{tikzpicture}
-\caption{Single example}
-\end{subfigure}
-\hspace{1cm}
-\begin{subfigure}[b]{0.3\linewidth}
-$$
- \begin{array}{ll}
-    \primi{switch} \dots \primi{with}   & \\
-    |\ \text{Nil} \rightarrow 1  & \\  
-    |\ \primi{otherwise} \rightarrow  1 & 
- \end{array}
-$$
-\caption{Potential incorrect program}
-\end{subfigure}
-\end{figure}
-\end{frame}
-
-\end{comment}
-
-%\begin{figure}
-%\begin{subfigure}[b]{0.3\linewidth}
-%\begin{forest}
-%  forked edges,
-%  for tree={    grow'=0,    draw,    align=c,    font=\sffamily,
-%      rounded corners  },
-%  highlight/.style={    thick,    font=\sffamily\bfseries  }
-%    [{pats}
-%      [{Nil}]
-%      [{\_}]
-%    ]
-%\end{forest}
-%\end{subfigure}
-%\hspace{.5cm}
-%\begin{subfigure}[b]{0.6\linewidth}
-%%\texttt{hello [] 111}
-%\begin{lstlisting}[language=ocaml]
-%match (s : unit list) with 
-%| []  -> 1
-%| _   -> 2
-%\end{lstlisting}
-%\vspace{1cm}
-%\begin{itemize}
-%\item All inhabitants bound by depth = 1 -- is a set of single element
-%\item It is not enough
-%\item We should test at least on an expression that starts from Cons  (\lstinline{unit :: []}, for instance)
-%\item but if we don't do that...
-%\end{itemize}
-%\end{subfigure}
-%\end{figure}
-%\end{frame}
-
-\begin{comment}
-
-\begin{frame}[fragile]{Example 2 (2/2) }
-\begin{figure}
-\begin{subfigure}[b]{0.3\linewidth}
-\begin{forest}
-  forked edges,
-  for tree={    grow'=0,    draw,    align=c,    font=\sffamily,
-      rounded corners  },
-  highlight/.style={    thick,    font=\sffamily\bfseries  }
-    [{pats}
-      [{Nil}]
-      [{\_}]
-    ]
-\end{forest}
-\vspace{1cm}
-
-Wrong set of examples:
-\begin{itemize}
-\item \verb=Nil=
-\end{itemize}
-\vspace{1cm}
-\end{subfigure}
-\hspace{.5cm}
-\begin{subfigure}[b]{0.6\linewidth}
-\begin{lstlisting}{ocaml}
-match (s : unit list) with 
-| []  -> 1
-| _   -> 2
-\end{lstlisting}
-\vspace{1cm}
-\begin{itemize}
-\item ... and test single example \verb=[]= (i.e. Nil)
-\item then the synthesized program 
+Данная программа ведет себя согласовано на наборе примеров \\
 \[
  \begin{array}{ll}
     \primi{switch} \dots \primi{with}   & \\
@@ -762,161 +830,179 @@ match (s : unit list) with
     |\ \primi{otherwise} \rightarrow  1 & 
  \end{array}
 \]
-behaves the same on our set of examples
-\item but obviously wrong
-\end{itemize}
-\end{subfigure}
-\end{figure}
+
+но, очевидно, неправильная
+\end{minipage}
 \end{frame}
 
-\end{comment}
 
-\begin{frame}{Current Algorithm for Examples Generation}
+\begin{frame}{Текущий алгоритм для получения примеров}
 \begin{figure}
 \begin{subfigure}[b]{0.75\linewidth}
-Algorithm briefly:
+Если кратко:
 \begin{itemize}
-\item Evaluate the depth of patterns $h$
-\item Synthesize all inhabitants, but
-\item on depth $h+1$ use a single predefined per type inhabitant 
+\item Вычислить глубину образцов $h$
+\item Синтезируем всех жителей, но
+\item на глубине $h+1$ используем заранее подготовленного жителя соответствующего типа
 \end{itemize}
 \vspace{1cm}
 
 \begin{itemize}
-%\item[\faGood] Is correct (proved in Coq)
-\item[\faBad] The number of examples is  worst case exponential
+\item[\faBad] В худшем случае ---~экспоненциальное количество примеров
 \end{itemize}
 \end{subfigure}
-\hspace{.5cm}
-\begin{subfigure}[b]{0.45\linewidth}
-
-%\vspace{1cm}
-%We are currently working on
-%\begin{itemize}
-%\item When we can generate less examples?
-%\item Overall synthesis speed
-%\begin{itemize}
-%\item it not only depend on a number of examples
-%\end{itemize}
-%\end{itemize}
-\end{subfigure}
 \end{figure}
+\end{frame}
+
+\subsection{Оптимизации}
+
+\begin{frame}[fragile]{Оптимизация: откидывание эквивалентных программ}
+Очевидно, что реляционный интерпретатор языка \ir{} может перебирать различные эквивалентные программы
+\begin{center}
+  \begin{minipage}[t]{0.2\linewidth}
+  \begin{center}
+  \begin{lstlisting}[language=ocamllambda,gobble=2]
+  switch Scru with 
+  true -> ...
+  false -> ...
+  \end{lstlisting}
+  \end{center}
+  \end{minipage}\hspace{.5cm}
+  \begin{minipage}[t]{0.2\linewidth}
+  \huge
+  \begin{center}
+  \[
+  \Leftrightarrow
+  \]
+  \end{center}
+  \end{minipage}\hspace{.5cm}
+  \begin{minipage}[t]{0.2\linewidth}
+  \begin{lstlisting}[language=ocamllambda,gobble=2]
+  switch Scru with 
+  false -> ...
+  true -> ...
+  \end{lstlisting}
+  \end{minipage}
+\end{center}
+С этой проблемой удалось побороться
+\begin{itemize}
+\item Задав порядок на ветвях \primi{switch}ей, используя информацию о типе
+\item Это несколько <<сломало>> интерпретатор, но для синтеза это не существенно
+\end{itemize}
 
 \end{frame}
 
-
-\begin{frame}[fragile]{Improvement: Reducing Examples Set}
-An example:
+\defverbatim[colored]{\improvementA}{
 \begin{lstlisting}{ocaml}
 match (s : bool * bool * bool) with 
 | (_,_,F) -> 0
 | (_,_,T) -> 1
 \end{lstlisting}
-\vspace{.5cm}
-We can statically determine that 
+}
 
+\begin{frame}{Оптимизация: сокращение необходимого набора примеров}
+Пример:
+\improvementA
+\vspace{1em}
+
+Мы можем во время компиляции обнаружить, что
 \begin{itemize}
-\item There are $2^3$ inhabitants of type \lstinline=bool * bool * bool=
-\item No need to  check that scrutinee is a triple
-\item No need to look at the 1st and  the 2nd subtrees of a triple (only the 3rd matters)
+\item Всего $2^3$ жителей у типа \lstinline=bool * bool * bool=
+\item Не надо проверять, что сопоставляемое выражение --- это тройка
+\item Не надо заглядывать в 1ю и 2ю компоненты, так как важна только третья 
 \end{itemize}
-\vspace{.5cm}
+\vspace{1em}
 
 
-So, we can run the synthesis only on two examples $\{(\mathcal{B},\mathcal{B},\text{T}),(\mathcal{B},\mathcal{B},\text{F})\}$
-where $\mathcal{B}$ is any value of type \lstinline=bool=
-if we \textbf{forbid the investigation of  some subtrees} of examples
-
-
-%$\text{T}\!\!\! \text{F}$
+Итого, может запускать синтез только на двух примерах $\{(\mathcal{B},\mathcal{B},\text{T}),(\mathcal{B},\mathcal{B},\text{F})\}$
+(где $\mathcal{B}$ ---~это любое значение типа \lstinline=bool=)
+если мы \textbf{запретим "заглядывание" в ненужные поддеревья} примеров
 \end{frame}
 
 
-\begin{frame}{Branch and Bound Optimization}
-The synthesis answer is stored in variable $\circled{?}$ and 
+\begin{frame}{Оптимизация методом ветвей и границ}
+Текущий результат синтеза хранится в  $\circled{?}$ и во время поиска 
 %Synthesis answer is stored in variable $\circled{?}$ and 
 %Our answer is always in single variable -- $\circled{?}$ and 
-during the search we \emph{only} extend it with new $\primi{switch}$es \\
+мы \emph{только уточняем} результат, добавляя новые конструкции $\primi{switch}$ \\
 
-\begin{alertblock}{\textbf{Idea}}
-If current estimate is longer than the shortest answer already found -- cut this branch
+\begin{alertblock}{\textbf{Идея}}
+Если текущее приближение ответа длиннее, чем уже найденный ответ --- прерырываем поиск в этой ветке
 \end{alertblock}
 
-Requires a modified miniKanren's \lstinline=run= primitive: for every answer found we 
+Требует модификации примитива \miniKanren{} \lstinline=run=: для каждого найденного ответа
 \begin{itemize}
-\item evaluate it's size
-\item update already found minimum
+\item считаем размер
+\item обновляем минимальный найденный ответ
 \end{itemize}
 
-Pruning search branches is implemented using a new primitive called  \emph{structural constraint}
+Отсечение ветвей поиска делается помощью нового примитива --- \emph{ограничения на структуру (structural constraint)}
 
 \end{frame}
 
-\begin{frame}{Structural constraint}
-A new primitive called \emph{structural constraint}:
+\begin{frame}{Ограничение на структуру (structural constraint)}
+Новый примитив:
 \begin{itemize}
-\item Takes a logic value and performs reification in a current state
-\item Takes a predicate which inspects the reified value 
-\item If there are too many branches, stops the search ($failure^o$)
-\item Otherwise continues search without changing the state ($success^o$)
+\item Принимает промежуточное представление значений и конвертирует их (в текущем состоянии) до логических %a logic value and performs reification in a current state
+\item Принимает предикат для логических значений %Takes a predicate which inspects the reified value 
+\item Если результат слишком большой ---~прекратить поиск% If there are too many branches, stops the search 
+($failure^o$)
+\item Иначе продолжать поиск, не меняя состояние 
+%Otherwise continues search without changing the state 
+($success^o$)
 \end{itemize}
 \vspace{1em}
 %Peculiarities:
-Subtleties:
+Особенности:
 \begin{itemize}
-\item Used to count the size of current estimate
-\item May take or may not take into account disequality constraints
-\item Can be used to implement $absent^o$ or similar constraints
-\item Deals with reified values $\Rightarrow$ can be slow
+\item Используется для вычисления размера текущего решения
+\item Может учитывать или не учитывать disequality constraints
+\item Можно использовать, чтобы реализовать $absent^o$ и подобные играничения
+\item Работает с логическим представлением (reified) значений $\Rightarrow$ медленно
 \end{itemize}
 \end{frame}
 
 
 
-\begin{frame}[fragile]{Minimization Criterion for Synthesized Program}
+\begin{frame}[fragile]{Критерий минимизации для синтезированных программ}
 \begin{figure}
 \begin{subfigure}[b]{0.3\linewidth}
-$$
-\begin{array}{l}
-\primi{switch}\;\mathcal{M}\;\primi{with}\; \\
-\mathcal{C}_1\; \primi{\rightarrow}\; \ir_1\\
-\dots \\
-\mathcal{C}_n\; \primi{\rightarrow}\; \ir_n\\
-\primi{otherwise}\;\ir\\
-\end{array}\\
-$$
-$$
-\Updownarrow
-$$
-$$
-\begin{array}{l}
-\primi{if}\; \mathcal{M} = \mathcal{C}_1\;\primi{then}\; \ir_1\\
-\dots \\
-\primi{else if}\; \mathcal{M} = \mathcal{C}_n\; \primi{then}\;  \ir_n\\
-\primi{else}\;\ir\\
-\end{array}\\
-$$
+\[
+  \begin{array}{l}
+  \primi{switch}\;\mathcal{M}\;\primi{with}\; \\
+  \mathcal{C}_1\; \primi{\rightarrow}\; \ir_1\\
+  \dots \\
+  \mathcal{C}_n\; \primi{\rightarrow}\; \ir_n\\
+  \primi{otherwise}\;\ir\\
+  \end{array}\\
+\]
+\[
+  \Updownarrow
+\]
+\[
+  \begin{array}{l}
+  \primi{if}\; \mathcal{M} = \mathcal{C}_1\;\primi{then}\; \ir_1\\
+  \dots \\
+  \primi{else\ if}\; \mathcal{M} = \mathcal{C}_n\; \primi{then}\;  \ir_n\\
+  \primi{else}\;\ir\\
+  \end{array}\\
+\]
 \vspace{1cm}
 
 \end{subfigure}
 \hspace{1cm}
 \begin{subfigure}[b]{0.6\linewidth}
-A single switch with $n$ branches roughly can be encoded as $n$ \texttt{if}s\\
+Интуиция: один \primi{switch} с $n$ случаев можно примерно закодировать в  $n$ \primi{if}ов\\
 
-Let's say that the size of
+Будем считать, что размер
 \begin{itemize}
-\item  $\primi{switch}$ is the number of branches
-\item $\primi{return}$ is 0
-\item the whole program in $\ir$ is the sum of sizes of its $\primi{switch}$es 
+\item \primi{switch} --- это число веток
+\item \primi{return} равен 0
+\item программы целиком --- сумма размеров всех входящих в неё \primi{switch}
 \end{itemize}
-Our minimization criterion: reduce the size of synthesized program\\
+Наш критерий минимизации: уменьшение размера синтезированной программы \\
 
-But there can be other criteria:
-\begin{itemize}
-\item The  depth 
-\item The branching factor
-\item etc.
-\end{itemize}
+Но могут быть другие: глубина, коэффициент ветвления, и т.д.
 \end{subfigure}
 \end{figure}
 
@@ -926,127 +1012,37 @@ But there can be other criteria:
 
 
 
-\begin{comment}
-
-
-\begin{frame}[fragile,allowframebreaks]{Experiments}
-%\begin{table}[H]
-  \begin{longtable}{|m{3.5cm}||cccccc|}
-\hline
-    \lheadll{3cm}{Patterns} & 
-%    \head{1.5cm}{Size constraint} & 
-%    \headll{1.7cm}{Answers requested} & 
-    \head{1.5cm}{\scriptsize \# samples} & 
-    \head{1.5cm}{\scriptsize 1st answer size} & 
-    \head{1.5cm}{\scriptsize 1st answer time (ms)} & 
-    \head{1.5cm}{\scriptsize Answers found} & 
-    \head{1.5cm}{\scriptsize Last answer size} & 
-    \headl{1.5cm}{\scriptsize Total search time (ms)}
-\endhead
-    \hline
-    \hline
-
-%    \texttt{
-%A
-%B
-%C }&3&&1&2&&2\\ \hline
-%
-%    \begin{lstlisting}[basicstyle=\scriptsize]
-%true
-%false
-%    \end{lstlisting} &2&&$<$1&1&&$<$1\\
-%        \hline
-
-            \begin{lstlisting}[basicstyle=\scriptsize,belowskip=-1.5em,aboveskip=-1em]
-(true, _) 
-(_, true)
-(false, false)
-\end{lstlisting}  &4&2&5&1&2&6\\
-        \hline
-     \begin{lstlisting}[basicstyle=\scriptsize,belowskip=-1.5em,aboveskip=-1em]
-(_, false, true)
-(false, true, _)
-(_, _, false) 
-(_, _, true)
-\end{lstlisting}   &8&6&$\sim$1000&3&4&$\sim$2000\\
-        \hline
-%        5&
-%     \begin{lstlisting}[basicstyle=\scriptsize]
-%([], _)
-%(_, [])
-%(_ :: _, _ :: _)
-%    \end{lstlisting} &100&10&4&5&1&6\\
-%        \hline
-%        6&
-     \begin{lstlisting}[basicstyle=\scriptsize,belowskip=-1.5em,aboveskip=-1em]
-type nat = Z 
-         | S of nat
-  
-(Succ _, Succ _)
-(Zero, _)
-(_, Zero)    \end{lstlisting} &4&2&30&1&2&30
-    \\
-        \hline
-     \begin{lstlisting}[basicstyle=\scriptsize,belowskip=-1.5em,aboveskip=-1em]
-type 'a list = 
-| Nil 
-| Nil2 
-| Cons of 'a * 'a list     
-
-(Nil, _)
-(_, Nil)
-(Nil2, _)
-(_, Nil2)
-(Cons(_,_),Cons(_,_))
-    \end{lstlisting}
-     &9&5&24&3& 5  &157                    \\ 
-      \hline
-%      \hline
-     \begin{lstlisting}[basicstyle=\scriptsize,belowskip=-1.5em,aboveskip=-1em]
-type code = 
-| Push 
-|Ldi of int 
-| IOp of int 
-| Int of int 
-type prog = code list 
-type item = 
-| Val of code 
-| Env of int 
-| Code of int
-type stack = item list 
-
-match (code, stack,prog) 
-(_, _, (Ldi _)::_)
-(_, _, (Push _)::_)
-    \end{lstlisting} &5&3&11&1&3&30\\
-        \hline      
-        \newpage
-        \begin{lstlisting}[basicstyle=\scriptsize,belowskip=-1.5em,aboveskip=-1em]
-(_, _, (Ldi _)::_)
-(_, _, (Push _)::_)
-(Int(_), _, (IOp _)::_)
-\end{lstlisting}
-     &20&7&$\sim$1700&3&5&$\sim$11000                    \\ \hline
-  \end{longtable}
-
-\end{frame}
-
-\end{comment}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{frame}[fragile]{Evaluation: matching three boolean values}
-\begin{minipage}[c][5cm][t]{0.35\linewidth}
-\begin{lstlisting}[basicstyle=\small,belowskip=1em,aboveskip=0em]
+\section{Реализация}
+
+\begin{frame}{Реализация}
+Мы пользуемся \OCanren{} --- типобезопасным встраиванием \miniKanren{} в \OCaml{}.
+\vspace{2em}
+
+В процессе используется \noCanren{}~\cite{RelConversion} для порождения кода на \OCanren{}~\cite{OCanren,OCanrenWeb}
+\vspace{1em}
+
+Основная часть (два реляционных интерпретатора + порождение примеров) сделаны с помощью \noCanren{}.
+\vspace{1em}
+
+Репозиторий проекта~\cite{Repo}
+\end{frame}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Проблемы}
+
+\defverbatim[colored]{\synthInputA}{
+\begin{lstlisting}
+match $\bullet$ with
 (_, false, true) -> 1
 (false, true, _) -> 2
 (_, _, false) -> 3
 (_, _, true) -> 4
 \end{lstlisting}
-\end{minipage}
-\begin{minipage}{0.63\linewidth}
-\begin{onlyenv}<1>
-Answer of size 6 (in 1.6 seconds)
-\begin{lstlisting}[basicstyle=\small,belowskip=0em]
+}
+\defverbatim[colored]{\synthResultA}{
+\begin{lstlisting}[language=ocamllambda]
 switch $\bullet$[0] with  
 | true -> 
     (switch $\bullet$[1] with  
@@ -1060,99 +1056,64 @@ switch $\bullet$[0] with
     | _ -> 
          (switch $\bullet$[2] with true -> 1 | _ -> 3))
 \end{lstlisting}
-\end{onlyenv}
-\begin{onlyenv}<2>
-Answer of size 5 (in +0.4 seconds)
-\begin{lstlisting}[basicstyle=\small,belowskip=1em]
-switch $\bullet$[0] with  
+}
+
+\defverbatim[colored]{\synthResultB}{
+\begin{lstlisting}[language=ocamllambda]
+switch Scru[0] with  
 | true -> 
-    (switch $\bullet$[2] with  
+    (switch Scru[2] with  
     | true -> 
-       (switch $\bullet$[1] with true -> 4 | _ -> 1)
+       (switch Scru[1] with true -> 4 | _ -> 1)
     | _ -> 3 )  
 | _ -> 
-    (switch $\bullet$[1] with  
+    (switch Scru[1] with  
     | true -> 2   
-    | _ -> (switch $\bullet$[2] with  true -> 1 | _ -> 3))
+    | _ -> (switch Scru[2] with  true -> 1 | _ -> 3))
 \end{lstlisting}
-\end{onlyenv}
-\begin{onlyenv}<3>
-Answer of size 4 (in +0.7 seconds)
-\begin{lstlisting}[basicstyle=\small,belowskip=0em]
+}
+
+\defverbatim[colored]{\synthResultC}{
+\begin{lstlisting}[language=ocamllambda]
 switch $\bullet$[1] with  
 | true -> 
     (switch $\bullet$[0] with  
-    | true -> (switch $\bullet$[2] with true -> 4 | _ -> 3)
+    | true -> 
+        (switch $\bullet$[2] with true -> 4 | _ -> 3)
     | _ -> 2) 
 | _ -> 
     (switch $\bullet$[2] with true -> 1 | _ -> 3)
 \end{lstlisting}
-\end{onlyenv}
+}
+
+\begin{frame}[fragile]{Пример синтезированной программы: сопоставление выражения типа \lstinline[language=ocaml]{bool*bool*bool}}
+\begin{minipage}[c][7cm][t]{0.35\linewidth}\vspace{0em}
+\begin{minipage}{0.35\linewidth}
+\synthInputA
+\end{minipage}
+\end{minipage}
+\begin{minipage}{0.63\linewidth}\vspace{0em}
+\begin{onlyenv}<1>\begin{minipage}{0.63\linewidth}
+Ответ размера  6 (за 1.6 секунд)
+\synthResultA
+\end{minipage}\end{onlyenv}
+%
+\begin{onlyenv}<2>\begin{minipage}{0.63\linewidth}
+Ответ размера 5 (за +0.4 секунд)
+\synthResultB
+\end{minipage}\end{onlyenv}
+\begin{onlyenv}<3>\begin{minipage}{0.63\linewidth}
+Ответ размера 4 (за +0.7 секунд)
+\synthResultC
+\end{minipage}\end{onlyenv}
 \end{minipage}
 \end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\begin{comment}
-\begin{frame}[fragile]{Evaluation (1/3)}
+
+\begin{frame}[fragile]{Проблемы с производительностью (1/2)}
 \begin{figure}
-\begin{subfigure}[b]{0.48\linewidth}
-\begin{lstlisting}[basicstyle=\small,belowskip=1em,aboveskip=0em]
-(_, false, true) -> 1
-(false, true, _) -> 2
-(_, _, false) -> 3
-(_, _, true) -> 4
-\end{lstlisting}
-Answer of size 6 (in 1.6 seconds)
-\begin{lstlisting}[basicstyle=\scriptsize,belowskip=0em]
-switch $\bullet$[0] with  
-| true -> 
-    (switch $\bullet$[1] with  
-    | true -> 
-        (switch $\bullet$[2] with true -> 4 | _ -> 3)
-    | _ -> 
-        (switch $\bullet$[2] with true -> 1 | _ -> 3))  
-| _ -> 
-    (switch $\bullet$[1] with  
-    | true -> 2   
-    | _ -> 
-         (switch $\bullet$[2] with true -> 1 | _ -> 3))
-\end{lstlisting}
-\end{subfigure}
-%\hspace{.5cm}
-\begin{subfigure}[b]{0.48\linewidth}
-Answer of size 5 (in +0.4 seconds)
-\begin{lstlisting}[basicstyle=\scriptsize,belowskip=1em]
-switch $\bullet$[0] with  
-| true -> 
-    (switch $\bullet$[2] with  
-    | true -> 
-       (switch $\bullet$[1] with true -> 4 | _ -> 1)
-    | _ -> 3 )  
-| _ -> 
-  (switch $\bullet$[1] with  
-  | true -> 2   
-  | _ -> (switch $\bullet$[2] with  true -> 1 | _ -> 3))
-\end{lstlisting}
-Answer of size 4 (in +0.7 seconds)
-\begin{lstlisting}[basicstyle=\scriptsize,belowskip=0em]
-switch $\bullet$[1] with  
-| true -> 
-   (switch $\bullet$[0] with  
-   | true -> (switch $\bullet$[2] with true -> 4 | _ -> 3)
-   | _ -> 2) 
-| _ -> (switch $\bullet$[2] with true -> 1 | _ -> 3)
-\end{lstlisting}
-\end{subfigure}
-\end{figure}
-\end{frame}
-
-
-content
-\end{comment}
-
-\begin{frame}[fragile]{Performance problem (1/2)}
-\begin{figure}
-\begin{subfigure}[b]{0.5\linewidth}
+\begin{subfigure}[t]{0.5\linewidth}
 \begin{lstlisting}[basicstyle=\small,language=ocaml]
 match a,s,c with
 | (_,_,Ldi i::_) -> 1
@@ -1172,18 +1133,26 @@ match a,s,c with
 \end{lstlisting}
 \end{subfigure}
 \hspace{1cm}
-\begin{subfigure}[b]{0.35\linewidth}
-Doesn't currently work because the types are too large (11102 examples  generated).\\
+\begin{subfigure}[t]{0.35\linewidth}\vspace{0em}
+Интерпретатор PCF (mini-ML) из статьи Г.Плоткина, 1977
+\vspace{4em}
+
+Сейчас не работает, потому что слишком много (11102) примеров
+\begin{itemize}
+\item большая глубина образцов
+\item много конструкторов в типах
+\end{itemize}
+%Doesn't currently work because the types are too large (11102 examples  generated).\\
 
 %But for a reduced example we can synthesize the answer
-\vspace{1cm}
+%\vspace{1cm}
 \end{subfigure}
 \end{figure}
 \end{frame}
 
-\begin{frame}[fragile]{Performance problem (2/2)}
+\begin{frame}[fragile]{Проблемы с производительностью (2/2)}
 \begin{figure}
-\begin{subfigure}[b][6cm][b]{0.45\linewidth}
+\begin{subfigure}[b][7cm][b]{0.35\linewidth}\vspace{0em}
 \begin{lstlisting}[basicstyle=\small]
 type code = 
 | Push 
@@ -1197,8 +1166,8 @@ type item =
 | Code of int
 type stack = item list 
 
-match (code, stack,prog) with
-| (_, _, (Ldi _)::_) -> 1
+match (code,stack,prog) with
+| (_, _, (Ldi _)::_)  -> 1
 | (_, _, (Push _)::_) -> 2
 \end{lstlisting}
 \begin{onlyenv}<1>
@@ -1211,21 +1180,21 @@ match (code, stack,prog) with
 \end{onlyenv}
 \end{subfigure}
 \hspace{.5cm}
-\begin{subfigure}[b]{0.45\linewidth}
-\begin{overlayarea}{7cm}{6cm}
-Example is reduces by 
+\begin{subfigure}[b]{0.65\linewidth}
+\begin{overlayarea}{8cm}{6cm}
+Сокращённый пример 
 \begin{itemize}
-\item types 
-\item clauses
+\item по типам 
+\item по веткам
 \end{itemize}
-For two clauses we require 5 examples \\\vspace{1em}
+Для двух веток  надо 5 примеров\\\vspace{1em}
 
 \begin{onlyenv}<2->
-For three clauses and the same types we require 20 examples
+Для трёх веток и тех же типов уже необходимо 20 примеров
 \begin{itemize}
-\item in 1,5s it gives the  1st answer of size 7
-\item in the next half a second it gives the 2nd and the 3rd (last) answers of sizes 6 and 5
-\item in the end it in 10s proves that no shorter answers exist
+\item за 1,5с получим 1й ответ размера 7
+\item ещё через полсекунды --- 2й и 3й (последний) ответы размера 6 и 5, соответственно
+\item в конце оно тратит 10с, чтобы доказать, что более коротких ответов не существует
 \end{itemize}
 %\begin{lstlisting}[basicstyle=\small,aboveskip=-0.5em]
 %| (Int _, _, (IOp _)::_) -> 3
@@ -1238,29 +1207,39 @@ For three clauses and the same types we require 20 examples
 
 \end{frame}
 
-\begin{frame}{Conclusions and Future Work}
-Contributions: \contributions
+\section{Заключение}
+
+\begin{frame}{Результаты}% и задачи на будущее}
+Достижения: \contributions
 \vspace{1em}
 
-An approach shows correct results on small problems...
- but performs not fast enough\\
+На маленьких примерах подход работает корректно, ... но на больших есть проблемы с производительностью 
 \vspace{1em}
- 
-Areas for possible improvements:
+\end{frame}
+
+
+\begin{frame}{Пути дальнейшего улучшения}
 \begin{itemize}
-\item Reification for structural constraints can be made faster (lazy computations)
-\item Use finite-domain constraints instead of disequality constraints 
-\item Memoization is not used (because of presence of disequality constraints)
-\item More clever way to generate less examples
+\item Построение входного логического значения для  ограничений на структуру можно делать эффективнее (ленивые вычисления)
+\item Использование конечнодоменных ограничений вместо disequality constraints 
+\item Мемоизация сейчас никак не используется, т.к.  disequality constraints
+\item Создание меньшего числа примеров
+\item Другое представление языка \ir{} с использованием конструкций \primi{exit}
+\begin{itemize}
+\item тут может потребоваться номинальная унификация
 \end{itemize}
-\vspace{1em}\pause
+\end{itemize}
+\end{frame}
+
+\begin{frame}
 \begin{center}
-{\Huge Thanks!}
+{\Huge Спасибо!}
 \end{center}
 \end{frame}
 
+
 \begin{frame}%[t, allowframebreaks]
-\frametitle{References}
+\frametitle{Литература}
 \bibliographystyle{amsalpha}
 \bibliography{references}
 \vspace{1cm}

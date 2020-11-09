@@ -1,3 +1,5 @@
+
+
 % get rid of header navigation bar
 \setbeamertemplate{headline}{}
 % get rid of bottom navigation symbols
@@ -6,23 +8,53 @@
 %\setbeamertemplate{footline}{}
 %\setbeamertemplate{note page}[plain]
 %\setbeameroption{show notes on second screen=right}
+\addtobeamertemplate{title page}{}{
+  \begin{center}{\tiny Build date: \today}\end{center}
+}
+
 
 \usepackage{xcolor}
 \definecolor{YellowGreen} {HTML}{B5C28C}
 \definecolor{ForestGreen} {HTML}{009B55}
 \definecolor{MyBackground}{HTML}{F0EDAA}
 
-
 \usepackage{xltxtra} % load xunicode
 \usepackage{polyglossia}
 \setmainlanguage{english}
+\setotherlanguage{russian}
+%\setmainlanguage{russian}
+%\setotherlanguage{english}
 
 \let\cyrillicfonttt\monofamily
+%\let\cyrillicfont\rmfamily
+%\usepackage{fontspec}
+%\newfontfamily{\cyrillicfont}{\rmfamily}
 
 %\newfontfamily\dejaVuSansMono{DejaVu Sans Mono}
 % https://github.com/vjpr/monaco-bold/raw/master/MonacoB/MonacoB.otf
 %\newfontfamily\monacoB{MonacoB}
 
+  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\setmainfont[
+ Ligatures=TeX,
+ Extension=.otf,
+ BoldFont=cmunbx,
+ ItalicFont=cmunti,
+ BoldItalicFont=cmunbi,
+]{cmunrm}
+% С засечками (для заголовков)
+\setsansfont[
+ Ligatures=TeX,
+ Extension=.otf,
+ BoldFont=cmunsx,
+ ItalicFont=cmunsi,
+]{cmunss}
+\setmonofont{Latin Modern Mono}
+
+\usefonttheme{professionalfonts}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \usepackage{listings}
 \lstdefinelanguage{ocanren}{
 keywords={run, conde, fresh, let, in, match, with, when, class, type,
@@ -44,32 +76,20 @@ morecomment=[s]{(*}{*)}
 \lstset{
 language=ocanren
 }
-  
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\setmainfont[
- Ligatures=TeX,
- Extension=.otf,
- BoldFont=cmunbx,
- ItalicFont=cmunti,
- BoldItalicFont=cmunbi,
-]{cmunrm}
-% С засечками (для заголовков)
-\setsansfont[
- Ligatures=TeX,
- Extension=.otf,
- BoldFont=cmunsx,
- ItalicFont=cmunsi,
-]{cmunss}
 
-
-\usefonttheme{professionalfonts}
 \usepackage{times}
 \usepackage{tikz}
 \usetikzlibrary{cd}
 % \usepackage{tikz-cd}
 \usepackage{amsmath}
 %\DeclareMathOperator{->}{\rightarrow}
-\newcommand\iso{\ensuremath{\cong}}
+%\newcommand\iso{\ensuremath{\cong}}
+\newcommand{\OCaml}{\textsc{OCaml}}
+\newcommand{\miniKanren}{\textsc{miniKanren}}
+\newcommand{\OCanren}{\textsc{OCanren}}
+\newcommand{\noCanren}{\textsc{noCanren}}
+
 \usepackage{verbatim}
 \usepackage{graphicx}
 \usetikzlibrary{arrows,shapes}
@@ -112,10 +132,6 @@ language=ocanren
 %\usepackage[cache=true]{minted}
 
 
-
-\addtobeamertemplate{title page}{}{
-  \begin{center}{\tiny Build date: \today}\end{center}
-}
 
 \usepackage{inconsolata}
 \setmonofont[Scale=1.0,
