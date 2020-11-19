@@ -1,0 +1,182 @@
+\documentclass[tikz]{standalone}
+\usepackage{forest}
+\begin{document}
+\begin{forest}
+for tree={
+  circle,
+  black,
+  draw,
+  fill=blue!40,
+}
+  [{}
+    [{}, edge label={node [midway, above left] {B}}
+      [{}, edge label={node [midway, right] {A}}
+        [{}, edge label={node [midway, right] {U}}
+          [,phantom]
+          [{}, edge label={node [midway, left] {E}}
+            [{}, edge label={node [midway, left] {R}}, label=below:Bauer
+            ]
+            [,phantom]
+          ]
+          [{}, edge label={node [midway, right] {M}}, label=below:Baum
+          ]
+          [,phantom]
+        ]
+        [,phantom]
+      ]
+      [,phantom]
+    ]
+    [{}, edge label={node [midway, right] {F}}
+      [{}, edge label={node [midway, right] {E}}
+        [{}, edge label={node [midway, right] {L}}
+          [{}, edge label={node [midway, right] {D}}, label=below:Feld
+          ]
+          [,phantom]
+        ]
+        [,phantom]
+      ]
+      [,phantom]
+    ]
+    [{}, edge label={node [midway, left] {H}}
+      [{}, edge label={node [midway, left] {A}}
+        [{}, edge label={node [midway, left] {H}}
+          [{}, edge label={node [midway, left] {N}}, label=below:Hahn
+          ]
+          [,phantom]
+        ]
+        [{}, edge label={node [midway, right] {U}}
+          [{}, edge label={node [midway, left] {S}}, label=below:Haus
+          ]
+          [,phantom]
+        ]
+        [,phantom]
+      ]
+      [{}, edge label={node [midway, left] {O}}
+        [{}, edge label={node [midway, right] {F}}, label=below:Hof
+        ]
+      ]
+      [{}, edge label={node [midway, right] {U}}
+        [,phantom]
+        [{}, edge label={node [midway, left] {H}}
+          [{}, edge label={node [midway, right] {N}}, label=below:Huhn
+          ]
+        ]
+        [{}, edge label={node [midway, right] {N}}
+          [,phantom]
+          [{}, edge label={node [midway, right] {D}}, label=below:Hund
+          ]
+        ]
+      ]
+    ]
+    [{}, edge label={node [midway, above right] {K}}
+      [,phantom]
+      [{}, edge label={node [midway, right] {A}}
+        [,phantom]
+        [{}, edge label={node [midway, right] {T}}
+          [,phantom]
+          [{}, edge label={node [midway, right] {Z}}
+            [,phantom]
+            [{}, edge label={node [midway, right] {E}}, label=below:Katze
+            ]
+          ]
+        ]
+      ]
+    ]
+  ]
+\end{forest}
+
+
+
+\begin{forest}
+for tree={
+  circle,
+  black,
+  draw,
+  fill=blue!40,
+}
+  [{}
+    [{}, edge label={node [midway, above left] {BA}}
+          [{}, edge label={node [midway, left] {UE}}
+            [{}, edge label={node [midway, left] {R}}, label=below:Bauer
+            ]
+            [,phantom]
+          ]
+          [{}, edge label={node [midway, right] {UM}}, label=below:Baum
+          ]
+          [,phantom]
+    ]
+    [{}, edge label={node [midway, right] {FE  }}
+          [{}, edge label={node [midway, right] {LD}}, label=below:Feld
+          ]
+          [,phantom]
+          [,phantom]
+    ]
+    [,phantom][,phantom]
+      [{}, edge label={node [midway, left] {\phantom{1}HA}}
+          [{}, edge label={node [midway, left] {HN}}, label=below:Hahn
+          ]
+          [,phantom]
+                    [,phantom]
+          [,phantom]          
+          [{}, edge label={node [midway, left] {US}}, label=below:Haus
+          ]
+          [,phantom]
+      ]
+      [{}, edge label={node [midway, left] {HO}}
+        [{}, edge label={node [midway, right] {F}}, label=below:Hof
+        ]
+      ]
+      [{}, edge label={node [midway, right] {HU}}
+        [,phantom]
+          [{}, edge label={node [midway, right] {HN}}, label=below:Huhn
+          ]
+          [,phantom]          [,phantom]
+          [{}, edge label={node [midway, right] {ND}}, label=below:Hund
+          ]
+      ]
+    [{}, edge label={node [midway, above right] {KA}}
+        [,phantom]
+        [{}, edge label={node [midway, right] {TZ}}
+          [,phantom]
+            [,phantom]
+            [{}, edge label={node [midway, right] {E}}, label=below:Katze
+            ]
+        ]
+    ]
+  ]
+\end{forest}
+
+
+
+\begin{forest}
+for tree={
+  circle,
+  black,
+  draw,
+  fill=blue!40,
+}
+  [{}
+    [{}, edge label={node [midway, above left] {1111}}
+          [{}, edge label={node [midway, left] {1}}, label=below:Bauer            
+          ]
+          [,phantom]
+          [{}, edge label={node [midway, right] {0}}, label=below:Baum
+          ]
+          [,phantom]
+    ]
+    [,phantom]
+    [{}, edge label={node [midway, left] {10}}, label=below:Hof
+    ]
+    [{}, edge label={node [midway, right] {0111}}
+      [,phantom]
+        [{}, edge label={node [midway, right] {10}}, label=below:Huhn
+        ]
+        [,phantom]          [,phantom]
+        [{}, edge label={node [midway, right] {01}}, label=below:Hund
+        ]
+    ]
+  ]
+\end{forest}
+
+\end{document}
+

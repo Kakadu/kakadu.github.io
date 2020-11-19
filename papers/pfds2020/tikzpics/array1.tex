@@ -1,0 +1,22 @@
+\documentclass[tikz]{standalone}
+\input{fontawe}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning,trees,decorations.pathreplacing}
+
+\begin{document}
+\begin{tikzpicture}
+  [%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+      box/.style={rectangle,draw=black, ultra thick, minimum size=1cm},
+  ]%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\foreach \y [count=\x] in 
+  { \faChessKing, \faChessQueen, \faChessRook, \faChessBishop
+  , \faChessKnight, \faChessPawn%, \faChess
+  }
+{
+  \node[] at (\x-1,0) { \huge \y };
+}
+\end{tikzpicture}
+\end{document}
+

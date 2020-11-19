@@ -1,0 +1,202 @@
+% !TeX spellcheck = ru_RU
+\newif\ifanswers
+
+\documentclass[aspectratio=169
+  , xcolor={svgnames}
+  , hyperref=
+      { colorlinks
+      , urlcolor=DarkBlue 
+      }  
+  , russian  % This line affects translation of theorem titles
+  ]{beamer}
+
+\input{heading.tex}
+%\usepackage[ruled,vlined]{algorithm2e}
+\usepackage{tabulary}
+\usepackage{verbatim}
+
+\newcommand{\term}[2]{\textit{#1} (#2)}
+
+\usepackage{amsthm}
+\newtheorem{remark}{\textbf{Замечание}}[section]
+\newtheorem{hint}{\textbf{Указание разработчикам}}[section]
+
+\newtheoremstyle{exerciseStyle1}
+{}                % Space above
+{}                % Space below
+{}                % Theorem body font % (default is "\upshape")
+{}                % Indent amount
+{\bfseries}       % Theorem head font % (default is \mdseries)
+{.}               % Punctuation after theorem head % default: no punctuation
+{ }               % Space after theorem head
+{}                % Theorem head spec
+\theoremstyle{exerciseStyle1}
+\newtheorem{exercise}{\textbf{Упражнение}}[section]
+
+
+\deftranslation[to=russian]{Theorem}{Теорема}
+\deftranslation[to=russian]{theorem}{теорема}
+
+\usepackage{tikz}
+\usetikzlibrary{trees,decorations.pathreplacing}
+
+\usepackage{subcaption}
+
+%%%%%%%%%%%%%%%%%%
+\makeatletter
+\newenvironment{tabminted}{
+  \let\FV@ListVSpace\relax
+  \minted
+}{
+  \endminted
+  \unskip   
+  \aftergroup\@tabmintedend
+}
+\newcommand*{\tabminted@finalstrut}[1]{%
+  \ifdim\prevdepth>0pt
+    \ifdim\dp#1>\prevdepth
+      \vskip\dimexpr(\dp#1)-\prevdepth\relax
+    \fi
+  \else
+    \vskip\dimexpr(\dp#1)\relax
+  \fi
+}
+\newcommand*{\@tabmintedend}{%
+  \let\@finalstrut\tabminted@finalstrut
+}
+\renewcommand{\cite}[1]{}
+\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title[PFDS без примеров кода вообще]{Чисто функциональные структуры данных}
+\subtitle{Без примеров кода вообще}
+\author{Косарев Дмитрий}
+
+\institute{матмех СПбГУ}
+
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>%[allowframebreaks]
+    \frametitle{Оглавление}
+    \tableofcontents[currentsection]
+  \end{frame}
+}
+
+\newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}
+\setcounter{tocdepth}{1}  % part,chapters,sections 
+\newcommand\chap[1]{
+  \addcontentsline{toc}{chapter}{#1}
+}
+
+
+\begin{document}
+\maketitle
+
+% For every picture that defines or uses external nodes, you'll have to
+% apply the 'remember picture' style. To avoid some typing, we'll apply
+% the style to all pictures.
+\tikzstyle{every picture}+=[remember picture] 
+
+% By default all math in TikZ nodes are set in inline mode. Change this to
+% displaystyle so that we don't get small fractions.
+\everymath{\displaystyle}
+
+% Uncomment these lines for an automatically generated outline.
+\begin{frame}{Оглавление}
+  \tableofcontents
+\end{frame}
+
+%\begin{frame}{Чисто функциональные структуры данных}
+%\begin{itemize}
+%  \item Следуя книге Okasaki "Pure Functional Data Structures"
+%  \item Чисто функциональные -- это 
+%    \begin{itemize}
+%      \item используя только чистые функции
+%      \item проектируя с помощью индуктивных (алгебраических) типов
+%    \end{itemize}
+%  \item С примерами кода на языке Haskell
+%  \item В принципе, можно бы и на Python, но оно будет выглядеть отвратительно
+%  \item Поэтому сначала gentle introduction to Haskell \textcopyright\vspace{.5cm}
+%  
+%  \item Будет непонятно -- кричите!
+%\end{itemize}
+%\end{frame}
+
+
+\section{Введение}
+\input{02intro}
+
+%\section{Унификация}
+%\input{03unif}
+
+%\input{02intro.tex}
+
+%\input{chapter03.tex}
+
+\input{chapter05.tex}
+
+%\input{chapter09.tex}
+\section{Префиксные деревья}
+\begin{frame}{Префиксные деревья (trie)}
+\begin{center}
+\includegraphics[page=1]{tikzpics/trie1.pdf}
+\end{center}
+Картинка \href{https://tex.stackexchange.com/a/182484/171947}{отсюда}
+\end{frame}
+
+\begin{frame}{Префиксные деревья (trie)}
+\begin{center}
+\includegraphics[page=2,scale=1.2]{tikzpics/trie1.pdf}
+\end{center}
+\end{frame}
+
+
+\begin{frame}{Префиксные деревья (trie), где ключи -- числа}
+\begin{figure}[ht]
+\begin{subfigure}{.59\textwidth}
+\includegraphics[page=3,scale=1.4]{tikzpics/trie1.pdf}
+\end{subfigure}
+\begin{subfigure}{.39\textwidth}
+\begin{itemize}
+\item $63=11111_2\mapsto$ Bauer 
+\item $31=01111_2\mapsto$ Baum 
+\item $2=10_2\mapsto$ Hof 
+\item $71=100111_2\mapsto$ Huhn
+\item $39=010111_2\mapsto$ Hund
+\end{itemize}
+\end{subfigure}
+\end{figure}
+\vspace{2em}
+Важный апгрейд: HAMT (Hash Array Mapped Trie)
+\end{frame}
+
+\begin{frame}
+\begin{center}
+  {\Huge Конец.}\\
+  
+  Подробнее в книге Окасаки "Чисто функциональные структуры данных".
+\end{center}
+\end{frame}
+
+
+% \begin{frame}[allowframebreaks]
+%   \frametitle<presentation>{Ссылки}
+%   \begin{thebibliography}{10}
+%   \bibitem{paper}
+%     \href{http://conal.net/papers/compiling-to-categories/compiling-to-categories.pdf}{paper}
+%     \newblock {\em Conal Elliot }    
+%   \bibitem{conal}
+%     Slides
+%     \newblock {\em Conal Elliot }
+%     \newblock \href{http://conal.net/talks/compiling-to-categories.pdf}{ссылка}
+%   \bibitem{video}    
+%     \href{http://podcasts.ox.ac.uk/compiling-categories}{ICFP 2017 video}
+%     \newblock {\em Conal Elliot }
+%   \bibitem{}
+%     \href{https://github.com/conal/concat}{Project repo}
+%   \end{thebibliography}
+% \end{frame}
+
+\end{document}

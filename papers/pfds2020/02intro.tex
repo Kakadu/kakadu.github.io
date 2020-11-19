@@ -1,0 +1,397 @@
+
+%{
+%\setbeamertemplate{headline}{}
+%\setbeamertemplate{footline}{}
+%\usebackgroundtemplate{
+%  \includegraphics[width=\paperwidth]{munch2.jpg}
+%}
+%\begin{frame}
+%\end{frame}
+%}
+
+%\section{Введение в Haskell}
+
+
+%\defverbatim[colored]{\imageA}{
+%\begin{tikzpicture}
+%    [%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%        box/.style={rectangle,draw=black, ultra thick, minimum size=1cm},
+%    ]%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%\foreach \x/\y in {0/9, 1/\faAmazon,2/13,3/19,4/12,5/8,6/7,7/4,8/21,9/2,10/6,11/11}
+%        \node[box] at (\x,0){\y};
+%
+%\end{tikzpicture}
+%}
+
+
+\begin{frame}{Введение}
+\begin{center}
+\only<1>{
+\includegraphics{tikzpics/array1.pdf}
+}
+\only<2>{
+\includegraphics{tikzpics/array2.pdf}
+}
+\only<3>{
+\includegraphics{tikzpics/array1.pdf}
+}
+\only<4>{
+\includegraphics{tikzpics/array1.pdf}
+\vspace{2em}
+
+\includegraphics{tikzpics/array2.pdf}
+}
+\end{center}
+\end{frame}
+
+\begin{frame}{Чистые функции}
+\begin{definition}{Чистая функция -- это}
+  \begin{itemize}
+    \item Детерминированная
+    \item В процессе работы не совершающая ``побочных эффектов''
+  \end{itemize}
+\end{definition}
+Т.е. запрещены: ввод-вывод, случайные значения, присваивания\\
+
+N.B. Это свойство \emph{функции}, а не языка программирования
+\end{frame}
+
+\begin{frame}%{Чистые функции}
+\begin{definition}[Неизменяемые структуры данных (immutable data structures)]
+  Которые с течением времени не изменяются \faSmileO
+\end{definition}
+
+\vspace{1em}
+
+\begin{definition}[Устойчивые структуры данных (persistent data structures)]
+Имеют доступ (не уничтожают) предыдущее своё состояние
+\end{definition}
+Почти то же самое, только акцент смещён\vspace{1em}
+
+\begin{remark}
+Так как старые узлы есть, то можно их использовать (share) в новой версии структуры данных
+\end{remark}
+\begin{definition}[Неустойчивые структуры данных называются \textit{эфемерными (ephemeral)}]
+\end{definition}
+\end{frame}
+
+\begin{frame}{Самая простая структура данных связный список}
+\begin{definition}[Список]
+Структура данных, у которой для некоторой выбранной стороны (например, голова списка) добавление и удаление элементов работает из O(1)
+\end{definition}
+
+\begin{definition}[Связный список]
+... вы же знаете, да?
+
+\end{definition}
+
+\end{frame}
+
+\begin{frame}{Конкатенация связных списков в императивной среде}
+\begin{figure}[h]
+  \includegraphics{tikzpics/fig.2.4.before.pdf}\par
+	(до)\par\vspace{1em}
+  \includegraphics{tikzpics/fig.2.4.after.pdf}\par
+	(после)\par
+	\caption{Выполнение конкатенации списков \mlinline{xs} и \mlinline{ys}  в императивной среде. Эта операция уничтожает списки-аргументы \texttt{xs} и \texttt{ys} (их использовать больше нельзя)}
+	\label{fig:2.4}
+\end{figure}
+\end{frame}
+
+
+%\begin{frame}[fragile]{Конкатенация в функциональной среде}
+%В функциональной среде мы не можем деструктивно модифицировать. Поэтому
+%\begin{itemize}
+%\item добавляем последний элемент первого списка ко второму списку
+%\item добавляем \emph{пред}последний элемент первого списка к результату
+%\item и т.д.
+%\end{itemize}
+%\vspace{2em}
+%
+%\begin{minted}{ocaml}
+%let rec append xs ys = 
+%  match xs with 
+%  | [] -> ys 
+%  | x::xs -> x::(append xs ys)
+%\end{minted}
+%\end{frame}
+
+
+\begin{frame}{Конкатенация чисто функциональных списков}
+\begin{figure}[h]
+	\centering
+  \includegraphics{tikzpics/fig.2.5.before.pdf}\par
+	(до)\par
+	\vspace{0.5cm}
+  \includegraphics{tikzpics/fig.2.5.after.pdf}\par
+	(после)\par
+	\vspace{0.5cm}
+	\caption{Выполнение \texttt{zs = xs ++ ys} в функциональной среде. Заметим, что списки-аргументы \texttt{xs} и \texttt{ys} не затронуты операцией.
+	}
+	\label{fig:2.5}
+\end{figure}
+Несмотря на большой объем копирования, заметим, что второй список копировать не пришлось
+\end{frame}
+
+
+\begin{frame}{}
+\textbf{Как реализовать конкатенацию  \mlinline{++} списков \mlinline{xs} и \mlinline{ys}?}
+\begin{itemize}
+\item Если \mlinline{xs} пустой, то \mlinline{ys} -- ответ
+\item Иначе \mlinline{xs} состоит из головы \mlinline{h} и хвоста \mlinline{tl}, а ответ -- это прицепление головы \mlinline{h} к хвосту  \mlinline{tl++ys}
+\end{itemize}
+Сложность: O(length(xs))
+\vspace{2em}
+
+\textbf{Как сложно обращаться к n-му элементу?}
+
+Ответ: O(n), что несколько печалит
+\vspace{2em}
+
+%Потом улучшим
+\end{frame}
+
+\begin{frame}{Деревья}
+\begin{figure}[ht]
+\begin{subfigure}{.49\textwidth}
+Хранят элементы по-разному
+\begin{itemize}
+\item Только в узлах
+\item Только в листьях
+\item И там, и там
+\end{itemize}
+\vspace{1em}
+По форме бывают разные
+\begin{itemize}
+\item Бинарные
+\item $n$-арные
+\item другие
+\end{itemize}
+\end{subfigure}
+\begin{subfigure}{.49\textwidth}
+\includegraphics{tikzpics/fig.2.8.before.pdf}\par
+\end{subfigure}
+\end{figure}
+\end{frame}
+
+
+\begin{frame}
+\begin{minipage}{\textwidth}
+\begin{minipage}[t]{.48\textwidth}\vspace{0em}
+  \includegraphics{tikzpics/fig.2.8.before.pdf}\par
+\end{minipage}
+\begin{minipage}[t]{.48\textwidth}\vspace{0em}
+  \includegraphics{tikzpics/fig.2.8.after.pdf}\par
+\end{minipage}
+\end{minipage}
+Выполнение \texttt{ys $\equiv$ add("e",xs)}.\\
+
+Для большинства деревьев путь, который надо изменить, содержит лишь небольшую долю узлов в дереве. Громадное
+большинство узлов будет находиться в совместно используемых поддеревьях.
+\end{frame}
+
+\section{Двоичные деревья поиска}
+
+\begin{frame}{Двоичные деревья поиска}
+\begin{definition}[Двоичные деревья поиска]
+Двоичные деревья, в которых элементы cимметричном
+ (symmetric) порядке, то есть, элемент в каждом узле больше любого элемента в левом поддереве
+этого узла и меньше любого элемента в правом поддереве. 
+\end{definition}
+\end{frame}
+
+\begin{frame}{Двоичные деревья поиска: вставка}
+Например, пусть двоичное дерево поиска каких-то значений -- это 
+\begin{itemize}
+\item Либо лист без значений
+\item Либо узел, который хранит значение и двое других двоичных деревьев поиска
+\end{itemize}
+\vspace{1em}
+
+Функция \mintinline[escapeinside=||]{ocaml}{insert: tree|$\times$|int -> tree} вставки значения $x$ в дерево:
+\begin{itemize}
+\item Вставка в пустое дерево тривиальна
+\item Иначе наше дерево -- это узел из значения $y$ и двух других поддеревьев \mlinline{l} и \mlinline{r}
+\begin{itemize}
+\item Если $x<y$, то ответ -- это дерево из $y$, \mlinline{insert x l} и \mlinline{r}
+\item Если $x>y$, то ответ -- это дерево из $y$, \mlinline{l} и \mlinline{insert x r} 
+\item Иначе не нужно добавлять, дерево из $y$, \mlinline{l} и \mlinline{r} -- это ответ
+\end{itemize}
+\end{itemize}
+\vspace{2em}
+Функция \mintinline[escapeinside=||]{ocaml}{member: tree|$\times$|int -> bool} пишется аналогично
+\end{frame}
+
+%
+%\begin{frame}
+%3+2 упражнения на 22й странице
+%\end{frame}
+
+
+
+
+
+
+\section{Красно-чёрные деревья}
+
+\begin{frame}{Красно-чёрные деревья}
+Двоичные деревья поиска хорошо ведут себя на случайных или неупорядоченных данных,
+однако на упорядоченных данных их производительность резко падает, и
+каждая операция может занимать до $O(n)$  времени. \\
+
+ Решение этой
+проблемы состоит в том, чтобы каждое дерево поддерживать в
+приблизительно сбалансированном состоянии. Тогда каждая операция
+выполняется не хуже, чем за время $O(\log n)$. \\
+
+ Одним из наиболее
+популярных семейств сбалансированных двоичных деревьев поиска являются
+красно-чёрные.
+\end{frame}
+
+\begin{frame}[fragile]{}{Красно-чёрные деревья}
+
+\begin{definition}[Красно-чёрные деревья]
+Это двоичные деревья поиска особой структуры
+\begin{itemize}
+\item либо узел, состоящий из цвета, значения и двух поддеревьев
+\begin{itemize}
+\item где цвет бывает либо красный, либо черный
+\end{itemize}
+\item либо лист без значений (считается черным)
+\end{itemize}
+\end{definition}
+\vspace{1em}
+
+
+Мы требуем, чтобы всякое красно-чёрное дерево соблюдало два
+инварианта:
+\begin{itemize}
+  \item \textbf{Инвариант 1.} У красного узла не может быть красного ребёнка.
+  \item \textbf{Инвариант 2.} Каждый путь от корня дерева до пустого
+  узла содержит одинаковое количество чёрных узлов.
+\end{itemize}
+Вместе эти два инварианта гарантируют, что самый длинный возможный
+путь по красно-чёрному дереву, где красные и чёрные узлы чередуются,
+не более чем вдвое длиннее самого короткого, состоящего только из
+чёрных узлов.
+
+%\ifanswers
+%\begin{exercise}\label{ex:3.8}
+%  Докажите, что максимальная глубина узла в красно-чёрном дереве
+%  размера $n$ не превышает $2 \lfloor \log (n+1) \rfloor$.
+%\end{exercise}
+%\fi
+\end{frame}
+
+
+\begin{frame}{Вставка делается нетривиально}
+%Например, пусть двоичное дерево поиска каких-то значений -- это 
+%\begin{itemize}
+%\item Либо лист без значений
+%\item Либо узел, который хранит значение и двое других двоичных деревьев поиска
+%\end{itemize}
+%\vspace{1em}
+
+Функция \mintinline[escapeinside=||]{ocaml}{insert: tree|$\times$|int -> tree} вставки значения $x$ в дерево реализуется с помощью функции 
+\mintinline[escapeinside=||]{ocaml}{balance}:
+\begin{itemize}
+\item Вставка в пустое дерево тривиальна
+\item Иначе вставляем в  дерево, которое состоит из: значения $y$, цвета $c$ и двух других поддеревьев \mlinline{l} и \mlinline{r}
+\begin{itemize}
+\item Если $x=y$, то возвращаем дерево как есть
+\item Если $x<y$, нужно вызвать \mlinline{balance(c, insert x l, y, r)} 
+\item Если $x>y$, нужно вызвать \mlinline{balance(c, l, y, insert x r)} 
+\end{itemize}
+\end{itemize}
+\vspace{2em}
+Функция \mintinline[escapeinside=||]{ocaml}{balance: color|$\times$|tree|$\times$|int|$\times$|tree -> tree} конструирует узел дерева, переупорядочивая, если нужно
+\end{frame}
+
+%\defverbatim[colored]{\balance}{
+%\begin{minted}{ocaml}
+%let balance = function
+%  | B, T (R, T (R, a, x, b), y, c), z, d
+%  | B, T (R, a, x, T (R, b, y, c)), z, d
+%  | B, a, x, T (R, T (R, b, y, c), z, d)
+%  | B, a, x, T (R, b, y, T (R, c, z, d)) ->
+%      T (R, T (B, a, x, b), y, T (B, c, z, d))
+%  | c, a, x, b -> T (c, a, x, b)
+%\end{minted}
+%}
+
+%\begin{frame}[fragile]{Балансировка}
+%Функция \mlinline{balance} действует подобно
+%конструктору \mlinline{T}, но только она переупорядочивает свои
+%аргументы, чтобы обеспечить выполнение инвариантов баланса.
+%\vspace{1em}
+%
+%\balance
+%\vspace{1em}
+%
+%Почему выполняется Инвариант 2 будет видно на картинке.
+%
+%Инвариант 1 будет нарушаться только временно, по мере перебалансирования снизу вверх
+%\end{frame}
+
+
+%\begin{frame}[fragile]{}
+%Функция
+%\hsinline{balance} обнаруживает и исправляет красно-красные нарушения,
+%когда обрабатывает чёрного родителя красного узла с красным
+%ребёнком. Такая чёрно-красно-красная цепочка может возникнуть в
+%четырёх различных конфигурациях, в зависимости от того, левым или
+%правым ребёнком является каждая из красных вершин. Однако в каждом из
+%этих случаев решение одно и то же: нужно преобразовать
+%чёрно-красно-красный путь в красную вершину с двумя чёрными детьми,
+%как показано на рисунке ниже.
+%
+%После балансировки некоторого поддерева красный корень этого поддерева
+%может оказаться ребёнком ещё одного красного узла. Таким образом,
+%балансировка продолжается до самого корня дерева. На самом верху
+%дерева мы можем получить красную вершину с красным ребёнком, но без
+%чёрного родителя. С этим вариантом мы справляемся, всегда перекрашивая корень
+%в чёрное.
+%
+%\end{frame}
+
+
+\begin{frame}[fragile]{}
+\begin{figure}[h]
+  \centering
+  \input{figures/rbtree1234.tex}
+\end{figure}
+\end{frame}
+
+
+
+
+%\begin{frame}[fragile]{}
+%%\begin{hint}
+%  Даже без дополнительных оптимизаций наша реализация сбалансированных
+%  двоичных деревьев поиска~--- одна из самых быстрых среди
+%  имеющихся. С оптимизациями вроде описанных в
+%  Упражнениях~\ref{ex:2.2} и \ref{ex:3.10} она просто летает!
+%%\end{hint}
+%\end{frame}
+
+
+%\begin{frame}{Почему это выглядит короче императивной реализации?}
+%\begin{remark}
+%  Одна из причин, почему наша реализация выглядит настолько проще, чем
+%  типичное описание красно-чёрных деревьев, состоит в том, что мы
+%  используем несколько другие преобразования перебалансировки. 
+%  \vspace{1em}
+%  
+%  В императивных реализациях обычно наши четыре проблематичных случая
+%  разбиваются на восемь, в зависимости от цвета узла, соседствующего с
+%  красной вершиной с красным ребёнком.  Знание цвета этого узла в
+%  некоторых случаях позволяет совершить меньше присваиваний, а в
+%  некоторых других завершить балансировку раньше. Однако в
+%  функциональной среде мы в любом случае копируем все эти вершины, и
+%  таким образом, не можем ни сократить число присваиваний, ни
+%  прекратить копирование раньше времени, так что для использования
+%  более сложных преобразований нет причины.
+%\end{remark}
+%\end{frame}
