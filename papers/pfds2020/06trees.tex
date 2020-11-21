@@ -55,7 +55,7 @@
 \end{itemize}
 \vspace{1em}
 
-Функция \mlinline{insert: tree|$\times$|int -> tree} вставки значения $x$ в дерево:
+Функция \mlinline{insert: tree*int -> tree} вставки значения $x$ в дерево:
 \begin{itemize}
 \item Вставка в пустое дерево тривиальна
 \item Иначе наше дерево -- это узел из значения $y$ и двух других поддеревьев \mlinline{l} и \mlinline{r}
@@ -66,7 +66,7 @@
 \end{itemize}
 \end{itemize}
 \vspace{2em}
-Функция \mlinline{member: tree|$\times$|int -> bool} пишется аналогично
+Функция \mlinline{member: tree*int -> bool} пишется аналогично
 \end{frame}
 
 %
@@ -140,7 +140,7 @@
 %\end{itemize}
 %\vspace{1em}
 
-Функция \mlinline{insert: tree|$\times$|int -> tree} вставки значения $x$ в дерево реализуется с помощью функции 
+Функция \mlinline{insert: tree*int -> tree} вставки значения $x$ в дерево реализуется с помощью функции 
 \mlinline{balance}:
 \begin{itemize}
 \item Вставка в пустое дерево тривиальна
@@ -152,7 +152,7 @@
 \end{itemize}
 \end{itemize}
 \vspace{2em}
-Функция \mlinline{balance: color|$\times$|tree|$\times$|int|$\times$|tree -> tree} конструирует узел дерева, переупорядочивая, если нужно
+Функция \mlinline{balance: color*tree*int*tree -> tree} конструирует узел дерева, переупорядочивая, если нужно
 \end{frame}
 
 %\defverbatim[colored]{\balance}{

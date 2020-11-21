@@ -163,11 +163,7 @@
 %%    BoldItalicFont=lmmonoproplt10-boldoblique.otf
 %%]{lmmono9-regular.otf}
 %
-\usepackage[cache=true]{minted}
-\usemintedstyle{perldoc}
 
-\def\hsinline{\mintinline{haskell}}
-\def\mlinline{\mintinline[mathescape=true,escapeinside=||]{ocaml}}
 % color options
 \definecolor{YellowGreen} {HTML}{B5C28C}
 \definecolor{ForestGreen} {HTML}{009B55}
@@ -235,9 +231,7 @@
 %
 %%\newfontfamily\cyrillicfont[Script=Cyrillic]{Charis SIL}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
-%\usepackage{polyglossia}
-%\setmainlanguage{russian}
-%\setotherlanguage{english}
+
 %
 %\usepackage{listings}
 %\lstdefinestyle{style1}{
@@ -267,9 +261,33 @@
 %%          , backgroundcolor = \color{MyBackground}
 %}
 %
-%\newcommand{\inline}[1]{\lstinline{haskell}{#1}}
+
+\usepackage[cache=true]{minted}
+\usemintedstyle{perldoc}
 %\def\hsinline{\mintinline{haskell}}
-%\def\inline{\hsinline}
+\def\mlinline{\mintinline[mathescape=true,escapeinside=||]{ocaml}}
+
+%\lstdefinelanguage{ocaml}{
+%keywords={fresh, conde, let, begin, end, in, match, type, and, fun, function, try, with, when, class,
+%object, method, of, rec, repeat, until, while, not, do, done, as, val, inherit,
+%new, module, sig, deriving, datatype, struct, if, then, else, open, private, virtual, include, @type},
+%sensitive=true,
+%commentstyle=\small\itshape\ttfamily,
+%keywordstyle=\ttfamily\underbar,
+%identifierstyle=\ttfamily,
+%basewidth={0.5em,0.5em},
+%columns=fixed,
+%fontadjust=true,
+%literate={->}{{$\to\;\;$}}3 {*}{{$\times$}}3 {=/=}{{$\not\equiv$}}3 {|>}{{$\triangleright$}}3,
+%morecomment=[s]{(*}{*)}
+%}
+%
+%\usepackage{listings}
+%\def\mlinline{\lstinline[language=ocaml]}
+
+% TODO: minted и lstlisting дают ту же производительность компиляции. 
+% Разобраться должно ли быть так
+
 %
 %\lstnewenvironment{hslisting} {
 %    \lstset { style={hsstyle1} }

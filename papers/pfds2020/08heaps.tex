@@ -12,8 +12,8 @@
 
 Операции:
 \begin{itemize}
-\item Вставка: \mlinline{int|$\times$|heap -> heap}
-\item Слияние: \mlinline{heap|$\times$|heap -> heap}
+\item Вставка: \mlinline{int*heap -> heap}
+\item Слияние: \mlinline{heap*heap -> heap}
 \item Минимум: \mlinline{heap -> int} (если пустая -- исключение)
 \item Удаление минимума: \mlinline{heap -> heap} (если пустая -- исключение)
 \end{itemize}
@@ -84,7 +84,7 @@
 левоориентированности.
 \end{idea}
 
-Функция \mlinline{merge: heap|$\times$|heap -> heap} 
+Функция \mlinline{merge: heap*heap -> heap} 
 \begin{itemize}
 \item Если одна из куч пустая -- возвращаем другую
 \item Если имеем два узла: \mlinline{h1}, состоящий из \mlinline{(x,l1,r1)} и  \mlinline{h2} --- \mlinline{(x,l2,r2)} 
@@ -94,19 +94,19 @@
 \end{itemize}
 \end{itemize}
 
-Функция \mlinline{makeT: int|$\times$|heap|$\times$|heap -> heap} принимает \mlinline{(x,l,r)}:
+Функция \mlinline{makeT: int*heap*heap -> heap} принимает \mlinline{(x,l,r)}:
 \begin{itemize}
 \item Если \mlinline{rank(l) >= rank(r)} то строим дерево из \mlinline{(1+rank(b), x, a, b)}
 \item Иначе как \mlinline{(1+rank(a), x, b, a)}
 \end{itemize}
-%где \hsinline{makeT}~--- вспомогательная функция, вычисляющая ранг
-%вершины \hsinline{T} и, если необходимо, меняющая местами ее
+%где \mlinline{makeT}~--- вспомогательная функция, вычисляющая ранг
+%вершины \mlinline{T} и, если необходимо, меняющая местами ее
 %поддеревья.
 
 %\inputminted[firstline=8, lastline=13] {haskell}{code/LeftistHeap.lhs}
 
 Поскольку длина правой периферии любой вершины в худшем случае
-логарифмическая, \hsinline{merge} выполняется за время $O(\log n)$.
+логарифмическая, \mlinline{merge} выполняется за время $O(\log n)$.
 \end{frame}
 
 \def\Olog{\ensuremath{O(log\ n)}}
@@ -119,10 +119,10 @@
 \item Вставка -- это слияние с одноэлементным деревом (\Olog)
 \item Удаление -- слияние левого поддерева с правым (\Olog)
 \end{itemize}
-%Поскольку \hsinline{merge} выполняется за время $O(\log n)$, столько
-%же занимают и \hsinline{insert} с \hsinline{deleteMin}.\\
+%Поскольку \mlinline{merge} выполняется за время $O(\log n)$, столько
+%же занимают и \mlinline{insert} с \mlinline{deleteMin}.\\
 %
-%Очевидно, что \hsinline{findMin} выполняется за $O(1)$. 
+%Очевидно, что \mlinline{findMin} выполняется за $O(1)$. 
 \end{frame}
 
 \begin{frame}{Пример: слияние двух левоориентированных куч}
@@ -146,19 +146,19 @@
 \ifanswers
 \begin{frame}[fragile]{}
 \begin{exercise}\label{ex:3.2}
- Определите \hsinline{insert} напрямую, а не через обращение к \hsinline{merge}.
+ Определите \mlinline{insert} напрямую, а не через обращение к \mlinline{merge}.
 \end{exercise}
 
 \begin{exercise}\label{ex:3.3}
- Реализуйте функцию \hsinline{fromList} типа \hsinline{Elem.T list $\to$ Heap},
+ Реализуйте функцию \mlinline{fromList} типа \mlinline{Elem.T list $\to$ Heap},
  порождающую левоориентированную кучу из неупорядоченного списка
  элементов путем преобразования каждого элемента в одноэлементную
  кучу, а затем слияния получившихся куч, пока не останется
  одна. Вместо того, чтобы сливать кучи проходом слева направо или
- справа налево при помощи \hsinline{foldr} или \hsinline{foldl},
+ справа налево при помощи \mlinline{foldr} или \mlinline{foldl},
  слейте кучи за $\lceil \log n \rceil$ проходов, где на каждом
  проходе сливаются пары соседних куч. Покажите, что
- \hsinline{fromList} требует всего $O(n)$ времени.
+ \mlinline{fromList} требует всего $O(n)$ времени.
 \end{exercise}
 \end{frame}
 
@@ -200,8 +200,8 @@
 первый взгляд, не возмещают эту сложность никакими
 преимуществами. \\
 
-Однако, с помощью дополнительных ухищрений (избавление от амортизации), можно заставить \hsinline{insert} и
-\hsinline{merge} выполняться за время $O(1)$.\\
+Однако, с помощью дополнительных ухищрений (избавление от амортизации), можно заставить \mlinline{insert} и
+\mlinline{merge} выполняться за время $O(1)$.\\
 
 Биномиальные кучи строятся из более простых объектов, называемых
  биномиальными деревьями. 
@@ -307,7 +307,7 @@
 \begin{frame}{Вставка аналогично инкременту}
 Чтобы внести элемент в кучу, мы сначала создаем одноэлементное дерево (т.~е., биномиальное дерево ранга 0), затем поднимаемся по списку существующих деревьев в порядке возрастания рангов, связывая при этом одноранговые деревья. Каждое связывание соответствует переносу в двоичной арифметике.\\
  
-Функция \mlinline{insTree: tree |$\times$| tree list -> tree}
+Функция \mlinline{insTree: tree * tree list -> tree}
 \begin{itemize}
 \item Вставка в пустой список возвращает одноэлементный
 \item Нужно посмотреть на вставляемое дерево $t$ и на головное дерево \mlinline{t2} из списка \mlinline{ts} 
@@ -343,7 +343,7 @@
  \end{frame}
  
 \begin{frame}{Операции работы с минимумом}
-Дополнительная функция \mlinline{removeMinTree: tree list -> tree|$\times$|(tree list)}\\
+Дополнительная функция \mlinline{removeMinTree: tree list -> tree * (tree list)}\\
 удаляет из списка дерево с минимальным значением в корне, и выдает это дерево и остаток списка\\
 
 Функция \mlinline{findMin} -- вызвать \mlinline{removeMinTree} и заглянуть в корень полученного дерева\\
@@ -352,21 +352,21 @@
 \end{frame}
  
 % \begin{frame}[fragile]{Поиск минимального элемента}
-% Функции \hsinline{findMin} и \hsinline{deleteMin} вызывают
-% вспомогательную функцию \hsinline{removeMinTree}, которая находит
+% Функции \mlinline{findMin} и \mlinline{deleteMin} вызывают
+% вспомогательную функцию \mlinline{removeMinTree}, которая находит
 % дерево с минимальным корнем, исключает его из списка и возвращает как
 % это дерево, так и список оставшихся деревьев.
 % 
 % \inputminted[firstline=28,lastline=32]{haskell}{code/BinomialHeap.lhs}
 % 
-% Функция \hsinline{findMin} просто возвращает корень найденного дерева
+% Функция \mlinline{findMin} просто возвращает корень найденного дерева
 % 
 % \inputminted[firstline=40,lastline=41,gobble=2] {haskell}{code/BinomialHeap.lhs}
 % \inputminted[firstline=9,lastline=9] {haskell}{code/BinomialHeap.lhs}
 % \end{frame}
  
 % \begin{frame}[fragile]{Удаление минимального элемента}
-% Функция \hsinline{deleteMin} устроена немного похитрее. \\
+% Функция \mlinline{deleteMin} устроена немного похитрее. \\
 % 
 %  Отбросив
 % корень найденного дерева, мы ещё должны вернуть его потомков в список
