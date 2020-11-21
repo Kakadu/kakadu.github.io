@@ -1,6 +1,22 @@
 \documentclass[tikz]{standalone}
+%\usepackage[utf8x]{fontenc}
 \usepackage{forest}
+%\usepackage{lmodern}
+%\usepackage{polyglossia}
+%\setmainlanguage{english}
+%\setotherlanguage{russian}
+
+%\newfontfamily\russianfont{Comic Sans MS}
+
 \begin{document}
+%\begin{tikzpicture}[>=latex,line join=bevel,]
+%%%
+%\node (Moscow) at (5bp,51bp) [draw,ellipse] {Москва};
+%  \node (SPb) at (5bp,5bp) [draw,ellipse] {Санкт-Петербург};
+%  \draw [->] (Moscow) ..controls (5bp,39.554bp) and (5bp,29.067bp)  .. (SPb);
+%%
+%\end{tikzpicture}
+
 \begin{forest}
 for tree={
   circle,
@@ -26,17 +42,17 @@ for tree={
       ]
       [,phantom]
     ]
-    [{}, edge label={node [midway, right] {F}}
-      [{}, edge label={node [midway, right] {E}}
-        [{}, edge label={node [midway, right] {L}}
-          [{}, edge label={node [midway, right] {D}}, label=below:Feld
-          ]
-          [,phantom]
-        ]
-        [,phantom]
-      ]
-      [,phantom]
-    ]
+%    [{}, edge label={node [midway, right] {F}}
+%      [{}, edge label={node [midway, right] {E}}
+%        [{}, edge label={node [midway, right] {L}}
+%          [{}, edge label={node [midway, right] {D}}, label=below:Feld
+%          ]
+%          [,phantom]
+%        ]
+%        [,phantom]
+%      ]
+%      [,phantom]
+%    ]
     [{}, edge label={node [midway, left] {H}}
       [{}, edge label={node [midway, left] {A}}
         [{}, edge label={node [midway, left] {H}}
@@ -105,32 +121,33 @@ for tree={
           ]
           [,phantom]
     ]
-    [{}, edge label={node [midway, right] {FE  }}
-          [{}, edge label={node [midway, right] {LD}}, label=below:Feld
-          ]
-          [,phantom]
-          [,phantom]
-    ]
+%    [{}, edge label={node [midway, right] {FE  }}
+%          [{}, edge label={node [midway, right] {LD}}, label=below:Feld
+%          ]
+%          [,phantom]
+%          [,phantom]
+%    ]
     [,phantom][,phantom]
       [{}, edge label={node [midway, left] {\phantom{1}HA}}
           [{}, edge label={node [midway, left] {HN}}, label=below:Hahn
           ]
           [,phantom]
-                    [,phantom]
-          [,phantom]          
-          [{}, edge label={node [midway, left] {US}}, label=below:Haus
+%                    [,phantom]
+%          [,phantom]          
+          [{}, edge label={node [midway, right] {US}}, label=below:Haus
           ]
           [,phantom]
       ]
-      [{}, edge label={node [midway, left] {HO}}
+      [{}, edge label={node [midway, right] {HO}}
         [{}, edge label={node [midway, right] {F}}, label=below:Hof
         ]
       ]
       [{}, edge label={node [midway, right] {HU}}
         [,phantom]
-          [{}, edge label={node [midway, right] {HN}}, label=below:Huhn
+          [{}, edge label={node [midway, left] {HN}}, label=below:Huhn
           ]
-          [,phantom]          [,phantom]
+          [,phantom]          
+%          [,phantom]
           [{}, edge label={node [midway, right] {ND}}, label=below:Hund
           ]
       ]
@@ -177,6 +194,91 @@ for tree={
     ]
   ]
 \end{forest}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\begin{forest}
+%for tree={
+%  circle,
+%  black,
+%  draw,
+%  fill=blue!40,
+%}
+%  [{}
+%    [{}, edge label={node [midway, above left] {Б}}
+%      [{}, edge label={node [midway, right] {А}}
+%        [{}, edge label={node [midway, right] {Р}}
+%          [,phantom]
+%          [{}, edge label={node [midway, left] {А}}
+%            [{}, edge label={node [midway, left] {\texttt{Н}}}, label=below:Bauer
+%            ]
+%            [,phantom]
+%          ]
+%          [{}, edge label={node [midway, right] {M}}, label=below:Baum
+%          ]
+%          [,phantom]
+%        ]
+%        [,phantom]
+%      ]
+%      [,phantom]
+%    ]
+%    [{}, edge label={node [midway, right] {F}}
+%      [{}, edge label={node [midway, right] {E}}
+%        [{}, edge label={node [midway, right] {L}}
+%          [{}, edge label={node [midway, right] {D}}, label=below:Feld
+%          ]
+%          [,phantom]
+%        ]
+%        [,phantom]
+%      ]
+%      [,phantom]
+%    ]
+%    [{}, edge label={node [midway, left] {H}}
+%      [{}, edge label={node [midway, left] {A}}
+%        [{}, edge label={node [midway, left] {H}}
+%          [{}, edge label={node [midway, left] {N}}, label=below:Hahn
+%          ]
+%          [,phantom]
+%        ]
+%        [{}, edge label={node [midway, right] {U}}
+%          [{}, edge label={node [midway, left] {S}}, label=below:Haus
+%          ]
+%          [,phantom]
+%        ]
+%        [,phantom]
+%      ]
+%      [{}, edge label={node [midway, left] {O}}
+%        [{}, edge label={node [midway, right] {F}}, label=below:Hof
+%        ]
+%      ]
+%      [{}, edge label={node [midway, right] {U}}
+%        [,phantom]
+%        [{}, edge label={node [midway, left] {H}}
+%          [{}, edge label={node [midway, right] {N}}, label=below:Huhn
+%          ]
+%        ]
+%        [{}, edge label={node [midway, right] {N}}
+%          [,phantom]
+%          [{}, edge label={node [midway, right] {D}}, label=below:Hund
+%          ]
+%        ]
+%      ]
+%    ]
+%    [{}, edge label={node [midway, above right] {K}}
+%      [,phantom]
+%      [{}, edge label={node [midway, right] {A}}
+%        [,phantom]
+%        [{}, edge label={node [midway, right] {T}}
+%          [,phantom]
+%          [{}, edge label={node [midway, right] {Z}}
+%            [,phantom]
+%            [{}, edge label={node [midway, right] {E}}, label=below:Katze
+%            ]
+%          ]
+%        ]
+%      ]
+%    ]
+%  ]
+%\end{forest}
 
 \end{document}
 

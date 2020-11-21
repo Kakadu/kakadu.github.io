@@ -167,7 +167,7 @@
 \usemintedstyle{perldoc}
 
 \def\hsinline{\mintinline{haskell}}
-\def\mlinline{\mintinline{ocaml}}
+\def\mlinline{\mintinline[mathescape=true,escapeinside=||]{ocaml}}
 % color options
 \definecolor{YellowGreen} {HTML}{B5C28C}
 \definecolor{ForestGreen} {HTML}{009B55}
@@ -309,3 +309,12 @@
 %
 %\usepackage{soul} % for \st that strikes through
 %\usepackage[normalem]{ulem} % \sout
+
+\newcommand\mdoubleplus{\ensuremath{\mathbin{+\mkern-10mu+}}}
+\newcommand\concat{\mdoubleplus}
+\newcommand\card[1]{\ensuremath{\mid\!\!#1\!\mid}}
+\newcommand\nil{\ensuremath{\texttt{\$Nil}}}
+\newcommand\cons[2]{\ensuremath{\texttt{\$Cons}(#1,#2)}}
+
+\def\Oconst{\ensuremath{O(1)}}
+\def\Ologn{\ensuremath{O(log~n)}}

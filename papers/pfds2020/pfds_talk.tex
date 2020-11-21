@@ -11,7 +11,6 @@
   ]{beamer}
 
 \input{heading.tex}
-%\usepackage[ruled,vlined]{algorithm2e}
 \usepackage{tabulary}
 \usepackage{verbatim}
 
@@ -19,6 +18,8 @@
 
 \usepackage{amsthm}
 \newtheorem{remark}{\textbf{Замечание}}[section]
+\newtheorem{notation}{\textbf{Нотация}}[section]
+\newtheorem{idea}{\textbf{Идея}}
 \newtheorem{hint}{\textbf{Указание разработчикам}}[section]
 
 \newtheoremstyle{exerciseStyle1}
@@ -69,8 +70,8 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title[PFDS без примеров кода вообще]{Чисто функциональные структуры данных}
-\subtitle{Без примеров кода вообще}
+\title[PFDS без примеров кода (ну почти)]{Чисто функциональные структуры данных}
+\subtitle{Без примеров кода (ну почти)}
 \author{Косарев Дмитрий}
 
 \institute{матмех СПбГУ}
@@ -80,15 +81,22 @@
 {
   \begin{frame}<beamer>%[allowframebreaks]
     \frametitle{Оглавление}
-    \tableofcontents[currentsection]
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>%[allowframebreaks]
+    \frametitle{Оглавление}
+    \tableofcontents[currentsection,currentsubsection]
   \end{frame}
 }
 
 \newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}
-\setcounter{tocdepth}{1}  % part,chapters,sections 
-\newcommand\chap[1]{
-  \addcontentsline{toc}{chapter}{#1}
-}
+\setcounter{tocdepth}{2}  % part,chapters,sections 
+%\newcommand\chap[1]{
+%  \addcontentsline{toc}{chapter}{#1}
+%}
 
 
 \begin{document}
@@ -126,77 +134,53 @@
 
 
 \section{Введение}
-\input{02intro}
+\input{02intro.tex}
 
-%\section{Унификация}
-%\input{03unif}
-
-%\input{02intro.tex}
-
-%\input{chapter03.tex}
-
+\section{Списки}
 \input{chapter05.tex}
 
-%\input{chapter09.tex}
-\section{Префиксные деревья}
-\begin{frame}{Префиксные деревья (trie)}
-\begin{center}
-\includegraphics[page=1]{tikzpics/trie1.pdf}
-\end{center}
-Картинка \href{https://tex.stackexchange.com/a/182484/171947}{отсюда}
-\end{frame}
-
-\begin{frame}{Префиксные деревья (trie)}
-\begin{center}
-\includegraphics[page=2,scale=1.2]{tikzpics/trie1.pdf}
-\end{center}
-\end{frame}
+\section{Деревья}
+\input{06trees}
 
 
-\begin{frame}{Префиксные деревья (trie), где ключи -- числа}
-\begin{figure}[ht]
-\begin{subfigure}{.59\textwidth}
-\includegraphics[page=3,scale=1.4]{tikzpics/trie1.pdf}
-\end{subfigure}
-\begin{subfigure}{.39\textwidth}
-\begin{itemize}
-\item $63=11111_2\mapsto$ Bauer 
-\item $31=01111_2\mapsto$ Baum 
-\item $2=10_2\mapsto$ Hof 
-\item $71=100111_2\mapsto$ Huhn
-\item $39=010111_2\mapsto$ Hund
-\end{itemize}
-\end{subfigure}
-\end{figure}
-\vspace{2em}
-Важный апгрейд: HAMT (Hash Array Mapped Trie)
-\end{frame}
+\section{Кучи}
+\input{08heaps}
+
+\section{Унификация}
+\input{03unif}
+
+\section{Упражнения}
+\input{07exercises}
+
 
 \begin{frame}
 \begin{center}
   {\Huge Конец.}\\
   
-  Подробнее в книге Окасаки "Чисто функциональные структуры данных".
+  Подробнее в книге К.Окасаки "Чисто функциональные структуры данных".
 \end{center}
 \end{frame}
 
 
-% \begin{frame}[allowframebreaks]
-%   \frametitle<presentation>{Ссылки}
-%   \begin{thebibliography}{10}
-%   \bibitem{paper}
-%     \href{http://conal.net/papers/compiling-to-categories/compiling-to-categories.pdf}{paper}
-%     \newblock {\em Conal Elliot }    
-%   \bibitem{conal}
-%     Slides
-%     \newblock {\em Conal Elliot }
-%     \newblock \href{http://conal.net/talks/compiling-to-categories.pdf}{ссылка}
-%   \bibitem{video}    
-%     \href{http://podcasts.ox.ac.uk/compiling-categories}{ICFP 2017 video}
-%     \newblock {\em Conal Elliot }
-%   \bibitem{}
-%     \href{https://github.com/conal/concat}{Project repo}
-%   \end{thebibliography}
-% \end{frame}
+\begin{frame}[allowframebreaks]
+\frametitle<presentation>{Ссылки}
+\begin{thebibliography}{10}
+\bibitem{paper}
+  Книга "Чисто функциональные структуры данных"
+ \newblock {\em Chris Okasaki}
+
+\bibitem{leftist-ocaml}
+  \href{http://typeocaml.com/2015/03/12/heap-leftist-tree/}{Heap - Leftist Tree}
+  
+\bibitem{aa}
+  \href{https://doi.org/10.1145/2857274.2884038}{<<Immutability changes everything>>}
+  \newblock {\em Pat Helland  }
+  
+\bibitem{youtube}
+  \href{https://www.youtube.com/watch?v=Wo0qiGPSV-s}{Immutable data structures for functional JS}
+  \newblock {\em Anjana Vakil}
+  
+\end{thebibliography}
+\end{frame}
 
 \end{document}

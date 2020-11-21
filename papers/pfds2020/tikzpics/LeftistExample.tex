@@ -1,0 +1,70 @@
+\documentclass[tikz]{standalone}
+\usepackage{forest}
+
+\begin{document}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\begin{forest}
+for tree={
+  circle,
+  black,
+  draw,
+}
+[{3}, 
+  [{4}]
+  [{5}]
+]
+\end{forest}
+
+\begin{forest}
+for tree={
+  circle,
+  black,
+  draw,
+}
+[{7}, 
+  [{8}]
+  [{9}]
+]
+\end{forest}
+
+\begin{forest}
+for tree={
+  circle,
+  black,
+  draw,
+}
+[{3}, 
+  [{5},
+    [{7}, 
+      [{8}]
+      [{9}]
+    ]
+    [,phantom]
+  ]
+  [{4}]
+]
+\end{forest}
+
+%\tikzset{every label/.style={xshift=-4ex, text width=6ex, align=right, 
+%                             inner sep=1pt, font=\footnotesize, text=red}}
+\begin{forest}
+for tree={
+  circle,
+  black,
+  draw,
+}
+[{3}, label={r=2}
+  [{5}, label={r=1\phantom{111}}
+    [{7}, label={r=2\phantom{111}}
+      [{8}, label={r=1\phantom{111}}] 
+      [{9}, label={\phantom{111}r=1}]
+    ]
+    [,phantom]
+  ]
+  [{4}, label={\phantom{111}r=1}]
+]
+\end{forest}
+
+
+\end{document}
+

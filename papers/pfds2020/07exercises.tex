@@ -1,0 +1,96 @@
+
+\begin{frame}{Общие замечания по упражнениям}
+Если явно не оговорено иное, то...
+\vspace{3em}
+Предлагается реализовать устойчивую структуру данных на вашем любимом языке (C\#, C, etc), и на каком-нибудь функциональном языке (OCaml,Haskell,F\#, Scala 3), а затем сравнить размер/сложность двух реализаций.
+
+Ожидаются реализации в виде чистых функций (ну может понадобится присваивание для эмуляции мемоизации, в остальном -- едва ли)
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Упражнения на ленивость}
+\begin{exercise}
+По аналогии с вычислением последовательности фибоначчи, сделайте вычисление простых чисел решетом Эратосфена
+\end{exercise}
+\begin{exercise}
+Дан поток потоков чисел $xss$. Функция \mlinline{merge} должно объединить это всё в один поток чисел. \\
+Ограничение: $\forall (i<\infty) \forall (j<\infty)\quad \big((xss[i][j]\equiv n)\quad \Longrightarrow \quad\exists (k<\infty)\quad (merge(xss)[k]\equiv n)\big)$
+\end{exercise}
+
+\begin{exercise}
+Дано дерево с числами только в листьях. Построить новое дерево, где все числа предыдущего дерева заменены на минимум от этих чисел. Ограничение: за один проход.
+\begin{remark}
+Крайне рекомендуется использовать язык, где все вычисления ленивы по умолчанию (например, Haskell)
+\end{remark}
+\end{exercise}
+\end{frame}
+
+
+
+\begin{frame}[allowframebreaks]{Упражнения на очереди}
+\begin{exercise}
+Реализуйте чисто функциональную очередь
+\end{exercise}
+
+\begin{exercise}
+Реализуйте очередь банкира
+\end{exercise}
+
+\begin{exercise}
+Реализуйте очередь реального времени
+\end{exercise}
+\end{frame}
+
+
+
+\begin{frame}[allowframebreaks]{Упражнения на очереди}
+\begin{exercise}
+Реализуйте чисто функциональную очередь
+\end{exercise}
+
+\begin{exercise}
+Реализуйте очередь банкира
+\end{exercise}
+
+\begin{exercise}
+Реализуйте очередь реального времени
+\end{exercise}
+\end{frame}
+
+
+
+\begin{frame}[allowframebreaks]{Упражнения на кучи}
+\begin{exercise}
+Реализуйте левоориентированную кучу
+\end{exercise}
+
+\begin{exercise}
+Реализуйте weight-biased левоориентированную кучу (упражнение в книге 3.4)
+\end{exercise}
+
+
+\begin{exercise}
+Реализуйте биномиальную кучу, храня аннотации ранга рееже (упражнение в книге 3.6)
+\end{exercise}
+
+\begin{exercise}
+Реализуйте биномиальную кучу с явным минимумом (упражнение в книге 3.7)
+\end{exercise}
+
+\end{frame}
+
+
+\begin{frame}[allowframebreaks]{Упражнения на деревья}
+\begin{exercise}
+Реализуйте красно-черное дерево, где балансировка делает меньше проверок (упражнение в книге 3.10)
+\end{exercise}
+
+
+\begin{exercise}
+Реализуйте префиксное дерево
+\end{exercise}
+
+\begin{exercise}
+Реализуйте HAMT
+\end{exercise}
+
+\end{frame}

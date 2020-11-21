@@ -1,0 +1,96 @@
+\documentclass[tikz]{standalone}
+%\input{fontawe}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning,trees,decorations.pathreplacing}
+
+\begin{document}
+\begin{tikzpicture}
+  [box/.style={rectangle,draw=black, ultra thick, minimum size=1cm}]
+
+\foreach \y [count=\x] in 
+  { 1,1,,,
+  }
+{
+  \node[box] at (\x-1,0) { \huge \y };
+}
+\foreach \y [count=\x] in 
+  { ,,,
+  }
+{
+  \node[box] at (\x-1,-1) { \huge \y };
+}
+
+\end{tikzpicture}
+\begin{tikzpicture}
+  [box/.style={rectangle,draw=black, ultra thick, minimum size=1cm}]
+
+\foreach \y [count=\x] in 
+  { 1,1,,,
+  }
+{
+  \node[box] at (\x-1,0) { \huge \y };
+}
+\foreach \y [count=\x] in 
+  { 1,,,
+  }
+{
+  \node[box] at (\x-1,-1) { \huge \y };
+}
+
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  [box/.style={rectangle,draw=black, ultra thick, minimum size=1cm}]
+
+\foreach \y [count=\x] in 
+  { 1,1,2,,
+  }
+{
+  \node[box] at (\x-1,0) { \huge \y };
+}
+\foreach \y [count=\x] in 
+  { 1,,,
+  }
+{
+  \node[box] at (\x-1,-1) { \huge \y };
+}
+
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  [box/.style={rectangle,draw=black, ultra thick, minimum size=1cm}]
+
+\foreach \y [count=\x] in 
+  { 1,1,2,,
+  }
+{
+  \node[box] at (\x-1,0) { \huge \y };
+}
+\foreach \y [count=\x] in 
+  { 1,2,,
+  }
+{
+  \node[box] at (\x-1,-1) { \huge \y };
+}
+\end{tikzpicture}
+
+\begin{tikzpicture}
+  [box/.style={rectangle,draw=black, ultra thick, minimum size=1cm}]
+
+\foreach \y [count=\x] in 
+  { 1,1,2,3,
+  }
+{
+  \node[box] at (\x-1,0) { \huge \y };
+}
+\foreach \y [count=\x] in 
+  { 1,2,,
+  }
+{
+  \node[box] at (\x-1,-1) { \huge \y };
+}
+\end{tikzpicture}
+
+\end{document}
+

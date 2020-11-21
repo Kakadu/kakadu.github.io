@@ -1,3 +1,59 @@
 \begin{frame}{Ленивые вычисления}
-TODO
+%Две основые идеи
+
+\begin{idea}[Ленивые вычисления]
+Если надо что-то сделать, то выполняем, когда понадобится результат этого действия, т.е. откладываем вычисление на потом
+\end{idea}
+
+\begin{idea}[Мемоизация ленивых вычислений]
+Если вычисление понадобилось, то мы вычисляем и \emph{запоминаем} результат. Когда оно понадобится кому-то ещё, \emph{вернем уже посчитанный} результат
+\end{idea}
+
+\end{frame}
+
+\begin{frame}{Ленивые списки (потоки)}
+\begin{definition}[Поток (stream)]
+Это список, где вычисления подсписков в нём отложены на потом, а вычисление элементов не отложено на потом (или не обязательно отложено)
+\end{definition}
+С потоками легко описать, например, "все возможные натуральные числа"\vspace{1em}
+
+\begin{notation}
+Добавление элемента $x$ к хвосту $xs$: $\cons{x}{xs}$
+
+Пустой поток: $\nil$
+
+Откладывание на потом $f$: $\texttt{\$}f$
+\end{notation}
+\begin{remark}
+Потоки могут быть конечными, а могут быть бесконечными. Пока до конца не посчитаешь -- не поймешь
+\end{remark}
+\end{frame}
+
+\begin{frame}{Пример: фибоначчи}
+Пусть будет функция $\texttt{zip}: stream\times stream \rightarrow stream$, которая складывает потоки поэлементно
+
+Поток чисел фибоначчи описывается так:
+\[
+fibs \equiv \cons{1}{zip(fibs, tail(fibs))}
+\]
+\begin{center}
+
+\only<2>{
+\includegraphics[page=1]{tikzpics/fibs.pdf}
+}
+\only<3>{
+\includegraphics[page=2]{tikzpics/fibs.pdf}
+}
+\only<4>{
+\includegraphics[page=3]{tikzpics/fibs.pdf}
+}
+\only<5>{
+\includegraphics[page=4]{tikzpics/fibs.pdf}
+}
+\only<6>{
+\includegraphics[page=5]{tikzpics/fibs.pdf}
+
+и т.д.
+}
+\end{center}
 \end{frame}

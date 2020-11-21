@@ -1,0 +1,64 @@
+\documentclass[tikz]{standalone}
+%\input{fontawe}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning,trees,decorations.pathreplacing}
+
+\begin{document}
+\begin{tikzpicture}[->,thick,scale=0.5, every node/.style={scale=0.5}
+  , grow via three points={
+      one child at (0,-2) and 
+      two children at (.8,-2) and (-0.8,-2) 
+  }]
+     \tikzstyle{tnode}=[circle, inner sep=1.5mm]
+     \tikzstyle{var}=[ circle, inner sep=1.5mm,draw]
+     \def\rstep{5cm}
+     \huge
+         
+    \begin{scope}[xshift= \rstep]
+      \node[tnode] {f}
+          child {node[tnode] {g} 
+            child {node[var] {x} }
+            child {node[tnode] {a} }
+          }
+          child[missing] {} 
+          child {node[tnode] {g} 
+            child {node[var] {x} }
+            child {node[tnode] {a} }
+          };
+%        child[missing] {} ;
+      \end{scope}
+      
+    \begin{scope}[xshift=15cm]
+      \node[tnode] {f}
+          child {node[tnode] (gggg) {g} 
+            child[missing] {node[var] {x} }
+            child {node[tnode]  {a} }
+          }
+          child[missing] {}
+          child {node[tnode]  {g} 
+            child {node[var]  (xxxx) {x} }
+            child {node[tnode] {a} }
+          };
+
+      \draw [->,thick](gggg.south)
+              to [out=-90,in=90] (2,-5)
+              to [out=-90,in=0] (1,-6) 
+              to [out=180,in=-45]  (xxxx.south); 
+      \end{scope}
+      
+      \begin{scope}[xshift=23cm]
+        \node[tnode] (ffff) {f}
+            child {node[tnode] (gggg) {g} 
+              child {node[var] {x} }
+              child {node[tnode] {a} }
+            };
+
+        \draw [->,thick](ffff)
+                to [out=0,in=90] (1,-1)
+                to [out=-90,in=45]  (gggg.east); 
+        \end{scope}
+ \end{tikzpicture}
+
+\end{document}
+

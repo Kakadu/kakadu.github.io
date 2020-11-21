@@ -1,0 +1,436 @@
+ 
+\subsection{Левоориентированные кучи}
+
+\begin{frame}{Левоориентированные (leftist) кучи}
+Как правило, множества и конечные отображения поддерживают эффективный
+доступ к произвольным элементам. \\
+
+Однако иногда требуется эффективный
+доступ только к \emph{минимальному} элементу.  Структура данных,
+поддерживающая такой режим доступа, называется \term{очередь с
+приоритетами}{priority queue} или \term{куча}{heap}.\\
+
+Операции:
+\begin{itemize}
+\item Вставка: \mlinline{int|$\times$|heap -> heap}
+\item Слияние: \mlinline{heap|$\times$|heap -> heap}
+\item Минимум: \mlinline{heap -> int} (если пустая -- исключение)
+\item Удаление минимума: \mlinline{heap -> heap} (если пустая -- исключение)
+\end{itemize}
+\end{frame}
+
+\begin{frame}{}
+\begin{figure}[ht]
+\begin{subfigure}{.7\textwidth}
+\begin{definition}[\term{Порядок кучи}{heap-ordered}]
+Элемент при каждой вершине не больше элементов в поддеревьях.
+\end{definition}
+При таком упорядочении минимальный элемент дерева всегда находится в корне, \emph{но это не дерево поиска}\\
+
+\begin{definition}[\term{Правая периферия}{right spine} узла]
+Самого правый путь от данного узла до пустого
+\end{definition}
+\begin{definition}[Ранг]
+Ранг узла --- длина его правой периферии. 
+\end{definition}
+
+\end{subfigure}\hspace{1em}
+\begin{subfigure}{.25\textwidth}
+\includegraphics[page=4,scale=1.3]{tikzpics/LeftistExample.pdf}
+\end{subfigure}
+\end{figure}
+
+
+%Левоориентированные кучи \cite{Crane1972, Knuth1973a} представляют
+%собой двоичные деревья с порядком кучи, обладающие свойством
+%левоориентированности.
+
+\end{frame}
+
+\begin{frame}[fragile]{Левоориентированные кучи}
+\begin{definition}[Свойство \term{левоориентированности}{leftist property}]
+Ранг любого левого поддерева не меньше ранга его сестринской правой вершины. 
+\end{definition}
+Простым
+следствием свойства левоориентированности является то, что правая
+периферия любого узла~--- кратчайший путь от него к пустому узлу.\\
+
+
+%\inputminted[firstline=6, lastline=6] {haskell}{code/LeftistHeap.lhs}
+\begin{block}{Представление левоорентированных куч}
+Двоичные деревья, снабженные информацией о ранге, т.е.
+\begin{itemize}
+\item В листьях ничего нет (и ранг всегда 0)
+\item В узлах: хранимый элемент, два поддерева и ранг (int)
+\end{itemize}
+\end{block}
+
+Заметим, что элементы правой периферии левоориентированной кучи (да и
+любого дерева с порядком кучи) расположены в порядке возрастания.\\
+
+%Главная идея левоориентированной кучи заключается в том, что для
+%слияния двух куч достаточно слить их правые периферии как
+%упорядоченные списки, а затем вдоль полученного пути обменивать
+%местами поддеревья при вершинах, чтобы восстановить свойство
+%левоориентированности. 
+
+\end{frame}
+
+\begin{frame}[fragile]{Слияние}
+\begin{idea}
+Достаточно слить их правые периферии как
+упорядоченные списки, а затем вдоль полученного пути обменивать
+местами поддеревья при вершинах, чтобы восстановить свойство
+левоориентированности.
+\end{idea}
+
+Функция \mlinline{merge: heap|$\times$|heap -> heap} 
+\begin{itemize}
+\item Если одна из куч пустая -- возвращаем другую
+\item Если имеем два узла: \mlinline{h1}, состоящий из \mlinline{(x,l1,r1)} и  \mlinline{h2} --- \mlinline{(x,l2,r2)} 
+\begin{itemize}
+\item При x$\leqslant$y возвращаем \mlinline{makeT(x,l1, merge(r1, h2))}
+\item Иначе \mlinline{makeT(y,l2, merge(h1, r2))}
+\end{itemize}
+\end{itemize}
+
+Функция \mlinline{makeT: int|$\times$|heap|$\times$|heap -> heap} принимает \mlinline{(x,l,r)}:
+\begin{itemize}
+\item Если \mlinline{rank(l) >= rank(r)} то строим дерево из \mlinline{(1+rank(b), x, a, b)}
+\item Иначе как \mlinline{(1+rank(a), x, b, a)}
+\end{itemize}
+%где \hsinline{makeT}~--- вспомогательная функция, вычисляющая ранг
+%вершины \hsinline{T} и, если необходимо, меняющая местами ее
+%поддеревья.
+
+%\inputminted[firstline=8, lastline=13] {haskell}{code/LeftistHeap.lhs}
+
+Поскольку длина правой периферии любой вершины в худшем случае
+логарифмическая, \hsinline{merge} выполняется за время $O(\log n)$.
+\end{frame}
+
+\def\Olog{\ensuremath{O(log\ n)}}
+\begin{frame}[fragile]{Итого: сложность левоориентированных куч }
+%\inputminted[firstline=27, lastline=32] {haskell}{code/LeftistHeap.lhs}
+
+\begin{itemize}
+\item Слияние  (\Olog)
+\item Минимум -- заглядывание в корень ($O(1)$)
+\item Вставка -- это слияние с одноэлементным деревом (\Olog)
+\item Удаление -- слияние левого поддерева с правым (\Olog)
+\end{itemize}
+%Поскольку \hsinline{merge} выполняется за время $O(\log n)$, столько
+%же занимают и \hsinline{insert} с \hsinline{deleteMin}.\\
+%
+%Очевидно, что \hsinline{findMin} выполняется за $O(1)$. 
+\end{frame}
+
+\begin{frame}{Пример: слияние двух левоориентированных куч}
+\begin{figure}[ht]
+\begin{subfigure}{.25\textwidth}
+\includegraphics[page=1,scale=1.3]{tikzpics/LeftistExample.pdf}
+\end{subfigure}
+\begin{subfigure}{.25\textwidth}
+\includegraphics[page=2,scale=1.3]{tikzpics/LeftistExample.pdf}
+\end{subfigure}
+\begin{subfigure}{.1\textwidth}
+\Large $\Rightarrow$
+\end{subfigure}
+\begin{subfigure}{.3\textwidth}
+\includegraphics[page=3,scale=1.3]{tikzpics/LeftistExample.pdf}
+\end{subfigure}
+\end{figure}
+\end{frame}
+
+
+\ifanswers
+\begin{frame}[fragile]{}
+\begin{exercise}\label{ex:3.2}
+ Определите \hsinline{insert} напрямую, а не через обращение к \hsinline{merge}.
+\end{exercise}
+
+\begin{exercise}\label{ex:3.3}
+ Реализуйте функцию \hsinline{fromList} типа \hsinline{Elem.T list $\to$ Heap},
+ порождающую левоориентированную кучу из неупорядоченного списка
+ элементов путем преобразования каждого элемента в одноэлементную
+ кучу, а затем слияния получившихся куч, пока не останется
+ одна. Вместо того, чтобы сливать кучи проходом слева направо или
+ справа налево при помощи \hsinline{foldr} или \hsinline{foldl},
+ слейте кучи за $\lceil \log n \rceil$ проходов, где на каждом
+ проходе сливаются пары соседних куч. Покажите, что
+ \hsinline{fromList} требует всего $O(n)$ времени.
+\end{exercise}
+\end{frame}
+
+\begin{frame}[fragile]{}
+\begin{exercise}\label{ex:3.4}
+ Левоориентированные кучи
+ со сдвинутым весом~--- альтернатива левоориентированным кучам, где
+ вместо свойства левоориентированности используется свойство
+ \term{левоориентированности, сдвинутой по весу}{weight-biased leftist
+   property}: размер любого левого поддерева всегда не меньше размера
+ соответствующего правого поддерева.
+ \begin{enumerate}
+   \item Докажите, что правая периферия левоориентированной кучи со
+   сдвинутым весом содержит не более $\lfloor \log(n+1) \rfloor$ элементов.
+   \item Измените реализацию, чтобы получились
+   левоориентированные кучи со сдвинутым весом.
+   \item Функция \lstinline!merge! сейчас выполняется в два прохода:
+   сверху вниз, с вызовами \lstinline!merge!, и снизу вверх, с
+   вызовами вспомогательной функции \lstinline!makeT!. Измените
+   \lstinline!merge! для левоориентированных куч со сдвинутым весом
+   так, чтобы она работала за один проход сверху вниз.
+   \item Каковы преимущества однопроходной версии в
+   условиях ленивого вычисления? Параллельного?
+ \end{enumerate}
+\end{exercise}
+\end{frame}
+\fi 
+
+
+\subsection{Биномиальные кучи}
+
+\begin{frame}{Биномиальные кучи}
+Биномиальные очереди \cite{Vuillemin1978, Brown1978}, которые мы,
+чтобы избежать путаницы с очередями FIFO, будем называть \term{ биномиальными
+ кучами}{binomial heaps}~--- ещё одна распространенная реализация
+куч. \\
+
+Биномиальные кучи устроены сложнее, чем левоориентированные, и, на
+первый взгляд, не возмещают эту сложность никакими
+преимуществами. \\
+
+Однако, с помощью дополнительных ухищрений (избавление от амортизации), можно заставить \hsinline{insert} и
+\hsinline{merge} выполняться за время $O(1)$.\\
+
+Биномиальные кучи строятся из более простых объектов, называемых
+ биномиальными деревьями. 
+\end{frame}
+
+\begin{frame}[fragile]{Биномиальные деревья. Пример}
+\begin{figure}[ht]
+\begin{subfigure}{.58\textwidth}
+\only<1>{
+\begin{definition}[Биномиальные деревья (опр. 1, индуктивное)]
+\begin{itemize}
+\item Биномиальное дерево ранга 0 представляет собой одиночный узел.
+\item Биномиальное дерево ранга $r+1$ получается путем
+  \term{связывания}{linking} двух биномиальных деревьев ранга $r$, так
+что одно из них становится самым левым потомком второго.
+\end{itemize}
+\end{definition}
+Из этого определения видно, что биномиальное дерево ранга $r$ содержит
+ ровно $2^r$ элементов. 
+}
+\only<2>{
+Существует второе, эквивалентное первому, определение биномиальных деревьев, которым иногда удобнее пользоваться.
+ 
+\begin{definition}[Биномиальные деревья (опр. 2)]
+Биномиальное дерево ранга $r$ представляет собой узел с $r$ потомками $t_1\ldots t_r$, где каждое $t_i$ является биномиальным деревом ранга $(r-i)$.
+\end{definition}
+}
+\end{subfigure}\hspace{5mm}
+\begin{subfigure}{.37\textwidth}
+\includegraphics[scale=1]{tikzpics/BinomialTrees.pdf}
+\end{subfigure}
+\end{figure}
+\end{frame}
+
+%\begin{frame}{Биномиальные деревья. Определение}
+%\begin{definition}[Биномиальные деревья (опр. 1, индуктивное)]
+%\begin{itemize}
+%\item Биномиальное дерево ранга 0 представляет собой одиночный узел.
+%\item Биномиальное дерево ранга $r+1$ получается путем
+%  \term{связывания}{linking} двух биномиальных деревьев ранга $r$, так
+%что одно из них становится самым левым потомком второго.
+%\end{itemize}
+%\end{definition}
+%Из этого определения видно, что биномиальное дерево ранга $r$ содержит
+% ровно $2^r$ элементов.  \\
+%
+% \end{frame}
+ 
+ 
+ 
+ 
+\begin{frame}[fragile]{}
+Реализация биномиальных деревьев:
+\begin{itemize}
+\item Храним узлы с рангом, значением, список деревьев-потомков
+\item Потомки хранятся в порядке \emph{убывания}\footnote{Это будет важно при удалении} ранга
+\item Элементы подвешиваются согласно "порядку кучи" (деревья с большими корнями подвешиваются к узлам с меньшими)
+\end{itemize}
+
+Элементы хранятся в порядке кучи.  Чтобы сохранять этот порядок кучи, мы всегда
+подцепляем дерево с большим корнем к узлу с меньшим.\\
+ 
+Функция \mlinline{link: heap|$\times$|heap -> heap} принимает дерево \mlinline{t1} из \mlinline{(r,x1,c1)} и дерево \mlinline{t2} из \mlinline{(r2,x2,c2)}
+\begin{itemize}
+\item Если \mlinline{x1<x2} строим дерево из \mlinline{(r+1, x1, t2::c1)}
+\item Иначе \mlinline{(r+1, x2, t1::c1)}
+\item Инвариант: связываем деревья только с одинаковым рангом: \mlinline{assert(r1===r2)}
+\end{itemize}
+\end{frame}
+ 
+ 
+\begin{frame}[fragile]{}
+Реализация биномиальной кучи:
+\begin{itemize}
+\item Список биномиальных деревьев с "порядком кучи"
+\item Отсортированный в порядке \emph{возрастания}\footnote{Это будет важно при удалении} рангов
+\end{itemize}
+\vspace{1em}
+
+Поскольку каждое биномиальное дерево содержит $2^r$ элементов, и
+ никакие два дерева по рангу не совпадают, деревья размера $n$ в
+ точности соответствуют единицам в двоичном представлении
+ $n$.\\
+ 
+Например, число $21_{10} = 10101_2$, и поэтому биномиальная куча размера 21 содержит одно дерево ранга 0, одно ранга 2, и одно ранга 4 (размерами, соответственно, 1, 4 и 16).\\
+ 
+Заметим, что так же, как двоичное представление $n$ содержит не более $\lfloor log (n+1)\rfloor$ единиц, биномиальная куча размера $n$ содержит не более $\lfloor log(n+1) \rfloor$ деревьев.
+\end{frame}
+ 
+ 
+ \begin{frame}[fragile]{}
+ \begin{figure}[h]
+   \centering
+   \input{figures/fig.3.3_extra.tex}
+   \caption{Число $21_{10} = 10101_2$, и поэтому
+     биномиальная куча размера 21 содержит одно дерево ранга 0, одно ранга
+     2, и одно ранга 4 (размерами, соответственно, 1, 4 и 16).}
+ \end{figure}
+ 
+ \end{frame}
+ 
+ 
+\begin{frame}{Вставка аналогично инкременту}
+Чтобы внести элемент в кучу, мы сначала создаем одноэлементное дерево (т.~е., биномиальное дерево ранга 0), затем поднимаемся по списку существующих деревьев в порядке возрастания рангов, связывая при этом одноранговые деревья. Каждое связывание соответствует переносу в двоичной арифметике.\\
+ 
+Функция \mlinline{insTree: tree |$\times$| tree list -> tree}
+\begin{itemize}
+\item Вставка в пустой список возвращает одноэлементный
+\item Нужно посмотреть на вставляемое дерево $t$ и на головное дерево \mlinline{t2} из списка \mlinline{ts} 
+\begin{itemize}
+\item Если \mlinline{rank(t)<rank(t2)}, то вернуть \mlinline{t::ts} 
+\item Иначе вернуть  \mlinline{insTree(link(t,t2), tail(ts))}
+\end{itemize}
+\end{itemize}
+\vspace{1em}
+%\inputminted[firstline=8,lastline=8] {haskell}{code/BinomialHeap.lhs}
+%\inputminted[firstline=17,lastline=19] {haskell}{code/BinomialHeap.lhs}
+%\inputminted[firstline=38,lastline=38,gobble=2] {haskell}{code/BinomialHeap.lhs}
+
+В худшем случае, при вставке в кучу размера $n = 2^k -1$, требуется
+ $k$ связываний и $O(k) = O(\log n)$ времени.
+\end{frame}
+ 
+ 
+\begin{frame}{Слияние -- аналогично сложению}
+ При слиянии двух куч мы проходим через оба списка деревьев в порядке
+ возрастания ранга и связываем по пути деревья равного ранга. Как и
+ прежде, каждое связывание соответствует переносу в двоичной
+ арифметике.\\
+
+Функция \mlinline{merge: heap * heap -> heap}
+\begin{itemize}
+\item Если одна из куч пустая, то возвращаем другую
+\item Иначе у нас есть \mlinline{ts1===t1::ts1'} и \mlinline{ts2===t2::ts2'} 
+\item если \mlinline{rank(t1)<rank(t2)}, выдаем \mlinline{t1 :: merge (ts1', ts2)}
+\item если \mlinline{rank(t2)<rank(t1)}, выдаем \mlinline{t2 :: merge (ts1, ts2')}
+\item если равны, то \mlinline{insTree(link(t1,t2), merge (ts1', ts2')}
+\end{itemize}
+ \end{frame}
+ 
+\begin{frame}{Операции работы с минимумом}
+Дополнительная функция \mlinline{removeMinTree: tree list -> tree|$\times$|(tree list)}\\
+удаляет из списка дерево с минимальным значением в корне, и выдает это дерево и остаток списка\\
+
+Функция \mlinline{findMin} -- вызвать \mlinline{removeMinTree} и заглянуть в корень полученного дерева\\
+
+Функция \mlinline{delete} -- вызвать \mlinline{removeMinTree}, взять список потомков полученного дерева, перевернуть и слить с учетом рангов со вторым списком
+\end{frame}
+ 
+% \begin{frame}[fragile]{Поиск минимального элемента}
+% Функции \hsinline{findMin} и \hsinline{deleteMin} вызывают
+% вспомогательную функцию \hsinline{removeMinTree}, которая находит
+% дерево с минимальным корнем, исключает его из списка и возвращает как
+% это дерево, так и список оставшихся деревьев.
+% 
+% \inputminted[firstline=28,lastline=32]{haskell}{code/BinomialHeap.lhs}
+% 
+% Функция \hsinline{findMin} просто возвращает корень найденного дерева
+% 
+% \inputminted[firstline=40,lastline=41,gobble=2] {haskell}{code/BinomialHeap.lhs}
+% \inputminted[firstline=9,lastline=9] {haskell}{code/BinomialHeap.lhs}
+% \end{frame}
+ 
+% \begin{frame}[fragile]{Удаление минимального элемента}
+% Функция \hsinline{deleteMin} устроена немного похитрее. \\
+% 
+%  Отбросив
+% корень найденного дерева, мы ещё должны вернуть его потомков в список
+% остальных деревьев. Заметим, что список потомков \emph{почти} уже
+% соответствует определению биномиальной кучи. Это коллекция
+% биномиальных деревьев с неповторяющимися рангами, но только
+% отсортирована она не по возрастанию, а по убыванию ранга. Таким
+% образом, обратив список потомков, мы преобразуем его в биномиальную
+% кучу, а затем сливаем с оставшимися деревьями.
+% 
+% \inputminted[firstline=43,lastline=44,gobble=2] {haskell}{code/BinomialHeap.lhs}
+% \end{frame}
+
+
+
+\begin{frame}
+\begin{center}
+%\begin{tabular}{ |>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{2.5cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{2cm}| } 
+% \hline
+%Оп-я \textbackslash Куча  & Leftist & Биномиальная & Бин. + амортизация & Бин. + расписания & 11\\ \hline
+% findMin  & \Oconst & \Oconst\footnote{Изложено \Ologn{}, но можно сделать \Oconst{}} & & & \\  \hline
+% deleteMin &  \Ologn{} & \Ologn{} &  & \\  \hline
+% insert &\Ologn{} & \Ologn{} & \Oconst$^*$ & \Oconst & \\  \hline
+% 
+%  merge & \Ologn{} & \Ologn{} & & & \\ \hline
+%\end{tabular}
+\begin{tabular}{ |>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{2.5cm}|>{\centering\arraybackslash}p{2cm}| } 
+ \hline
+ Куча\textbackslash Операция  & findMin & deleteMin & insert & merge \\ \hline
+ Leftist  & \Oconst & \Ologn{} &\Ologn{}& \Ologn{} \\  \hline
+ Биномиальная &  \Oconst\footnote{Изложено \Ologn{}, но можно сделать \Oconst{}} & \Ologn{} & \Ologn{} &\Ologn{} \\  \hline
+ Бин. + амортизация &  &   & \Oconst$^*$ &  \\  \hline
+  Бин. + расписания &  &   & \Oconst &  \\ \hline
+bootstrapped & \Oconst & \Ologn{} &\Oconst  & \Oconst \\ \hline
+\end{tabular}
+\end{center}
+
+Пропуск означает, что точную оценку забыли подсмотреть в литературе
+
+Амортизированные оценки обозначаются с$^*$.
+\end{frame}
+
+
+ \ifanswers
+ \begin{frame}[fragile]{}
+ \begin{exercise}\label{ex:3.5}
+   Определите \lstinline!findMin! напрямую, без обращения к \lstinline!removeMinTree!.
+ \end{exercise}
+ 
+ \begin{exercise}\label{ex:3.6}
+   Большая часть аннотаций ранга в нашем представлении биномиальных куч
+   излишня, потому что мы и так знаем, что дети узла ранга $r$ имеют
+   ранги $(r\!-\!1), \ldots, 0$. Таким образом, можно исключить
+   поле-аннотацию ранга из узлов, а вместо этого помечать ранг корня
+   каждого дерева, т.~е.,
+   \begin{minted}{haskell}
+   data Tree a = Node  a [Tree]
+   type Heap = [(Int, Tree)]
+   \end{minted}
+   Реализуйте биномиальные кучи в таком представлении.
+ \end{exercise}
+ \end{frame}
+ 
+ % Ещё одно упражнение не скопипастьил
+ 
+ \fi
+ 

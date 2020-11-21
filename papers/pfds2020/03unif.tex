@@ -1,69 +1,25 @@
-\begin{frame}[fragile]{Деревья термов}
+\begin{frame}{Унификация}
+\begin{center}
+\Large
+Излагается как хороший пример, где можно реализовывать и устойчивую структуру данных, и эфемерную
+
+\end{center}
+\end{frame}
+
+\begin{frame}{Деревья термов}
 \begin{definition}[]
 \emph{Деревья (термов с метапеременными)} -- это деревья (или даже DAGи), где 
 \begin{enumerate}
 \item в узлах находятся $n$-местные "функциональные символы"
 \item у узлов $n$ поддеревьев
-\item в листьях могут стоять \emph{метапеременные}
+\item в листьях могут стоять \emph{метапеременные} или местные функц. символы
 \end{enumerate}
 \end{definition}
-\vspace{1em}
+%\vspace{1em}
 
 \begin{center}
-\begin{tikzpicture}[->,thick,scale=0.5, every node/.style={scale=0.5}
-  , grow via three points={
-      one child at (0,-2) and 
-      two children at (.8,-2) and (-0.8,-2) 
-  }]
-     \tikzstyle{tnode}=[circle, inner sep=1.5mm]
-     \tikzstyle{var}=[ circle, inner sep=1.5mm,draw]
-     \def\rstep{5cm}
-     \huge
-         
-    \begin{scope}[xshift= \rstep]
-      \node[tnode] {f}
-          child {node[tnode] {g} 
-            child {node[var] {x} }
-            child {node[tnode] {a} }
-          }
-          child[missing] {} 
-          child {node[tnode] {g} 
-            child {node[var] {x} }
-            child {node[tnode] {a} }
-          };
-%        child[missing] {} ;
-      \end{scope}
-      
-    \begin{scope}[xshift=15cm]
-      \node[tnode] {f}
-          child {node[tnode] (gggg) {g} 
-            child[missing] {node[var] {x} }
-            child {node[tnode]  {a} }
-          }
-          child[missing] {}
-          child {node[tnode]  {g} 
-            child {node[var]  (xxxx) {x} }
-            child {node[tnode] {a} }
-          };
-
-      \draw [->,thick](gggg.south)
-              to [out=-90,in=90] (2,-5)
-              to [out=-90,in=0] (1,-6) 
-              to [out=180,in=-45]  (xxxx.south); 
-      \end{scope}
-      
-      \begin{scope}[xshift=23cm]
-        \node[tnode] (ffff) {f}
-            child {node[tnode] (gggg) {g} 
-              child {node[var] {x} }
-              child {node[tnode] {a} }
-            };
-
-        \draw [->,thick](ffff)
-                to [out=0,in=90] (1,-1)
-                to [out=-90,in=45]  (gggg.east); 
-        \end{scope}
- \end{tikzpicture}
+Пример: дерево (и DAGи) для выражения f(f(a,x), g(a,x))
+\includegraphics[page=1,scale=1.1]{tikzpics/uniftrees.pdf}
 \end{center}
 \end{frame}
 
@@ -198,81 +154,26 @@
 \end{frame}
 
 
-\begin{frame}[fragile]{Упражнение 1}
-Задача: можно ли передать значения типа \mlinline{'a list -> ('a -> 'b) -> 'b } туда, где ожидается значение типа \mlinline{'c list -> ('c -> 'd list) -> 'd list}?
+\begin{frame}{Упражнение 1}
+Можно ли проунифицировать два выражения: $x+((2+f(y))+y)$ и  $f(y)+((2+x)+1)$?
 \vspace{1em}
 
-\begin{minipage}{0.45\linewidth}
-\begin{tikzpicture}[->,thick,scale=0.5, every node/.style={scale=0.5}
-  , grow via three points={
-      one child at (0,-2) and 
-      two children at (.8,-2) and (-0.8,-2) 
-  }]
-     \tikzstyle{tnode}=[rectangle, inner sep=1.5mm]
-     \tikzstyle{var}=[ circle, inner sep=1.5mm,draw]
-     \def\rstep{5cm}
-     \huge
-         
-    \begin{scope}[xshift= \rstep]
-      \node[tnode] {\mlinline{->}}
-          child {node[tnode] {\mlinline{->}} 
-            child { node [tnode] {\mlinline{->}}
-                        %child{ node [tnode] {\mlinline{list}} 
-                        child { node[var] {\mlinline{'b}} }
-                        child[missing] {}
-                        %}
-                       }
-            child[missing] {}
-            child { node [tnode] {\mlinline{->}}
-                    child { node[var] {\mlinline{'b}} }
-                    child { node[var] {\mlinline{'a}} }
-                   }
-          }
-          child[missing] {}
-            child{ node [tnode] {\mlinline{list}} 
-              child[missing] {}
-               child { node[var] {\mlinline{'a}} }
-            };
-      \end{scope}
-\end{tikzpicture}
-\end{minipage}\hspace{1cm}
-\begin{minipage}{0.45\linewidth}
-\begin{tikzpicture}[->,thick,scale=0.5, every node/.style={scale=0.5}
-  , grow via three points={
-      one child at (0,-2) and 
-      two children at (.8,-2) and (-0.8,-2) 
-  }]
-     \tikzstyle{tnode}=[rectangle, inner sep=1.5mm]
-     \tikzstyle{var}=[ circle, inner sep=1.5mm,draw]
-     \def\rstep{5cm}
-     \huge
-         
-    \begin{scope}[xshift= \rstep]
-      \node[tnode] {\mlinline{->}}
-          child {node[tnode] {\mlinline{->}} 
-            child { node [tnode] {\mlinline{->}}
-                        child{ node [tnode] {\mlinline{list}} 
-                          child { node[var] {\mlinline{'d}} }
-                        }
-                       }
-            child[missing] {}
-            child { node [tnode] {\mlinline{->}}
-                    child{ node [tnode] {\mlinline{list}} 
-                      child { node[var] {\mlinline{'d}} }
-                    }
-                    child { node[var] {\mlinline{'c}} }
-                   }
-          }
-          child[missing] {}
-            child{ node [tnode] {\mlinline{list}} 
-              child[missing] {}
-               child { node[var] {\mlinline{'c}} }
-            };
-      \end{scope}
-\end{tikzpicture}
-\end{minipage}
+\begin{figure}[ht]
+\begin{subfigure}{.35\textwidth}
+\includegraphics[page=1,scale=1.3]{tikzpics/uniftrees2.pdf}
+\end{subfigure}
+\begin{subfigure}{.35\textwidth}
+\includegraphics[page=2,scale=1.3]{tikzpics/uniftrees2.pdf}
+\end{subfigure}
+\begin{subfigure}{.25\textwidth}
+Ответ: да
+\begin{itemize}
+\item $x \mapsto f(y)$ 
+\item $y \mapsto 1$
+\end{itemize}
+\end{subfigure}
+\end{figure}
 \end{frame}
-
 
 \begin{frame}[fragile]{Упражнение 2}
 Проунифицировать $f(\alpha,\beta)$ и $f(l(\beta), n)$, где $\alpha,\beta$ -- метапеременные.
@@ -280,29 +181,12 @@
 
 \begin{minipage}{0.45\linewidth}
   \begin{center}
-  \begin{tikzpicture}[->,thick,scale=.71, every node/.style={scale=1}]
-      \tikzstyle{tnode}=[circle, inner sep=.5mm]
-      \tikzstyle{var}=[ circle, inner sep=1mm,draw]
-      \node[tnode] {f}
-                child {node[var] {$\alpha$} }
-                child {node[var] {$\beta$} 
-                };
-  \end{tikzpicture}
+\includegraphics[page=1,scale=1.1]{tikzpics/uniftrees3.pdf}
   \end{center}
 \end{minipage}\hspace{1cm}
 \begin{minipage}{0.45\linewidth}
   \begin{center}
-  \begin{tikzpicture}[->,thick,scale=.7, every node/.style={scale=1}]
-  \tikzstyle{tnode}=[circle, inner sep=.5mm]
-  \tikzstyle{var}=[ circle, inner sep=1mm,draw]
-  \node[tnode] {f}
-      child {
-        node[var] {$f$}
-        child {node[var] {$\beta$} }
-      }
-      child {node[var] {$n$} 
-      };
-  \end{tikzpicture}
+\includegraphics[page=2,scale=1.1]{tikzpics/uniftrees3.pdf}
   \end{center}
 \end{minipage}
 \vspace{1em}\pause
@@ -350,6 +234,10 @@
 \end{center}
 \end{frame}
 
+
+\begin{comment}
+content
+
 \begin{frame}[fragile]{Упражнение\uncover<3->{. Occurs check}}
 
 Проунифицируйте  $f(x, y)$ и $y$.\pause
@@ -386,99 +274,4 @@
 \end{definition}
 \end{frame}
 
-%\begin{frame}[fragile]{Упражнение. Тип Z-комбинатора}
-%Выведите тип функции
-%\begin{minted}{ocaml}
-%let fix f = (fun x -> f (fun v -> x x v)) (fun x -> f (fun v -> x x v))
-%\end{minted}
-%\vspace{2em}
-%
-%По плану разбор на доске
-%\end{frame}
-
-
-%\begin{frame}{Промежуточное заключение}
-%Используя треугольную подстановку можно 
-%\begin{itemize}
-%\item Эффективно расширять подстановку с помощью функции $\extend{\sigma}{ x}{\mathcal{V}}$
-%\item При этом старая подстановка может не уничтожаться, а частично переиспользоваться
-%\item Накопленную пользу надо тратить в функции $\walk{\sigma}{x}$
-%\end{itemize}
-%\vspace{2em}
-%Некоторые исследования~\cite{triangular} показывают, что треугольные подстановки поэффективнее 
-%\end{frame}
-
-
-
-
-%\begin{frame}[fragile]
-%  \begin{forest}
-%    for tree={
-%      parent anchor=south,
-%      child anchor=north,
-%      tier/.wrap pgfmath arg={tier#1}{level()},
-%      font=\sffamily
-%    }
-%    [f, name=root
-%      [g [a] [x, name=xxx]]
-%      [g,name=ggg [a] ]
-%    ]
-%     \draw [ red, -{Triangle[]}] (ggg.west) [bend left] to node   {}  (xxx) ;
-%     \draw [thick]  (ggg.east)
-%               to [out=10,in=190] (1,-1)
-%               to [out=10,in=190] (1,-3) 
-%               to [out=10,in=190] (xxx.east); 
-%  \end{forest}
-%\end{frame}
-
-
-
-\begin{comment}
-\begin{definition}[Унификация полиморфных типов]
-Унификация двух типов -- это поиск такой подстановки, которая после применения к обоим типам даст одинаковые типы.
-\end{definition}
-\vspace{1em}
-Пример 1: унификация типов \hsinline{a -> b} и \hsinline{Int -> Bool} \pause 
-завершается успешно с подстановкой $[\text{\hsinline{a}}\mapsto \text{\hsinline{Int}}, \text{\hsinline{b}} \mapsto \text{\hsinline{Bool}} ]$.\\\pause
-
-Пример 2: унификация типов \hsinline{a -> a} и \hsinline{Int -> Bool} \pause невозможна, 
-так как не существует подстановки, которая бы их сделала одинаковыми.
-
-\end{frame}
 \end{comment}
-
-
-%
-%\begin{frame}[fragile]{Формальные правила унификации $a\sim b : \theta$}
-%\noindent{
-%\begin{minipage}[t]{0.38\linewidth}
-%$$
-%\begin{array}{cl}
-%c \sim c : []           & \quad \text{Uni-Const} \\ \\
-%\alpha \sim \alpha : [] & \quad \trule{Uni-Var} \\ \\
-%\inferrule{\alpha \notin \FTV{\tau}}{\alpha \sim \tau : [\alpha / \tau]}
-%& \quad \trule{Uni-VarLeft} \\ \\
-%\inferrule{\alpha \notin \FTV{\tau}}{\tau \sim \alpha : [\alpha / \tau]}
-%& \quad \trule{Uni-VarRight} \\ \\
-%\end{array}
-%$$
-%\end{minipage}}
-%\begin{minipage}[t]{0.58\linewidth}
-%$$
-%\begin{array}{cl}
-%\inferrule{
-%  \tau_1 \sim \tau_1' : \theta_1 \and [\theta_1] \tau_2  \sim [\theta_1] \tau_2' : \theta_2
-%}{
-%  \tau_1 \tau_2 \sim \tau_1' \tau_2' : \theta_2 \circ \theta_1
-%} 
-%& \quad \trule{Uni-Con} \\ \\
-%\inferrule{
-%  \tau_1 \sim \tau_1' : \theta_1 \\ [\theta_1] \tau_2  \sim [\theta_1] \tau_2' : \theta_2
-%}{
-%  \tau_1 \rightarrow \tau_2 \sim \tau_1' \rightarrow \tau_2' : \theta_2 \circ \theta_1
-%}
-%& \quad \trule{Uni-Arrow} \\ \\
-%\end{array}
-%$$
-%\end{minipage}
-%\end{frame}
