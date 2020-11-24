@@ -522,8 +522,8 @@ rotate (\cons{x}{f}, \cons{y}{r}, a)
 Реализация $rotate(f,r,a)$
 \begin{itemize}
 \item Если $f\equiv\nil$ и $r\equiv\cons{y}{tl}$, то возвращаем $\cons{y}{a}$
-\item Если $f\equiv\cons{x}{f\'}$ и $r\equiv\cons{y}{r'}$, то возвращаем $\cons{x}{rotate(f\ ', r\ ', \cons{y}{a})}$
-\item Другие случаи не возможны из-за инварианта $\card{R}\ =\ \card{F} +\ 1$
+\item Если $f\equiv\cons{x}{f\ '}$ и $r\equiv\cons{y}{r'}$, то возвращаем $\cons{x}{rotate(f\ ', r\ ', \cons{y}{a})}$
+\item Другие случаи не возможны из-за инварианта $\card{r}\ =\ \card{f} +\ 1$
 \end{itemize}
 
 \begin{remark}
@@ -531,18 +531,18 @@ $rotate$ выполняет константное количество вычи
 \end{remark}
 \end{frame}
 
-\def\invariant{$\card{S}\ \equiv\ \card{F}-\card{R}$}
+\def\invariant{$\card{s}\ \equiv\ \card{f}-\card{r}$}
 \def\rotate{\ensuremath{rotate}}
 
 \begin{frame}{Тип данных для очередей реального времени}
 \begin{itemize}
-\item Новое поле S с типом "поток элементов", хранит расписание форсирования вычислений в F
+\item Новое поле s с типом "поток элементов", хранит расписание форсирования вычислений в F
 \begin{itemize}
-\item S будет суффиксом F, таким что \textbf{все элементы впереди посчитаны до конца}\footnote{Это будет важно при оценке сложности}
-\item Форсирование вычислений в F достигается форсирование головного элемента S
+\item Поток s будет суффиксом f, таким что \textbf{все элементы впереди посчитаны до конца}\footnote{Это будет важно при оценке сложности}
+\item Форсирование вычислений в f достигается форсирование головного элемента s
 \item Инвариант \invariant
 \end{itemize}
-\item R конструируется как есть, поэтому это просто список
+\item Перевернутый хвост r конструируется как есть, поэтому это просто список
 \item Не храним длины 
 \end{itemize}
 \end{frame}

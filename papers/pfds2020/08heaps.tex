@@ -261,13 +261,13 @@
 \item Элементы подвешиваются согласно "порядку кучи" (деревья с большими корнями подвешиваются к узлам с меньшими)
 \end{itemize}
 
-Элементы хранятся в порядке кучи.  Чтобы сохранять этот порядок кучи, мы всегда
+Элементы хранятся согласно порядку кучи.  Чтобы сохранять этот порядок кучи, мы всегда
 подцепляем дерево с большим корнем к узлу с меньшим.\\
  
-Функция \mlinline{link: heap|$\times$|heap -> heap} принимает дерево \mlinline{t1} из \mlinline{(r,x1,c1)} и дерево \mlinline{t2} из \mlinline{(r2,x2,c2)}
+Функция \mlinline{link: tree|$\times$|tree -> tree} принимает дерево \mlinline{t1} из \mlinline{(r1,x1,c1)} и дерево \mlinline{t2} из \mlinline{(r2,x2,c2)}
 \begin{itemize}
-\item Если \mlinline{x1<x2} строим дерево из \mlinline{(r+1, x1, t2::c1)}
-\item Иначе \mlinline{(r+1, x2, t1::c1)}
+\item Если \mlinline{x1<x2} строим дерево из \mlinline{(r1+1, x1, t2::c1)}
+\item Иначе \mlinline{(r1+1, x2, t1::c1)}
 \item Инвариант: связываем деревья только с одинаковым рангом: \mlinline{assert(r1===r2)}
 \end{itemize}
 \end{frame}
@@ -292,16 +292,15 @@
 \end{frame}
  
  
- \begin{frame}[fragile]{}
- \begin{figure}[h]
-   \centering
-   \input{figures/fig.3.3_extra.tex}
-   \caption{Число $21_{10} = 10101_2$, и поэтому
-     биномиальная куча размера 21 содержит одно дерево ранга 0, одно ранга
-     2, и одно ранга 4 (размерами, соответственно, 1, 4 и 16).}
- \end{figure}
- 
- \end{frame}
+\begin{frame}
+\begin{figure}[h]
+  \centering
+  \includegraphics[scale=1.5]{tikzpics/binomial.pdf}
+  \caption{Число $21_{10} = 10101_2$, и поэтому
+   биномиальная куча размера 21 содержит одно дерево ранга 0, одно ранга
+   2, и одно ранга 4 (размерами, соответственно, 1, 4 и 16).}
+\end{figure}
+\end{frame}
  
  
 \begin{frame}{Вставка аналогично инкременту}

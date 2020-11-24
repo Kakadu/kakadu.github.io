@@ -3,101 +3,102 @@
 
 \begin{frame}{Общие замечания по упражнениям}
 Если явно не оговорено иное, то...
-\vspace{3em}
+\vspace{2em}
 
-Предлагается реализовать устойчивую структуру данных на вашем любимом языке обывательском (C\#, C, etc), и на каком-нибудь функциональном языке (OCaml,Haskell,F\#, Scala 3), а затем сравнить размер/сложность двух реализаций.
+Предлагается реализовать устойчивую структуру данных на вашем любимом языке обывательском (C\#, C, etc), и на каком-нибудь функциональном языке (\OCaml{}, \Haskell{}, F\#, Scala 3), а затем сравнить размер/сложность двух реализаций.
 
 Ожидаются реализации в виде чистых функций (ну может понадобится присваивание для эмуляции мемоизации, в остальном -- едва ли)
 \vspace{2em}
 
-Обозначение \exscore{A}{B}{C} говорит, что за решение на обывательском языке будет начислено A баллов, на классическом функциональном B; С баллов начисляется дополнительно, если обучающийся может сравнить реализации, указать на преимущества и недостатки одной и второй, и т.д.
+Обозначение \exscore{A}{B}{C} говорит, что за решение на \sout{обывательском}вашем любимом языке будет начислено A баллов, на классическом функциональном B; С баллов начисляется дополнительно, если обучающийся может сравнить реализации, указать на преимущества и недостатки одной и второй, и т.д.
 \end{frame}
 
 
 
 \begin{frame}[allowframebreaks]{Упражнения на ленивость}
-\begin{exercise}[\exscore{?}{?}{?}]
+\begin{exercise}[1 балл]
 По аналогии с вычислением последовательности фибоначчи, сделайте вычисление простых чисел решетом Эратосфена
 \end{exercise}
-\begin{exercise}[\exscore{?}{?}{?}]
+
+\begin{exercise}[1 балл]
 Дан поток потоков чисел $xss$. Функция \mlinline{merge} должно объединить это всё в один поток чисел. \\
 Ограничение: $\forall (i<\infty) \forall (j<\infty)\quad \big((xss[i][j]\equiv n)\quad \Longrightarrow \quad\exists (k<\infty)\quad (merge(xss)[k]\equiv n)\big)$
 \end{exercise}
 
-\begin{exercise}[\exscore{?}{?}{?}]
+\begin{exercise}[2 балла]
 Дано дерево с числами только в листьях. Построить новое дерево, где все числа предыдущего дерева заменены на минимум от этих чисел. Ограничение: за один проход.
 \begin{remark}
-Крайне рекомендуется использовать язык, где все вычисления ленивы по умолчанию (например, Haskell)
+Крайне рекомендуется использовать язык, где все вычисления ленивы по умолчанию (например, \Haskell)
 \end{remark}
 \end{exercise}
 \end{frame}
 
 
 
-\begin{frame}[allowframebreaks]{Упражнения на очереди}
-\begin{exercise}[\exscore{?}{?}{?}]
+\begin{frame}{Упражнения на очереди}
+\begin{exercise}[\exscore{2}{2}{1}]
 Реализуйте чисто функциональную очередь
 \end{exercise}
 
-\begin{exercise}[\exscore{?}{?}{?}]
+\begin{exercise}[\exscore{2}{2}{1}]
 Реализуйте очередь банкира
 \end{exercise}
 
-\begin{exercise}[\exscore{?}{?}{?}]
+\begin{exercise}[\exscore{2}{2}{1}]
 Реализуйте очередь реального времени
 \end{exercise}
 \end{frame}
 
 
+%
+%\begin{frame}[allowframebreaks]{Упражнения на очереди}
+%\begin{exercise}[\exscore{?}{?}{?}]
+%Реализуйте чисто функциональную очередь
+%\end{exercise}
+%
+%\begin{exercise}[\exscore{?}{?}{?}]
+%Реализуйте очередь банкира
+%\end{exercise}
+%
+%\begin{exercise}[\exscore{?}{?}{?}]
+%Реализуйте очередь реального времени
+%\end{exercise}
+%\end{frame}
 
-\begin{frame}[allowframebreaks]{Упражнения на очереди}
-\begin{exercise}[\exscore{?}{?}{?}]
-Реализуйте чисто функциональную очередь
-\end{exercise}
-
-\begin{exercise}[\exscore{?}{?}{?}]
-Реализуйте очередь банкира
-\end{exercise}
-
-\begin{exercise}[\exscore{?}{?}{?}]
-Реализуйте очередь реального времени
-\end{exercise}
-\end{frame}
 
 
-
-\begin{frame}[allowframebreaks]{Упражнения на кучи}
-\begin{exercise}[\exscore{?}{?}{?}]
+\begin{frame}{Упражнения на кучи}
+\begin{exercise}[\exscore{2}{2}{1}]
 Реализуйте левоориентированную кучу
 \end{exercise}
 
-\begin{exercise}[\exscore{?}{?}{?}]
+\begin{exercise}[\exscore{2}{2}{1}]
 Реализуйте weight-biased левоориентированную кучу (упражнение в книге 3.4)
 \end{exercise}
 
 
-\begin{exercise}[\exscore{?}{?}{?}]
+\begin{exercise}[\exscore{3}{3}{1}]
 Реализуйте биномиальную кучу, храня аннотации ранга реже (упражнение в книге 3.6)
 \end{exercise}
 
-\begin{exercise}[\exscore{?}{?}{?}]
+\begin{exercise}[\exscore{2}{2}{1}]
 Реализуйте биномиальную кучу с явным минимумом (упражнение в книге 3.7)
 \end{exercise}
 
 \end{frame}
 
 
-\begin{frame}[allowframebreaks]{Упражнения на деревья}
-\begin{exercise}[\exscore{?}{?}{?}]
+\begin{frame}{Упражнения на деревья}
+\begin{exercise}[\exscore{1}{2}{1}]
 Реализуйте красно-черное дерево, где балансировка делает меньше проверок (упражнение в книге 3.10)
 \end{exercise}
 
 
-\begin{exercise}[\exscore{?}{?}{?}]
+\begin{exercise}[\exscore{2}{2}{1}]
 Реализуйте префиксное дерево
 \end{exercise}
 
-\begin{exercise}[\exscore{?}{?}{?}]
+\begin{exercise}[\exscore{3}{3}{1}]
 Реализуйте HAMT
 \end{exercise}
 
