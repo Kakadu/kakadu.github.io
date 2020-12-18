@@ -12,7 +12,11 @@
 :email:  Dmitrii.Kosarev@protonmail.ch
 
 
+
+
 TODO:
+
+image:Russia-Flag-Free-Download-PNG.png[width=5%,scalewidth=1cm]
 
 ifdef::backend-docbook[]
 [index]
