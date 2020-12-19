@@ -50,6 +50,12 @@ ROTOR
 
 [Мифический человеко-месяц](https://nsu.ru/xmlui/bitstream/handle/nsu/8870/Frederick_Brooks.pdf)
 
+### Concurrency
+
+https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/
+
+
+
 
 ###
 
