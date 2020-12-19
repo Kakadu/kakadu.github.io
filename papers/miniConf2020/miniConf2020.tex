@@ -9,7 +9,6 @@
 \usefonttheme{professionalfonts}
 
 \usepackage{pgfpages}
-
 \usepackage{bibentry}
 \usepackage{cite}
 \def\newblock{\hskip .11em plus .33em minus .07em}
@@ -125,19 +124,17 @@ morecomment=[s]{(*}{*)}
 \item[I] Спроектировали синтез с помощью комбинации \emph{реляционных интерпретаторов} на \miniKanren{}
 \item[II] Заменили $\forall$ на \emph{конечный} набор примеров
 \item[III] Сделали оптимизацию методом ветвей и границ с помощью нового примитива \miniKanren{}: \emph{ограничение на структуру (structural constraint)}
-%\item[IV] Extension of OCanren called \emph{structural constraint}
 \end{enumerate}
 }
 
-\title{Компиляция сопоставления с образцом с помощью синтеза программ}
+\title[Компиляция сопоставления с образцом]{Компиляция сопоставления с образцом с помощью синтеза программ}
 %\subtitle{Relational Synthesis for Pattern Matching}
 
 \date{19 декабря 2020}
 \author{Косарев Дмитрий} 
-\institute[]{\normalfont
-Миниконференция 2020
-Будет опубликовано на \\
-Asian Symposium on Programming Languages and Systems (APLAS) 2020}
+\institute[]{%\normalfont
+Лаборатория языковых инстументов \\
+Миниконференция 2020}
 
 
 \newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}
@@ -168,20 +165,20 @@ Asian Symposium on Programming Languages and Systems (APLAS) 2020}
     }
 }
   
-\AtBeginSection[]
-{
-  \begin{frame}<beamer>
-    \frametitle{Оглавление}
-    \tableofcontents[currentsection,currentsubsection]
-  \end{frame}
-} 
-\AtBeginSubsection[]
-{
-  \begin{frame}<beamer>
-    \frametitle{Оглавление}
-    \tableofcontents[currentsection,currentsubsection]
-  \end{frame}
-}
+%\AtBeginSection[]
+%{
+%  \begin{frame}<beamer>
+%    \frametitle{Оглавление}
+%    \tableofcontents[currentsection,currentsubsection]
+%  \end{frame}
+%} 
+%\AtBeginSubsection[]
+%{
+%  \begin{frame}<beamer>
+%    \frametitle{Оглавление}
+%    \tableofcontents[currentsection,currentsubsection]
+%  \end{frame}
+%}
 
 \begin{document}
 {
@@ -313,33 +310,46 @@ else
 
 
 \begin{frame}[fragile]{Пример: использование диаграмм решений \only<1>{(1/2)}\only<2>{(2/2)}}
+%\begin{figure}[ht]
+%\begin{subfigure}[t]{.49\textwidth}
+%
+%\end{subfigure}
+%\begin{subfigure}[t]{.49\textwidth}
+%
+%\end{subfigure}
+%\end{figure}
 
-\begin{minipage}[t]{0.25\linewidth}
+\begin{figure}[ht]
+\begin{subfigure}[t]{0.25\linewidth}
 \begin{minipage}{7cm}
 \matchA
 \end{minipage}
-%\caption{Pattern matching}
-\end{minipage}
+\caption{Пример}
+\end{subfigure}
 \hspace{0.5cm}
-\begin{minipage}[t]{0.32\linewidth}
-\only<1>{\begin{minipage}{7cm}
+\begin{subfigure}[t]{0.32\linewidth}
+\only<1>{\begin{minipage}{5cm}
 \matchB
+\caption{Полуоптимальная схема компиляции}
 \end{minipage}}
-\only<2>{\begin{minipage}{7cm}
+\only<2>{\begin{minipage}{5cm}
 \matchC
+\caption{Оптимальная схема компиляции}
 \end{minipage}}
-
-\end{minipage}
+\end{subfigure}
 \hspace{0.5cm}
-\begin{minipage}[t]{0.3\linewidth}
+\begin{subfigure}[t]{0.3\linewidth}
 \only<1>{\begin{minipage}{7cm}
 \forestB
 \end{minipage}}
 \only<2>{\begin{minipage}{7cm}
 \forestC
 \end{minipage}}
-\end{minipage}
-%\caption{Pattern matching compilation can be non-trivial (example from~\cite{maranget2008}).}\label{fig:match-example}
+\caption{Диаграмма решений}
+\end{subfigure}
+\caption{Компиляция сопоставления с образцом бывает нетривиальной (пример из~\cite{maranget2008}).}
+%\label{fig:match-example}
+\end{figure}
 \end{frame}
 
 \begin{comment}
@@ -1058,7 +1068,7 @@ switch $\bullet$[1] with
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\begin{frame}[fragile]{Проблемы с производительностью (1/2)}
+\begin{frame}[fragile]{Проблемы с производительностью}
 \begin{figure}
 \begin{subfigure}[t]{0.5\linewidth}
 \begin{lstlisting}[basicstyle=\small,language=ocaml]
@@ -1174,6 +1184,10 @@ match (code,stack,prog) with
 \item MiniKanren Workshop при ICFP 2020 (доклад)
 \item APLAS-2020 (доклад и публикация~\cite{matchingPublication})
 \end{enumerate}
+\vspace{4em}
+\begin{center}
+{\Huge Конец}
+\end{center}
 \end{frame}
 
 %\begin{frame}{Пути дальнейшего улучшения}
@@ -1188,12 +1202,12 @@ match (code,stack,prog) with
 %\end{itemize}
 %\end{itemize}
 %\end{frame}
-
-\begin{frame}
-\begin{center}
-{\Huge Спасибо!}
-\end{center}
-\end{frame}
+%
+%\begin{frame}
+%\begin{center}
+%{\Huge Спасибо!}
+%\end{center}
+%\end{frame}
 
 
 \begin{frame}%[t, allowframebreaks]
