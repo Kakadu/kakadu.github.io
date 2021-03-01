@@ -7,7 +7,7 @@ XELATEX=xelatex -shell-escape -interaction=nonstopmode #-output-directory=$(BUIL
 MKDIR ?= mkdir
 CP ?= cp 
 
-.PHONY: $(OUT).pdf
+#.PHONY: $(OUT).pdf
 all: $(OUT).pdf #$(BUILD) $(BUILD)/$(REFERENCES) $(OUT).pdf
 
 #$(BUILD):
@@ -18,7 +18,7 @@ all: $(OUT).pdf #$(BUILD) $(BUILD)/$(REFERENCES) $(OUT).pdf
 
 define WRAP
 INPUT_$(1)=$(wildcard $(1)*.tex)
-.PHONY: $(1).pdf
+#.PHONY: $(1).pdf
 
 #$(1).pdf: $$(INPUT_$(1):%.tex=%.pdf)
 $$(INPUT_$(1):%.tex=%.pdf): $$(INPUT_$(1)) heading.tex
@@ -29,12 +29,14 @@ $$(INPUT_$(1):%.tex=%.pdf): $$(INPUT_$(1)) heading.tex
 	$$(XELATEX) $$<
 endef
 
-LECTURES=$(OUT)
+LECTURES=pipeline $(OUT)
 
 $(foreach i,$(LECTURES),$(eval $(call WRAP,$(i)) ) )
 
+$(OUT).pdf: pipeline.pdf 02selectives.tex 03conversion.tex 05impl.tex
+
 celan: clean
 clean:
-	@$(RM) -r _minted* $(BUILD)
+	@$(RM) -r _minted* $(BUILD) pipeline.pdf
 	@$(RM) *.aux *.log *.nav *.out *.snm *.toc *.vrb *.synctex.gz *.bbl *.blg
 

@@ -1,8 +1,3 @@
-% for images on title page. Should go before \documentclass
-%\def\pgfsysdriver{pgfsys-dvipdfm.def}
-% required for [rememberpicture]
-% FIXME: remove?
-
 \documentclass[aspectratio=169
   , xcolor={svgnames}
   , hyperref={ colorlinks,citecolor=Blue
@@ -14,60 +9,14 @@
 
 \usepackage{pgfpages}
 \usepackage{graphicx}   % for \includegraphics{file.pdf}
-%\def\theFancyVerbLine{%
-%  \rmfamily\tiny\arabic{FancyVerbLine}%
-%  {\tikz[remember picture,overlay]\node(minted-\arabic{FancyVerbLine}){};}%
-%}
 
-%\usepackage{bibentry}
-%\usepackage{cite}
-%\def\newblock{\hskip .11em plus .33em minus .07em}
-
-%\usepackage{framed}
 \input{heading}
 
-%\newcommand{\lstquot}[1]{``\lstinline{#1}''}
-%\newcommand{\sembr}[1]{\llbracket{#1}\rrbracket}
-%\newcommand\false{$f\!alse$}
-%\newcommand\myif{i\!f}
 
 
-
-%\newcommand{\pair}[2]{\inbr{{#1}\mid{#2}}}
-%\newcommand{\inbr}[1]{\left<{#1}\right>}
-%\newcommand{\highlight}[1]{\color{red}{#1}}
-
-%\newcommand{\vsep}{\vspace{-2mm}}
-%\newcommand{\supp}[1]{\scriptsize{#1}}
-%\renewcommand{\sembr}[1]{\llbracket{#1}\rrbracket}
-%\newcommand{\cd}[1]{\texttt{#1}}
-
-%\newcommand{\diseq}{\not\equiv}
-%\newcommand{\reprfunset}{\mathcal{R}}
-%\newcommand{\reprfun}{\mathfrak{f}}
-%\newcommand{\cstore}{\Omega}
-%\newcommand{\cstoreinit}{\cstore_\epsilon^{init}}
-%\newcommand{\csadd}[3]{add(#1, #2 \diseq #3)}  %{#1 + [#2 \diseq #3]}
-%\newcommand{\csupdate}[2]{update(#1, #2)}  %{#1 \cdot #2}
-%\newcommand{\primi}[1]{\ensuremath{\mathbf{#1}}}
-%\newcommand{\sem}[1]{\llbracket #1 \rrbracket}
-%\newcommand{\ir}{\ensuremath{\mathcal{S}}}
-%\usepackage{tikz}
-%\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
-%    \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
-
-
-% for fancy table
-%\newcommand{\lheadl}[2]{\multicolumn{1}{|>{\centering\arraybackslash}m{#1}|}{{#2}}}
 
 \newcommand{\head}[2]{\multicolumn{1}{>{\centering\arraybackslash}m{#1}}{\textbf{\small #2}}}
 
-%\newcommand{\headll}[2]{\multicolumn{1}{>{\centering\arraybackslash}m{#1}||}{\textbf{\small #2}}}
-%\newcommand{\lheadll}[2]{\multicolumn{1}{|>{\centering\arraybackslash}m{#1}||}{\textbf{\small #2}}}
-%\newcommand{\headl}[2]{\multicolumn{1}{>{\centering\arraybackslash}m{#1}|}{\textbf{\small #2}}}
-%\usepackage{longtable}
-%\newcommand{\nodata}{}
-%\newcommand{\tablenotemark}[1]{#1}
 
 \title{Staged Selective парсер-комбинаторы}
 \subtitle{Staged Selective Parser Combinators}
@@ -122,23 +71,6 @@ IFCP 2020}
 \everymath{\displaystyle}
 
 \section{Парсер-комбинаторы (кратко)}
-
-%\begin{frame}[fragile]{Парсер-комбинаторы (кратко)}
-%\begin{minted}{haskell}
-%nonzero :: Parser Char 
-%nonzero :: oneOf ['1'..'9']
-%digit :: Parser Char 
-%digit = char '0' <|> nonzero 
-%natural :: Parser Int 
-%natural :: read <$> (nonzero <:> many digit)
-%\end{minted}
-%
-%\begin{minted}{haskell}
-%ident :: Parser String
-%ident = satisfy isAlpha 
-%  <:> many (satisfy alphaNum)
-%\end{minted}
-%\end{frame}
 
 
 \defverbatim[colored]{\haskellPrimA}{

@@ -134,9 +134,9 @@ many p = (p <:> many p) <|> (pure p)
 
 \defverbatim[colored]{\haskellLetOne}{
 \begin{minted}{haskell}
-many :: Parser a -> Parser a 
+many :: Parser a -> Parser [a]
 many p = 
-  let go = (p <:> many p) <|> (pure p) 
+  let go = (p <:> go) <|> (pure p) 
   go 
 \end{minted}
 }

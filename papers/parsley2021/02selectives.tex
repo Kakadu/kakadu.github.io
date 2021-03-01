@@ -99,7 +99,7 @@ m >?> f = m >>= !\tikzmark{a}! \ x -> if f x then pure x else empty !\tikzmark{b
   , mathescape=false
   ]
 (>?>) :: Selective m => m a -> (a -> Bool) -> m a
-m >?> f = select ( !\tikzmark{c}!(\ x -> !\tikzmark{d}!
+fx >?> f = select (  !\tikzmark{c}!(\ x -> !\tikzmark{d}!
 !\tikzmark{e}!  if f x then Right () 
   else        Left ()) !\tikzmark{f}!   <$> fx) empty 
 \end{lstlisting}
