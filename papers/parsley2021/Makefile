@@ -1,4 +1,5 @@
 .SUFFIXES: .tex .pdf
+.PHONY: celan
 OUT=parsley-talk
 REFERENCES=references.bib
 BUILD=_build
@@ -24,7 +25,7 @@ $$(INPUT_$(1):%.tex=%.pdf): $$(INPUT_$(1)) heading.tex
 	$$(XELATEX) $$<
 	#TEXMFOUTPUT="./_build:" bibtex $(1)
 	#cp $(REFERENCES) _build/ && cd _build && bibtex $(1)
-	bibtex $(1)
+	#bibtex $(1)
 	$$(XELATEX) $$<
 endef
 
@@ -32,6 +33,7 @@ LECTURES=$(OUT)
 
 $(foreach i,$(LECTURES),$(eval $(call WRAP,$(i)) ) )
 
+celan: clean
 clean:
 	@$(RM) -r _minted* $(BUILD)
 	@$(RM) *.aux *.log *.nav *.out *.snm *.toc *.vrb *.synctex.gz *.bbl *.blg

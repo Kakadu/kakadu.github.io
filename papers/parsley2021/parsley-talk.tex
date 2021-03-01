@@ -1,119 +1,67 @@
-\def\pgfsysdriver{pgfsys-dvipdfm.def} % required for forests inside
+% for images on title page. Should go before \documentclass
+%\def\pgfsysdriver{pgfsys-dvipdfm.def}
+% required for [rememberpicture]
+% FIXME: remove?
+
 \documentclass[aspectratio=169
   , xcolor={svgnames}
   , hyperref={ colorlinks,citecolor=Blue
              , linkcolor=DarkRed,urlcolor=DarkBlue}
+  , usenames, dvipsnames
   , russian
   ]{beamer}
-\usetheme{CambridgeUS}
-\usefonttheme{professionalfonts}
+
 
 \usepackage{pgfpages}
-
-\usepackage{bibentry}
-\usepackage{cite}
-\def\newblock{\hskip .11em plus .33em minus .07em}
-
-\usepackage{framed}
-\input{heading.tex}
-\newcommand{\staged}[1]{{\colorbox{light-gray}{#1}}}
-
-%\lstdefinelanguage{ocamllambda}{
-%keywords={catch, switch, default, case, with, failwith, exit, true, false, ::},
-%sensitive=true,
-%commentstyle=\small\itshape\ttfamily,
-%keywordstyle=\ttfamily\textbf,
-%identifierstyle=\ttfamily,
-%basewidth={0.5em,0.5em},
-%columns=fixed,
-%mathescape=true,
-%fontadjust=true,
-%literate={->}{{$\to$}}3 {===}{{$\equiv$}}1  {Scru}{{$\bullet$}}2,
-%morecomment=[s]{(*}{*)}
+\usepackage{graphicx}   % for \includegraphics{file.pdf}
+%\def\theFancyVerbLine{%
+%  \rmfamily\tiny\arabic{FancyVerbLine}%
+%  {\tikz[remember picture,overlay]\node(minted-\arabic{FancyVerbLine}){};}%
 %}
 
-\usepackage{subcaption}
-\usepackage{etoolbox}
+%\usepackage{bibentry}
+%\usepackage{cite}
+%\def\newblock{\hskip .11em plus .33em minus .07em}
 
+%\usepackage{framed}
+\input{heading}
 
-\usepackage{exercise}
-\usepackage{tikz}
-\usepackage{tikz-qtree}
-\usetikzlibrary{trees}
-\usepackage[edges]{forest}
-\forestset{.style={
-%  for tree={l=1em, l sep=1em, s sep=1em}
-  forked edges,
-    for tree={    grow'=0,    draw,    align=c,    font=\sffamily,
-        rounded corners  }
-  }}
-
-\newcommand{\lstquot}[1]{``\lstinline{#1}''}
-\newcommand{\sembr}[1]{\llbracket{#1}\rrbracket}
+%\newcommand{\lstquot}[1]{``\lstinline{#1}''}
+%\newcommand{\sembr}[1]{\llbracket{#1}\rrbracket}
 %\newcommand\false{$f\!alse$}
 %\newcommand\myif{i\!f}
-  \definecolor{light-gray}{gray}{0.80}
 
-\def\transarrow{\xrightarrow}
-\newcommand{\setarrow}[1]{\def\transarrow{#1}}
 
-\def\padding{\phantom{X}}
-\newcommand{\setpadding}[1]{\def\padding{#1}}
 
-\def\subarrow{}
-\newcommand{\setsubarrow}[1]{\def\subarrow{#1}}
+%\newcommand{\pair}[2]{\inbr{{#1}\mid{#2}}}
+%\newcommand{\inbr}[1]{\left<{#1}\right>}
+%\newcommand{\highlight}[1]{\color{red}{#1}}
 
-\newcommand{\trule}[2]{\dfrac{#1}{#2}}
-\newcommand{\crule}[3]{\dfrac{#1}{#2},\;{#3}}
-\newcommand{\withenv}[2]{{#1}\vdash{#2}}
-\newcommand{\trans}[3]{{#1}\transarrow{\padding{\textstyle #2}\padding}\subarrow{#3}}
-\newcommand{\ctrans}[4]{{#1}\transarrow{\padding#2\padding}\subarrow{#3},\;{#4}}
-\newcommand{\llang}[1]{\mbox{\lstinline[mathescape]|#1|}}
-\newcommand{\pair}[2]{\inbr{{#1}\mid{#2}}}
-\newcommand{\inbr}[1]{\left<{#1}\right>}
-\newcommand{\highlight}[1]{\color{red}{#1}}
-%\newcommand{\ruleno}[1]{\eqno[\scriptsize\textsc{#1}]}
-\newcommand{\ruleno}[1]{\mbox{[\textsc{#1}]}}
-\newcommand{\rulename}[1]{\textsc{#1}}
-\newcommand{\inmath}[1]{\mbox{$#1$}}
-%\newcommand{\lfp}[1]{fix_{#1}}
-%\newcommand{\gfp}[1]{Fix_{#1}}
-\newcommand{\vsep}{\vspace{-2mm}}
-\newcommand{\supp}[1]{\scriptsize{#1}}
-\renewcommand{\sembr}[1]{\llbracket{#1}\rrbracket}
-\newcommand{\cd}[1]{\texttt{#1}}
-%\newcommand{\free}[1]{\boxed{#1}}
-%\newcommand{\binds}{\;\mapsto\;}
-%\newcommand{\dbi}[1]{\mbox{\bf{#1}}}
-%\newcommand{\sv}[1]{\mbox{\textbf{#1}}}
-%\newcommand{\bnd}[2]{{#1}\mkern-9mu\binds\mkern-9mu{#2}}
-%\newcommand{\meta}[1]{{\mathcal{#1}}}
-%\newcommand{\dom}[1]{\mathtt{dom}\;{#1}}
-%\newcommand{\primi}[2]{\mathbf{#1}\;{#2}}
-%\renewcommand{\dom}[1]{\mathcal{D}om\,({#1})}
-%\newcommand{\ran}[1]{\mathcal{VR}an\,({#1})}
-%\newcommand{\fv}[1]{\mathcal{FV}\,({#1})}
-%\newcommand{\tr}[1]{\mathcal{T}r_{#1}}
-\newcommand{\diseq}{\not\equiv}
+%\newcommand{\vsep}{\vspace{-2mm}}
+%\newcommand{\supp}[1]{\scriptsize{#1}}
+%\renewcommand{\sembr}[1]{\llbracket{#1}\rrbracket}
+%\newcommand{\cd}[1]{\texttt{#1}}
+
+%\newcommand{\diseq}{\not\equiv}
 %\newcommand{\reprfunset}{\mathcal{R}}
 %\newcommand{\reprfun}{\mathfrak{f}}
 %\newcommand{\cstore}{\Omega}
 %\newcommand{\cstoreinit}{\cstore_\epsilon^{init}}
 %\newcommand{\csadd}[3]{add(#1, #2 \diseq #3)}  %{#1 + [#2 \diseq #3]}
 %\newcommand{\csupdate}[2]{update(#1, #2)}  %{#1 \cdot #2}
-\newcommand{\primi}[1]{\ensuremath{\mathbf{#1}}}
-\newcommand{\sem}[1]{\llbracket #1 \rrbracket}
-\newcommand{\ir}{\ensuremath{\mathcal{S}}}
-\usepackage{tikz}
-\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
-    \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
+%\newcommand{\primi}[1]{\ensuremath{\mathbf{#1}}}
+%\newcommand{\sem}[1]{\llbracket #1 \rrbracket}
+%\newcommand{\ir}{\ensuremath{\mathcal{S}}}
+%\usepackage{tikz}
+%\newcommand*\circled[1]{\tikz[baseline=(char.base)]{
+%    \node[shape=circle,draw,inner sep=1pt] (char) {#1};}}
 
-\let\emptyset\varnothing
-\let\eps\varepsilon
 
 % for fancy table
 %\newcommand{\lheadl}[2]{\multicolumn{1}{|>{\centering\arraybackslash}m{#1}|}{{#2}}}
-%\newcommand{\head}[2]{\multicolumn{1}{>{\centering\arraybackslash}m{#1}}{\textbf{\small #2}}}
+
+\newcommand{\head}[2]{\multicolumn{1}{>{\centering\arraybackslash}m{#1}}{\textbf{\small #2}}}
+
 %\newcommand{\headll}[2]{\multicolumn{1}{>{\centering\arraybackslash}m{#1}||}{\textbf{\small #2}}}
 %\newcommand{\lheadll}[2]{\multicolumn{1}{|>{\centering\arraybackslash}m{#1}||}{\textbf{\small #2}}}
 %\newcommand{\headl}[2]{\multicolumn{1}{>{\centering\arraybackslash}m{#1}|}{\textbf{\small #2}}}
@@ -121,52 +69,16 @@
 %\newcommand{\nodata}{}
 %\newcommand{\tablenotemark}[1]{#1}
 
-\newcommand{\contributions}{
-\begin{enumerate}
-\item[I] Спроектировали синтез с помощью комбинации \emph{реляционных интерпретаторов} на \miniKanren{}
-\item[II] Заменили $\forall$ на \emph{конечный} набор примеров
-\item[III] Сделали оптимизацию методом ветвей и границ с помощью нового примитива \miniKanren{}: \emph{ограничение на структуру (structural constraint)}
-%\item[IV] Extension of OCanren called \emph{structural constraint}
-\end{enumerate}
-}
+\title{Staged Selective парсер-комбинаторы}
+\subtitle{Staged Selective Parser Combinators}
 
-\title{Реляционный синтез сопоставления с образцом}
-\subtitle{Relational Synthesis for Pattern Matching}
-
-\date{9 ноября 2020}
+\date{1 марта 2021}
 \author{Косарев Дмитрий} 
 \institute[]{\normalfont
-Опубликовано на IFCP 2020}
+По статье <<Staged Selective Parser Combinators>> \\c конференции
+IFCP 2020}
 
 
-\newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}
-\usepackage{verbatimbox}
-
-\forestset{
-    .style={
-        for tree={
-            base=bottom,
-            child anchor=north,
-            align=center,
-            s sep+=1cm,
-    straight edge/.style={
-        edge path={\noexpand\path[\forestoption{edge},thick,-{Latex}] 
-        (!u.parent anchor) -- (.child anchor);}
-    },
-    if n children={0}
-        {tier=word, draw, thick, rectangle}
-        {draw, diamond, thick, aspect=2},
-    if n=1{%
-        edge path={\noexpand\path[\forestoption{edge},thick,-{Latex}] 
-        (!u.parent anchor) -| (.child anchor) node[pos=.2, above] {Y};}
-        }{
-        edge path={\noexpand\path[\forestoption{edge},thick,-{Latex}] 
-        (!u.parent anchor) -| (.child anchor) node[pos=.2, above] {N};}
-        }
-        }
-    }
-}
-  
 \AtBeginSection[]
 {
   \begin{frame}<beamer>
@@ -178,632 +90,423 @@
 {
   \begin{frame}<beamer>
     \frametitle{Оглавление}
-    \tableofcontents[currentsection,currentsubsection]
+    \tableofcontents[ currentsection
+                    , currentsubsection
+                    ]
   \end{frame}
 }
-
 \begin{document}
 
-\begin{frame}[fragile]
-  \begin{tabular}{p{5.5cm} p{5.5cm}}
-   \begin{center}
-%      \includegraphics[height=1.5cm]{pictures/jetbrainsResearch.pdf}
-    \end{center}
-    &
-    \begin{center}
-   %   \includegraphics[height=1.5cm]{pictures/SPbGU_Logo.png}
-    \end{center}
-  \end{tabular}
-  \titlepage
+% Title page 
+\begin{frame}
+   \tikz [overlay] {
+    \node at
+        ([yshift=-10cm,xshift=-2cm]current page.east) 
+        {\includegraphics[height=2cm]{pictures/SPbGU_Logo.png}};
+    \node at
+        ([yshift=-10cm,xshift=2cm]current page.west) 
+        {\includegraphics[height=1.5cm]{pictures/jetbrainsResearch.pdf}};
+   }
+   \titlepage
 \end{frame}
 
 
-%\maketitle
 
 % For every picture that defines or uses external nodes, you'll have to
 % apply the 'remember picture' style. To avoid some typing, we'll apply
 % the style to all pictures.
-\tikzstyle{every picture}+=[remember picture] 
+%\tikzstyle{every picture}+=[remember picture] 
 
 % By default all math in TikZ nodes are set in inline mode. Change this to
 % displaystyle so that we don't get small fractions.
 \everymath{\displaystyle}
-%\begin{comment}
-% Uncomment these lines for an automatically generated outline.
-\begin{frame}{}
-111
-\vspace{1cm}
 
-\result
+\section{Парсер-комбинаторы (кратко)}
+
+%\begin{frame}[fragile]{Парсер-комбинаторы (кратко)}
+%\begin{minted}{haskell}
+%nonzero :: Parser Char 
+%nonzero :: oneOf ['1'..'9']
+%digit :: Parser Char 
+%digit = char '0' <|> nonzero 
+%natural :: Parser Int 
+%natural :: read <$> (nonzero <:> many digit)
+%\end{minted}
+%
+%\begin{minted}{haskell}
+%ident :: Parser String
+%ident = satisfy isAlpha 
+%  <:> many (satisfy alphaNum)
+%\end{minted}
+%\end{frame}
+
+
+\defverbatim[colored]{\haskellPrimA}{
+\begin{minted}{haskell}
+item :: Parser Char 
+item = satisfy (const True)
+char :: Char -> Parser Char 
+char c = satisfy (==c)
+\end{minted}
+}
+\defverbatim[colored]{\haskellPrimB}{
+\begin{minted}{haskell}
+eof :: Parser ()
+eof = notFollowedBy item
+\end{minted}
+}
+
+\begin{frame}[fragile]{Парсер-комбинаторы. Примитивные операции}
+\begin{minted}{haskell}
+satisfy :: (Char -> Bool) -> Parser Char 
+\end{minted}
+\uncover<2->{
+\haskellPrimA
+}
+\begin{minted}{haskell}
+try :: Parser a -> Parser a 
+lookAhead :: Parser a -> Parser a 
+notFollowedBy :: Parser a -> Parser ()
+\end{minted}
+\uncover<2->{
+\haskellPrimB
+}
 \end{frame}
 
-\section{Обзор}
+\begin{frame}[fragile]
+\begin{minipage}{0.65\linewidth}
+\begin{minted}{haskell}
+class Functor (f :: * -> *) where
+  fmap :: (a -> b) -> f a -> f b
 
-\defverbatim[colored]{\matchA}{
-\begin{lstlisting}
-match x,y,z with
-| _,F,T -> 1
-| F,T,_ -> 2
-| _,_,F -> 3
-| _,_,T -> 4
-\end{lstlisting}
-}
+-- application abstracted 
+class Functor f => Applicative f where
+  -- | Lift a value.
+  pure :: a -> f a
+  -- | Sequential application.
+  (<*>) :: f (a -> b) -> f a -> f b
 
-\defverbatim[colored]{\matchB}{
-\begin{lstlisting}
-if x then
-  if y then
-    if z then 4 else 3
-  else
-    if z then 1 else 3
-else
-  if y then 2
-  else
-    if z then 1 else 3
-\end{lstlisting}
-}
-
-\defverbatim[colored]{\matchC}{
-\begin{lstlisting}
-if y then
-  if x then
-    if z then 4 else 3
-  else 2
-else
-  if z then 1 else 3
-\end{lstlisting}
-}
-
-
-\defverbatim[colored]{\forestB}{
-\begin{forest} 
-[\texttt{x}%, tikz={\draw[{Latex}-, thick] (.north) --++ (0,1);}
-    [\texttt{y}
-          [\texttt{z}
-                [4] 
-                [3] 
-            ]   
-         [\texttt{z}
-               [1] 
-               [3] 
-           ]    
-    ]   
-    [\texttt{y}
-        [2] 
-        [\texttt{z}
-            [1] 
-            [3] 
-        ]   
-    ]   
-] 
-\end{forest}
-}
-
-\defverbatim[colored]{\forestC}{
-\begin{forest} 
-[\texttt{y}%, tikz={\draw[{Latex}-, thick] (.north) --++ (0,1);}
-    [\texttt{x}
-          [\texttt{z}
-                [4] 
-                [3] 
-            ]   
-         [2]    
-    ]
-    [\texttt{z}
-               [1] 
-               [3] 
-           ]
-]
-\end{forest}
-}
-
-
-\begin{frame}[fragile]{Пример: использование диаграмм решений}% (1/2)}
-
-\begin{minipage}[t]{0.25\linewidth}
-\begin{minipage}{7cm}
-\matchA
+-- Nondeterminism (or try-catch) abstracted
+class Applicative f => Alternative f where
+  -- | The identity of '<|>'
+  empty :: f a
+  -- | An associative binary operation
+  (<|>) :: f a -> f a -> f a
+\end{minted}
+\end{minipage}\hspace{1cm}
+\begin{minipage}{0.2\linewidth}
+Монад пока нет, это нарочно
 \end{minipage}
-%\caption{Pattern matching}
-\end{minipage}
-\hspace{0.5cm}
-\begin{minipage}[t]{0.32\linewidth}
-\only<1>{\begin{minipage}{7cm}
-\matchB
-\end{minipage}}
-\only<2>{\begin{minipage}{7cm}
-\matchC
-\end{minipage}}
-
-\end{minipage}
-\hspace{0.5cm}
-\begin{minipage}[t]{0.3\linewidth}
-\only<1>{\begin{minipage}{7cm}
-\forestB
-\end{minipage}}
-\only<2>{\begin{minipage}{7cm}
-\forestC
-\end{minipage}}
-\end{minipage}
-%\caption{Pattern matching compilation can be non-trivial (example from~\cite{maranget2008}).}\label{fig:match-example}
 \end{frame}
 
-\defverbatim[colored]{\btCompAone}{
-\begin{lstlisting}[language=ocaml]
 
+\begin{frame}[fragile]
+\begin{block}{\emph{Идея парсер-комбинаторов}}
+Использовать обычные функции, чтобы строить большие парсеры
+\end{block}
+\vspace{1em}
 
-    (switch lx with case []: 1
-      default:     )
-               
-      (switch ly with case []: 2
-        default:     )
-                  
-      (switch lx with
-        case (::):
-          (switch ly with
-            case (::) : 3
-            default:     )
-        default:     )   
-                                
-\end{lstlisting}
-}
+%\uncover<2->{
+\begin{minted}{haskell}
+char :: Char -> Parser Char 
+\end{minted}
+%}
+\newln
+\begin{minted}{haskell}
+sequence :: Applicative f => [f a] -> f [a]
+sequence = foldr (<:>) (pure [])
 
-\defverbatim[colored]{\btCompA}{
-\begin{lstlisting}[language=ocaml]
-catch
-  (catch
-    (switch lx with case []: 1
-      default: exit)
-    with (catch
-      (switch ly with case []: 2
-        default: exit)
-    with (catch
-      (switch lx with
-        case (::):
-          (switch ly with
-            case (::) : 3
-            default: exit)
-        default: exit))))
-with (failwith "Partial match")
-\end{lstlisting}
-}
+traverse :: Applicative f => (a -> f b) -> [a] -> f [b]
+traverse f = sequence . map f  
+\end{minted}
+\newln
 
-
-
-
-
-
-
+%\uncover<2->{
+\begin{minted}{haskell}
+string :: String -> Parser String 
+string = traverse char 
+\end{minted}
+%}
+\newln
+\begin{minted}{haskell}
+string :: String -> Parser String 
+oneOf = foldr (<|>) empty . map char 
+\end{minted}
+%TODO: ещё слайд про предыдущеге из доклада?
+\end{frame}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\section{Заслуги работы}
-
-\section{Превращение монадического парсера в апплкиативный}
+\section{Заслуги работы (библиотеки Parsley)}
 
 
+\begin{frame}{Parsec vs. Parsley} 
+\def\sad{\textcolor{red}{\Huge\faSadTear}}
+\def\yolo{\textcolor{ForestGreen}{\Huge\faGrinStars}}
 
-
-\defverbatim[colored]{\haskellOptZero}{
-\begin{lstlisting}[language=haskell,mathescape=false]
-      (f <$> p) <*> (g <$> q)
-=> 
-      (\x y -> (f x) (g y)) <$> p <*> q
-\end{lstlisting}
-}
-
-\defverbatim[colored]{\haskellOptOne}{
-\begin{lstlisting}[language=haskell,mathescape=false]
-      string "ab"
-      = 
-      char 'a' <:> char 'b' <:> pure []
-=>
-      satisfy (== 'a') *> satisfy (== 'b') $> "ab"
-\end{lstlisting}
-}
-\defverbatim[colored]{\haskellOptTwo}{
-\begin{minted}{haskell}
-string "ab"   ===   char 'a' <:> char 'b' <:> pure []
-\end{minted}      
-}
-\defverbatim[colored]{\haskellOptThree}{
-\mintinline{haskell}{satisfy (== 'a') *> satisfy (== 'b') $> "ab" }
-}
-
-
-
-\begin{frame}{}
-
-Это кусок про optimization and analysis
+\Large 
 \begin{center}
-\mintinline{haskell}{ (f <$> p) <*> (g <$> q) } 
-
-{\Large $\Downarrow$}
-
-\mintinline{haskell}{(\x y -> (f x) (g y)) <$> p <*> q }
-
+\renewcommand{\arraystretch}{2}
+\begin{tabular}{c|cp{2cm}cccc}
+ & Performance & Error messages & Grammar & Debugging & Analysis  \\
+\hline
+Parsec & \Huge \faMeh & \head{2cm}{\Huge \faMeh} & \yolo & \sad & \sad \\
+\pause
+Parsley &\Huge  \faGood & \head{2cm}{\Huge 404} & \yolo & \yolo & \Huge  \faGood \\
+\end{tabular}
+\renewcommand{\arraystretch}{1}
 \end{center}
-
-\begin{center}
-\begin{minipage}{10cm}
-
-\begin{minipage}{10cm}
-\haskellOptTwo
-\end{minipage}
- 
-\begin{center}
-{\Large $\Downarrow$}
-\end{center}
-
-%\mintinline{haskell}{ satisfy (== 'a') *> satisfy (== 'b') $> "ab" }
-\begin{minipage}{10cm}
-\haskellOptThree
-\end{minipage}
-\end{minipage}
-\end{center}
+\pause
+\newln 
+Как этого удалось добиться? \emph{Метапрограммирование!} (Typed Template \Haskell{})
 \end{frame}
 
+%\begin{frame}[fragile]{11}
+%\includegraphics[page=0]{pipeline}
+%
+%TODO: слайд с примером
+%\end{frame}
 
-\section{Parsec vs Parsley} 
 
-\begin{frame}{Parsec vs Parsley} 
-\begin{tabular}{|c|c|c|c|c|c|}
-\hline
- &  &  &  &  &  \\
-\hline
- &  &  &  &  &  \\
-\hline
-\end{tabular} 
-\end{frame}
+\section{Monads  и Selectives}
+\input{02selectives.tex}
 
-  %  \includepdf[page={1}]{pipeline}
-    
-\begin{frame}[fragile]{}
-\includegraphics[page=2]{pipeline}
 
-\begin{minted}{haskell}
-newtype Fix (syn :: (* -> *) -> (* -> *)) (a :: *) where 
-  In :: syn (Fix syn) a -> Fix syn a
 
-newtype Parser a = Parser (Fix ParserF a)
-data ParserF (k :: ∗ -> ∗) (a :: ∗) where
-  Pure :: a -> ParserF k a
-  Satisfy :: (Char -> Bool) -> ParserF k Char
-  Try :: k a -> ParserF k a
-  Look :: k a -> ParserF k a
-  NegLook :: k () -> ParserF k ()
-  (:<*>:) :: k (a -> b) -> k a -> ParserF k b
-  (:*>:) :: k a -> k b -> ParserF k b
-  (:<*:) :: k a -> k b -> ParserF k a
-  (:<|>:) :: k a -> k a -> ParserF k a
-  Empty :: ParserF k a
-  Branch :: k (Either x y) -> k (x -> a) -> k (y -> a) -> ParserF k a
-\end{minted}
-\end{frame}
+\section{Превращение монадического парсера в аппликативный}
+\input{03conversion}
 
+\section{Законы}
 
 
 \defverbatim[colored]{\lawApp}{
 \begin{minted}{haskell}
-pure id <*> p = p  -- (1)
-pure f <*> pure x = pure (f x)  -- (2)
-u <*> pure x = pure (λf -> f x) <*> u -- (3)
-u <*> (v <*> w) = pure (.) <*> u <*> v <*> w -- (4)
+    pure id <*> p = p                          -- (1)
+pure f <*> pure x = pure (f x)                 -- (2)
+     u <*> pure x = pure (λf -> f x) <*> u     -- (3)
+  u <*> (v <*> w) = pure (.) <*> u <*> v <*> w -- (4)
 \end{minted}
 }
-
-\begin{frame}[fragile]
-\includegraphics[page=3]{pipeline}
-
-\begin{minted}{haskell}
-string :: String -> Parser String
-string = traverse char
-\end{minted}
-
-
-\begin{minted}{haskell}
-string "ab"
--- urolling
-pure (:) <*> char 'a' <*> (pure (:) <*> char 'b' <*> pure [])
--- Applicative fusion optimizations ....
-satisfy (== 'a') *> satisfy (== 'b') *> pure "ab"
-\end{minted}
-%\mintinline{haskell}{string "ab"}
-%
-%{\Large $\Downarrow$}
-%
-%\mintinline{haskell}{pure (:) <*> char 'a' <*> (pure (:) <*> char 'b' <*> pure []).}
-
-\begin{center}
-\begin{minipage}{50cm}
-Законы аппликативов
-\lawApp
-\end{minipage}
-\end{center}
-\end{frame}
-
 
 \defverbatim[colored]{\lawAlt}{
 \begin{minted}{haskell}
 (p <|> q) <|> r = p <|> (q <|> r) -- (5)
-empty <|> p = p <|> empty = p -- (6)
-empty <*> p = empty -- (7)
-pure x <|> p = pure x -- (8)
+    empty <|> p = p <|> empty = p -- (6)
+    empty <*> p = empty           -- (7)
+   pure x <|> p = pure x          -- (8)
 \end{minted}
 }
 
 \defverbatim[colored]{\lawSelParser}{
 \begin{minted}{haskell}
-branch (pure (Left x)) p q = p <*> pure x -- (9)
-branch (pure (Right y)) p q = q <*> pure y -- (10)
-branch b (pure f) (pure g) = pure (either f g)<*>b -- (11)
-branch (x ∗> y) p q = x ∗ŋ branch y p q -- (12)
-branch b p empty = branch (pure swap <*> b) empty p -- (13)
+branch (pure (Left  x)) p q = p <*> pure x                     -- (9)
+branch (pure (Right y)) p q = q <*> pure y                     -- (10)
+branch b (pure f) (pure g)  = pure (either f g) <*> b          -- (11)
+        branch (x *> y) p q = x *> branch y p q                -- (12)
+           branch b p empty = branch (pure swap <*> b) empty p -- (13)
 
-branch (branch b empty (pure f)) empty k = branch (pure g <*> b) empty k where
-g = either (const (Left ())) (either (const (Left ())) Right · f) -- (14)
+branch (branch b empty (pure f)) empty k = branch (pure g <*> b) empty k 
+  where
+    g = either (const (Left ())) (either (const (Left ())) Right. f) -- (14)
 \end{minted}
 }
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\defverbatim[colored]{\haskellLetZero}{
-\begin{lstlisting}[language=haskell]
-many :: Parser a -> Parser a 
-many p = (p <:> many p) <|> (pure p)
-\end{lstlisting}
-}
 
-\defverbatim[colored]{\haskellLetOne}{
-\begin{lstlisting}[language=haskell]
-many :: Parser a -> Parser a 
-many p = 
-  let go = (p <:> many p) <|> (pure p) 
-  go 
-\end{lstlisting}
-}
-
-\begin{frame}{Вставка let}
-\includegraphics[page=3]{pipeline}
-
-
-\haskellLetZero
-\haskellLetOne
-\end{frame}
-
-
-\begin{frame}{Различные анализы}
-\includegraphics[page=3]{pipeline}
-\begin{itemize}
-\item Cut 
-\begin{itemize}
-\item TODO
-\end{itemize}
-\item Termination
-\begin{itemize}
-\item Анализ точный для КС-грамматик и наивных аппликатиных парсеров
-\item В остальных случаях анализ неточный и ложные срабатывания игнорируются
-\end{itemize}
-\end{itemize}
-\end{frame}
-
-
-
-
-\begin{frame}[fragile]{}
-Сказать про CPS, и так как у нас нет монады и КЗ, то обходимся стековой машиной
-
+\begin{frame}[fragile]{Законы Applicative}
+\setminted{fontsize=\large,baselinestretch=1}
 \begin{minted}{haskell}
-data M (k :: [*] -> * -> * -> *) (xs :: [*]) (r :: *) (a :: *) where
-  Halt :: M k [a] Void a
-  Push :: x -> k (x : xs) r a -> M k xs r a
-  Pop  :: k xs r a -> M k (x : xs) r a
-  ...
-\end{minted}
-
-\begin{itemize}
-\item \mintinline{haskell}{k} is the same as in the combinator tree, it represents the shape of
-the values contained within each node (often Fix M); 
-\item \mintinline{haskell}{xs} is a type-level list representing the types of
-the values required on the stack upon entry to the given instruction
-\item \mintinline{haskell}{r} represents what type the
-machine returns to the caller in the case that this is a recursive call
-\item \mintinline{haskell}{a} the final "goal" of
-the machine, in other words it directly corresponds to the type of the top-level parser that was
-compiled to generate this machine.
-\end{itemize}
-\end{frame}
+-- application abstracted 
+class Functor f => Applicative f where
+    -- | Lift a value.
+    pure :: a -> f a
+    -- | Sequential application.
+    (<*>) :: f (a -> b) -> f a -> f b
 
 
-\begin{frame}[fragile]{Компиляция (1/n)}
-\begin{minted}{haskell}
-compile :: Fix ParserF a -> Fix M [ ] Void a
-compile = cata compAlg halt
-type CodeGen a x = forall xs r . Fix M (x : xs) r a -> Fix M xs r a
-compAlg :: ParserF (CodeGen a) x -> Fix M (x : xs) r a -> Fix M xs r a
-compAlg (Pure x) = push x
-compAlg (p :*>: q) = p . pop . q
-compAlg (p :<*: q) = p . q . pop
+
+    pure id <*> p = p                          -- (1)
+pure f <*> pure x = pure (f x)                 -- (2)
+     u <*> pure x = pure (λf -> f x) <*> u     -- (3)
+  u <*> (v <*> w) = pure (.) <*> u <*> v <*> w -- (4)
 \end{minted}
 \end{frame}
 
-\begin{frame}[fragile]{Компиляция (2/n)}
+
+
+\begin{frame}[fragile]{Законы Selective}
+\setminted{fontsize=\large,baselinestretch=1}
 \begin{minted}{haskell}
-data M (k :: [*] -> * -> * -> *) (xs :: [*]) (r :: *) (a :: *) where
-  ...
-  Lift2 :: (x -> y -> z) -> k (z : xs) r a -> M k (y : x : xs) r a
-  Swap :: k (x : y : xs) r a -> M k (y : x : xs) r a
-  
-app = lift2 id
-compAlg (pf :<*>: px) = pf . px . app
-
+-- case expression abstracted
+class Applicative f => Selective f where
+  branch :: f (Either a b) -> f (a -> c) -> f (b -> c) -> f c
 \end{minted}
-\end{frame}
-
-\begin{frame}[fragile]{Компиляция (1/n). Selectives }
-\begin{minted}{haskell}
-data M (k :: [*] -> * -> * -> *) (xs :: [*]) (r :: *) (a :: *) where
-  ...
-  Case :: k (x : xs) r a -> k (y : xs) r a -> M k (Either x y : xs) r a
-  
-compAlg (Branch b l r) = λk -> b (case (l (swap (app k))) (r (swap (app k))))
-
-\end{minted}
-\end{frame}
-
-\begin{frame}[fragile]{Компиляция (1/n). Alternatives}
-TODO: рассказать про две реализации alternative выше
-TODO: сказать про второй стек
-\begin{minted}{haskell}
-data M (k :: [*] -> * -> * -> *) (xs :: [*]) (r :: *) (a :: *) where
-  ...
-  Fail :: M k xs r a
-  Catch :: k xs r a -> k (String : xs) r a -> M k xs r a
-  Commit :: k xs r a -> M k xs r a
-  
-handle :: (Fix M xs r a -> Fix M (x : xs) r a) -> Fix M (String : xs) r a
-  -> Fix M (x : xs) r a -> Fix M xs r a
-handle p h k = catch (p (commit k)) h
-compAlg (p :<|>: q) = λk -> handle p (parsecHandle (q k)) k
-compAlg Empty = const fail
-\end{minted}
-\end{frame}
-
-\begin{frame}[fragile]{Компиляция (1/n). Primitive instructions}
+%\begin{lstlisting}[language=haskell]
+\newln 
 
 \begin{minted}{haskell}
-data M k (xs :: [*]) r a where
-  ...
-  Sat :: (Char -> Bool) -> k (Char : xs) r a -> M k xs r a
-  Tell :: k (String : xs) r a -> M k xs r a
-  Seek :: k xs r a -> M (String : xs) r a
-  Ret :: M k [r] r a
-  Call :: MuVar x -> k (x : xs) r a -> M k xs r a
-
-compAlg (Satisfy p) = sat p
-compAlg (Try p) = handle p (seek fail)
-compAlg (Look p) = tell . p . swap . seek
-compAlg (Let μ) = call μ
-
+branch (pure (Left  x)) p q = p <*> pure x                     -- (9)
+branch (pure (Right y)) p q = q <*> pure y                     -- (10)
+branch b (pure f) (pure g)  = pure (either f g) <*> b          -- (11)
+        branch (x *> y) p q = x *> branch y p q                -- (12)
+           branch b p empty = branch (pure swap <*> b) empty p -- (13)
+           
+branch (branch b empty (pure f)) empty k = 
+      branch (pure g <*> b) empty k  -- (14)
+  where
+    g = either (const (Left ())) (either (const (Left ())) Right. f) 
 \end{minted}
-\end{frame}
-
-\begin{frame}[fragile]{}
-\includegraphics[page=5]{pipeline}
-\begin{itemize}
-\item Join points ($\varphi$-узлы) 
-\begin{minted}{haskell}
-compAlg (p :<|>: q) = λk -> handle p (parsecHandle (q k)) k
-\end{minted}
-Решается с помощью специальной инструкции машины \mintinline{haskell}{Join}, которая вставляется после 
-\mintinline{haskell}{Case} и \mintinline{haskell}{Catch}
-\item TCO
-\begin{itemize}
-\item Достигается введением инструкций \mintinline{haskell}{Jump} и \mintinline{haskell}{Call}
-\end{itemize}
-\item Deep inspection (via histomoprhism)
-\end{itemize}
-
-%\begin{itemize}
-%\item Cut 
-%\begin{itemize}
-%\item TODO
-%\end{itemize}
-%\item Termination
-%\begin{itemize}
-%\item Анализ точный для КС-грамматик и наивных аппликатиных парсеров
-%\item В остальных случаях анализ неточный и ложные срабатывания игнорируются
-%\end{itemize}
-%\end{itemize}
-\end{frame}
-
-\begin{frame}{Consumption analysis revisited}
+%\end{lstlisting}
 
 \end{frame}
 
 
-\begin{frame}[fragile]{Staging}
-\begin{figure}[ht]
-\begin{subfigure}[t]{.59\textwidth}
-Обычная функция возведения в степень
+\begin{frame}[fragile]{Законы Alternative}
+\setminted{fontsize=\large,baselinestretch=1}
 \begin{minted}{haskell}
-power :: Nat -> (Int -> Int)
-power 0 = λx -> 1
-power n = λx -> x * power (n - 1) x
+-- Nondeterminism (or try-catch) abstracted
+class Applicative f => Alternative f where
+  -- | The identity of '<|>'
+  empty :: f a
+  -- | An associative binary operation
+  (<|>) :: f a -> f a -> f a
+
+
+
+(p <|> q) <|> r = p <|> (q <|> r) -- (5)
+    empty <|> p = p <|> empty = p -- (6)
+    empty <*> p = empty           -- (7)
+   pure x <|> p = pure x          -- (8)
 \end{minted}
-Staged функция, где степень известна \emph{статически}, а основание -- динамически
+\end{frame}
+
+
+
+\begin{frame}[fragile]{Законы парсеров}
+\setminted{fontsize=\large,baselinestretch=1}
 \begin{minted}{haskell}
-power_ :: Nat -> Code (Int -> Int)
-power_ 0 = [| λx -> 1 |]
-power_ n = [| λx -> x * $(power_ (n-1)) |]
+try (satisfy f) = satisfy f -- (15)
+try (negLook p) = negLook p -- (16)
+
+look empty       = empty    -- (17)
+look (pure x)    = pure x   -- (18)
+negLook empty    = pure ()  -- (19)
+negLook (pure x) = empty    -- (20)
+
+look (look p)       = look p                       -- (21)
+look p <|> look q   = look (try p <|> q)           -- (22)
+negLook (negLook p) = look p                       -- (23)
+look (negLook p)    = negLook (look p) = negLook p -- (24)
+-- de Morgan law where *> is conjunction
+negLook (try p <|> q)   = negLook p *> negLook q     -- (25)
+negLook p <|> negLook q = negLook (look p *> look q) -- (26)
 \end{minted}
-\end{subfigure}
-\hspace{.1\textwidth}
-\begin{subfigure}[t]{.29\textwidth}
-Quoting vs. splicing 
-\vspace{1em}
+\end{frame}
 
-Если \verb=x :: a= то \verb=[|x|] :: Code a= 
-\vspace{1em}
+\section{Реализация}
+\input{05impl}
 
-и если  \verb=qx :: Code a=, то \verb=$(qx) :: a=.
+%
+\begin{frame}[fragile]{Замеры производительности}
+\includegraphics[scale=.6]{pictures/benchmark1Screen.png}
+\end{frame}
 
-\end{subfigure}
-\end{figure}
+\begin{frame}[fragile]
 \begin{center}
-\begin{minipage}{10cm}
-\begin{minted}{haskell}
-power5 = $(power_ 5)
-       = $([| λx -> x * x * x * x * x * 1 |])
-       = λx -> x * x * x * x * x * 1
-\end{minted}
-\end{minipage}
+\includegraphics[scale=.5]{pictures/benchmark2Screen.png}
 \end{center}
 \end{frame}
-
-
-\begin{frame}[fragile]{Staging}
-
-
-
-\begin{minted}[escapeinside=!!]{haskell}
-type Eval' xs r a = Code !\staged{(Γ xs r a -> Maybe a)}!
-\end{minted}
-
-\end{frame}
-
-
-\begin{frame}{Заслуги работы}
-\Large
-%\contributions
-\end{frame}
-
 
 
 \section{Заключение}
 
-\begin{frame}{Результаты}
-Достижения: \contributions
-\vspace{1em}
-
-\end{frame}
-
-
-\begin{frame}{Пути дальнейшего улучшения}
+\begin{frame}{Заключение}
+\Large
+Достижения:
 \begin{itemize}
-\item 1
+\item Оптимизированная библиотека персер-комбинаторов с отличной производительностью
 \end{itemize}
+
+Задачи на будущее:
+\begin{itemize}
+\item Обработка ошибок
+\item Обход недостатков из-за отсутствия монад:
+\begin{itemize}\large
+\item Доступ к предыдущим результатам парсинга (например, через "регистры"~\cite{berlin2020})
+\end{itemize}
+\end{itemize}
+
 \end{frame}
 
-\begin{frame}
-\begin{center}
-{\Huge Спасибо!}
-\end{center}
-\end{frame}
+%\begin{frame}{Пути дальнейшего улучшения}
+%\begin{itemize}
+%\item 1
+%\end{itemize}
+%\cite{demos}
+%\end{frame}
+
+%\begin{frame}
+%\begin{center}
+%{\Huge Спасибо!}
+%\end{center}
+%\end{frame}
 
 
-\begin{frame}%[t, allowframebreaks]
-\frametitle{Литература}
-\bibliographystyle{amsalpha}
-\bibliography{references}
-\vspace{1cm}
-\end{frame}
+%\begin{frame}%[t, allowframebreaks]
+%\frametitle{Литература}
+%\bibliographystyle{amsalpha}
+%\bibliography{references}
+%\vspace{1cm}
+%\end{frame}
+
+\begin{frame}[allowframebreaks]
+\frametitle<presentation>{Ссылки}
+\begin{thebibliography}{10}
+
+  \bibitem{icfp2020}
+    Staged Selective Parser Combinators
+    \newblock {\em Jamie Willis \& Nicolas Wu \& Matthew Pickering}
+    \newblock \url{https://doi.org/10.1145/3409002}
+
+  \bibitem{berlin2020}
+    Garnishing Parsec With Parsley: A Staged Selective Parser Combinator Library
+    \newblock {\em Jamie Willis}
+    \newblock \url{https://www.youtube.com/watch?v=tJcyY9L2z84}
+
+
+  \bibitem{selective}
+     Selective Applicative Functors
+    \newblock {\em Andrey Mokhov \& Georgy Lukyanov \& Simon Marlow \& Jeremie Dimino}
+    \newblock \url{https://doi.org/10.1145/3341694}
+ 
+  \bibitem{cuts}
+    Библиотека FastParse для Scala
+    \newblock \href{https://webcache.googleusercontent.com/search?q=cache:WSoAEDqEOakJ:https://www.lihaoyi.com/fastparse/}{Documentation}
+   
+  \bibitem{trylookahead}
+    Try vs. lookahead
+    \newblock \url{https://stackoverflow.com/questions/20020350}
+    
+%  \bibitem{gerasimov}
+%     Курс математической логики и теории вычислимости
+%     \newblock {\em Герасимов А.С.}     
+%     \newblock \href{https://www.mccme.ru/free-books/gerasimov-3ed-mccme.pdf}{PDF}
+%
+%  \bibitem{}
+%    A Tutorial Introduction to the Lambda Calculus
+%    \newblock {\em Ra\'ul Rojas}     
+%    \newblock \href{https://www.inf.fu-berlin.de/lehre/WS03/alpi/lambda.pdf}{PDF}
+%
+%  \bibitem{sicp}
+%    Structure and Interpretation of Computer Programs
+%    \newblock {\em Abelson, Harold and Sussman, Gerald Jay and {with~Julie~Sussman}}     
+%    \newblock \href{https://web.mit.edu/alexmv/6.037/sicp.pdf}{PDF}
+%
+%  \bibitem{olegSKI}
+%    λ to SKI, Semantically (Declarative Pearl)
+%    \newblock {\em Oleg Kiselyov}
+%    \newblock \href{http://okmij.org/ftp/tagless-final/ski.pdf}{PDF}
+    
+\end{thebibliography}
+ \end{frame}
+
+
 
 \end{document}
