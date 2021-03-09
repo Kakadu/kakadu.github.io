@@ -9,3 +9,5 @@
 - [Deep Dive into the Burst Compiler](https://www.youtube.com/watch?v=QkM6zEGFhDY) talk by Alexandre Mutel 
 
   $performance $csharp $unity $gamedev
+
+- [The next Haskell will be strict](https://news.ycombinator.com/item?id=1924061) by SPJ (POPL 2003 ?)
