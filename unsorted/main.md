@@ -12,6 +12,9 @@
 
 - [The next Haskell will be strict](https://news.ycombinator.com/item?id=1924061) by SPJ (POPL 2003 ?)
 
+- [Making pointer-based data structures cache conscious](https://ieeexplore.ieee.org/document/889095)
+
+- "Semantics with applications" book
 
 
 ## TV shows to watch 
