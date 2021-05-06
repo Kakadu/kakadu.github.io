@@ -16,6 +16,9 @@
 
 - "Semantics with applications" book
 
+- https://gankra.github.io/blah/text-hates-you/
+- https://lord.io/text-editing-hates-you-too/
+- 
 
 ## TV shows to watch 
 
