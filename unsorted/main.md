@@ -26,6 +26,9 @@
 - http://lambda-the-ultimate.org/node/5043
 - http://refal.net/zashchita.html
 - https://www.quora.com/What-are-Zygohistomorphic-prepromorphisms-and-how-are-they-used
+- https://github.com/cohomolo-gy/Isomorphic-Reasoning
+- https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/
+- https://stackoverflow.com/questions/32576956/how-do-i-show-that-a-haskell-type-is-inhabited-by-one-and-only-one-function
 
 ## TV shows to watch 
 
