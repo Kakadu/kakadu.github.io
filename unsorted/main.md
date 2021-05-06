@@ -25,6 +25,7 @@
 - [An alternative prolog search strategy](https://dl.acm.org/doi/10.1145/67312.67339)
 - http://lambda-the-ultimate.org/node/5043
 - http://refal.net/zashchita.html
+- https://www.quora.com/What-are-Zygohistomorphic-prepromorphisms-and-how-are-they-used
 
 ## TV shows to watch 
 
