@@ -18,6 +18,9 @@
 
 - https://gankra.github.io/blah/text-hates-you/
 - https://lord.io/text-editing-hates-you-too/
+- https://blog.ielliott.io/topsy-turvy-reverse-state/
+- https://blog.ielliott.io/on-programming-language-design/
+- https://blog.ielliott.io/comonad-transformers-in-the-wild/
 - 
 
 ## TV shows to watch 
