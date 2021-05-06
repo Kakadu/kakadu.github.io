@@ -29,6 +29,8 @@
 - https://github.com/cohomolo-gy/Isomorphic-Reasoning
 - https://vorpus.org/blog/notes-on-structured-concurrency-or-go-statement-considered-harmful/
 - https://stackoverflow.com/questions/32576956/how-do-i-show-that-a-haskell-type-is-inhabited-by-one-and-only-one-function
+- https://tonsky.livejournal.com/322450.html
+
 
 ## TV shows to watch 
 
