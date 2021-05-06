@@ -21,7 +21,10 @@
 - https://blog.ielliott.io/topsy-turvy-reverse-state/
 - https://blog.ielliott.io/on-programming-language-design/
 - https://blog.ielliott.io/comonad-transformers-in-the-wild/
-- 
+- https://maartenfokkinga.github.io/utwente/
+- [An alternative prolog search strategy](https://dl.acm.org/doi/10.1145/67312.67339)
+- http://lambda-the-ultimate.org/node/5043
+- http://refal.net/zashchita.html
 
 ## TV shows to watch 
 
