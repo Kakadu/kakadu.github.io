@@ -1,0 +1,52 @@
+---
+layout: post
+title:  "Talks (доклады)"
+date:   2021-06-01 13:57:56 +0300
+categories: teaching
+---
+
+This is a list of talks I prepared during last years.
+
+In english:
+
+* "Typed embedding of a relational language in OCaml" (ML Workshop 2016) [on youtube][ocanren-2016]
+
+In russian during seminar of our lab :
+
+* Parsley (2021)
+* "Pattern mathcing compilation via relational programming" (2020)
+* "Retrofitting parallelism onto OCaml" (2020)
+* delimCC (2019)
+* Yoneda lemma (2019)
+* Register allocation via puzzle solving (2019)
+* copattern mathcing (2018)
+
+In russian:
+
+* About "Relational programming in OCaml" (during PLC2017 conference, Rostov-on-don, Russia)
+* About ocsigen on IT Meetup 2018
+* "Pure functional data structures" (for students in 2019)
+* "Pure functional data structures" (for students in 2020)
+
+
+
+You’ll find this post in your `_posts` directory. Go ahead and edit it and re-build the site to see your changes. You can rebuild the site in many different ways, but the most common way is to run `jekyll serve`, which launches a web server and auto-regenerates your site when a file is updated.
+
+To add new posts, simply add a file in the `_posts` directory that follows the convention `YYYY-MM-DD-name-of-post.ext` and includes the necessary front matter. Take a look at the source for this post to get an idea about how it works.
+
+Jekyll also offers powerful support for code snippets:
+
+{% highlight ruby %}
+def print_hi(name)
+  puts "Hi, #{name}"
+end
+print_hi('Tom')
+#=> prints 'Hi, Tom' to STDOUT.
+{% endhighlight %}
+
+Check out the [Jekyll docs][jekyll-docs] for more info on how to get the most out of Jekyll. File all bugs/feature requests at [Jekyll’s GitHub repo][jekyll-gh]. If you have questions, you can ask them on [Jekyll Talk][jekyll-talk].
+
+[jekyll-docs]: https://jekyllrb.com/docs/home
+[jekyll-gh]:   https://github.com/jekyll/jekyll
+[jekyll-talk]: https://talk.jekyllrb.com/
+[ocanren-2016]: https://youtu.be/tZm4b14_tZs?list=PLnqUlCo055hX_BCFl3kLW1bB9Mp4wZACc
