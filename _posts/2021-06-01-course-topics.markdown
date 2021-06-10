@@ -12,3 +12,7 @@ categories: teaching
 * Active patterns for OCaml
 * Транслятор OCaml в Lua
 * Про Qt/QML
+* Remake Turbo Vision
+    * для 2го курса
+    * Тема нужна для обучения проектированию GUI рективным способом.
+    * предлагается взять OCaml+ncurses+[notty](https://github.com/pqwy/notty) и сделать поделку в стиле [Borland Turbo Vision](https://github.com/magiblot/tvision)

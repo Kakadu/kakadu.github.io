@@ -21,3 +21,10 @@ celan: clean
 
 clean:
 	$(RM) $(FILES_OUT)
+
+.PHONY: deps watch
+deps:
+	GEM_HOME=$(HOME)/.gem bundle install
+
+watch:
+	bundle exec jekyll serve --livereload
