@@ -24,7 +24,10 @@ clean:
 
 .PHONY: deps watch
 deps:
+	sudo apt install ruby-dev ruby-ffi ruby-http-parser
+	GEM_HOME=$(HOME)/.gem gem install bundler jekyll
 	GEM_HOME=$(HOME)/.gem bundle install
+	
 
 watch:
-	bundle exec jekyll serve --livereload
+	GEM_HOME=$(HOME)/.gem bundle exec jekyll serve --livereload
