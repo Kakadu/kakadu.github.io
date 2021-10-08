@@ -33,6 +33,8 @@
 - https://habr.com/ru/post/469441/
 
   #language-flame-wars
+  
+- [bondage-and-discipline language](http://catb.org/~esr/jargon/html/B/bondage-and-discipline-language.html)
 
 ## TV shows to watch 
 
