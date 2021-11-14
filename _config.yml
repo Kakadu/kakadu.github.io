@@ -29,7 +29,11 @@ github_username:  Kakadu
 markdown: kramdown
 theme: minima
 plugins:
-  - jekyll-feed
+  - jekyll-feed # https://github.com/jekyll/jekyll-feed
+
+feed:
+  categories:
+    - english
 
 # Exclude from processing.
 # The following items will not be processed, by default. Create a custom list
