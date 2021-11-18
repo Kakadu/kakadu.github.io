@@ -207,7 +207,7 @@
 $$
 a_i = t_i + c_i - \bar{c}_i
 $$
-где $c_i$~--- размер кредита, выделяемого операцией $i$, а $\bar{c}_i$~---
+где $t_i$~--- реальная стоимость, $c_i$~--- размер кредита, выделяемого операцией $i$, а $\bar{c}_i$~---
 размер кредита, расходуемого операцией $i$.
 %
 %
@@ -225,8 +225,11 @@ $$
 \item Каждая единица кредита должна быть выделена, прежде чем  израсходована
 \item Нельзя расходовать кредит дважды
 \end{itemize}
+\vspace{1em}
+
 Таким образом, $\sum c_i \ge \sum \bar{c}_i$, а
 следовательно, как и требуется, $\sum a_i \ge \sum t_i$.
+
 
 %Как правило,
 %доказательства с использованием метода банкира определяют
@@ -291,11 +294,11 @@ $$
 
 
 \begin{frame}[fragile]{Чисто функциональные очереди}
-\begin{minipage}{.4\textwidth}
+\begin{minipage}{.49\textwidth}
 Интерфейс:
 \begin{itemize}
 \item \mlinline{empty: queue -> bool}
-\item \mlinline{enqueue*int -> queue}\\
+\item \mlinline{enqueue: queue * int -> queue}\\
 добавление в очередь
 \item \mlinline{head: queue -> int}\\
 посмотреть на головной элемент
@@ -303,7 +306,7 @@ $$
 изъять головной элемент
 \end{itemize}
 \end{minipage}
-\begin{minipage}{.55\textwidth}
+\begin{minipage}{.5\textwidth}
   Самая распространенная чисто функциональная реализация очередей
   представляет собой пару списков, \mlinline{f} и \mlinline{r}, 
   \begin{itemize}
@@ -312,9 +315,9 @@ $$
   \end{itemize}
   \vspace{1em}
   
-  Например, очередь, содержащая целые числа \mlinline{f=[1,2,3,4,5,6]}, может быть
-  представлена списками \mlinline{f=[1,2,3]} и
-  \mlinline{r=[6,5,4]}.
+  Например, очередь, содержащая целые числа \mlinline{f=[1;2;3;4;5;6]}, может быть
+  представлена списками \mlinline{f=[1;2;3]} и
+  \mlinline{r=[6;5;4]}.
 \end{minipage}
 \end{frame}
 
@@ -366,8 +369,9 @@ $$
 \begin{itemize}
 \item Если  \mlinline{f} пуст -- ошибка
 \item Если \mlinline{f} состоит из одного элемента \mlinline{x}, то возвращаем пару из  \mlinline{reverse(r)} и пустого списка
-\item Если \mlinline{f} состоит из головного элемента \mlinline{x} и хвоста \mlinline{tl}, то возвращаем пару \mlinline{reverse(r)} и списка \mlinline{tl}
+\item Если \mlinline{f} состоит из головного элемента \mlinline{x} и хвоста \mlinline{tl}, то возвращаем пару \mlinline{tl} и списка \mlinline{r}
 \end{itemize}
+\vspace{1em}
 
 Функции
 \mlinline{enqueue} и \mlinline{head} всегда завершаются за время
@@ -442,7 +446,7 @@ $O(1)$, но \mlinline{tail} в худшем случае отнимает $O(n)
 
 \begin{frame}{Улучшаем: banker's queue}
 \begin{remark}
-Эта реализация будет работать за амортизированную $O(1)$ и быть устойчивой
+Эта реализация будет работать за амортизированную $O(1)$ и будет устойчивой
 \end{remark}
 
 
@@ -451,6 +455,7 @@ $O(1)$, но \mlinline{tail} в худшем случае отнимает $O(n)
 \item Явно храним длины
 \item Инвариант: $\card{f}>\card{r}$
 \end{enumerate}
+\vspace{1em}
 
 В момент, когда потоки сравняются под длине конструируем новый $f$ как $f \concat reverse(r)$. \vspace{1em}
 
@@ -478,23 +483,28 @@ $O(1)$, но \mlinline{tail} в худшем случае отнимает $O(n)
 
 \begin{frame}{Real-time queue}
 Вспоминаем очередь банкира: там мы полагались на вычисление 
-\mlinline{f ++ reverse (r)}
+$f \mdoubleplus reverse (r)$
 
 Теперь будет использовать для этого специальную функцию \mlinline{rotate}
 
 \[
 rotate (f, r, a) =  f \mdoubleplus reverse(r) \mdoubleplus a
 \]
-Третий параметр -- аккумулятор, будет хранить частичные результаты \mlinline{reverse(r)}. Очевидно, что 
+Третий параметр -- аккумулятор, будет хранить частичные результаты $reverse(r)$. 
+\vspace{1em}
+
+Очевидно, что 
 \[
   rotate (f, r, \$Nil) =  f \mdoubleplus reverse(r)
 \]
 \end{frame}
 
 \begin{frame}{Когда перестраиваем очередь?}
-Будем перестраивать очередь, когда $\card{R}\ =\ \card{F} +\ 1$. Это будет сохраняться на всём протяжении перестроения\\
+Будем перестраивать очередь, когда $\card{R}\ =\ \card{F} +\ 1$. Это соотношение будет сохраняться на всём протяжении перестроения\\
 
-База индукции
+Докажем соотношение индукцией по длине фронта $\card{F}$.\\
+
+База:
 \begin{equation*}
 \begin{split}
 rotate (\nil, \cons{y}{\nil}, a) 
@@ -503,7 +513,7 @@ rotate (\nil, \cons{y}{\nil}, a)
 \end{split}
 \end{equation*}
 
-Переход
+Переход:
 \begin{equation*}
 \begin{split}
 rotate (\cons{x}{f}, \cons{y}{r}, a) 
@@ -534,12 +544,17 @@ $rotate$ выполняет константное количество вычи
 \def\invariant{$\card{s}\ \equiv\ \card{f}-\card{r}$}
 \def\rotate{\ensuremath{rotate}}
 
-\begin{frame}{Тип данных для очередей реального времени}
+\begin{frame}[fragile]{Тип данных для очередей реального времени}
+
+%\begin{minted}{ocaml} 
+%type 'a queue = { s : 'a stream; f : 'a stream; r: 'a list } 
+%\end{minted}
+
 \begin{itemize}
 \item Новое поле s с типом "поток элементов", хранит расписание форсирования вычислений в F
 \begin{itemize}
 \item Поток s будет суффиксом f, таким что \textbf{все элементы впереди посчитаны до конца}\footnote{Это будет важно при оценке сложности}
-\item Форсирование вычислений в f достигается форсирование головного элемента s
+\item Форсирование вычислений в f достигается через форсирование головного элемента s
 \item Инвариант \invariant
 \end{itemize}
 \item Перевернутый хвост r конструируется как есть, поэтому это просто список
