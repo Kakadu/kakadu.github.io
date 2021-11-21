@@ -1,4 +1,4 @@
-.PHONY: debs all pics
+.PHONY: debs depexts all pics 
 .SUFFIXES: .tex .pdf
 
 TARGET=pfds_talk
@@ -19,6 +19,7 @@ clean:
 cleanminted:
 	@$(RM) -r _minted* *.pdf
 
+depexts: debs
 debs:
-	sudo apt install texlive-lang-cyrillic fonts-cmu python3-pygments
+	sudo apt install texlive-lang-cyrillic fonts-cmu python3-pygments texlive-fonts-extra texlive-science
 
