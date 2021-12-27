@@ -73,6 +73,15 @@
 
 - [QHasm from D. J. Bernstein](https://cr.yp.to/qhasm.html)
 
+  От упоминания всего этого Петр возбудился.
+
+  * Что можно сделать интересного на уровне ассемблеров. Сходу придумывается:
+    1. Алгебраический (в духе некоторых DSP-ассемблеров), типизированный ассемблер. Современный вариант qhasm от Бернштейна.
+    2. Транскомпилятор в духе классического 8080 -> 8086. См. работы Килдалла.
+    3. Распределение регистров на уровне ассемблера. Пользователь занимается выбором команд и планированием, а RA — делается автоматически.
+  * Можно предложить создать ЯП для описания DSP-алгоритмов. Как раз с SIMD и проч. Особенной разницы не будет по сравнению с интринсиками в коде на каком-нибудь C++. К тому же можно сделать трансляцию в интринсики для разных архитектур.
+
+
 - [ModernC book](https://gustedt.gitlabpages.inria.fr/modern-c)
 
 - [Japan's Fifth Generation Computer Systems: Success or Failure?](https://instadeq.com/blog/posts/japans-fifth-generation-computer-systems-success-or-failure/)
@@ -82,6 +91,27 @@
 - [Writing essays](https://rubber-duck-typing.com/articles/2018/09/06/writing-essays/) by rubber duck typing
 
   #writing
+
+- Property based testing vs. Fuzzing
+
+  * [Fuzzing vs property testing](https://www.tedinski.com/2018/12/11/fuzzing-and-property-testing.html) by Ted Kaminski
+  * [What is Property Based Testing?](https://hypothesis.works/articles/what-is-property-based-testing/) by David R. MacIver
+
+  #testing #fuzzing
+
+- Programming language zoo
+
+  * https://github.com/Drup/pl-experiments/tree/master/lang
+  * Andrej Bauer's
+  * andreypopp's https://github.com/andreypopp/type-systems
+
+- https://github.com/mlochbaum/BQN/
+
+- [Compiler Error Messages Considered Unhelpful: The Landscape of Text-Based Programming Error Message Research](https://web.eecs.umich.edu/~akamil/papers/iticse19.pdf)
+
+- https://egorbo.com/llvm-range-checks.html
+
+  #llvm #optimization
 
 ## TV shows to watch
 
