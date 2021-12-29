@@ -50,7 +50,11 @@
 - [Julia vs Haskell Reddit](https://www.reddit.com/r/haskell/comments/2ldvae/why_julia_and_why_not_haskell/)
 
   #language-flame-wars
+  
+- [C++ vs C# (habr)](https://habr.com/ru/company/jugru/blog/469467/)  
 
+  #language-flame-wars
+  
 - [Willingness to look stupid](https://danluu.com/look-stupid/)
 
   #general
