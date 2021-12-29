@@ -112,6 +112,10 @@
 - https://egorbo.com/llvm-range-checks.html
 
   #llvm #optimization
+  
+- [EVE Evolved: EVE Online's server model](https://www.engadget.com/2008-09-28-eve-evolved-eve-onlines-server-model.html)  or why singletread is better (2008)
+
+  #gamedev #performace
 
 ## TV shows to watch
 
