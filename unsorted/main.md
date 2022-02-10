@@ -120,6 +120,9 @@
 - [EVE Evolved: EVE Online's server model](https://www.engadget.com/2008-09-28-eve-evolved-eve-onlines-server-model.html)  or why singletread is better (2008)
 
   #gamedev #performace
+  
+- [A fork() in the road](https://www.microsoft.com/en-us/research/uploads/prod/2019/04/fork-hotos19.pdf) Every time somebody from Microsoft says that UNIX is broken -- I get suspicious.
+
 
 ## TV shows to watch
 
