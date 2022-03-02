@@ -28,8 +28,8 @@ github_username:  Kakadu
 # Build settings
 markdown: kramdown
 theme: minima
-plugins:
-  - jekyll-feed # https://github.com/jekyll/jekyll-feed
+#plugins:
+  #- jekyll-feed # https://github.com/jekyll/jekyll-feed
 
 feed:
   categories:
