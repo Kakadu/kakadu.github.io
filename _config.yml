@@ -28,7 +28,8 @@ github_username:  Kakadu
 # Build settings
 markdown: kramdown
 theme: minima
-#plugins:
+plugins:
+  - jekyll-redirect-from
   #- jekyll-feed # https://github.com/jekyll/jekyll-feed
 
 feed:
@@ -47,3 +48,6 @@ exclude:
 #   - vendor/cache/
 #   - vendor/gems/
 #   - vendor/ruby/
+
+whitelist:
+  - jekyll-redirect-from
