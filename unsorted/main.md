@@ -121,3 +121,7 @@
   
 - [A fork() in the road](https://www.microsoft.com/en-us/research/uploads/prod/2019/04/fork-hotos19.pdf) Every time somebody from Microsoft says that UNIX is broken -- I get suspicious.
 
+- [О доверии к программным системам](https://habr.com/ru/post/657817/) #blockchain 
+
+  Должна аккуратно описать проблему, и применить блокчейн для её решения. Типа мотивация для существования блокчейна.
+	

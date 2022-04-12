@@ -11,17 +11,17 @@
           "state": {
             "file": "main.md",
             "mode": "source",
-            "source": true
+            "source": false
           }
         }
       },
       {
-        "id": "4fe7102b912dc6e4",
+        "id": "0044c43aaf94b45c",
         "type": "leaf",
         "state": {
           "type": "markdown",
           "state": {
-            "file": "main.md",
+            "file": "papers.md.md",
             "mode": "preview",
             "source": true
           }
@@ -102,6 +102,8 @@
   "active": "a111f0f0071ee1a6",
   "lastOpenFiles": [
     "main.md",
+    "papers.md.md",
+    "funnies.md",
     "tvshows.md"
   ]
 }
