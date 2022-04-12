@@ -1,18 +1,16 @@
 ## Unsorted links
 
 
-- [Design patterns (lisp vs. other world)](https://norvig.com/design-patterns/design-patterns.pdf), Norvig, 1996
-
-  $se $patterns
+- [Design patterns (lisp vs. other world)](https://norvig.com/design-patterns/design-patterns.pdf), Norvig, 1996  #se #patterns
 
 
 - [Deep Dive into the Burst Compiler](https://www.youtube.com/watch?v=QkM6zEGFhDY) talk by Alexandre Mutel
 
-  $performance $csharp $unity $gamedev
+  #performance #csharp #unity #gamedev
 
-- [The next Haskell will be strict](https://news.ycombinator.com/item?id=1924061) by SPJ (POPL 2003 ?)
+- [The next Haskell will be strict](https://news.ycombinator.com/item?id=1924061) by SPJ (POPL 2003 ?) #fp #haskell #flame 
 
-- [Making pointer-based data structures cache conscious](https://ieeexplore.ieee.org/document/889095)
+- [Making pointer-based data structures cache conscious](https://ieeexplore.ieee.org/document/889095) #data-structures
 
 - "Semantics with applications" book
 
@@ -123,15 +121,3 @@
   
 - [A fork() in the road](https://www.microsoft.com/en-us/research/uploads/prod/2019/04/fork-hotos19.pdf) Every time somebody from Microsoft says that UNIX is broken -- I get suspicious.
 
-
-## TV shows to watch
-
-From [The 6 Best British TV Series To Learn English](https://www.youtube.com/watch?v=KWNfw9uxUtk)
-
-* the office
-* ~~crown~~ boring
-* gavin stacey
-* fleabag
-* black mirror
-* peaky blinders
-* bonus- arka sokaklar
