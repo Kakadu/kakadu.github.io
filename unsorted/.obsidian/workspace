@@ -4,28 +4,28 @@
     "type": "split",
     "children": [
       {
-        "id": "a111f0f0071ee1a6",
+        "id": "aef4e43a409760d5",
         "type": "leaf",
         "state": {
           "type": "markdown",
           "state": {
-            "file": "main.md",
-            "mode": "source",
-            "source": false
+            "file": "watch_list.md.md",
+            "mode": "source"
           }
-        }
+        },
+        "group": "a0f8bd67294d09d4"
       },
       {
-        "id": "0044c43aaf94b45c",
+        "id": "b3d2ebba06b8d48c",
         "type": "leaf",
         "state": {
           "type": "markdown",
           "state": {
-            "file": "papers.md.md",
-            "mode": "preview",
-            "source": true
+            "file": "watch_list.md.md",
+            "mode": "preview"
           }
-        }
+        },
+        "group": "a0f8bd67294d09d4"
       }
     ],
     "direction": "vertical"
@@ -81,7 +81,7 @@
             "state": {
               "type": "backlink",
               "state": {
-                "file": "main.md",
+                "file": "watch_list.md.md",
                 "collapseAll": false,
                 "extraContext": false,
                 "sortOrder": "alphabetical",
@@ -99,11 +99,16 @@
     "width": 300,
     "collapsed": true
   },
-  "active": "a111f0f0071ee1a6",
+  "active": "aef4e43a409760d5",
   "lastOpenFiles": [
-    "main.md",
-    "papers.md.md",
+    "watch_list.md.md",
+    "topics.md.md",
+    "Reading_list.md.md",
+    "tvshows.md",
     "funnies.md",
-    "tvshows.md"
+    "minilangs.md.md",
+    "main.md",
+    "game-related.md.md",
+    "papers.md.md"
   ]
 }
