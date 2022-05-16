@@ -6,11 +6,6 @@ Categories: listed, published
 
 ---
 
-(https://habrahabr.ru/post/350386/)[Паттерн "Стратегия" из кучи функций]
-
-(http://people.csail.mit.edu/dnj/teaching/6898/projects/vicente-wagner.pdf)[Design patterns in OCaml]
-
--- 
 Talk by Yaron Minsky 
 (https://www.youtube.com/watch?v=0arFPIQatCU)[`Types, and Why You Should Care`]
 
@@ -134,7 +129,3 @@ V8 это не понравится и оно будет работать 10 р�
 Talk by Yaron Minsky 
 (https://www.youtube.com/watch?v=_1GZShA1F20)[`Observations of a Functional Programmer`]
 
-(https://www.youtube.com/watch?v=_1GZShA1F20)[`A plan on Janestreet's website`]
-
-I downloaded subtitles and slightly edited them. You can get them 
-(https://kakadu.github.io/blogitems/Observations_of_a_Functional_Programmer.srt)
