@@ -26,8 +26,8 @@ clean:
 deps:
 	sudo apt install ruby-dev ruby-ffi ruby-http-parser
 	GEM_HOME=$(HOME)/.gem gem install bundler jekyll
-	GEM_HOME=$(HOME)/.gem bundle install
-	
+	GEM_HOME=$(HOME)/.gem PATH=$(HOME)/.gem/bin:$(PATH) bundle install
+
 
 watch:
-	GEM_HOME=$(HOME)/.gem bundle exec jekyll serve --livereload
+	GEM_HOME=$(HOME)/.gem PATH=$(HOME)/.gem/bin:$(PATH) bundle exec jekyll serve --livereload
