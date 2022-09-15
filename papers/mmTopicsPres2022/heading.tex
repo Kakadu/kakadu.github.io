@@ -1,0 +1,180 @@
+\makeatletter
+\@ifclassloaded{beamer}{
+  % get rid of header navigation bar
+  \setbeamertemplate{headline}{}
+  % get rid of bottom navigation symbols
+  \setbeamertemplate{navigation symbols}{}
+  % get rid of footer
+  %\setbeamertemplate{footline}{}
+}
+{}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\usepackage{fontawesome}
+% \newfontfamily{\FA}{Font Awesome 5 Free} % some glyphs missing
+\expandafter\def\csname faicon@facebook\endcsname{{\FA\symbol{"F09A}}}
+\def\faQuestionSign{{\FA\symbol{"F059}}}
+\def\faQuestion{{\FA\symbol{"F128}}}
+\def\faExclamation{{\FA\symbol{"F12A}}}
+\def\faUploadAlt{{\FA\symbol{"F093}}}
+\def\faLemon{{\FA\symbol{"F094}}}
+\def\faPhone{{\FA\symbol{"F095}}}
+\def\faCheckEmpty{{\FA\symbol{"F096}}}
+\def\faBookmarkEmpty{{\FA\symbol{"F097}}}
+
+\newcommand{\faGood}{\textcolor{ForestGreen}{\faThumbsUp}}
+\newcommand{\faBad}{\textcolor{red}{\faThumbsODown}}
+\newcommand{\faWrong}{\textcolor{red}{\faTimes}}
+\newcommand{\faMaybe}{\textcolor{blue}{\faQuestion}}
+\newcommand{\faCheckGreen}{\textcolor{ForestGreen}{\faCheck}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{fontspec}
+\usepackage{xunicode}
+\usepackage{xltxtra}
+\usepackage{xecyr}
+\usepackage{hyperref}
+
+\setmainfont[
+ Ligatures=TeX,
+ Extension=.otf,
+ BoldFont=cmunbx,
+ ItalicFont=cmunti,
+ BoldItalicFont=cmunbi,
+% Scale = 1.1
+]{cmunrm}
+\setsansfont[
+ Ligatures=TeX,
+ Extension=.otf,
+ BoldFont=cmunsx,
+ ItalicFont=cmunsi,
+%  Scale = 1.2
+]{cmunss}
+%\setmainfont[Mapping=tex-text]{DejaVu Serif}
+%\setsansfont[Mapping=tex-text]{DejaVu Sans}
+%\setmonofont{Fira Code}[Contextuals=AlternateOff]
+\setmonofont{Fira Code}[Contextuals=Alternate,Scale=0.9]
+\newfontfamily{\myfiracode}[Scale=1.5,Contextuals=Alternate]{Fira Code}
+%\setmonofont[Scale=0.9,BoldFont={Inconsolata Bold}]{Inconsolata}
+
+\usepackage{polyglossia}
+\setmainlanguage{russian}
+\setotherlanguage{english}
+
+
+%\newfontfamily\dejaVuSansMono{DejaVu Sans Mono}
+% https://github.com/vjpr/monaco-bold/raw/master/MonacoB/MonacoB.otf
+%\newfontfamily\monacoB{MonacoB}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+\usepackage{soul} % for \st that strikes through
+\usepackage[normalem]{ulem} % \sout
+
+\usepackage{stmaryrd}
+\newcommand{\sem}[1]{\ensuremath{\llbracket #1\rrbracket}}
+
+
+\usepackage{listings}
+%\lstdefinestyle{style1}{
+%  language=haskell,
+%  numbers=left,
+%  stepnumber=1,
+%  numbersep=10pt,
+%  tabsize=4,
+%  showspaces=false,
+%  showstringspaces=false
+%}
+%\lstdefinestyle{hsstyle1}
+%{ language=haskell
+%%          , basicstyle=\monacoB
+%         , deletekeywords={Int,Float,String,List,Void}
+%         , breaklines=true
+%         , columns=fullflexible
+%         , commentstyle=\color{ForestGreen}
+%         , escapeinside=§§
+%         , escapebegin=\begin{russian}\commentfont
+%         , escapeend=\end{russian}
+%         , commentstyle=\color{ForestGreen}
+%         , escapeinside=§§
+%         , escapebegin=\begin{russian}\color{ForestGreen}
+%         , escapeend=\end{russian}
+%         , mathescape=true
+%%          , backgroundcolor = \color{MyBackground}
+%}
+%
+%\newcommand{\inline}[1]{\lstinline{haskell}{#1}}
+%\def\hsinline{\mintinline{haskell}}
+%\def\inline{\hsinline}
+%
+%\lstnewenvironment{hslisting} {
+%    \lstset { style={hsstyle1} }
+%  }
+%  {}
+%  
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  
+%%\setmainfont[
+%% Ligatures=TeX,
+%% Extension=.otf,
+%% BoldFont=cmunbx,
+%% ItalicFont=cmunti,
+%% BoldItalicFont=cmunbi,
+%%]{cmunrm}
+%%% С засечками (для заголовков)
+%%\setsansfont[
+%% Ligatures=TeX,
+%% Extension=.otf,
+%% BoldFont=cmunsx,
+%% ItalicFont=cmunsi,
+%%]{cmunss}
+%% \setmonofont[Scale=0.6]{Monaco}
+%
+%\usefonttheme{professionalfonts}
+%\usepackage{times}
+\usepackage{tikz}
+\usetikzlibrary{cd}
+\usepackage{tikz-cd}
+\usepackage{caption}
+\usepackage{subcaption}
+
+%\renewtheorem{definition}{برهان}[chapter]
+%%\DeclareMathOperator{->}{\rightarrow}
+%\newcommand\iso{\ensuremath{\cong}}
+%\usepackage{verbatim}
+%\usepackage{graphicx}
+%\usetikzlibrary{arrows,shapes}
+
+%\usepackage{amsmath}
+%\usepackage{amsfonts}
+\usepackage{scalerel}
+\DeclareMathOperator*{\myvee}{\scalerel*{\vee}{\sum}}
+\DeclareMathOperator*{\mywedge}{\scalerel*{\wedge}{\sum}}
+
+%
+%\usepackage{tabulary}
+%
+%% sudo aptget install ttf-mscorefonts-installer
+%%\setmainfont{Times New Roman}
+%%\setsansfont[Mapping=tex-text]{DejaVu Sans}
+%
+%%\setmonofont[Scale=1.0,
+%%    BoldFont=lmmonolt10-bold.otf,
+%%    ItalicFont=lmmono10-italic.otf,
+%%    BoldItalicFont=lmmonoproplt10-boldoblique.otf
+%%]{lmmono9-regular.otf}
+%
+\usepackage[cache=true]{minted}
+\usemintedstyle{perldoc}
+
+\def\hsinline{\mintinline{haskell}}
+\def\mlinline{\mintinline{ocaml}}
+% color options
+\definecolor{YellowGreen} {HTML}{B5C28C}
+\definecolor{ForestGreen} {HTML}{009B55}
+\definecolor{MyBackground}{HTML}{F0EDAA}
+
+
+
+\institute{матмех СПбГУ}
+
+\addtobeamertemplate{title page}{}{
+  \begin{center}{\tiny Дата сборки: \today}\end{center}
+}

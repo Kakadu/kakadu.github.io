@@ -1,0 +1,147 @@
+% !TeX spellcheck = ru_RU
+\documentclass[aspectratio=169
+  , xcolor={svgnames}
+  , hyperref=
+      { colorlinks
+      , urlcolor=DarkBlue
+      }
+  , 12pt
+  , russian  % This line affects translation of theorem titles
+  ]{beamer}
+\usepackage[svgnames]{xcolor}
+\usetheme{CambridgeUS}
+\usefonttheme{professionalfonts}
+
+\input{heading.tex}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\title{Направления работ на 2022/2023 учебные года}
+
+%\institute[]{Лаборатория Языковых Инструментов JetBrains}
+\author[Косарев Дмитрий]{Косарев Дмитрий a.k.a. Kakadu}
+\date{15 сентября 2022 г.}
+
+
+\newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}
+\usepackage{verbatimbox}
+
+%\setbeamertemplate{section in toc}{\inserttocsectionnumber.~\inserttocsection}
+\begin{document}
+\maketitle
+
+% For every picture that defines or uses external nodes, you'll have to
+% apply the 'remember picture' style. To avoid some typing, we'll apply
+% the style to all pictures.
+%\tikzstyle{every picture}+=[remember picture]
+
+% By default all math in TikZ nodes are set in inline mode. Change this to
+% displaystyle so that we don't get small fractions.
+\everymath{\displaystyle}
+
+% Uncomment these lines for an automatically generated outline.
+\begin{frame}{Про что есть темы у меня}
+\begin{itemize}
+%\item Разнообразная верификация программ
+%\item Теоретические модели памяти для параллельных программ
+\item [\faGood] Синтаксический анализ и всё связанное с ним
+\item [\faGood] Функциональное программирование (язык OCaml и около него)
+\item [\faGood] Реляционное (a.k.a. логическое) программирование (miniKanren)
+\end{itemize}
+\vspace{3em}
+
+%Я занимаюсь тем, что отмечено \faGood
+
+Подробнее тут: \href{https://kakadu.github.io/2022/topics}{https://kakadu.github.io/2022/topics}
+\end{frame}
+
+\begin{frame}[fragile]{Про функциональный язык программирования OCaml }
+\framesubtitle{и IDE для него на основе Language Server Protocol}
+
+\begin{itemize}
+\item Семантическая подсветка (и/или) идентация \href{http://kakadu.github.io/fp2020/projects.html\#semantich-highlighting}{\faGithub}
+\begin{itemize}
+\item Для встраиваемых языков программирования, оформленных в виде библиотеки
+\item Подход более популярный в функциональном программировании, чем в мейнстриме
+\item Примеры из языка C\#: LINQ, в некоторой степени \mintinline{csharp}{select * from expr}
+\end{itemize}\pause
+
+%\item Поддержка compile-time синтаксических расширений языка
+%\href{http://kakadu.github.io/fp2020/projects.html#ide-camlp5}{\faGithub}
+%\begin{itemize}
+%\item Уже работают расширения из синтаксиса OCaml в синтаксис OCaml
+%\item Хочется поддержать более могучие расширения
+%\begin{itemize}
+%\item Например, которые превращают синтаксис Scheme в синтаксис OCaml
+%\end{itemize}
+%\end{itemize}
+\item И огромное количество других околоIDEшных тем
+\end{itemize}
+\end{frame}
+
+
+
+\begin{comment}
+
+
+
+\begin{frame}[fragile]{Про язык ReScript}
+\framesubtitle{диалект OCaml и \sout{испорченным} исправленным синтаксисом}
+
+\begin{itemize}
+\item Восстановление от ошибок для ReScript
+\href{http://kakadu.github.io/fp2020/projects.html#rescript-recovery}{\faGithub}
+\begin{itemize}
+\item В ReScript добавили синтаксис, который сильно напоминает Javascript
+\item Поэтому OCaml программистом пересаживаться на ReScript больно
+\item Необходимо научить парсер ReScript распознавать наиболее частые "камлизмы" и автоматически исправлять их
+\end{itemize}\pause
+
+\item Парсер ReScript на основе парсер-комбинаторов
+\href{http://kakadu.github.io/fp2020/projects.html#rescript-combinators}{\faGithub}
+\begin{itemize}
+\item Теоретически исследованные подходы на основе грамматик плохо работают на практике
+\item Рекурсивный спуск, используемый на практике, больно писать и поддерживать
+\item Парсер-комбинаторы пытаются совместить лучшее из двух подходов
+\item Надо проверить это заявление в рамках курсовой
+\end{itemize}
+\end{itemize}
+
+\end{frame}
+\end{comment}
+
+
+%\begin{frame}[fragile]{Мелкие темы (на уровне курсовых) }
+%\begin{itemize}
+%\item Доработка конвертера документов Pandoc (написан на \textsc{Haskell})
+%\begin{itemize}
+%\item хочется не писать РПД в Word
+%\item а использовать latex/markdown и т.п.
+%\item Нужно доработать Pandoc, поддержкой титульной страницы, таблиц и т.п.
+%\end{itemize}\pause
+%
+%\item Ещё одна реализация tabling (кэширования) для \textsc{miniKanren}
+%\begin{itemize}
+%\item \textsc{miniKanren} -- реинкарнация логического программирования
+%\item Нужно будет прочитать статью и реализовать на алгоритм OCaml
+%\end{itemize}
+%\end{itemize}
+%\end{frame}
+
+%\begin{frame}[fragile]{Мелкие темы (на уровне курсовых) }
+%\begin{itemize}
+%  \item Доработка конвертера документов Pandoc (написан на \textsc{Haskell})
+%  \begin{itemize}
+%    \item хочется не писать РПД в Word
+%    \item а использовать latex/markdown и т.п.
+%    \item Нужно доработать Pandoc, поддержкой титульной страницы, таблиц и т.п.
+%  \end{itemize}\pause
+%
+%  \item Ещё одна реализация tabling (кэширования) для \textsc{miniKanren}
+%  \begin{itemize}
+%    \item \textsc{miniKanren} -- реинкарнация логического программирования
+%    \item Нужно будет прочитать статью и реализовать на алгоритм OCaml
+%  \end{itemize}
+%\end{itemize}
+%\end{frame}
+
+\end{document}
