@@ -17,15 +17,17 @@
 
   <script type="text/javascript">
     class Item {
-      constructor(date) {
-        if (date)
-          this.start_date = date;
-        this.autolink = true;
+      constructor() {
+        this.inner = {};
+        this.inner.autolink = true;
       }
-      start_date = (x) => {this.start_date = x; return this;}
-      end_date = (x) => {this.end_date = x; return this;}
-      text = (x) => {this.text = x; return this;}
-      media = (x) => {this.media = x; return this;}
+      inner = {}
+      date = (x) => { this.inner.start_date = x; return this;}
+      start_date = this.date
+      fin_date = (x) => { this.inner.end_date = x; return this;}
+      end_date = this.fin_date
+      text = (x) => { this.inner.text = x; return this;}
+      media = (x) => { this.inner.media = x; return this;}
     }
 
 
@@ -34,36 +36,40 @@
     var make_the_json = function () {
       var events = [];
       let extend = ev => {
-        events.push(ev);
+        console.log("Extending by \n" + JSON.stringify(ev.inner));
+        events.push(ev.inner);
       };
 
-      extend(new Item({year: 1941, month: 6, day: 22})
-        // .start_date({year: 1941, month: 6, day: 22})
-        .end_date({year: 1945, month: 5, day: 9})
+      // events.push({"start_date": {"year": 1941, "month": 6, "day": 22}, "end_date": {"year": 1945, "month": 5, "day": 9}, "text": {"headline": "Великая отечественная"}, "autolink": true});
+      extend(new Item()
+        .date({year: 1941, month: 6, day: 22})
+        .fin_date({year: 1945, month: 5, day: 9})
         .text({headline: "Великая отечественная"})
       );
-      // extend(new Item()
-      //   .start_date({year: 1934, month: 1, day: 26})
-      //   .text({
-      //     headline: "<a href='https://en.wikipedia.org/wiki/German%E2%80%93Polish_declaration_of_non-aggression'>Пакт Пилсудского-Гитлера</a>"
-      //   })
-      //   .media({url: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Bundesarchiv_Bild_183-B0527-0001-293%2C_Warschau%2C_Empfang_Goebbels_bei_Marschall_Pilsudski.jpg/540px-Bundesarchiv_Bild_183-B0527-0001-293%2C_Warschau%2C_Empfang_Goebbels_bei_Marschall_Pilsudski.jpg"})
-      // );
-      // extend({
-      //   start_date: {year: 1939, month: 8, day: 23}
-      //   , text: {headline: "Пакт Молотова-Рибентроппа"}
-      //   , media: {url: "https://ru.wikipedia.org/wiki/%D0%94%D0%BE%D0%B3%D0%BE%D0%B2%D0%BE%D1%80_%D0%BE_%D0%BD%D0%B5%D0%BD%D0%B0%D0%BF%D0%B0%D0%B4%D0%B5%D0%BD%D0%B8%D0%B8_%D0%BC%D0%B5%D0%B6%D0%B4%D1%83_%D0%93%D0%B5%D1%80%D0%BC%D0%B0%D0%BD%D0%B8%D0%B5%D0%B9_%D0%B8_%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%81%D0%BA%D0%B8%D0%BC_%D0%A1%D0%BE%D1%8E%D0%B7%D0%BE%D0%BC"},
-      //   autolink: true
-      // });
-      // extend({
-      //   start_date: {year: 1939, month: 9, day: 1}
-      //   , end_date: {year: 1945}
-      //   , text: {headline: "Вторая мировая война"}
-      // });
-      // extend({
-      //   start_date: {year: 1939, month: 9, day: 1}
-      //   , text: {headline: "Нападение Германии на Польшу"}
-      // });
+      (() => {
+        let PHOTO_URL = "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/Bundesarchiv_Bild_183-B0527-0001-293%2C_Warschau%2C_Empfang_Goebbels_bei_Marschall_Pilsudski.jpg/540px-Bundesarchiv_Bild_183-B0527-0001-293%2C_Warschau%2C_Empfang_Goebbels_bei_Marschall_Pilsudski.jpg";
+        extend(new Item()
+          .date({year: 1934, month: 1, day: 26})
+          .text({
+            headline: "<a href='https://en.wikipedia.org/wiki/German%E2%80%93Polish_declaration_of_non-aggression'>Пакт Пилсудского-Гитлера</a>"
+          })
+          .media({url: PHOTO_URL})
+        );
+      })();
+      extend(new Item()
+        .start_date( {year: 1939, month: 8, day: 23})
+        .text({headline: "Пакт Молотова-Рибентроппа"})
+        .media({url: "https://ru.wikipedia.org/wiki/%D0%94%D0%BE%D0%B3%D0%BE%D0%B2%D0%BE%D1%80_%D0%BE_%D0%BD%D0%B5%D0%BD%D0%B0%D0%BF%D0%B0%D0%B4%D0%B5%D0%BD%D0%B8%D0%B8_%D0%BC%D0%B5%D0%B6%D0%B4%D1%83_%D0%93%D0%B5%D1%80%D0%BC%D0%B0%D0%BD%D0%B8%D0%B5%D0%B9_%D0%B8_%D0%A1%D0%BE%D0%B2%D0%B5%D1%82%D1%81%D0%BA%D0%B8%D0%BC_%D0%A1%D0%BE%D1%8E%D0%B7%D0%BE%D0%BC"})
+      );
+      extend(new Item()
+        .start_date( {year: 1939, month: 9, day: 1})
+        .end_date({year: 1945})
+        .text({headline: "Вторая мировая война"})
+      );
+      extend(new Item()
+        .date( {year: 1939, month: 9, day: 1})
+        .text( {headline: "Нападение Германии на Польшу"})
+      );
 
       console.log(events);
       console.log(JSON.stringify(events))
