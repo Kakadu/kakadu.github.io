@@ -26,6 +26,7 @@ telegram_username: jekyll
 github_username:  Kakadu
 
 # Build settings
+safe: false
 markdown: kramdown
 theme: minima
 plugins:
