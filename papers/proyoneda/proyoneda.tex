@@ -2,7 +2,7 @@
   russian,
   aspectratio=169,
   xcolor={svgnames},
-  hyperref={colorlinks,citecolor=DeepPink4,linkcolor=DarkRed,urlcolor=DarkBlue}]{beamer}
+  hyperref={colorlinks,citecolor=DeepPink4}]{beamer}
 \beamertemplatenavigationsymbolsempty % remove navigation bar
 % \setbeamertemplate{headline}  % remove heading
 
@@ -26,7 +26,7 @@
 \usepackage{subcaption}
 \newtheorem{thm}{Theorem}
 % \newtheorem*{remark}{Remark}
-
+\newcommand*{\natarr}{\ensuremath{\overset{\text{\normalsize .}}\longrightarrow}}
 \newcommand{\naturalto}{%
   \mathrel{\vbox{\offinterlineskip
     \mathsurround=0pt
@@ -93,7 +93,7 @@
  \item тождественная (identity) стрелка $id_A \in\mathbb{C}(A, A)$ для каждого объекта $A \in |\mathbb{C}|$;
  \item композиций $g\circ f \in\mathbb{C}(A, C)$ для каждой пары ``соединяемых'' стрелок $f \in\mathbb{C}(A, B)$ and $g \in\mathbb{C}(B, C)$,\\
 \end{itemize}
-и такая, что 
+и такая, что
 \begin{itemize}
  \item композиция ассоциативна;
  \item соответсвующие тождественные стрелки служат нейтральными элементами для композиции.
@@ -112,7 +112,7 @@
 \vspace{1cm}
 Наборы стрелок в категории $\mathbb{C}$ из объекта A в объект B обозначаются $\mathbb{C}(A, B)$.
 
-Множества $\mathbb{C}(A, B)$ называются homsets. 
+Множества $\mathbb{C}(A, B)$ называются homsets.
 \end{frame}
 
 \begin{frame}[fragile]{Примеры}
@@ -123,7 +123,7 @@
 \end{itemize}
 \vspace{1cm}
 
-На типы и программы можно смотреть как на категорию $\mathbb{H}ask$. 
+На типы и программы можно смотреть как на категорию $\mathbb{H}ask$.
 
 Тогда объекты будут типами, а стрелки -- программами.
 \end{frame}
@@ -133,7 +133,7 @@
 
 \begin{itemize}
  \item Объекты -- элементы множества A
- \item Множества homset $\mathbb{P}re(A,\leqslant)(a,b)$ 
+ \item Множества homset $\mathbb{P}re(A,\leqslant)(a,b)$
     \begin{itemize}
     \item либо состоят из одного элемента (когда $a\leqslant b$)
     \item либо пустые
@@ -147,12 +147,12 @@
 
 \begin{frame}[fragile]{Примеры}
 \begin{minipage}{0.65\textwidth}
-Всякий моноид $(M,\oplus,e)$ порождает категорию 
+Всякий моноид $(M,\oplus,e)$ порождает категорию
 $\mathbb{M}on(M,\oplus,e)$
 
 \begin{itemize}
  \item С единственным объектом $*$
- \item C единственным homset $\mathbb{M}on(M,\oplus,e)(*,*)$ 
+ \item C единственным homset $\mathbb{M}on(M,\oplus,e)(*,*)$
     \begin{itemize}
     \item нейтральный элемент отображается в identity стрелку
     \item остальные элементы -- в остальные стрелки
@@ -165,12 +165,12 @@ $\mathbb{M}on(M,\oplus,e)$
   \draw[thick, ->] (7,2) arc (0:360:1cm);% syntax (starting point coordinates) arc (starting angle:ending angle:radius)
   \draw[thick, ->] (7,2) arc (0:360:0.5cm);
   \draw[thick, ->] (7,2) arc (0:360:1.5cm);
-  \draw[black,fill=black] (7,2.1) circle (.5ex); 
+  \draw[black,fill=black] (7,2.1) circle (.5ex);
  \end{tikzpicture}
- 
+
 \end{minipage}
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%% 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
 \end{frame}
@@ -188,13 +188,13 @@ $\mathbb{M}on(M,\oplus,e)$
 
 TODO: рассказать про дуальность.
 \end{frame}
-% 
+%
 % \begin{frame}[fragile]{Произведение категорий}
 % Для категорий $\mathbb{C}$ и $\mathbb{D}$, категория произведений $\mathbb{C}\times\mathbb{D}$ состоит из пар объектов и пар стрелок:
-% 
+%
 % \begin{itemize}
 %  \item  объекст $(A, B) \in |C × D|$ для каждой пары объектов $A \in |\mathbb{C}|$ and $B \in |\mathbb{D}|$;
-% \item  стрелка $(f,g) \in (\mathbb{C}\times\mathbb{D})((A, B), (C, D))$ для каждой пары стрелок  
+% \item  стрелка $(f,g) \in (\mathbb{C}\times\mathbb{D})((A, B), (C, D))$ для каждой пары стрелок
 % $f\in \mathbb{C}(A, C)$ and $g \in \mathbb{D}(B, D)$;
 % \item композиция задается поточечно.
 % \end{itemize}
@@ -203,17 +203,17 @@ TODO: рассказать про дуальность.
 \begin{frame}[fragile]{TODO: про декартову замкнутость}
 
  И на примере Haskell тоже
- 
+
 \end{frame}
 
 \begin{frame}[fragile]{Функторы}
 Функторы -- это отображения между категориями, сохраняющие структуру.
 \vspace{1cm}
 
-Формально, функтор $F: \mathbb{C} \rightarrow \mathbb{D}$ -- это отображение объектов и стрелок из $\mathbb{C}$ в объекты и стрелки из $\mathbb{D}$, такое, что 
+Формально, функтор $F: \mathbb{C} \rightarrow \mathbb{D}$ -- это отображение объектов и стрелок из $\mathbb{C}$ в объекты и стрелки из $\mathbb{D}$, такое, что
 \begin{itemize}
  \item объект $F(A) \in |\mathbb{D}|$ для каждого объекта $A \in |\mathbb{C}|$;
- \item стрелка $F(f) \in \mathbb{D}(F(A), F(B))$ для каждой стрелки 
+ \item стрелка $F(f) \in \mathbb{D}(F(A), F(B))$ для каждой стрелки
 $f \in\mathbb{C}(A, B)$,
  \item $F(id_A ) = id_{F(A)}$ для каждого объекта $A \in |\mathbb{C}|$;
  \item $F (g \circ f) = F (g) \circ F (f)$ для каждой пары $f$ , $g$ ``соединяемых'' стрелок.
@@ -233,7 +233,7 @@ $f \mapsto (f \circ) \in \mathbb{S}et(\mathbb{C}(A, B), \mathbb{C}(A, C))$
 
 Функтор $\mathbb{C}(A, −)$ из $\mathbb{C}$ в $\mathbb{S}et$ будем называть \textit{homfunctor}. \vspace{0.5cm}
 
-Аналогично, $\mathbb{C}(−, B)$ функтор преобразующий $f\mapsto(\circ f)$; но контравариантный, т.е. homfunctor из категории $\mathbb{C}^{op}$ в 
+Аналогично, $\mathbb{C}(−, B)$ функтор преобразующий $f\mapsto(\circ f)$; но контравариантный, т.е. homfunctor из категории $\mathbb{C}^{op}$ в
 $\mathbb{S}et$
 
 \end{frame}
@@ -244,8 +244,8 @@ $\mathbb{S}et$
 \caption{Ковариантный Hom функтор от \href{https://bartoszmilewski.files.wordpress.com/2015/07/hom-functor.jpg}{Бартоша Милевски}}
 \end{figure}
 
-% Тут мы сиспользхуем функтор, а не оперирует термином стрелка, потому что категория множест локально 
-% малая и не понятно как быдут выглядеть стрелки в неё. И непонятно, что это за категория, которая 
+% Тут мы сиспользхуем функтор, а не оперирует термином стрелка, потому что категория множест локально
+% малая и не понятно как быдут выглядеть стрелки в неё. И непонятно, что это за категория, которая
 % содержит локально малые категории, да и говорить об этом не хочется.
 
 \end{frame}
@@ -256,7 +256,7 @@ $\mathbb{S}et$
 type Reader a x = a -> x
 
 instance Functor (Reader a) where
-    fmap f h = f . h 
+    fmap f h = f . h
 \end{hslisting}
 Контравариантный -- композиция до
 \begin{hslisting}
@@ -285,13 +285,13 @@ instance Contravariant (Op a) where
 \begin{frame}[fragile]{Естественные преобразования (natural transformations)}
 По сути: отображение между функторами, сохраняющее структуру.\vspace{0.4cm}
 
-Формально, даны функторы $F,G : \mathbb{C} \rightarrow \mathbb{D}$. \textit{Естественным преобразованием} 
-$\phi : F \overset{\text{\normalsize .}}\longrightarrow G$ из $F$ в $G$ будет 
+Формально, даны функторы $F,G : \mathbb{C} \rightarrow \mathbb{D}$. \textit{Естественным преобразованием}
+$\phi : F \overset{\text{\normalsize .}}\longrightarrow G$ из $F$ в $G$ будет
 семейство стрелок в $\mathbb{D}$ индексированное объектами из $\mathbb{C}$, такое что
 \begin{itemize}
  \item стрелка $\phi_{A} \in \mathbb{D}(F(A), G(A))$ для каждого объекта
  $A \in |\mathbb{C}|$;
- \item \textit{условие натуральности}: для произвольной стрелки $f \in \mathbb{C}(A, B)$ верно $\phi_{B} \circ F(f)=G(f) \circ \phi_{A}$ 
+ \item \textit{условие натуральности}: для произвольной стрелки $f \in \mathbb{C}(A, B)$ верно $\phi_{B} \circ F(f)=G(f) \circ \phi_{A}$
 \end{itemize}
 \begin{tikzpicture}
   \matrix (m) [matrix of math nodes,row sep=2em,column sep=2em,minimum width=1em]
@@ -310,7 +310,7 @@ $\phi : F \overset{\text{\normalsize .}}\longrightarrow G$ из $F$ в $G$ бу�
 \end{frame}
 
 \begin{frame}[fragile]{Категория функторов}
-% TODO: сказать про категорию функторов 
+% TODO: сказать про категорию функторов
 \end{frame}
 
 
@@ -319,8 +319,8 @@ $\phi : F \overset{\text{\normalsize .}}\longrightarrow G$ из $F$ в $G$ бу�
 Отображение $reverse: List \overset{\text{\normalsize .}}\longrightarrow List$ -- естественное из функтора List в себя.
 % \vspace{0.5cm}
 
-\begin{figure}[h]  
-  \centering 
+\begin{figure}[h]
+  \centering
   \begin{subfigure}[b]{0.3\textwidth} \centering
     \begin{tikzpicture}
       \matrix (m) [matrix of math nodes,row sep=2em,column sep=2em,minimum width=1em]
@@ -337,7 +337,7 @@ $\phi : F \overset{\text{\normalsize .}}\longrightarrow G$ из $F$ в $G$ бу�
     \end{tikzpicture}    \caption{Натуральность}
   \end{subfigure}
   \begin{subfigure}[b]{0.5\textwidth}
-    \centering    
+    \centering
     \begin{tikzpicture}
       \matrix (m) [ matrix of math nodes
                   , row sep=2em, column sep=3em
@@ -356,7 +356,7 @@ $\phi : F \overset{\text{\normalsize .}}\longrightarrow G$ из $F$ в $G$ бу�
     \caption{Специализация для List}
   \end{subfigure}
 \end{figure}
- 
+
 Здесь $\phi\equiv$ reverse; F,G $\equiv$ списки
 \end{frame}
 
@@ -382,7 +382,7 @@ $ inorder_{B} \circ Tree(f)=List(f) \circ inorder_{A}$
 \begin{lemma}[Йонеды для ковариантного hom-функтора]
 $$
 \lceil- \rceil^{A, F}:\quad
-[\mathbb{C}, \operatorname{Set}](\mathbb{C}(A,-), F) \ \simeq\ F(A) 
+[\mathbb{C}, \operatorname{Set}](\mathbb{C}(A,-), F) \ \simeq\ F(A)
 \quad:\lfloor-\rfloor^{A, F}.
 $$
 \end{lemma}
@@ -390,7 +390,7 @@ $$
 \begin{lemma}[Йонеды для контравариантного hom-функтора]
 $$
 \lceil- \rceil^{A, F} :\quad
-[\mathbb{C}^{op}, \mathbb{S}et](\mathbb{C}(-,A), F) \ \simeq\  F(A) 
+[\mathbb{C}^{op}, \mathbb{S}et](\mathbb{C}(-,A), F) \ \simeq\  F(A)
 \quad:\lfloor-\rfloor^{A, F}.
 $$
 \end{lemma}
@@ -399,7 +399,7 @@ $$
 \begin{frame}[fragile]{Расшифровка}
 $$
 \lceil- \rceil^{A, F} :\quad
-[\mathbb{C}^{op}, \mathbb{S}et](\mathbb{C}(-,A), F) \ \simeq\  F(A) 
+[\mathbb{C}^{op}, \mathbb{S}et](\mathbb{C}(-,A), F) \ \simeq\  F(A)
 \quad:\lfloor-\rfloor^{A, F}.
 $$
 \begin{minipage}{0.5\textwidth}
@@ -426,7 +426,7 @@ $$
 };
 \draw[->] (cd-1-1) to[bend left=50] node[label=above:$\scriptstyle\mathbb{C}\mathrm{(-,A)}$] (U) {} (cd-1-2);
 \draw[->] (cd-1-1) to[bend right=50,name=D] node[label=below:$\scriptstyle F$] (V) {} (cd-1-2);
-\draw[double,double equal sign distance,-implies,shorten >=10pt,shorten <=10pt] 
+\draw[double,double equal sign distance,-implies,shorten >=10pt,shorten <=10pt]
   (U) -- node[label=right:$ $] {} (V);
 \end{tikzpicture}
 \end{minipage}
@@ -436,7 +436,7 @@ $$
 
 \begin{frame}[fragile]{Доказательство (1/2)}
 \begin{minipage}{0.4\textwidth}
-  \begin{figure}%[b]{0.3\textwidth} 
+  \begin{figure}%[b]{0.3\textwidth}
   \centering
     \begin{tikzpicture}
       \matrix (m) [matrix of math nodes,row sep=2em,column sep=2em,minimum width=1em]
@@ -455,7 +455,7 @@ $$
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
   $id_c\in\mathbb{C}(A,A) \quad \eta:\mathbb{C}(-,A) \natarr F$
-  \begin{figure}%[b]{0.3\textwidth} 
+  \begin{figure}%[b]{0.3\textwidth}
   \centering
     \begin{tikzpicture}
       \matrix (m) [matrix of math nodes,row sep=2em,column sep=2em,minimum width=1em]
@@ -476,7 +476,7 @@ $$
 $\eta$ определяется полностью единственным значением $u:=\eta_A(Id_A) \in F(A)$, так как $\forall B \in \mathbb{C}$ $\eta_B:C(B,A)\arr F(B)$
 она должна преобразовывать $f\in\mathbb{C}(B,A)$ (т.е. морфизм $f:B\arr A$) согласно коммутативности. \vspace{0.5cm}
 
-\textbf{Ключевая идея}: условий натуральности для произвольной $\eta:\mathbb{C}(-,A) \natarr F$ достаточно, чтобы постановить, что $\eta$ однозначно определилась своим занчением $\eta_A(id_A)\in F(A)$ за счет компоненты 
+\textbf{Ключевая идея}: условий натуральности для произвольной $\eta:\mathbb{C}(-,A) \natarr F$ достаточно, чтобы постановить, что $\eta$ однозначно определилась своим занчением $\eta_A(id_A)\in F(A)$ за счет компоненты
 $\eta_A:\mathbb{C}(A,A)\arr F(A)$ на тождественном морфизме $id_A$.
 
 \end{frame}
@@ -484,22 +484,22 @@ $\eta_A:\mathbb{C}(A,A)\arr F(A)$ на тождественном морфизм
 \begin{frame}[fragile]{Доказательство (2/2)}
 Слева направо
 $$
-[\mathbb{C}^{op}, \mathbb{S}et](\mathbb{C}(-,A), F) 
-  \overset{comp_A}{\xrightarrow{\hspace*{1cm}}} 
+[\mathbb{C}^{op}, \mathbb{S}et](\mathbb{C}(-,A), F)
+  \overset{comp_A}{\xrightarrow{\hspace*{1cm}}}
 \mathbb{S}et(\mathbb{C}(A,A), F(A))
-  \overset{ev_{Id_A}}{\xrightarrow{\hspace*{1cm}}} 
+  \overset{ev_{Id_A}}{\xrightarrow{\hspace*{1cm}}}
   F(A)
-$$ 
+$$
 ``application to identity arrow``\\ \vspace{1cm}
 
 Справа налево: надо перегнать элемент $x$ множества $F(A)$ в
-натуральную трансформацию $\mathbb{C}(-,A)\natarr F$. Конструируется покомпонентно. 
+натуральную трансформацию $\mathbb{C}(-,A)\natarr F$. Конструируется покомпонентно.
 $\eta_B$ должна быть стрелкой в $\mathbb{S}et$, т.е. функцией $\mathbb{C}(B,A) \arr F(B)$
 
 $$
 \lfloor x\rfloor^{A, F}(f) = F(f)(x),\quad \text{где $f$  -- стрелка в~}\mathbb{C}
 $$
-``using functorial action`` 
+``using functorial action``
 \end{frame}
 
 \begin{frame}[fragile]
@@ -513,14 +513,14 @@ homfunctor $\mathbb{C}(-,B): \mathbb{C}^{op}\rightarrow\mathbb{S}et$
 
 Можно построить $\mathbb{C}(-,-): \mathbb{C}^{op}\times \mathbb{C} \rightarrow\mathbb{S}et$
 
-и получить путём каррирования 
+и получить путём каррирования
 $H^{\bullet}: C^{op}\rightarrow [\mathbb{C}, \mathbb{S}et]$
 
 \end{frame}
 
 \begin{frame}[fragile]{Yoneda embedding}
 \begin{lemma}%%%[Йонеды для ковариантного hom-функтора]
-Функтор 
+Функтор
 $H^{\bullet}: C^{op}\rightarrow [\mathbb{C}, \mathbb{S}et]$
 полный (full), строгий (faithful) и инъективен на объектах
 \end{lemma}\vspace{1cm}
@@ -539,7 +539,7 @@ TODO: какойнить пример
 
 \begin{frame}[fragile]
 \begin{minipage}{0.3\textwidth}
-  \begin{figure}%[b]{0.3\textwidth} 
+  \begin{figure}%[b]{0.3\textwidth}
       \begin{tikzpicture}
       \draw \boundellipse{0,1}{1}{.45};
       \node[align=left] at (0,1) {$\mathbb{C}$};
@@ -552,9 +552,9 @@ TODO: какойнить пример
 \begin{minipage}{0.65\textwidth}
 Подставим $\mathbb{C}(B, A)$ вместо $F$ в лемме Йонеды
 \begin{center}
-$ [\mathbb{C}, \operatorname{Set}](\mathbb{C}(A,-), \mathbb{C}(B,-)) \simeq \mathbb{C}(B, A) $  
+$ [\mathbb{C}, \operatorname{Set}](\mathbb{C}(A,-), \mathbb{C}(B,-)) \simeq \mathbb{C}(B, A) $
 \end{center}
-Отображение справа налево переводит стрелку 
+Отображение справа налево переводит стрелку
 $f\in \mathbb{C}(B, A)$ в $\mathbb{C}(f,-)=(\circ f)$
 \vspace{0.5cm}
 
@@ -582,7 +582,7 @@ $\mathbb{C} $ -- малая категория и функтор $F:\mathbb{C}\a
 
 \begin{frame}[fragile]{Indirect inequality}
 
-Для произвольного предпорядка $(A,\leqslant)$ 
+Для произвольного предпорядка $(A,\leqslant)$
 $$ (b \leqslant a) \Leftrightarrow(\forall c . (a \leqslant c) \Rightarrow(b \leqslant c)) $$
 
 Доказательство:
@@ -626,10 +626,10 @@ $$\vspace{0.5cm}
 \begin{column}{0.8\textwidth}
 % Full and failthful functors preserve isomorphisms (???)
 \begin{itemize}%[<+->]
-\item Если F строгий (faithful), то последний шаг -- это 
+\item Если F строгий (faithful), то последний шаг -- это
 $\Leftrightarrow$
 \item В этом случае, если $F(f)$ и $F(g)$ образуют изоморфизм, то $f$ и $g$ тоже
-\item Если $F$ full (сюръективен по стрелкам), то если $F(f)$ имеет обратное $h$, то $h$ достижим путём $F$, т.е. $\exists g : h=F(g)$ 
+\item Если $F$ full (сюръективен по стрелкам), то если $F(f)$ имеет обратное $h$, то $h$ достижим путём $F$, т.е. $\exists g : h=F(g)$
 \item Итого, для full\&faithful функтора $F$, стрелка $f$ образует изоморфизм $\Leftrightarrow F(f)$ образует тоже
 \item Yoneda embedding предоставляет full\&faithful функтор
 $$
@@ -648,7 +648,7 @@ $$
 \begin{hslisting}
 data Yo f a = Yo { unYo :: forall r . (a -> r) -> f r }
 \end{hslisting}
-Лемма гласит, что $Y\!o\; f\; a \simeq f\; a$, если $f$ -- это   функтор. 
+Лемма гласит, что $Y\!o\; f\; a \simeq f\; a$, если $f$ -- это   функтор.
 
 Надо предъявить изоморфизм
 
@@ -660,7 +660,7 @@ toYo :: Functor f => f a -> Yo f a
 toYo x = Yo (\h -> fmap h x) {- use functorial action -}
 \end{hslisting}
 
-Неформально: $Y\!o\; f\; a$ берет произвольную функцию $a\rightarrow r$ для произвольного $r$ и возвращает значение типа $f\ r$. В некотором смысле она должна иметь $f a$ сохраненным внутри себя.  
+Неформально: $Y\!o\; f\; a$ берет произвольную функцию $a\rightarrow r$ для произвольного $r$ и возвращает значение типа $f\ r$. В некотором смысле она должна иметь $f a$ сохраненным внутри себя.
 \end{frame}
 
 \begin{frame}[fragile]{Частный случай: $f = Id$}
@@ -674,7 +674,7 @@ $Yo\ Id\ a = \forall r . (a \rightarrow r) \rightarrow r$
 
 Что сильно напоминает преобразование
 
-$b \arr a \quad\rightsquigarrow\quad  \forall r . b \rightarrow(a \rightarrow r) \rightarrow r$ 
+$b \arr a \quad\rightsquigarrow\quad  \forall r . b \rightarrow(a \rightarrow r) \rightarrow r$
 
 \begin{theorem}CPS преобразование корректно\end{theorem}
 \begin{proof}Лемма Йонеды\end{proof}
@@ -700,7 +700,7 @@ data CoYo f r = exists a . CoYo { unCoYo :: (f a, a -> r) }
 \end{hslisting}
 
 \begin{hslisting}
-fromCoYo :: Functor f => CoYo f b -> f b 
+fromCoYo :: Functor f => CoYo f b -> f b
 fromCoYo (CoYo (x, h)) = fmap h x
 
 toCoYo :: f b -> CoYo f b
@@ -709,7 +709,7 @@ toCoYo y = CoYo (y, id)
 instance Functor (CoYo f ) where
   fmap g (CoYo (x, h)) = CoYo (x, g . h)
 \end{hslisting}
-Использоваться, чтобы для GADT, где типы используются только как индесы, породить функтор
+Использоваться, чтобы для GADT, где типы используются только как индексы, породить функтор
 \end{frame}
 
 
@@ -719,7 +719,7 @@ instance Functor (CoYo f ) where
 
 Функтор $Hom(a,-)$ для некоторого $a$ иногда называют представимым.\vspace{0.5cm}
 
-Вообще, любой функтор, который для некоторого $a$ изоморфен 
+Вообще, любой функтор, который для некоторого $a$ изоморфен
 hom функтору, называется \emph{представимым}.\vspace{0.5cm}
 \end{frame}
 
@@ -728,7 +728,7 @@ hom функтору, называется \emph{представимым}.\vspa
 
 \begin{itemize}
  \item $\alpha\circ\beta = \mathit{id} = \beta\circ\alpha$
- \item Условие натуральности: 
+ \item Условие натуральности:
      $Ff \circ \alpha_x = \alpha_y \circ \mathbb{C}(a, f)$
  \begin{hslisting}
   alpha :: forall x. (a -> x) -> F x
@@ -747,12 +747,12 @@ hom функтору, называется \emph{представимым}.\vspa
 
 \begin{frame}[fragile]{Непредставимость функтора List}
 Число 42 -- с потолка.
- 
+
  \begin{hslisting}
   alpha :: forall x. (Int -> x) -> [x]
   alpha h = map h [42]
  \end{hslisting}
- 
+
  Условие натруальности выполняется
  \begin{hslisting}
   map f (map h [12]) = map (f . h) [12]
@@ -775,7 +775,7 @@ hom функтору, называется \emph{представимым}.\vspa
   instance Naperian Stream where
     type Rep Stream = Integer
 
-    lookup (Cons b bs) n = 
+    lookup (Cons b bs) n =
       if n == 0 then b
       else index bs (n - 1)
     tabulate f = Cons (f 0) (tabulate (f . (+1)))
@@ -791,13 +791,13 @@ hom функтору, называется \emph{представимым}.\vspa
     type Log f
     lookup   :: f a -> (Log f -> a)  -- each other's...
     tabulate :: (Log f -> a) -> f a  -- ... inverses
-    
+
     positions :: f (Log f)
     tabulate h = fmap h positions
     positions = tabulate id
 \end{hslisting}\vspace{0.5cm}
 
-Если функтор -- это пара, 
+Если функтор -- это пара,
 
 то \hsinline|positions = (True, False)|
 
@@ -821,7 +821,7 @@ hom функтору, называется \emph{представимым}.\vspa
     \newblock {\em Gabriel Gonzalez }
     \newblock \href{http://www.haskellforall.com/2012/06/gadts.html}{ссылка}
    \bibitem{}
-    The Yoneda Lemma: What’s It All About? 
+    The Yoneda Lemma: What’s It All About?
     \newblock {\em Tom Leinster}
     \newblock \href{http://www.maths.ed.ac.uk/~tl/categories/yoneda.ps}{ссылка}
    \bibitem{}
