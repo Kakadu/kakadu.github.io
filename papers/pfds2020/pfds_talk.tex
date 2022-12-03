@@ -5,8 +5,8 @@
   , xcolor={svgnames}
   , hyperref=
       { colorlinks
-      , urlcolor=DarkBlue 
-      }  
+      , urlcolor=DarkBlue
+      }
   , russian  % This line affects translation of theorem titles
   ]{beamer}
 
@@ -50,7 +50,7 @@
   \minted
 }{
   \endminted
-  \unskip   
+  \unskip
   \aftergroup\@tabmintedend
 }
 \newcommand*{\tabminted@finalstrut}[1]{%
@@ -93,7 +93,7 @@
 }
 
 \newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}
-\setcounter{tocdepth}{2}  % part,chapters,sections 
+\setcounter{tocdepth}{2}  % part,chapters,sections
 %\newcommand\chap[1]{
 %  \addcontentsline{toc}{chapter}{#1}
 %}
@@ -105,7 +105,7 @@
 % For every picture that defines or uses external nodes, you'll have to
 % apply the 'remember picture' style. To avoid some typing, we'll apply
 % the style to all pictures.
-\tikzstyle{every picture}+=[remember picture] 
+\tikzstyle{every picture}+=[remember picture]
 
 % By default all math in TikZ nodes are set in inline mode. Change this to
 % displaystyle so that we don't get small fractions.
@@ -113,13 +113,13 @@
 
 % Uncomment these lines for an automatically generated outline.
 \begin{frame}{Оглавление}
-  \tableofcontents
+%  \tableofcontents
 \end{frame}
 
 %\begin{frame}{Чисто функциональные структуры данных}
 %\begin{itemize}
 %  \item Следуя книге Okasaki "Pure Functional Data Structures"
-%  \item Чисто функциональные -- это 
+%  \item Чисто функциональные -- это
 %    \begin{itemize}
 %      \item используя только чистые функции
 %      \item проектируя с помощью индуктивных (алгебраических) типов
@@ -127,7 +127,7 @@
 %  \item С примерами кода на языке Haskell
 %  \item В принципе, можно бы и на Python, но оно будет выглядеть отвратительно
 %  \item Поэтому сначала gentle introduction to Haskell \textcopyright\vspace{.5cm}
-%  
+%
 %  \item Будет непонятно -- кричите!
 %\end{itemize}
 %\end{frame}
@@ -136,18 +136,20 @@
 \section{Введение}
 \input{02intro.tex}
 
-\section{Списки}
+\section{Структуры данных на основе списков}
 \input{chapter05.tex}
 
 \section{Деревья}
 \input{06trees}
+
+\begin{comment}
 
 
 \section{Кучи}
 \input{08heaps}
 
 %\section{Унификация}
-%\input{03unif}
+\input{03unif}
 
 \section{Упражнения}
 \input{07exercises}
@@ -165,6 +167,7 @@
 \item Биномиальные кучи. Оценки асимптотической сложности для основных операций.
 \end{itemize}
 \end{frame}
+\end{comment}
 
 \begin{frame}
 \begin{figure}[ht]
@@ -173,9 +176,10 @@
 \end{subfigure}
 \begin{subfigure}{.55\textwidth}
 \begin{center}
-  Подробнее в книге К.Окасаки \\"Чисто функциональные структуры данных" \\
+  Подробнее в книге К.~Окасаки \\
+  ``Чисто функциональные структуры данных'' \\
   \vspace{6em}
-    
+
   {\Huge Конец}
 \end{center}
 \end{subfigure}
@@ -192,15 +196,17 @@
 
 \bibitem{leftist-ocaml}
   \href{http://typeocaml.com/2015/03/12/heap-leftist-tree/}{Heap -- Leftist Tree}
-  
+
 \bibitem{aa}
   \href{https://doi.org/10.1145/2857274.2884038}{Immutability changes everything}
   \newblock {\em Pat Helland  }
-  
+
 \bibitem{youtube}
   \href{https://www.youtube.com/watch?v=Wo0qiGPSV-s}{Immutable data structures for functional JS}
   \newblock {\em Anjana Vakil}
-  
+
+\bibitem{queues-gitlab}
+\href{https://gitlab.com/Kakadu/fp2020course-materials/-/tree/master/code/datatypes}{Три реализации очередей на GitLab}
 \end{thebibliography}
 \end{frame}
 

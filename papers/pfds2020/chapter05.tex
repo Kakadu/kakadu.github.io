@@ -33,9 +33,9 @@
 %\vspace{2em}
 %
 %\begin{minted}{ocaml}
-%let rec append xs ys = 
-%  match xs with 
-%  | [] -> ys 
+%let rec append xs ys =
+%  match xs with
+%  | [] -> ys
 %  | x::xs -> x::(append xs ys)
 %\end{minted}
 %\end{frame}
@@ -78,7 +78,7 @@
 \begin{frame}{Ассоциативность конкатенации}
 В теории конкатенация ассоциативна
 \[
-  (((a_1 \mdoubleplus a_2) \mdoubleplus a_3) \mdoubleplus\dots \mdoubleplus a_n) \equiv 
+  (((a_1 \mdoubleplus a_2) \mdoubleplus a_3) \mdoubleplus\dots \mdoubleplus a_n) \equiv
   (a_1 \mdoubleplus (a_2 \mdoubleplus (a_3 \mdoubleplus (\dots \mdoubleplus a_n))))
 \]
 На практике то, что слева будет работать сильно медленнее того, что справа.
@@ -108,7 +108,7 @@
 \end{itemize}
 \vspace{2em}
 
-%Чтобы совместить амортизацию и устойчивость стоит применить 
+%Чтобы совместить амортизацию и устойчивость стоит применить
 %\emph{ленивые вычисления}.
 
 % Например, имея $n$
@@ -146,7 +146,7 @@
 \begin{frame}{Как оценивать амортизированную сложность? Метод банкира}
 \begin{definition}[\term{Текущие накопления}{accumulated savings}]
 Разница между общей текущей амортизированной стоимостью
-и общей текущей реальной стоимостью. 
+и общей текущей реальной стоимостью.
 \end{definition}
 \vspace{2em}
 Таким образом, общая
@@ -181,7 +181,7 @@
 
 %\begin{frame}{}
 %\begin{itemize}
-%  \item \term{Метод банкира}{banker's method} 
+%  \item \term{Метод банкира}{banker's method}
 %      \begin{itemize}
 %        \item \term{кредит}{credits}
 %      \end{itemize}
@@ -308,13 +308,13 @@ $$
 \end{minipage}
 \begin{minipage}{.5\textwidth}
   Самая распространенная чисто функциональная реализация очередей
-  представляет собой пару списков, \mlinline{f} и \mlinline{r}, 
+  представляет собой пару списков, \mlinline{f} и \mlinline{r},
   \begin{itemize}
   \item \mlinline{f} (front) содержит головные элементы очереди в правильном порядке,
   \item \mlinline{r} (reversed) состоит из хвостовых элементов в обратном порядке
   \end{itemize}
   \vspace{1em}
-  
+
   Например, очередь, содержащая целые числа \mlinline{f=[1;2;3;4;5;6]}, может быть
   представлена списками \mlinline{f=[1;2;3]} и
   \mlinline{r=[6;5;4]}.
@@ -442,16 +442,16 @@ $O(1)$, но \mlinline{tail} в худшем случае отнимает $O(n)
 \subsection{Ленивые вычисления}
 \input{06lazy.tex}
 
-\subsection{Banker's queue}
+\subsection{Очередь банкира}
 
-\begin{frame}{Улучшаем: banker's queue}
+\begin{frame}{Улучшение предыдущего: очередь банкира}
 \begin{remark}
 Эта реализация будет работать за амортизированную $O(1)$ и будет устойчивой
 \end{remark}
 
 
 \begin{enumerate}
-\item Вместо списков используем потоки 
+\item Вместо списков используем потоки
 \item Явно храним длины
 \item Инвариант: $\card{f}>\card{r}$
 \end{enumerate}
@@ -459,7 +459,7 @@ $O(1)$, но \mlinline{tail} в худшем случае отнимает $O(n)
 
 В момент, когда потоки сравняются под длине конструируем новый $f$ как $f \concat reverse(r)$. \vspace{1em}
 
-Обращение списка 
+Обращение списка
 \begin{itemize}
 \item не будет считаться слишком рано из-за ленивости
 \item не будет считаться дважды из-за мемоизации
@@ -467,7 +467,7 @@ $O(1)$, но \mlinline{tail} в худшем случае отнимает $O(n)
 \end{frame}
 
 
-\subsection{Real-time queue}
+\subsection{Очереди реального времени}
 \begin{frame}{Планирование (scheduling)}
 Проблема:
 \begin{itemize}
@@ -482,7 +482,7 @@ $O(1)$, но \mlinline{tail} в худшем случае отнимает $O(n)
 \end{frame}
 
 \begin{frame}{Real-time queue}
-Вспоминаем очередь банкира: там мы полагались на вычисление 
+Вспоминаем очередь банкира: там мы полагались на вычисление
 $f \mdoubleplus reverse (r)$
 
 Теперь будет использовать для этого специальную функцию \mlinline{rotate}
@@ -490,10 +490,10 @@ $f \mdoubleplus reverse (r)$
 \[
 rotate (f, r, a) =  f \mdoubleplus reverse(r) \mdoubleplus a
 \]
-Третий параметр -- аккумулятор, будет хранить частичные результаты $reverse(r)$. 
+Третий параметр -- аккумулятор, будет хранить частичные результаты $reverse(r)$.
 \vspace{1em}
 
-Очевидно, что 
+Очевидно, что
 \[
   rotate (f, r, \$Nil) =  f \mdoubleplus reverse(r)
 \]
@@ -507,7 +507,7 @@ rotate (f, r, a) =  f \mdoubleplus reverse(r) \mdoubleplus a
 База:
 \begin{equation*}
 \begin{split}
-rotate (\nil, \cons{y}{\nil}, a) 
+rotate (\nil, \cons{y}{\nil}, a)
 & \equiv \nil\concat reverse(\cons{y}{\nil}) \concat a \\
 & \equiv \cons{y}{a}
 \end{split}
@@ -516,7 +516,7 @@ rotate (\nil, \cons{y}{\nil}, a)
 Переход:
 \begin{equation*}
 \begin{split}
-rotate (\cons{x}{f}, \cons{y}{r}, a) 
+rotate (\cons{x}{f}, \cons{y}{r}, a)
 & \equiv \cons{x}{f} \concat  reverse(\cons{y}{r}) \concat a \\
 & \equiv \cons{x}{f \concat  reverse(\cons{y}{r}) \concat a} \\
 & \equiv \cons{x}{f \concat  reverse(r) \concat \cons{y}{a}} \\
@@ -537,7 +537,7 @@ rotate (\cons{x}{f}, \cons{y}{r}, a)
 \end{itemize}
 
 \begin{remark}
-$rotate$ выполняет константное количество вычислений, при этом откладывая вычисление ещё одно вызова $rotate$ от аргументов меньшей длины
+Вызов $rotate$ выполняет константное количество вычислений, при этом откладывая вычисление ещё одно вызова $rotate$ от аргументов меньшей длины
 \end{remark}
 \end{frame}
 
@@ -546,8 +546,8 @@ $rotate$ выполняет константное количество вычи
 
 \begin{frame}[fragile]{Тип данных для очередей реального времени}
 
-%\begin{minted}{ocaml} 
-%type 'a queue = { s : 'a stream; f : 'a stream; r: 'a list } 
+%\begin{minted}{ocaml}
+%type 'a queue = { s : 'a stream; f : 'a stream; r: 'a list }
 %\end{minted}
 
 \begin{itemize}
@@ -558,7 +558,7 @@ $rotate$ выполняет константное количество вычи
 \item Инвариант \invariant
 \end{itemize}
 \item Перевернутый хвост r конструируется как есть, поэтому это просто список
-\item Не храним длины 
+\item Не храним длины
 \end{itemize}
 \end{frame}
 
@@ -591,24 +591,28 @@ $rotate$ выполняет константное количество вычи
 
 Оцениваем:
 \begin{itemize}
-\item Все конструирования, такие как $\nil$, $\cons{\cdot}{\cdot}$, и тело \rotate{} выполняют константу работы   
+\item Все конструирования, такие как $\nil$, $\cons{\cdot}{\cdot}$, и тело \rotate{} выполняют константу работы
 \item Вызов \rotate{} форсирует голову фронта, но мы помним, что перед планированием \rotate{} фронт уже был посчитан, так что это тоже константа работы
 \end{itemize}
 \end{frame}
 
+\subsection{Итог по очередям}
 \begin{frame}{Итоги по очередям}
 \begin{center}
-\begin{tabular}{ |>{\centering\arraybackslash}p{4cm}|>{\centering\arraybackslash}p{2cm}|>{\centering\arraybackslash}p{3cm}|>{\centering\arraybackslash}p{2.5cm}| } 
+\begin{tabular}{ |>{\centering\arraybackslash}p{3.5cm}|>{\centering\arraybackslash}p{1.5cm}|>{\centering\arraybackslash}p{1.5cm}|>{\centering\arraybackslash}p{1.5cm}|>{\centering\arraybackslash}p{3cm}| }
  \hline
- Очередь\textbackslash Операция  & enqueue & head & tail \\ \hline
- Банкира  & \Oconst$^*$ & \Oconst{}$^*$ &\Oconst{}$^*$  \\  \hline
- Real-time &  \Oconst & \Oconst{} & \Oconst{}   \\  \hline
+ Очередь\textbackslash Операция  & enqueue & head & tail& Инвариант\\ \hline
+ ``В лоб''$\star$  & \Oconst$^*$ & \Oconst{}$^*$ &\Oconst{}$^*$ & $\card{f}=0 \implies \card{r}=0$\\  \hline
+ Банкира  & \Oconst$^*$ & \Oconst{}$^*$ &\Oconst{}$^*$ & $\card{f}>\card{r}$ \\  \hline
+ Real-time &  \Oconst & \Oconst{} & \Oconst{} & $\card{f}>\card{r}$ \\  \hline
 \end{tabular}
 \end{center}
 
 %Пропуск означает, что точную оценку забыли подсмотреть в литературе
 
 Амортизированные оценки обозначаются с$^*$.
+
+Неустойчивые реализации структуры данных обозначены со $\star$.
 \end{frame}
 
 %\begin{frame}[fragile]{Ленивые вычисления (очень кратко)}
@@ -639,7 +643,7 @@ $rotate$ выполняет константное количество вычи
 %  очередь содержит более одного элемента, оба списка должны быть
 %  непустыми. Когда один из списков становится пустым, мы делим другой
 %  пополам и одну из половин обращаем.
-%  
+%
 %  \begin{enumerate}
 %    \item Реализуйте эту версию деков.
 %    \item Докажите, что каждая операция занимает $O(1)$ амортизированного
@@ -660,7 +664,7 @@ $rotate$ выполняет константное количество вычи
 %что на самом деле амортизированное ограничение на время вставки
 %составляет $O(1)$.\\
 %
-%Метод физика. Потенциал биномиальной кучи -- число деревьев в ней. 
+%Метод физика. Потенциал биномиальной кучи -- число деревьев в ней.
 %
 %Заметим, что это число равно количеству
 %единиц в двоичном представлении $n$, числа элементов в куче.  Вызов
@@ -726,7 +730,7 @@ $rotate$ выполняет константное количество вычи
 %Вместо этого каждая операция перестраивает дерево при помощи
 %некоторых простых преобразований, которые имеют тенденцию увеличивать
 %сбалансированность. Несмотря на то, что каждая конкретная операция
-%может занимать до $O(n)$ времени, можно показать, что 
+%может занимать до $O(n)$ времени, можно показать, что
 %амортизированная стоимость ее не превышает $O(\log n)$.
 %\end{frame}
 %
@@ -779,7 +783,7 @@ $rotate$ выполняет константное количество вычи
 %
 %где \hsinline{smaller} выделяет дерево из элементов, меньше или равных
 %\hsinline{x}, а \hsinline{bigger} -- больших
-%\hsinline{x}. 
+%\hsinline{x}.
 %
 %\end{frame}
 %
@@ -793,7 +797,7 @@ $rotate$ выполняет константное количество вычи
 %\begin{minted}{haskell}
 %bigger pivot E = E
 %bigger pivot (T a x b) =
-%  if x <= pivot 
+%  if x <= pivot
 %  then bigger pivot b
 %  else T (bigger pivot a) x b
 %\end{minted}
@@ -812,15 +816,15 @@ $rotate$ выполняет константное количество вычи
 %\begin{minted}{haskell}
 %bigger pivot E = E
 %bigger pivot (T a x b) =
-%  if x <= pivot 
+%  if x <= pivot
 %  then bigger pivot b
 %  else case a of
 %    E         -> T E x b
 %    T a1 y a2 ->
-%        if y <= pivot 
+%        if y <= pivot
 %        then T (bigger pivot a2) x b)
 %        else T (bigger pivot a1) y (T a2 x b)
-%\end{minted} 
+%\end{minted}
 %\end{frame}
 %
 %\begin{frame}[fragile]{}
@@ -861,7 +865,7 @@ $rotate$ выполняет константное количество вычи
 %  устраивать отдельную проверку на равенство не следует!).
 %\end{exercise}
 %\end{frame}
-%\fi 
+%\fi
 %
 %
 %\begin{frame}[fragile]{}
@@ -902,7 +906,7 @@ $O(\log n)$. Пусть $\#t$ обозначает размер дерева $t$
   $$
   1 + \log y + \log z < 2 \log x
   $$
-  
+
   \noindent
   \textit{Доказательство.} Без потери общности предположим, что $y \le  z$.
   Тогда $y \le x/2$ и $z \le x$, так что $1 + \log y \le \log x$ и
@@ -929,16 +933,16 @@ $$
 \begin{frame}[fragile]{}
 \begin{theorem}\label{th:5.2}
   $\mathcal{A}(t) \le 1 + 2\phi(t) = 1 + 2\log(\#t)$
-  
+
   \noindent\textbf{Доказательство.} Требуется рассмотреть два
   нетривиальных случая, называемые зиг-зиг и зиг-заг, в зависимости
   от того, проходит ли вызов \hsinline{partition} по двум левым
   ветвям (или, симметрично, по двум правым), либо по левой ветке, а
   затем правой (или, симметрично, по правой, а затем по левой).
-  
+
   Для случая зиг-зиг предположим, что исходное и результирующее дерево
   имеют формы
-  
+
   \begin{center}
     \input{figures/formula.theorem.5.2.tex}
   \end{center}
