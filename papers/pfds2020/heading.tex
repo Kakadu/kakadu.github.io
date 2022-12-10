@@ -32,9 +32,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \usepackage{fontspec}
-\usepackage{xunicode}
-\usepackage{xltxtra}
-\usepackage{xecyr}
 \usepackage{hyperref}
 
 \setmainfont[
@@ -55,9 +52,14 @@
 %\setmainfont[Mapping=tex-text]{DejaVu Serif}
 %\setsansfont[Mapping=tex-text]{DejaVu Sans}
 %\setmonofont{Fira Code}[Contextuals=AlternateOff]
-\setmonofont{Fira Code}[Contextuals=Alternate,Scale=0.9]
-\newfontfamily{\myfiracode}[Scale=1.5,Contextuals=Alternate]{Fira Code}
+%\setmonofont{Fira Code}[Contextuals=Alternate,Scale=0.9]
+%\setmonofont{Dejavu Sans Mono}[Contextuals=Alternate,Scale=0.9]
+%\newfontfamily{\myfiracode}[Scale=1.5,Contextuals=Alternate]{Fira Code}
 %\setmonofont[Scale=0.9,BoldFont={Inconsolata Bold}]{Inconsolata}
+
+% https://tex.stackexchange.com/a/91510
+\newfontfamily{\cyrillicfonttt}{Monaco for Powerline}[Contextuals=Alternate,Scale=0.8]
+%\newfontfamily{\cyrillicfonttt}{Fira Code}
 
 \usepackage{polyglossia}
 \setmainlanguage{russian}
@@ -338,3 +340,11 @@
 
 \def\Oconst{\ensuremath{O(1)}}
 \def\Ologn{\ensuremath{O(log~n)}}
+
+\usepackage{amsthm}
+\newtheorem{remark}{\textbf{Замечание}}[section]
+\newtheorem{notation}{\textbf{Нотация}}[section]
+\newtheorem{idea}{\textbf{Идея}}
+\newtheorem{hint}{\textbf{Указание разработчикам}}[section]
+\deftranslation[to=russian]{Theorem}{Теорема}
+\deftranslation[to=russian]{theorem}{теорема}

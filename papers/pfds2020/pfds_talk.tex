@@ -1,4 +1,6 @@
 % !TeX spellcheck = ru_RU
+% !TEX TS-program = xelatex
+% !TEX TS-program = lualatex
 \newif\ifanswers
 
 \documentclass[aspectratio=169
@@ -16,12 +18,6 @@
 
 \newcommand{\term}[2]{\textit{#1} (#2)}
 
-\usepackage{amsthm}
-\newtheorem{remark}{\textbf{Замечание}}[section]
-\newtheorem{notation}{\textbf{Нотация}}[section]
-\newtheorem{idea}{\textbf{Идея}}
-\newtheorem{hint}{\textbf{Указание разработчикам}}[section]
-
 \newtheoremstyle{exerciseStyle1}
 {}                % Space above
 {}                % Space below
@@ -34,14 +30,10 @@
 \theoremstyle{exerciseStyle1}
 \newtheorem{exercise}{\textbf{Упражнение}}[section]
 
-
-\deftranslation[to=russian]{Theorem}{Теорема}
-\deftranslation[to=russian]{theorem}{теорема}
-
 \usepackage{tikz}
 \usetikzlibrary{trees,decorations.pathreplacing}
 
-\usepackage{subcaption}
+%\usepackage{subcaption}
 
 %%%%%%%%%%%%%%%%%%
 \makeatletter

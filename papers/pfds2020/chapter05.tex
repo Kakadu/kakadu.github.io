@@ -227,8 +227,8 @@ $$
 \end{itemize}
 \vspace{1em}
 
-Таким образом, $\sum c_i \ge \sum \bar{c}_i$, а
-следовательно, как и требуется, $\sum a_i \ge \sum t_i$.
+Таким образом, $\sum c_i \geqslant \sum \bar{c}_i$, а
+следовательно, как и требуется, $\sum a_i \geqslant \sum t_i$.
 
 
 %Как правило,
@@ -532,7 +532,7 @@ rotate (\cons{x}{f}, \cons{y}{r}, a)
 Реализация $rotate(f,r,a)$
 \begin{itemize}
 \item Если $f\equiv\nil$ и $r\equiv\cons{y}{tl}$, то возвращаем $\cons{y}{a}$
-\item Если $f\equiv\cons{x}{f\ '}$ и $r\equiv\cons{y}{r'}$, то возвращаем $\cons{x}{rotate(f\ ', r\ ', \cons{y}{a})}$
+\item Если $f\equiv\cons{x}{f\:'}$ и $r\equiv\cons{y}{r\:'}$, то возвращаем $\cons{x}{rotate(f\:', r\:', \cons{y}{a})}$
 \item Другие случаи не возможны из-за инварианта $\card{r}\ =\ \card{f} +\ 1$
 \end{itemize}
 
