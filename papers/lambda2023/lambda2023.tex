@@ -1,0 +1,130 @@
+% !TeX spellcheck = ru_RU
+% !TEX TS-program = xelatex
+% !TEX TS-program = lualatex
+\newif\ifanswers
+
+\documentclass[aspectratio=169
+  , xcolor={svgnames}
+  , hyperref=
+      { colorlinks
+      , urlcolor=DarkBlue
+      }
+  , russian  % This line affects translation of theorem titles
+  ]{beamer}
+
+\input{heading.tex}
+\usepackage{tabulary}
+\usepackage{verbatim}
+\usepackage{amsmath}
+\usepackage{relsize}
+
+\newcommand{\term}[2]{\textit{#1} (#2)}
+\newcommand\alphaequiv{\overset{\alpha}{\equiv}}
+\newcommand{\xarr}[1]{\xrightarrow{\ #1\ }}
+\newcommand{\cbv}{\xarr{cbv}}
+\newcommand{\cbn}{\xarr{cbn}}
+\newcommand{\nor}{\xarr{nor}}
+\newcommand{\ao}{\xarr{ao}}
+
+\newcommand{\abs}[2]{\ensuremath{(\lambda #1 . #2)}}
+\newcommand{\lam}[2]{\ensuremath{\abs{#1}{#2}}}
+\newcommand{\app}[2]{\ensuremath{(#1 #2)}}
+
+
+%\usepackage{subcaption}
+
+%%%%%%%%%%%%%%%%%%
+\makeatletter
+%\newenvironment{tabminted}{
+%  \let\FV@ListVSpace\relax
+%  \minted
+%}{
+%  \endminted
+%  \unskip
+%  \aftergroup\@tabmintedend
+%}
+%\newcommand*{\tabminted@finalstrut}[1]{%
+%  \ifdim\prevdepth>0pt
+%    \ifdim\dp#1>\prevdepth
+%      \vskip\dimexpr(\dp#1)-\prevdepth\relax
+%    \fi
+%  \else
+%    \vskip\dimexpr(\dp#1)\relax
+%  \fi
+%}
+%\newcommand*{\@tabmintedend}{%
+%  \let\@finalstrut\tabminted@finalstrut
+%}
+%\renewcommand{\cite}[1]{}
+%\makeatother
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\title[]{Лямбда-исчисление}
+\subtitle{Набросок слайдов}
+\author{Косарев Дмитрий}
+
+\institute{матмех СПбГУ}
+
+
+\AtBeginSection[]
+{
+  \begin{frame}<beamer>%[allowframebreaks]
+    \frametitle{Оглавление}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>%[allowframebreaks]
+    \frametitle{Оглавление}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
+
+\newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}
+\setcounter{tocdepth}{2}  % part,chapters,sections
+%\newcommand\chap[1]{
+%  \addcontentsline{toc}{chapter}{#1}
+%}
+
+
+\begin{document}
+\maketitle
+
+% For every picture that defines or uses external nodes, you'll have to
+% apply the 'remember picture' style. To avoid some typing, we'll apply
+% the style to all pictures.
+\tikzstyle{every picture}+=[remember picture]
+
+% By default all math in TikZ nodes are set in inline mode. Change this to
+% displaystyle so that we don't get small fractions.
+\everymath{\displaystyle}
+
+% Uncomment these lines for an automatically generated outline.
+\begin{frame}{Оглавление}
+  \tableofcontents
+\end{frame}
+
+
+\section{Введение}
+\input{02intro.tex}
+
+
+
+
+
+\begin{frame}%[allowframebreaks]
+\frametitle<presentation>{Ссылки}
+\begin{thebibliography}{10}
+\bibitem{paper}
+  Книга "Чисто функциональные структуры данных"
+ \newblock {\em Chris Okasaki}
+
+\bibitem{leftist-ocaml}
+  \href{http://typeocaml.com/2015/03/12/heap-leftist-tree/}{Heap -- Leftist Tree}
+
+\end{thebibliography}
+\end{frame}
+
+\end{document}

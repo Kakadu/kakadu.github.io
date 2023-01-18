@@ -1,0 +1,350 @@
+\makeatletter
+\@ifclassloaded{beamer}{
+  \usetheme{CambridgeUS}
+  % get rid of header navigation bar
+  \setbeamertemplate{headline}{}
+  % get rid of bottom navigation symbols
+  \setbeamertemplate{navigation symbols}{}
+  % get rid of footer
+  %\setbeamertemplate{footline}{}
+}
+{}
+\makeatother
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\usepackage{fontawesome}
+%% \newfontfamily{\FA}{Font Awesome 5 Free} % some glyphs missing
+%\expandafter\def\csname faicon@facebook\endcsname{{\FA\symbol{"F09A}}}
+%\def\faQuestionSign{{\FA\symbol{"F059}}}
+%\def\faQuestion{{\FA\symbol{"F128}}}
+%\def\faExclamation{{\FA\symbol{"F12A}}}
+%\def\faUploadAlt{{\FA\symbol{"F093}}}
+%\def\faLemon{{\FA\symbol{"F094}}}
+%\def\faPhone{{\FA\symbol{"F095}}}
+%\def\faCheckEmpty{{\FA\symbol{"F096}}}
+%\def\faBookmarkEmpty{{\FA\symbol{"F097}}}
+\input{fontawe}
+
+\newcommand{\faGood}{\textcolor{ForestGreen}{\faThumbsUp}}
+\newcommand{\faBad}{\textcolor{red}{\faThumbsODown}}
+\newcommand{\faWrong}{\textcolor{red}{\faTimes}}
+\newcommand{\faMaybe}{\textcolor{blue}{\faQuestion}}
+\newcommand{\faCheckGreen}{\textcolor{ForestGreen}{\faCheck}}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\usepackage{fontspec}
+\usepackage{hyperref}
+
+\setmainfont[
+ Ligatures=TeX,
+ Extension=.otf,
+ BoldFont=cmunbx,
+ ItalicFont=cmunti,
+ BoldItalicFont=cmunbi,
+% Scale = 1.1
+]{cmunrm}
+\setsansfont[
+ Ligatures=TeX,
+ Extension=.otf,
+ BoldFont=cmunsx,
+ ItalicFont=cmunsi,
+%  Scale = 1.2
+]{cmunss}
+%\setmainfont[Mapping=tex-text]{DejaVu Serif}
+%\setsansfont[Mapping=tex-text]{DejaVu Sans}
+%\setmonofont{Fira Code}[Contextuals=AlternateOff]
+%\setmonofont{Fira Code}[Contextuals=Alternate,Scale=0.9]
+%\setmonofont{Dejavu Sans Mono}[Contextuals=Alternate,Scale=0.9]
+%\newfontfamily{\myfiracode}[Scale=1.5,Contextuals=Alternate]{Fira Code}
+%\setmonofont[Scale=0.9,BoldFont={Inconsolata Bold}]{Inconsolata}
+
+% https://tex.stackexchange.com/a/91510
+\newfontfamily{\cyrillicfonttt}{Monaco for Powerline}[Contextuals=Alternate,Scale=0.8]
+%\newfontfamily{\cyrillicfonttt}{Fira Code}
+
+\usepackage{polyglossia}
+\setmainlanguage{russian}
+\setotherlanguage{english}
+
+
+%\newfontfamily\dejaVuSansMono{DejaVu Sans Mono}
+% https://github.com/vjpr/monaco-bold/raw/master/MonacoB/MonacoB.otf
+%\newfontfamily\monacoB{MonacoB}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%5
+\usepackage{soul} % for \st that strikes through
+\usepackage[normalem]{ulem} % \sout
+
+\usepackage{stmaryrd}
+\newcommand{\sem}[1]{\ensuremath{\llbracket #1\rrbracket}}
+\newcommand\Haskell{\textsc{Haskell}}
+\newcommand\haskell{\Haskell}
+\newcommand\OCaml{\textsc{OCaml}}
+
+\usepackage{listings}
+%\lstdefinestyle{style1}{
+%  language=haskell,
+%  numbers=left,
+%  stepnumber=1,
+%  numbersep=10pt,
+%  tabsize=4,
+%  showspaces=false,
+%  showstringspaces=false
+%}
+%\lstdefinestyle{hsstyle1}
+%{ language=haskell
+%%          , basicstyle=\monacoB
+%         , deletekeywords={Int,Float,String,List,Void}
+%         , breaklines=true
+%         , columns=fullflexible
+%         , commentstyle=\color{ForestGreen}
+%         , escapeinside=§§
+%         , escapebegin=\begin{russian}\commentfont
+%         , escapeend=\end{russian}
+%         , commentstyle=\color{ForestGreen}
+%         , escapeinside=§§
+%         , escapebegin=\begin{russian}\color{ForestGreen}
+%         , escapeend=\end{russian}
+%         , mathescape=true
+%%          , backgroundcolor = \color{MyBackground}
+%}
+%
+%\newcommand{\inline}[1]{\lstinline{haskell}{#1}}
+%\def\hsinline{\mintinline{haskell}}
+%\def\inline{\hsinline}
+%
+%\lstnewenvironment{hslisting} {
+%    \lstset { style={hsstyle1} }
+%  }
+%  {}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%\setmainfont[
+%% Ligatures=TeX,
+%% Extension=.otf,
+%% BoldFont=cmunbx,
+%% ItalicFont=cmunti,
+%% BoldItalicFont=cmunbi,
+%%]{cmunrm}
+%%% С засечками (для заголовков)
+%%\setsansfont[
+%% Ligatures=TeX,
+%% Extension=.otf,
+%% BoldFont=cmunsx,
+%% ItalicFont=cmunsi,
+%%]{cmunss}
+%% \setmonofont[Scale=0.6]{Monaco}
+%
+%\usefonttheme{professionalfonts}
+%\usepackage{times}
+\usepackage{tikz}
+\usetikzlibrary{cd}
+\usepackage{tikz-cd}
+\usepackage{caption}
+\usepackage{subcaption}
+
+%\renewtheorem{definition}{برهان}[chapter]
+%%\DeclareMathOperator{->}{\rightarrow}
+%\newcommand\iso{\ensuremath{\cong}}
+%\usepackage{verbatim}
+%\usepackage{graphicx}
+%\usetikzlibrary{arrows,shapes}
+
+%\usepackage{amsmath}
+%\usepackage{amsfonts}
+\usepackage{scalerel}
+\DeclareMathOperator*{\myvee}{\scalerel*{\vee}{\sum}}
+\DeclareMathOperator*{\mywedge}{\scalerel*{\wedge}{\sum}}
+
+%
+%\usepackage{tabulary}
+%
+%% sudo aptget install ttf-mscorefonts-installer
+%%\setmainfont{Times New Roman}
+%%\setsansfont[Mapping=tex-text]{DejaVu Sans}
+%
+%%\setmonofont[Scale=1.0,
+%%    BoldFont=lmmonolt10-bold.otf,
+%%    ItalicFont=lmmono10-italic.otf,
+%%    BoldItalicFont=lmmonoproplt10-boldoblique.otf
+%%]{lmmono9-regular.otf}
+%
+
+% color options
+\definecolor{YellowGreen} {HTML}{B5C28C}
+\definecolor{ForestGreen} {HTML}{009B55}
+\definecolor{MyBackground}{HTML}{F0EDAA}
+\usepackage{verbatimbox}
+
+
+%\author{Косарев Дмитрий}
+%\institute{JetBrains Reasearch, Лаборатория языковых инструментов\\матмех СПбГУ}
+%
+%\addtobeamertemplate{title page}{}{
+%  \begin{center}{\tiny Дата сборки: \today}\end{center}
+%}
+
+
+%\makeatletter
+%\@ifclassloaded{beamer}{
+%  % get rid of header navigation bar
+%  \setbeamertemplate{headline}{}
+%  % get rid of bottom navigation symbols
+%  \setbeamertemplate{navigation symbols}{}
+%  % get rid of footer
+%  %\setbeamertemplate{footline}{}
+%}
+%{}
+%\makeatother
+%
+%\usepackage{xcolor}
+%\definecolor{YellowGreen} {HTML}{B5C28C}
+%\definecolor{ForestGreen} {HTML}{009B55}
+%\definecolor{MyBackground}{HTML}{F0EDAA}
+%
+%
+%\usepackage{xltxtra} % load xunicode
+%\usefonttheme{professionalfonts}
+%
+%
+%
+%\newfontfamily\dejaVuSansMono{DejaVu Sans Mono}
+%% https://github.com/vjpr/monaco-bold/raw/master/MonacoB/MonacoB.otf
+%\newfontfamily\monacoB{MonacoB}
+%
+%\usepackage{fontspec}
+%
+%\defaultfontfeatures{Ligatures={TeX}}
+%\setmainfont{Times New Roman}
+%\setsansfont{CMU Sans Serif}
+%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%\setmainfont[
+% Ligatures=TeX,
+% Extension=.otf,
+% BoldFont=cmunbx,
+% ItalicFont=cmunti,
+% BoldItalicFont=cmunbi,
+%]{cmunrm}
+%\setsansfont[
+% Ligatures=TeX,
+% Extension=.otf,
+% BoldFont=cmunsx,
+% ItalicFont=cmunsi,
+%]{cmunss}
+%\setmonofont{Fira Code}[Contextuals=Alternate,Scale=0.9]
+%\newfontfamily{\myfiracode}[Scale=1.5,Contextuals=Alternate]{Fira Code}
+%
+%%\newfontfamily\cyrillicfont[Script=Cyrillic]{Charis SIL}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%
+%\usepackage{listings}
+%\lstdefinestyle{style1}{
+%  language=haskell,
+%  numbers=left,
+%  stepnumber=1,
+%  numbersep=10pt,
+%  tabsize=4,
+%  showspaces=false,
+%  showstringspaces=false
+%}
+%\lstdefinestyle{hsstyle1}
+%{ language=haskell
+%%          , basicstyle=\monacoB
+%         , deletekeywords={Int,Float,String,List,Void}
+%         , breaklines=true
+%         , columns=fullflexible
+%         , commentstyle=\color{ForestGreen}
+%         , escapeinside=§§
+%         , escapebegin=\begin{russian}\commentfont
+%         , escapeend=\end{russian}
+%         , commentstyle=\color{ForestGreen}
+%         , escapeinside=§§
+%         , escapebegin=\begin{russian}\color{ForestGreen}
+%         , escapeend=\end{russian}
+%         , mathescape=true
+%%          , backgroundcolor = \color{MyBackground}
+%}
+%
+
+\usepackage[cache=true]{minted}
+\usemintedstyle{perldoc}
+%\def\hsinline{\mintinline{haskell}}
+\def\mlinline{\mintinline[mathescape=true,escapeinside=||]{ocaml}}
+
+%\lstdefinelanguage{ocaml}{
+%keywords={fresh, conde, let, begin, end, in, match, type, and, fun, function, try, with, when, class,
+%object, method, of, rec, repeat, until, while, not, do, done, as, val, inherit,
+%new, module, sig, deriving, datatype, struct, if, then, else, open, private, virtual, include, @type},
+%sensitive=true,
+%commentstyle=\small\itshape\ttfamily,
+%keywordstyle=\ttfamily\underbar,
+%identifierstyle=\ttfamily,
+%basewidth={0.5em,0.5em},
+%columns=fixed,
+%fontadjust=true,
+%literate={->}{{$\to\;\;$}}3 {*}{{$\times$}}3 {=/=}{{$\not\equiv$}}3 {|>}{{$\triangleright$}}3,
+%morecomment=[s]{(*}{*)}
+%}
+%
+%\usepackage{listings}
+%\def\mlinline{\lstinline[language=ocaml]}
+
+% TODO: minted и lstlisting дают ту же производительность компиляции.
+% Разобраться должно ли быть так
+
+%
+%\lstnewenvironment{hslisting} {
+%    \lstset { style={hsstyle1} }
+%  }
+%  {}
+%
+%
+%\usefonttheme{professionalfonts}
+%\usepackage{times}
+%\usepackage{tikz}
+%\usetikzlibrary{cd}
+%% \usepackage{tikz-cd}
+%\usepackage{amsmath}
+%%\DeclareMathOperator{->}{\rightarrow}
+%\newcommand\iso{\ensuremath{\cong}}
+%\usepackage{verbatim}
+%\usepackage{graphicx}
+%\usetikzlibrary{arrows,shapes}
+%
+%%\usepackage{fontawesome}
+%%% \newfontfamily{\FA}{Font Awesome 5 Free} % some glyphs missing
+%%\expandafter\def\csname faicon@facebook\endcsname{{\FA\symbol{"F09A}}}
+%%\def\faQuestionSign{{\FA\symbol{"F059}}}
+%%\def\faQuestion{{\FA\symbol{"F128}}}
+%%\def\faExclamation{{\FA\symbol{"F12A}}}
+%%\def\faUploadAlt{{\FA\symbol{"F093}}}
+%%\def\faLemon{{\FA\symbol{"F094}}}
+%%\def\faPhone{{\FA\symbol{"F095}}}
+%%\def\faCheckEmpty{{\FA\symbol{"F096}}}
+%%\def\faBookmarkEmpty{{\FA\symbol{"F097}}}
+%%
+%%\newcommand{\faGood}{\textcolor{ForestGreen}{\faThumbsUp}}
+%%\newcommand{\faBad}{\textcolor{red}{\faThumbsODown}}
+%%\newcommand{\faWrong}{\textcolor{red}{\faTimes}}
+%%\newcommand{\faMaybe}{\textcolor{blue}{\faQuestion}}
+%%\newcommand{\faCheckGreen}{\textcolor{ForestGreen}{\faCheck}}
+%
+%\usepackage{soul} % for \st that strikes through
+%\usepackage[normalem]{ulem} % \sout
+
+\newcommand\mdoubleplus{\ensuremath{\mathbin{+\mkern-10mu+}}}
+\newcommand\concat{\mdoubleplus}
+\newcommand\card[1]{\ensuremath{\mid\!\!#1\!\mid}}
+\newcommand\nil{\ensuremath{\texttt{\$Nil}}}
+\newcommand\cons[2]{\ensuremath{\texttt{\$Cons}(#1,#2)}}
+
+\def\Oconst{\ensuremath{O(1)}}
+\def\Ologn{\ensuremath{O(log~n)}}
+
+\usepackage{amsthm}
+\newtheorem{remark}{\textbf{Замечание}}[section]
+\newtheorem{notation}{\textbf{Нотация}}[section]
+\newtheorem{idea}{\textbf{Идея}}
+\newtheorem{hint}{\textbf{Указание разработчикам}}[section]
+\deftranslation[to=russian]{Theorem}{Теорема}
+\deftranslation[to=russian]{theorem}{теорема}
