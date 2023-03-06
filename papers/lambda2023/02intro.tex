@@ -1,29 +1,4 @@
 
-%{
-%\setbeamertemplate{headline}{}
-%\setbeamertemplate{footline}{}
-%\usebackgroundtemplate{
-%  \includegraphics[width=\paperwidth]{munch2.jpg}
-%}
-%\begin{frame}
-%\end{frame}
-%}
-
-%\section{Введение в Haskell}
-
-
-%\defverbatim[colored]{\imageA}{
-%\begin{tikzpicture}
-%    [%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%        box/.style={rectangle,draw=black, ultra thick, minimum size=1cm},
-%    ]%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%
-%\foreach \x/\y in {0/9, 1/\faAmazon,2/13,3/19,4/12,5/8,6/7,7/4,8/21,9/2,10/6,11/11}
-%        \node[box] at (\x,0){\y};
-%
-%\end{tikzpicture}
-%}
-
 
 \begin{frame}{Введение: $\lambda$-исчисление}
   \begin{figure}
@@ -31,7 +6,7 @@
     \begin{subfigure}[t]{0.45\textwidth}
       \begin{minipage}{0.7\textwidth}
       \includegraphics[width=1\textwidth]{220px-Alonzo_Church.jpg}\\
-            Alonzo Church (1903–1995)
+            Alonzo Church (1903--1995)
       \end{minipage}
     \end{subfigure}
     \begin{subfigure}[t]{0.45\textwidth}
@@ -104,7 +79,7 @@
   \begin{subfigure}[t]{0.35\textwidth}
       \begin{minipage}{0.7\textwidth}
   \includegraphics[width=1\textwidth]{800px-Bertrand_Russell_transparent_bg.png}\\
-  Bertrand Russell (1872–1970)
+  Bertrand Russell (1872--1970)
 \end{minipage}
   \end{subfigure}
 \end{figure}
@@ -309,7 +284,8 @@ $\forall x z\ \exists y (x < y) \vee (y < z)$\\
 Используя машину Тьюринга можно реализовать произвольный алгоритм
 \emph{с точностью до представления данных}.
 \end{theorem}
-Т.е. теперь под алгоритмом понимается только то, что можно записать в формализме.
+\vspace{1em}
+Т.е. теперь под алгоритмом понимается только то, что можно записать в формализ\-ме~(-ах).
 \end{frame}
 
 \begin{frame}{Как происходят вычисления (редукция) $\lambda$-исчислении?}
@@ -607,23 +583,4 @@ R(YR)
 \end{enumerate}
 \end{frame}
 
-%
-%\begin{frame}%{Чистые функции}
-%\begin{definition}[Неизменяемые структуры данных (immutable data structures)]
-%  Которые с течением времени не изменяются \faSmileO
-%\end{definition}
-%
-%\vspace{1em}
-%
-%\begin{definition}[Устойчивые структуры данных (persistent data structures)]
-%Имеют доступ (не уничтожают) предыдущее своё состояние
-%\end{definition}
-%Почти то же самое, только акцент смещён\vspace{1em}
-%
-%\begin{remark}
-%Так как старые узлы есть, то можно их использовать (share) в новой версии структуры данных
-%\end{remark}
-%\begin{definition}[Неустойчивые структуры данных называются \textit{эфемерными (ephemeral)}]
-%\end{definition}
-%\end{frame}
 
