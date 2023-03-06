@@ -25,96 +25,204 @@
 %}
 
 
-\begin{frame}
+\begin{frame}{Введение: $\lambda$-исчисление}
+  \begin{figure}
+    \centering
+    \begin{subfigure}[t]{0.45\textwidth}
+      \begin{minipage}{0.7\textwidth}
+      \includegraphics[width=1\textwidth]{220px-Alonzo_Church.jpg}\\
+            Alonzo Church (1903–1995)
+      \end{minipage}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.45\textwidth}
+      \vspace{-5em}   % TODO: dirty hack!
   Алонзо Чёрч 1935   открыл $\lambda$-исчисление
+\vspace{1em}
 
+Аналогичный подход от А.~Тьюринга с его машинами Тьюринга
+\vspace{1em}
 
-  Аналогичный подход от А.Тьюринга с его машинами Тьюринга
+Это разные подходы для формализации понятия ``алгоритм''
+\vspace{1em}
 
-  Всё формализация понятия алгоритма
+В принципе, могло быть изобретено уже в 1910-х г.г.
+\footnotetext{Изображение из \href{https://en.wikipedia.org/wiki/Alonzo\_Church}{Википедии}}
 
+    \end{subfigure}
+  \end{figure}
 
-  В принципе, могло быть изобретено уже в 1910х гг
+%\thisfloatsetup{heightadjust=all,valign=t}
+%\begin{figure}
+%  \begin{subfloatrow}
+%    \ffigbox[\dimexpr\FBwidth+4cm\relax]
+%    {\includegraphics[width=3cm,height=5cm]{example-image-b}}
+%    {\caption{Left subfigure}\label{sfig:testa}}%
+%    \ffigbox[\FBwidth]
+%    {\caption{Right subfigure}\label{sfig:testb}}
+%    {\includegraphics[width=3cm,height=2cm]{example-image-a}}
+%  \end{subfloatrow}
+%\end{figure}
+
 \end{frame}
 
-\begin{frame}{Состояние математики в 1910х}
-  \begin{itemize}
-    \item матан, алгебра, геометрия
-    \item информатики существует неявно, как часть математики
-    \item Математическая логика
+\begin{frame}{Состояние математики в 1910-х}
+
+    Матан, алгебра, геометрия...\\
+    Информатики (computer science) явным образом пока нет, как часть математики\\
+
+    Математическая логика
     \begin{enumerate}
       \item Пытается формализовать интуитивно понятные утверждения
       \item Языки (т.е. синтаксис), чтобы на них можно было правильно сформулировать теоремы
-      \item Различные интерпретации синтаксиса (т.е. семантики), потому что формулы могут быть верны и не верны в зависимости от семантики
+      \item Различные ``семантики'' как интерпретации синтаксиса , потому что формулы могут быть верны и не верны в зависимости от семантики
       \item ``Исчисления'' -- правильные способы доказательств
       \item Теоремы, которые невозможно ни доказать, ни опровергнуть.
     \end{enumerate}
-  \item Начинают задумываться, что такое ``алгоритм'', ``вычисление'' и ``вычислимая функция''.
-  \end{itemize}
+  Начинают задумываться, что такое ``алгоритм'', ``вычисление'' и ``вычислимая функция''
+
 \end{frame}
 
 \begin{frame}{Зачем формализовывать то, что и так понятно?}
-  Например, любой школьник знает, что такое множество
+\framesubtitle{''Наивная'' теория множеств}
+\begin{figure}[t]
+  \begin{subfigure}[t]{0.55\textwidth}
+    \vspace{-7em}
+  Множества можно делить на два типа
+  \begin{enumerate}
+    \item   набор не является элементом самого себя
+    \item Расселовские: набор является элементом самого себя.
+  \end{enumerate}
+  Рассмотрим $P=\{y: y\notin P\}$ и задумаемся про $P\in P$?
   \begin{itemize}
-    \item И множетсво множеств
-    \item И множество множеств множеств
-    \item ...
-    \item И множество всех множеств
-    \begin{enumerate}
-\item       Но, необжиданно, множество всех множеств -- не множество!
-      \item Парадок Рассела
-      \item ДОказательство -- сведение к противоречию.
-    \end{enumerate}
+    \item Если формула верна, то нарушается определение
+    \item Если ложна, то не принадлежит, но по определению должна
   \end{itemize}
+\footnotetext{Изображение из \href{https://en.wikipedia.org/wiki/Bertrand\_Russell}{Википедии}}
+
+  \end{subfigure}
+\hspace{0.05\textwidth}
+  \begin{subfigure}[t]{0.35\textwidth}
+      \begin{minipage}{0.7\textwidth}
+  \includegraphics[width=1\textwidth]{800px-Bertrand_Russell_transparent_bg.png}\\
+  Bertrand Russell (1872–1970)
+\end{minipage}
+  \end{subfigure}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Некоторые известные языки и исчисления из математической логики}
+\begin{itemize}
+  \item Нулевого порядка (высказываний)
+  \item Первого порядка (предикатов)
+  \item Высших порядков
+  \item Исчисление конструкций (calculus of constructions)
+\end{itemize}
+\begin{block}{Важное замечание}
+  То, что нельзя записать в языке, нельзя использовать в исчислениях/доказательствах
+\end{block}
 \end{frame}
 
 \begin{frame}{Пример: яызк 0го порядка (высказываний) }
 \frametitle{Знакомая вам булева (бинарная) логика}
+\begin{figure}[t]
+  \begin{subfigure}[t]{0.45\textwidth}
+\begin{enumerate}
+  \item Логические константы True и False
+  \item Логические переменные $x,y,z,\dots$
+  \item Бинарные связки $\vee, \wedge, \Rightarrow$ и т.д.
+\end{enumerate}
+\vspace{2em}
+Правила вывода в исчислении, например:
+\begin{mathpar}
+  \inferrule* [Right=modus ponens]
+  { P\Rightarrow Q \\    P  }{Q}
+\end{mathpar}
+  \end{subfigure}
+\hspace{0.05\textwidth}
+  \begin{subfigure}[t]{0.46\textwidth}
+\begin{theorem}[Язык и исчисление \textbf{``хорошие''}]
+  Верную формулу можно доказать за конечное число шагов. Ложную можно опровергнуть.\\
 
-Тут описание языка
-
-\begin{theorem}[Язык и исчисление хорошие]
-  Верную формулу можно доказать за конечное число шагов.
-
-   Ложную можно опровергнуть.
-
-   Т.е. существует алгоритм, который говорит да/нет и всегда завершается
+  Т.е. существует алгоритм, который всегда завершается и говорит да/нет.
 \end{theorem}
+\vspace{2em}
+Язык и исчисление \textbf{``плохие''}, потому что не всё можно записать (где кванторы?)
+  \end{subfigure}
+\end{figure}
 
-Язык и исчисление плохие, потому что не всё можно записать (где кванторы?)
 
 \end{frame}
 
 
-\begin{frame}{Язык и исчиследние 1го порядка (предикатов)}
-\framesubtitle{Вы это видели на матане}
-
-TODO: формальное описание
-
-Пример: $\forall x z \exists y (x < y) \vee (y < z)$
-верно, если $x,y,z \in \mathcal{R}$, неверно, если $x,y,z \in \mathcal{N}$
-
-Мораль
+\begin{frame}{Разрешимые и неразрешимые задачи}
+  \begin{definition}[Алгоритмически неразрешимая задача]
+    Задача, которая имеет ответ ``да'' или ``нет'', но для которое невозможно реализовать алгоритм, который \emph{всегда завершается, и выдает правильный ответ}.
+  \end{definition}
+  \begin{definition}[Полуразрешимая задача]
+    Неразрешимая задача, для которой можно предъявить алгоритм, который либо дает правильный ответ  ``да'', либо не завершается. Полуразрешимые$^{+}$ умеют говорить ``да'', полуразрешимые$^{-}$ --- ``нет''.
+  \end{definition}
+Как доказывать неразрешимость
 \begin{itemize}
-  \item Для некоторых формул из синтаксиса можно понять, что они верны (общезначимы). Для них есть алгоритм, который их докажет за конечное число шагов (метод британского музея)
-  \item Огромное количество формул верны только в некоторой семантике, для них нельзя предъявить, алгоритм, который завершается и выдает вердикт
+  \item Разбирать случаи и искать противоречие в каждом
+  \item Сводить каноничную неразрешимую задачу к нашей
 \end{itemize}
-\begin{definition}[Разрешимая задача]
-\end{definition}
-\begin{definition}[Полуразрешимая задача]
-\end{definition}
+\end{frame}
+
+\begin{frame}{Язык и исчисление 1-го порядка (предикатов)}
+%\framesubtitle{Вы это видели на матане}
+\begin{figure}[t]
+  \begin{subfigure}[t]{0.5\textwidth}
+    Термы:
+    \begin{itemize}
+      \item Предметные константы: 1.0, 42, $\pi$
+      \item Функциональные символы арности  $1\leqslant n$ от термов. Например, $+, \times, f, mod$ и т.д.
+    \end{itemize}
+    Формулы:
+    \begin{itemize}
+  \item Логические константы True и False
+  \item Логические переменные $x,y,z,\dots$
+  \item Бинарные связки $\vee, \wedge, \Rightarrow$ (и т.д.) %(от двух формул)
+  \item Предикатные символы (от термов) арности $1\leqslant n$
+  \item Кванторы $\forall, \exists$ от имени предметной переменной и формулы
+    \end{itemize}
+  \end{subfigure}
+\hspace{0.05\textwidth}
+  \begin{subfigure}[t]{0.4\textwidth}
+    \begin{block}{Важно}
+      $+, \times, f, mod$ это названия функциональных символов, никто не гарантирует, что  $+$ это сложение чисел
+    \end{block}
+\vspace{1em}
+Пример: \\
+$\forall x z\ \exists y (x < y) \vee (y < z)$\\
+верно, если $x,y,z \in \mathbb{R}$, \\
+неверно, если $x,y,z \in \mathbb{N}$
+  \end{subfigure}
+\end{figure}
+\end{frame}
+
+\begin{frame}{Преимущества и недостатки языка 1го порядка}
+
+  \begin{itemize}
+    \item Для некоторых формул из синтаксиса можно понять, что они верны (общезначимы). Для них есть алгоритм, который их докажет за конечное число шагов (см. ``метод британского музея'')
+    \item Огромное количество формул верны только в некоторой семантике, для них нельзя предъявить, алгоритм, который завершается и выдает вердикт.\\
+    В общем виде проверка формулы на истинность/ложность -- неразрешимая задача
+    \item Язык недостаточно богат. Кванторы пробегают только предметные переменные, нельзя выразить ``для любой формулы P, верно...'', например, принцип индукции
+    \[
+    \forall P.\quad P(0) \Rightarrow (\forall n . P(n) \Rightarrow P(n+1))  \Rightarrow (\forall n . P(n))
+    \]
+  \end{itemize}
 \end{frame}
 
 
-\begin{frame}{Недостатки исчисления предикатов}
-Некоторые формулы нельзя записать, а следовательно, пользоваться ими при доказательстве
-
-Например, принцип индукции
-
-
-
-Для этого нужен язык более высокого порядка, чем первого, а там всё ещё хуже с разрешимостью/неразрешимостью
-\end{frame}
+%\begin{frame}{Недостатки исчисления предикатов}
+%Некоторые формулы нельзя записать, а следовательно, пользоваться ими при доказательстве
+%
+%Например, принцип индукции
+%
+%
+%
+%Для этого нужен язык более высокого порядка, чем первого, а там всё ещё хуже с разрешимостью/неразрешимостью
+%\end{frame}
 
 \section{Лямбды как апгрейд языка предикатов}
 
@@ -126,10 +234,10 @@ TODO: формальное описание
 \]
 Опишем принцип индукции, и применим его для $P(n)\equiv 0+\dots+n=\frac{n\cdot(n+1)}{2}$
 \[
-\lambda P.\quad P(0) \Rightarrow (\forall n . P(n) \Rightarrow P(n+1))  \Rightarrow (\forall n . P(n))
-\]
+\lambda P.\quad P(0) \Rightarrow \big{(}\forall n . P(n) \Rightarrow P(n+1)\big{)}  \Rightarrow \big{(}\forall n . P(n)\big{)}
+\]\pause
 \[
-\text{применение/подстановка} \mathlarger{\mathlarger{\mathlarger{\mathlarger{\Downarrow  \quad\Uparrow}}}} \text{абстракция}
+\text{применение/подстановка} \mathlarger{\mathlarger{\mathlarger{\mathlarger{\Downarrow  \quad\!\!\!\!\!\!\Uparrow}}}} \text{абстракция}
 \]
 
 \begin{equation} \label{eq1}
@@ -150,74 +258,179 @@ TODO: формальное описание
 Например:  если ни $P$, ни $Q$ не встречаются в $phormula$, то $\lambda P. phormula(P)  \alphaequiv{} \lambda Q. phormula(Q) $
 
 \begin{block}{$\beta$-эквивалентность}
-Если у нас встречается $(\lambda P. phaormula(P))X$, то мы можем продолжить с этим работать, используя $phormula[P\mapsto X]$, т.е. заменив все свободных вхождения $P$ на $X$ внутри $phormula$
+Если у нас встречается $(\lambda P. phormula(P))X$, то мы можем продолжить с этим работать совершив подстановку $X$ вместо $P$ в $phormula$ (записывается как $phormula[P\mapsto X]$), т.е. заменив все свободные вхождения $P$ на $X$ внутри $phormula$.
 \end{block}
 \end{frame}
 
 
-\begin{frame}{$\lambda$-исчсисление}
- TODO: определение
-
-
- Так получилось, что если добавить в язык синтаксис абстракции, применения, и имена перменных, по-видимому, на этом можно записать произвольный алгоритм
-
- \begin{theorem}[Тезис Чёрча]
-   Используя $\lambda$ исчисление можно реализовать произвольный алгоритм, с точностью до представления данных.
- \end{theorem}
-\end{frame}
-
-
-\section{Две стратегии}
-
-\begin{frame}{Как происходят вычисления $\lambda$-исчислении?}
-\begin{definition}[Процесс вычислений регламентирует стратегия]
-  Ищем редексы $(\lambda x. P)Q$
+\begin{frame}{$\lambda$-исчисление}
+Синтаксис
 \begin{itemize}
-  \item Если редексов нет, то вычисление закончилось
-  \item Если редексы есть, стратегия регламентирует какой на данном шаге редекс стоит $\beta$редуцировать
-  \item Или же, стратегия может сказать, что все редексы нужно оставить как есть, и выдать ответ.
+  \item переменные: $x,y,z,\dots$
+  \item Абстракция $(\lambda \nu. A)$, где $A$ -- $\lambda$-выражение, а $\nu$ --- произвольное имя переменной
+  \item Применение $(AB)$, где $A$ и $B$ --- $\lambda$-выражения
 \end{itemize}
+\begin{definition}{Редекс}
+  --- это $\lambda$-выражение вида $(\lambda \nu. A)B$
 \end{definition}
-Стратегий бывает много разных
-\begin{enumerate}
-  \item Строгая стратегия call-by-value .    Для $(\lambda x. P)Q$ вычисляет $Q\cbv Q'$ и потом подставляет $Q'$ вместо $x$ в $P$.
-  \item Ленивая стратегия call-by-name.   Для $(\lambda x. P)Q$ сразу подставляет $Q$ вместо $x$ в $P$.
-  \item Обе стратегии оставляют абстракции и переменные как есть
-\end{enumerate}
-
-
+Процесс вычисления --- это процеcc устранения редексов (возможно, не всех) путём подстановок $\lambda$-выражений вместо переменных.
 \end{frame}
 
-\begin{frame}{Ленивая vs. Строгая}
-Пример 1 ($\cbv$ выглядит лучше)\\
-$(\lambda x. f x x)((\lambda x. x)A) \cbv (\lambda x. f x x)A \cbv (f A A) \cbv \dots $\\
+\begin{frame}{Каррирование%\footnote{}
+  }
 
-$(\lambda x. f x x)((\lambda x. x)A) \cbn (\lambda x. f ((\lambda x. x)A) ((\lambda x. x)A))A \cbn \dots $
+\begin{figure}[t]
+  \begin{subfigure}[t]{0.5\textwidth}
+    \vspace{-4em}
+В $\lambda$-исчислении функция $n$ аргументов представляются как функция одного аргумента, которые возвращает функцию от $n-1$ аргумента.\\
 
-\vspace{3em}
-Пример 2 ($\cbn$ выглядит лучше)\\
-$(\lambda x. \lambda y. y)((\lambda x. xx)(\lambda x. xx)) \cbv (\lambda x. \lambda y. y)((\lambda x. xx)(\lambda x. xx)) \cbv \dots \text{зависло}$
+В мире названо в честь Хаскеля Карри. Впервые появилось в 1924 в работе М.~И.~Шейнфинкеля.\\
 
-$(\lambda x. \lambda y. y)((\lambda x. xx)(\lambda x. xx)) \cbn (\lambda y. y)\quad\text{ответ!}$
+\footnotetext{Изображение взято с \href{https://en.wikipedia.org/wiki/Moses\_Sch\%C3\%B6nfinkel}{Википедии}}
+
+  \end{subfigure}
+\hspace{1cm}
+  \begin{subfigure}[t]{0.3\textwidth}
+      \begin{minipage}{1\textwidth}
+  \includegraphics[width=1\textwidth]{440px-Moses_Schonfinkel_1922_(cropped).jpg}\\
+  Моисей Исаевич Шейнфинкель (1888 -- 1942)
+\end{minipage}
+  \end{subfigure}
+\end{figure}
 \end{frame}
 
-\section{Представление данных в $\lambda$ исчислении}
-\begin{frame}{Представление данных}
-  Нумералы Чёрча
-$ 0 \sim \lam{s}{\lam{x}{x}}$
 
-$ 1 \sim \lam{s}{\lam{x}{sx}}$
+\begin{frame}{Определения алгоритма}
+ \begin{theorem}[Тезис Чёрча]
+  Используя $\lambda$-исчисление можно реализовать произвольный алгоритм
+  \emph{с точностью до представления данных}.
+\end{theorem}
+\begin{theorem}[Тезис Тьюринга]
+Используя машину Тьюринга можно реализовать произвольный алгоритм
+\emph{с точностью до представления данных}.
+\end{theorem}
+Т.е. теперь под алгоритмом понимается только то, что можно записать в формализме.
+\end{frame}
 
-$ 2 \sim \lam{s}{\lam{x}{s(sx)}}$
+\begin{frame}{Как происходят вычисления (редукция) $\lambda$-исчислении?}
+  \begin{definition}[Процесс вычислений регламентирует стратегия]
+    Ищем редексы $(\lambda x. P)Q$
+    \begin{itemize}
+      \item Если редексов нет, то вычисление закончилось
+      \item Если редексы есть, стратегия регламентирует какой на данном шаге редекс стоит $\beta$-редуцировать
+      \item Или же, стратегия может сказать, что все редексы нужно оставить как есть, и выдать ответ.
+    \end{itemize}
+  \end{definition}
+  %Стратегий бывает много разных
+  %\begin{enumerate}
+  %  \item Строгая стратегия call-by-value .    Для $(\lambda x. P)Q$ вычисляет $Q\cbv Q'$ и потом подставляет $Q'$ вместо $x$ в $P$.
+  %  \item Ленивая стратегия call-by-name.   Для $(\lambda x. P)Q$ сразу подставляет $Q$ вместо $x$ в $P$.
+  %  \item Обе стратегии оставляют абстракции и переменные как есть
+  %\end{enumerate}
+\end{frame}
 
-и т.д.
-\vspace{1cm}
+\begin{frame}{Две стратегии: Call-by-value и аппликативная}
+  \begin{figure}[t]
+    \begin{subfigure}[t]{0.45\textwidth}
+            \centering Call-by-value
+      \begin{mathpar}
+  \inferrule*  [Right=Abs] {\\}
+{\lam{x}{e} \cbv \lam{x}{e}}
+\end{mathpar}
+    \end{subfigure}
+    \begin{subfigure}[t]{0.45\textwidth}
+      \centering
+      Applicative order
+      \begin{mathpar}
+      \inferrule* [Right=Abs] {e \ao e'}
+      {\lam{x}{e} \ao \lam{x}{e'}}
+      \end{mathpar}
+    \end{subfigure}
+  \end{figure}
+\hrulefill
+\only<1>{
+\begin{mathpar}
+  \inferrule*  [Right=App-abs]
+  { e_1 \arr \lam{x}{e} \\
+    e_2 \arr e_2' \\
+    [e_2'/x]e \arr e'
+  }
+  { (e_1 e_2) \arr e'}
+\end{mathpar}
+\begin{mathpar}
+  \inferrule* [Right=Var] {\\}
+  {x \arr x}
+  \and
+  \inferrule*  [Right=App-non-abs]
+  { e_1 \arr e' \neq \lam{x}{e} \\
+    e_2 \arr e_2'}
+  { (e_1 e_2) \arr (e_1' e_2') }
+\end{mathpar}
+}
+\only<2>{
+\begin{figure}[t]
+  \begin{subfigure}[t]{0.45\textwidth}
+\begin{itemize}
+\item[\faGood]    Подходит для написания произвольных алгоритмов
+\vspace{4em}
 
-Сложение (один из вариантов): взять два нумерала $m$ и $n$, взяьб $f$ и $x$, а затем к $x$ применить $n$ раз $f$, а затем к результату применить $m$ раз $f$.
+\item[\faBad] Не считает под абстракцией, поэтому ответ иногда длиннее, чем хотелось бы
+\end{itemize}
+  \end{subfigure}
+  \begin{subfigure}[t]{0.45\textwidth}
+\begin{itemize}
+  \item[\faBad] Нет возможности отложить вычисления на потом,т.е. в if-then-else вычисляется и then, и else. Нельзя дождаться ответа от рекурсивных функций
+  \item[\faGood] Cчитает под абстракцией, поэтому ответ короче
+\end{itemize}
+  \end{subfigure}
+\end{figure}
+}
+\end{frame}
 
+
+\section{Написание алгоритмов с помощью $\lambda$-исчисления}
+
+\begin{frame}{Что нужно для представления алгоритмов?}
+  \begin{itemize}
+    \item Принимать входные данные
+    \item Делать ветвления  в зависимости от входных данных
+    \item Совершать некоторое количество однотипных действий в зависимости от входных данных (т.е. должны быть циклы или их аналог -- рекурсия)
+    \begin{itemize}
+\item       Чтобы понимать, сколько действий уже сделали нужны натуральные числа
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Ветвления}
 \[
-add \equiv \lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}
+T\equiv\lam{x}{\lam{y}{x}} \equiv fst \qquad \qquad \qquad \qquad
+F\equiv \lam{x}{\lam{y}{y}}\equiv snd
 \]
+
+\begin{align*}
+  ite \quad\equiv &\quad \lambda c. \lambda th. \lambda el. (c\ th\ el)\\
+  (ite\ T) \quad\equiv &\quad  \lambda th. \lambda el. (T\ th\ el) \rightsquigarrow th\\
+  (ite\ F) \quad\equiv &\quad  \lambda th. \lambda el. (F\ th\ el) \rightsquigarrow el
+\end{align*}
+\end{frame}
+
+%\section{Представление данных в $\lambda$ исчислении}
+\begin{frame}{Представление чисел (Нумералы Чёрча)}
+
+  $ 0 \sim \lam{s}{\lam{x}{x}}$
+
+  $ 1 \sim \lam{s}{\lam{x}{sx}}$
+
+  $ 2 \sim \lam{s}{\lam{x}{s(sx)}}$
+
+  и т.д.
+  \vspace{1cm}
+
+  Сложение (один из вариантов): взять два нумерала $m$ и $n$, взять $f$ и $x$, а затем к $x$ применить $n$ раз $f$, а затем к результату применить $m$ раз $f$.
+
+  \[
+  add \equiv \lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}
+  \]
 \end{frame}
 \newcommand{\tb}[1]{\textcolor{blue}{#1}}
 \newcommand{\tr}[1]{\textcolor{red}{#1}}
@@ -240,48 +453,116 @@ add \equiv \lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }
 \begin{frame}{2+2}
   \begin{figure}[t]
     \begin{subfigure}[t]{0.50\textwidth}
-  \begin{align*}
-  (\lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}){} 2 2 &\cbv \\
-  \textcolor{blue}{(\lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}) {}} \textcolor{red}{2} 2 &\cbv \\
-  \textcolor{blue}{( \lambda n. \lambda f. \lambda x. \app{2\ f\ }{\app{n\ f\ }{x}}){}} \textcolor{red}{2} & \cbv \\
-  \lambda f. \lambda x. \app{2\ f\ }{\app{2\ f\ }{x}}   &
-\end{align*}
-Это ответ для $\cbv$.\\
+      \begin{align*}
+        (\lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}){} 2 2 &\cbv \\
+        \textcolor{blue}{(\lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}) {}} \textcolor{red}{2} 2 &\cbv \\
+        \textcolor{blue}{( \lambda n. \lambda f. \lambda x. \app{2\ f\ }{\app{n\ f\ }{x}}){}} \textcolor{red}{2} & \cbv \\
+        \lambda f. \lambda x. \app{2\ f\ }{\app{2\ f\ }{x}}   &
+      \end{align*}
+      Это ответ для $\cbv$.\\
 
-Давайте посмотрим, что будет, если мы \\
-ответ применим к $g$ и $y$
+      Давайте посмотрим, что будет, если мы \\
+      ответ применим к $g$ и $y$
     \end{subfigure}
     \begin{subfigure}[t]{0.45\textwidth}
-  \begin{align*}
-  (\lambda f. \lambda x. \app{2\ f\ }{\app{2\ f\ }{x}}) g y  &\cbv \\
-  (\lambda x. \app{2\ g\ }{\app{2\ g\ }{x}}) y  &\cbv \\
-  \app{2\ g\ }{\app{2\ g\ }{y}}   &\cbv \\
-  \app{\tb{\lam{f}{\lam{x}{f (f x)}}} \ \tr{g}\ }{\app{2\ g\ }{y}} &\cbv \\
-  \app{\lam{x}{g (g x)} \ \ }{\app{2\ g\ }{y}} &\cbv \\
-  \app{\lam{x}{g (g x)} \ \ } {\app{\app{\tb{\lam{f}{\lam{x}{f (f x)}}}\ \tr{g}\ }{x}}} &\cbv \\
-  \app{\lam{x}{g (g x)}  } {\app{\tb{\lam{x}{g (g x)} } }{\tr{y}}} &\cbv \\
-  \app{\tb{\lam{x}{g (g x)} } } {\tr{(g (g y))}} &\cbv \\
-  g (g (g (g y))) &
-\end{align*}
+      \begin{align*}
+        (\lambda f. \lambda x. \app{2\ f\ }{\app{2\ f\ }{x}}) g y  &\cbv \\
+        (\lambda x. \app{2\ g\ }{\app{2\ g\ }{x}}) y  &\cbv \\
+        \app{2\ g\ }{\app{2\ g\ }{y}}   &\cbv \\
+        \app{\tb{\lam{f}{\lam{x}{f (f x)}}} \ \tr{g}\ }{\app{2\ g\ }{y}} &\cbv \\
+        \app{\lam{x}{g (g x)} \ \ }{\app{2\ g\ }{y}} &\cbv \\
+        \app{\lam{x}{g (g x)} \ \ } {\app{\app{\tb{\lam{f}{\lam{x}{f (f x)}}}\ \tr{g}\ }{x}}} &\cbv \\
+        \app{\lam{x}{g (g x)}  } {\app{\tb{\lam{x}{g (g x)} } }{\tr{y}}} &\cbv \\
+        \app{\tb{\lam{x}{g (g x)} } } {\tr{(g (g y))}} &\cbv \\
+        g (g (g (g y))) &
+      \end{align*}
     \end{subfigure}
   \end{figure}
+\end{frame}
+
+\begin{frame}{Рекурсия}
+Не понятно как вызвать самого себя, так как имен нет.\\
+
+Идея:
+\begin{itemize}
+  \item записываем фунцию $f$, чтобы она принимала первый аргумент, который будет вызываться вместо рекурсивного вызова
+  \item Везде, где надо вызвать эту ``рекурсивную'' функцию, будем писать $Yf$  или $Zf$
+
+  $$
+  Y\equiv \lam{f}{\lam{x}{f(x\ x)}\lam{x}{f(x\ x)}}
+  $$
+
+  $$
+  Z\equiv \lam{f}{\lam{x}{f\lam{v}{\ x\ x\ v}}\lam{x}{f\lam{v}{\ x\ x\ v}}}
+  $$
+\end{itemize}
 
 \end{frame}
 
-\begin{frame}{Ветвления}
+
+\newcommand{\ite}[3]{\ensuremath{(\text{if } #1\text{ then }#2\text{ else }#3})}}
+\begin{frame}{Рекурсия в call-by-value (упрощенно)}
+$$
+Z\equiv \lam{f}{\lam{x}{f\lam{v}{\ x\ x\ v}}\lam{x}{f\lam{v}{\ x\ x\ v}}}
+$$
+%Основное свойство
 \[
-T\equiv\lam{x}{\lam{y}{x}} \equiv fst \qquad \qquad \qquad \qquad
-F\equiv \lam{x}{\lam{y}{y}}\equiv snd
+ZR = \lam{x}{R\lam{v}{\ x\ x\ v}} \lam{x}{R\lam{v}{\ x\ x\ v}} \nor
+R\big( \lam{x}{R\lam{v}{\ x\ x\ v}}\lam{x}{R\lam{v}{\ x\ x\ v}} \big) =
+R(ZR)
 \]
 
-  \begin{align*}
-  ite \equiv & \lambda c. \lambda th. \lambda el. (c\ th\ el) \\
-  (ite\ T) \equiv &  \lambda th. \lambda el. (T\ th\ el) \cbn th\\
-  (ite\ F) \equiv &  \lambda th. \lambda el. (F\ th\ el) \cbn el
+\vspace{1em}
+
+Факториал: $fac \equiv (\lambda self.\lambda n . \ite{n<2}{1}{n \cdot self(n-1)})$
+\begin{align*}
+  Z(\lambda self.\lambda n . \ite{n<2}{1}{n \cdot self(n-1)}) 2 &\cbn \\
+  (\lambda n . \ite{n<2}{1}{n \cdot Z\ fac(n-1)}) 2 &\cbn \\
+  2 \cdot Y\ fac\ (2-1) &\cbn \\
+  2 \cdot (Z(\lambda self.\lambda n . \ite{n<2}{1}{n \cdot self(n-1)})\ 1) &\cbn \\
+  2 \cdot \ite{1<2}{1}{n \cdot (Z\ fac\ (1-1))} &\cbn \\
+  2 \cdot 1 & \cbn 2
 \end{align*}
-
-
 \end{frame}
+
+%\section{Две стратегии}
+\begin{comment}
+
+\begin{frame}{Как происходят вычисления (редукция) $\lambda$-исчислении?}
+\begin{definition}[Процесс вычислений регламентирует стратегия]
+  Ищем редексы $(\lambda x. P)Q$
+\begin{itemize}
+  \item Если редексов нет, то вычисление закончилось
+  \item Если редексы есть, стратегия регламентирует какой на данном шаге редекс стоит $\beta$редуцировать
+  \item Или же, стратегия может сказать, что все редексы нужно оставить как есть, и выдать ответ.
+\end{itemize}
+\end{definition}
+%Стратегий бывает много разных
+%\begin{enumerate}
+%  \item Строгая стратегия call-by-value .    Для $(\lambda x. P)Q$ вычисляет $Q\cbv Q'$ и потом подставляет $Q'$ вместо $x$ в $P$.
+%  \item Ленивая стратегия call-by-name.   Для $(\lambda x. P)Q$ сразу подставляет $Q$ вместо $x$ в $P$.
+%  \item Обе стратегии оставляют абстракции и переменные как есть
+%\end{enumerate}
+\end{frame}
+
+\begin{frame}{Ленивая vs. Строгая}
+Пример 1 ($\cbv$ выглядит лучше)\\
+$(\lambda x. f x x)((\lambda x. x)A) \cbv (\lambda x. f x x)A \cbv (f A A) \cbv \dots $\\
+
+$(\lambda x. f x x)((\lambda x. x)A) \cbn (\lambda x. f ((\lambda x. x)A) ((\lambda x. x)A))A \cbn \dots $
+
+\vspace{3em}
+Пример 2 ($\cbn$ выглядит лучше)\\
+$(\lambda x. \lambda y. y)((\lambda x. xx)(\lambda x. xx)) \cbv (\lambda x. \lambda y. y)((\lambda x. xx)(\lambda x. xx)) \cbv \dots \text{зависло}$
+
+$(\lambda x. \lambda y. y)((\lambda x. xx)(\lambda x. xx)) \cbn (\lambda y. y)\quad\text{ответ!}$
+\end{frame}
+\end{comment}
+
+
+
+\begin{comment}
+
 
 \newcommand{\ite}[3]{\ensuremath{(\text{if } #1\text{ then }#2\text{ else }#3})}}
 \begin{frame}{Рекурсия в call-by-name}
@@ -308,13 +589,15 @@ R(YR)
 \end{align*}
 
 \end{frame}
+\end{comment}
+
 
 \section{Демка интерпретатора на Си}
 \begin{frame}{Дэмка на Си}
   Не забыть показать позднее связывание
 \end{frame}
 
-\section{Вопросы к экзамену}
+\section*{Вопросы к экзамену (TODO)}
 \begin{frame}{Вопросы к экзамену}
 \begin{enumerate}
   \item Разрешимые и неразрешимые задачи

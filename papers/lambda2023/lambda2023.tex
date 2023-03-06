@@ -21,6 +21,7 @@
 \newcommand{\term}[2]{\textit{#1} (#2)}
 \newcommand\alphaequiv{\overset{\alpha}{\equiv}}
 \newcommand{\xarr}[1]{\xrightarrow{\ #1\ }}
+\newcommand{\arr}{\rightarrow}
 \newcommand{\cbv}{\xarr{cbv}}
 \newcommand{\cbn}{\xarr{cbn}}
 \newcommand{\nor}{\xarr{nor}}
@@ -29,9 +30,7 @@
 \newcommand{\abs}[2]{\ensuremath{(\lambda #1 . #2)}}
 \newcommand{\lam}[2]{\ensuremath{\abs{#1}{#2}}}
 \newcommand{\app}[2]{\ensuremath{(#1 #2)}}
-
-
-%\usepackage{subcaption}
+\usepackage{mathpartir}
 
 %%%%%%%%%%%%%%%%%%
 \makeatletter
@@ -64,7 +63,7 @@
 \subtitle{Набросок слайдов}
 \author{Косарев Дмитрий}
 
-\institute{матмех СПбГУ}
+%\institute{матмех СПбГУ}
 
 
 \AtBeginSection[]
@@ -107,7 +106,7 @@
 \end{frame}
 
 
-\section{Введение}
+\section*{Введение}
 \input{02intro.tex}
 
 
@@ -118,12 +117,7 @@
 \frametitle<presentation>{Ссылки}
 \begin{thebibliography}{10}
 \bibitem{paper}
-  Книга "Чисто функциональные структуры данных"
- \newblock {\em Chris Okasaki}
-
-\bibitem{leftist-ocaml}
-  \href{http://typeocaml.com/2015/03/12/heap-leftist-tree/}{Heap -- Leftist Tree}
-
+ \newblock {\em TODO}
 \end{thebibliography}
 \end{frame}
 
