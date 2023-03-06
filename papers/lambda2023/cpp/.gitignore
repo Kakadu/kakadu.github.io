@@ -1,0 +1,14 @@
+.cmake/
+.ninja_deps
+.ninja_log
+.qtc_clangd/
+CMakeCache.txt
+CMakeCache.txt.prev
+CMakeFiles/
+CMakeLists.txt        
+Makefile
+build.ninja
+cmake_install.cmake
+lambda_exe
+qtcsettings.cmake
+
