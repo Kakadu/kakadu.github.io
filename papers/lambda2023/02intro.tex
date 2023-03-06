@@ -1,4 +1,4 @@
-
+% !TeX root = lambda2023.tex
 
 \begin{frame}{Введение: $\lambda$-исчисление}
   \begin{figure}
@@ -391,13 +391,41 @@ F\equiv \lam{x}{\lam{y}{y}}\equiv snd
 \end{frame}
 
 %\section{Представление данных в $\lambda$ исчислении}
-\begin{frame}{Представление чисел (Нумералы Чёрча)}
+\begin{frame}{Историческое напоминание: числа Пеано}
+\begin{figure}[ht]
+  \begin{subfigure}[t]{.55\textwidth}
+  \vspace{-8em}
+  Первым ввел аксиоматику арифметики в 1889 году. Натуральные числа определяются через ``базу'' и ``следующий''\\
+  
+  \begin{enumerate}
+  \item[1.] 0 --- натуральное число
+  \item[6.] Для любого натурального $n$, $S(n)$ тоже натуральное. т.е. натуральные числа замкнуты относительно операции $S(\cdot)$
+  \item [9.] Аксиома индукции.
+  \end{enumerate}
+  \footnotetext{
+  \href{https://www.researchgate.net/publication/240358753\_Peano's\_axioms\_in\_their\_historical\_context}{Peano's axioms in their historical context}
+  }
+  
+  \footnotetext{Изображение взято с \href{https://en.wikipedia.org/wiki/Moses\_Sch\%C3\%B6nfinkel}{Википедии}}
+  \end{subfigure}
+\hspace{1cm}
+\begin{subfigure}[t]{.35\textwidth}
+  \begin{minipage}{1\textwidth}
+    \includegraphics[width=1\textwidth]{Giuseppe_Peano.jpg}\\
+    Giuseppe Peano (1858 -- 1932)
+  \end{minipage}
+\end{subfigure}
+\end{figure}
+\end{frame}
 
-  $ 0 \sim \lam{s}{\lam{x}{x}}$
 
-  $ 1 \sim \lam{s}{\lam{x}{sx}}$
+\begin{frame}{Представление чисел (нумералы Чёрча)}
 
-  $ 2 \sim \lam{s}{\lam{x}{s(sx)}}$
+$ 0 \sim \lam{s}{\lam{x}{x}}$
+
+$ 1 \sim \lam{s}{\lam{x}{s\ x}}$
+
+$ 2 \sim \lam{s}{\lam{x}{s\ (s\ x)}}$
 
   и т.д.
   \vspace{1cm}
