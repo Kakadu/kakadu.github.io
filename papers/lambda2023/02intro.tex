@@ -152,11 +152,11 @@
     \begin{itemize}
       \item Предметные константы: 1.0, 42, $\pi$
       \item Функциональные символы арности  $1\leqslant n$ от термов. Например, $+, \times, f, mod$ и т.д.
+	  \item Предметные переменные $x,y,z,\dots$
     \end{itemize}
     Формулы:
     \begin{itemize}
   \item Логические константы True и False
-  \item Логические переменные $x,y,z,\dots$
   \item Бинарные связки $\vee, \wedge, \Rightarrow$ (и т.д.) %(от двух формул)
   \item Предикатные символы (от термов) арности $1\leqslant n$
   \item Кванторы $\forall, \exists$ от имени предметной переменной и формулы
@@ -169,7 +169,7 @@
     \end{block}
 \vspace{1em}
 Пример: \\
-$\forall x z\ \exists y (x < y) \vee (y < z)$\\
+$\forall x z\ \exists y (x < y) \wedge (y < z)$\\
 верно, если $x,y,z \in \mathbb{R}$, \\
 неверно, если $x,y,z \in \mathbb{N}$
   \end{subfigure}
@@ -399,7 +399,7 @@ F\equiv \lam{x}{\lam{y}{y}}\equiv snd
   \begin{subfigure}[t]{.55\textwidth}
   \vspace{-8em}
   Первым ввел аксиоматику арифметики в 1889 году. Натуральные числа определяются через ``базу'' и ``следующий''\\
-  
+
   \begin{enumerate}
   \item[1.] 0 --- натуральное число
   \item[6.] Для любого натурального $n$, $S(n)$ тоже натуральное. т.е. натуральные числа замкнуты относительно операции $S(\cdot)$
@@ -408,7 +408,7 @@ F\equiv \lam{x}{\lam{y}{y}}\equiv snd
   \footnotetext{
   \href{https://www.researchgate.net/publication/240358753\_Peano's\_axioms\_in\_their\_historical\_context}{Peano's axioms in their historical context}
   }
-  
+
   \footnotetext{Изображение взято с \href{https://en.wikipedia.org/wiki/Moses\_Sch\%C3\%B6nfinkel}{Википедии}}
   \end{subfigure}
 \hspace{1cm}
@@ -452,7 +452,7 @@ $ 2 \sim \lam{s}{\lam{x}{s\ (s\ x)}}$
     \lambda f. \lambda x. \app{\lam{x}{f (f x)} \ \ } {\app{\app{\tb{\lam{f}{\lam{x}{f (f x)}}}\ \tr{f}\ }{x}}} &\ao \\
     \lambda f. \lambda x. \app{\lam{x}{f (f x)}  } {\app{\tb{\lam{x}{f (f x)} } }{\tr{x}}} &\ao \\
     \lambda f. \lambda x. \app{\tb{\lam{x}{f (f x)} } } {\tr{(f (f x))}} &\ao \\
-    \lambda f. \lambda x. \lam{x}{f (f (f (f x)))} &
+    \lambda f. \lambda x. f (f (f (f x))) &
   \end{align*}
 \end{frame}
 
@@ -510,13 +510,13 @@ $ 2 \sim \lam{s}{\lam{x}{s\ (s\ x)}}$
 \newcommand{\ite}[3]{\ensuremath{(\text{if } #1\text{ then }#2\text{ else }#3})}}
 \begin{frame}{Рекурсия в call-by-value (упрощенно)}
 $$
-Z\equiv \lam{f}{\lam{x}{f\lam{v}{\ x\ x\ v}}\lam{x}{f\lam{v}{\ x\ x\ v}}}
+  Y\equiv \lam{f}{\lam{x}{f(x\ x)}\lam{x}{f(x\ x)}}
 $$
 %Основное свойство
 \[
-ZR = \lam{x}{R\lam{v}{\ x\ x\ v}} \lam{x}{R\lam{v}{\ x\ x\ v}} \nor
-R\big( \lam{x}{R\lam{v}{\ x\ x\ v}}\lam{x}{R\lam{v}{\ x\ x\ v}} \big) =
-R(ZR)
+YR = \lam{x}{R(x\ x)} \lam{x}{R(x\ x)} \arr
+R\big( \lam{x}{R(x\ x)}\lam{x}{R(x\ x)} \big) =
+R(YR)
 \]
 
 \vspace{1em}
