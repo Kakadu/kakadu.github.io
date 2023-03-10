@@ -31,7 +31,9 @@
 \newcommand{\lam}[2]{\ensuremath{\abs{#1}{#2}}}
 \newcommand{\app}[2]{\ensuremath{(#1 #2)}}
 \usepackage{mathpartir}
-
+\usepackage{tabulary}
+\usepackage{multirow}
+\usepackage{makecell}
 %%%%%%%%%%%%%%%%%%
 \makeatletter
 %\newenvironment{tabminted}{
@@ -60,7 +62,7 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title[]{Лямбда-исчисление}
-\subtitle{Набросок слайдов}
+%\subtitle{Набросок слайдов}
 \author{Косарев Дмитрий}
 
 %\institute{матмех СПбГУ}
@@ -112,12 +114,44 @@
 
 
 
+\section{Проблема останова}
+
+
+\begin{frame}{Проблема останова (1/2)}
+  \begin{block}{Вопрос}
+    Можем ли мы написать алгоритм, который будет брать на вход произвольную $\lambda$-абстракцию и аргумент, и говорить посчитается ли для их применения нормальная форма?\\
+  \end{block}
+  \pause
+  Положим наши программы либо зависают, либо выдают значение \texttt{true}.\\
+
+  Положим существует гипотетическая $(Halting\ P\ w)$, которая всегда завершается, и возвращает \texttt{true}, если $(P\ w)$ редуцируется в \texttt{true}, иначе $(Halting\ P\ w)$ возвращает \texttt{false}.\\
+
+  Покажем от противного, что $Halting$ не может существовать.
+\end{frame}
+
+\begin{frame}{Проблема останова (2/2)}
+  Вопрос: во что редуцируется $E$, в \texttt{true} или в \texttt{false}?
+  \[
+  E = Halting\big( \lam{m}{not(Halting\ m\ m)},\ \ \lam{m}{not(Halting \ m\ m)} \big)
+  \]
+  Если E редуцируется в \texttt{true}, то применим функцию $\lam{m}{not(Halting(m,m))}$ к аргументу $\lam{m}{not(Halting(m,m))}$ и получим
+  \[
+  not ( Halting\big(\lam{m}{not(Halting \ m\ m)},\ \ \lam{m}{not(Halting \ m\ m)}\big)) = \neg E
+  \]
+  что является отрицание истинного факта выше.\\
+
+  Если $E$ редуцируется в \texttt{false}, то это означает, $Halting$ иногда зависает, что противоречит определению функции $Halting$.
+  \qed
+\end{frame}
+
 
 \begin{frame}%[allowframebreaks]
 \frametitle<presentation>{Ссылки}
 \begin{thebibliography}{10}
-\bibitem{paper}
- \newblock {\em TODO}
+\bibitem{cppimpl}
+ \newblock {\em Реализация интерпретатора на Си} \url{https://github.com/Kakadu/kakadu.github.io/tree/master/papers/lambda2023/cpp}
+\bibitem{ocamlimpl}
+\newblock {\em Реализация интерпретатора на OCaml} \url{https://gitlab.com/Kakadu/fp2020course-materials/-/blob/master/code/Lambda/lib/lambda.ml}
 \end{thebibliography}
 \end{frame}
 
