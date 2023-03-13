@@ -1,9 +1,10 @@
 #define DOCTEST_CONFIG_IMPLEMENT
+
 #include "doctest.h"
 #include "lambda.h"
 #include <iostream>
-
 #include <sstream>
+
 void trace(struct ulc* root) {
     return;
     std::stringstream o;
