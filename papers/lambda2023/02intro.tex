@@ -1,5 +1,6 @@
 % !TeX root = lambda2023.tex
 
+
 \begin{frame}{Введение: $\lambda$-исчисление}
   \begin{figure}
     \centering
@@ -26,19 +27,10 @@
     \end{subfigure}
   \end{figure}
 
-%\thisfloatsetup{heightadjust=all,valign=t}
-%\begin{figure}
-%  \begin{subfloatrow}
-%    \ffigbox[\dimexpr\FBwidth+4cm\relax]
-%    {\includegraphics[width=3cm,height=5cm]{example-image-b}}
-%    {\caption{Left subfigure}\label{sfig:testa}}%
-%    \ffigbox[\FBwidth]
-%    {\caption{Right subfigure}\label{sfig:testb}}
-%    {\includegraphics[width=3cm,height=2cm]{example-image-a}}
-%  \end{subfloatrow}
-%\end{figure}
-
 \end{frame}
+\section{Введение и историческая справка}
+
+
 
 \begin{frame}{Состояние математики в 1910-х}
 
@@ -190,15 +182,7 @@ $\forall x z\ \exists y (x < y) \wedge (y < z)$\\
 \end{frame}
 
 
-%\begin{frame}{Недостатки исчисления предикатов}
-%Некоторые формулы нельзя записать, а следовательно, пользоваться ими при доказательстве
-%
-%Например, принцип индукции
-%
-%
-%
-%Для этого нужен язык более высокого порядка, чем первого, а там всё ещё хуже с разрешимостью/неразрешимостью
-%\end{frame}
+
 
 \section{Лямбды как апгрейд языка предикатов}
 
@@ -240,24 +224,43 @@ $\forall x z\ \exists y (x < y) \wedge (y < z)$\\
 
 
 \begin{frame}{$\lambda$-исчисление}
-Синтаксис
+\begin{figure}[t]
+  \begin{subfigure}[t]{0.45\textwidth}
+    \vspace{-1em}
+Синтаксис:
 \begin{itemize}
-  \item переменные: $x,y,z,\dots$
+  \item Переменные: $x,y,z,\dots$
   \item Абстракция $(\lambda \nu. A)$, где $A$ -- $\lambda$-выражение, а $\nu$ --- произвольное имя переменной
   \item Применение $(AB)$, где $A$ и $B$ --- $\lambda$-выражения
 \end{itemize}
 \begin{definition}{Редекс}
   --- это $\lambda$-выражение вида $(\lambda \nu. A)B$
 \end{definition}
+  \end{subfigure}
+\hspace{1cm}
+  \begin{subfigure}[t]{0.45\textwidth}
+В терминах программирования:
+\begin{itemize}
+  \item Переменные
+  \item Объявления 1-аргументных функций
+  \item Вызов функции от одного аргумента
+\end{itemize}
+    \vspace{1em}
 Процесс вычисления --- это процеcc устранения редексов (возможно, не всех) путём подстановок $\lambda$-выражений вместо переменных.
+  \end{subfigure}
+\end{figure}
 \end{frame}
 
-\begin{frame}{Каррирование%\footnote{}
-  }
-
+\begin{frame}{Каррирование}
 \begin{figure}[t]
-  \begin{subfigure}[t]{0.5\textwidth}
-    \vspace{-4em}
+  \begin{subfigure}[t]{0.6\textwidth}
+        \vspace{-10em}
+\begin{definition}{Каррирование}
+  --- это представление n-арных функций через 1-арные функции
+\end{definition}
+
+\vspace{1em}
+
 В $\lambda$-исчислении функция $n$ аргументов представляются как функция одного аргумента, которые возвращает функцию от $n-1$ аргумента.\\
 
 В мире названо в честь Хаскеля Карри. Впервые появилось в 1924 в работе М.~И.~Шейнфинкеля.\\
@@ -278,14 +281,48 @@ $\forall x z\ \exists y (x < y) \wedge (y < z)$\\
 \end{frame}
 
 
+\begin{frame}[fragile]{Символ $\lambda$ работает как квантор}
+  \tikzstyle{every picture}+=[remember picture]
+  \tikzstyle{na} = [shape=rectangle,inner sep=0pt,text depth=0pt]
+  {\Large
+  \[
+  \lambda \tikz\node[na](dbI1){x}; . (\lambda \tikz\node[na](dbI2){z};.  \tikz\node[na](dbI3){x}; \tikz\node[na](dbI4){z};)  \tikz\node[na](dbI5){x};
+
+  \]
+  \begin{tikzpicture}[overlay]
+    \path[->,red,thick](dbI1) edge [out=90, in=90] (dbI3);
+    \path[->,red,thick](dbI1) edge [out=-90, in=-90] (dbI5);
+    \path[draw,->,blue,thick] (dbI2.south) -- ++(0,-0.2cm) -- ++(0.6cm,0) -- (dbI4.south);
+  \end{tikzpicture}
+}
+\begin{itemize}
+  \item свободные вхождения
+  \item связанных вхождения и т.д.
+\end{itemize}
+
+%  \[
+%  (\lambda \tikz\node[na](word6){x}; . (\lambda \tikz\node[na](word7){y};.  \tikz\node[na](word8){y}; )) (\lambda \tikz\node[na](word9){y}; .  \tikz\node[na](word10){y}; )
+%  \]
+%  \begin{tikzpicture}[overlay]
+%    \path[draw,->,red,thick] (word8.north) -- ++(0,0.3cm) -- ++(-0.3cm,0) -- (word7.north);
+%    \path[draw,->,blue,thick] (word10.north) -- ++(0,0.3cm) -- ++(-0.3cm,0) -- (word9.north);
+%  \end{tikzpicture}
+%
+%  %\vspace{1em}
+%  Индексы: $ \lam{}{\lam{}{0}}\lam{}{0}$\\
+%  Уровни: $ \lam{}{\lam{}{1}}\lam{}{0}$
+%
+%  Стрёмно: одинаковые лямбда-выражения в разных местах представлены по-разному
+\end{frame}
+
 \begin{frame}{Определения алгоритма}
  \begin{theorem}[Тезис Чёрча]
   Используя $\lambda$-исчисление можно реализовать произвольный алгоритм
-  \emph{с точностью до представления данных}.
+  \emph{(с точностью до представления данных)}.
 \end{theorem}
 \begin{theorem}[Тезис Тьюринга]
 Используя машину Тьюринга можно реализовать произвольный алгоритм
-\emph{с точностью до представления данных}.
+\emph{(с точностью до представления данных)}.
 \end{theorem}
 \vspace{1em}
 Т.е. теперь под алгоритмом понимается только то, что можно записать в формализ\-ме~(-ах).
@@ -473,361 +510,192 @@ $ 2 \sim \lam{s}{\lam{x}{s\ (s\ x)}}$
     \end{subfigure}
     \begin{subfigure}[t]{0.45\textwidth}
       \begin{align*}
-        (\lambda f. \lambda x. \app{2\ f\ }{\app{2\ f\ }{x}}) g y  &\cbv \\
-        (\lambda x. \app{2\ g\ }{\app{2\ g\ }{x}}) y  &\cbv \\
-        \app{2\ g\ }{\app{2\ g\ }{y}}   &\cbv \\
-        \app{\tb{\lam{f}{\lam{x}{f (f x)}}} \ \tr{g}\ }{\app{2\ g\ }{y}} &\cbv \\
-        \app{\lam{x}{g (g x)} \ \ }{\app{2\ g\ }{y}} &\cbv \\
-        \app{\lam{x}{g (g x)} \ \ } {\app{\app{\tb{\lam{f}{\lam{x}{f (f x)}}}\ \tr{g}\ }{x}}} &\cbv \\
-        \app{\lam{x}{g (g x)}  } {\app{\tb{\lam{x}{g (g x)} } }{\tr{y}}} &\cbv \\
-        \app{\tb{\lam{x}{g (g x)} } } {\tr{(g (g y))}} &\cbv \\
+        (\lambda f. \lambda x. \app{2\ f\ }{\app{2\ f\ }{x}}) g y  &\arr \\
+        (\lambda x. \app{2\ g\ }{\app{2\ g\ }{x}}) y  &\arr \\
+        \app{2\ g\ }{\app{2\ g\ }{y}}   &\arr \\
+        \app{\tb{\lam{f}{\lam{x}{f (f x)}}} \ \tr{g}\ }{\app{2\ g\ }{y}} &\arr \\
+        \app{\lam{x}{g (g x)} \ \ }{\app{2\ g\ }{y}} &\arr \\
+        \app{\lam{x}{g (g x)} \ \ } {\app{\app{\tb{\lam{f}{\lam{x}{f (f x)}}}\ \tr{g}\ }{x}}} &\arr \\
+        \app{\lam{x}{g (g x)}  } {\app{\tb{\lam{x}{g (g x)} } }{\tr{y}}} &\arr \\
+        \app{\tb{\lam{x}{g (g x)} } } {\tr{(g (g y))}} &\arr \\
         g (g (g (g y))) &
       \end{align*}
     \end{subfigure}
   \end{figure}
 \end{frame}
 
-\begin{frame}{Рекурсия}
+\begin{frame}{Рекурсия через комбинатор неподвижной точки}
+\framesubtitle{англ. FIXed point combinator}
 Не понятно как вызвать самого себя, так как имен нет.\\
 
 Идея:
 \begin{itemize}
-  \item записываем фунцию $f$, чтобы она принимала первый аргумент, который будет вызываться вместо рекурсивного вызова
+  \item записываем функцию $f$, чтобы она принимала первый аргумент, который будет вызываться вместо рекурсивного вызова
   \item Везде, где надо вызвать эту ``рекурсивную'' функцию, будем писать $Yf$  или $Zf$
 
-  $$
-  Y\equiv \lam{f}{\lam{x}{f(x\ x)}\lam{x}{f(x\ x)}}
-  $$
-
-  $$
-  Z\equiv \lam{f}{\lam{x}{f\lam{v}{\ x\ x\ v}}\lam{x}{f\lam{v}{\ x\ x\ v}}}
-  $$
+      \begin{align*}
+  \text{FIX для $\ao$ и $\cbv$:}\quad\quad \quad  & Z\equiv \lam{f}{\lam{x}{f\lam{v}{\ x\ x\ v}}\lam{x}{f\lam{v}{\ x\ x\ v}}} \\
+  \text{FIX для ``ленивых`` стратегий:}\quad\quad \quad  & Y\equiv \lam{f}{\lam{x}{f(x\ x)}\lam{x}{f(x\ x)}}
+\end{align*}
 \end{itemize}
-
-\end{frame}
-
-
-\newcommand{\ite}[3]{\ensuremath{(\text{if } #1\text{ then }#2\text{ else }#3})}}
-\begin{frame}{Рекурсия в call-by-value (упрощенно)}
-$$
-  Y\equiv \lam{f}{\lam{x}{f(x\ x)}\lam{x}{f(x\ x)}}
-$$
-%Основное свойство
+\vspace{1em}
+Откуда такое название?
 \[
 YR = \lam{x}{R(x\ x)} \lam{x}{R(x\ x)} \arr
 R\big( \lam{x}{R(x\ x)}\lam{x}{R(x\ x)} \big) =
 R(YR)
 \]
-
-\vspace{1em}
-
-Факториал: $fac \equiv (\lambda self.\lambda n . \ite{n<2}{1}{n \cdot self(n-1)})$
-\begin{align*}
-  Z(\lambda self.\lambda n . \ite{n<2}{1}{n \cdot self(n-1)}) 2 &\cbn \\
-  (\lambda n . \ite{n<2}{1}{n \cdot Z\ fac(n-1)}) 2 &\cbn \\
-  2 \cdot Y\ fac\ (2-1) &\cbn \\
-  2 \cdot (Z(\lambda self.\lambda n . \ite{n<2}{1}{n \cdot self(n-1)})\ 1) &\cbn \\
-  2 \cdot \ite{1<2}{1}{n \cdot (Z\ fac\ (1-1))} &\cbn \\
-  2 \cdot 1 & \cbn 2
-\end{align*}
 \end{frame}
-
-%\section{Две стратегии}
-\begin{comment}
-
-\begin{frame}{Как происходят вычисления (редукция) $\lambda$-исчислении?}
-\begin{definition}[Процесс вычислений регламентирует стратегия]
-  Ищем редексы $(\lambda x. P)Q$
-\begin{itemize}
-  \item Если редексов нет, то вычисление закончилось
-  \item Если редексы есть, стратегия регламентирует какой на данном шаге редекс стоит $\beta$редуцировать
-  \item Или же, стратегия может сказать, что все редексы нужно оставить как есть, и выдать ответ.
-\end{itemize}
-\end{definition}
-%Стратегий бывает много разных
-%\begin{enumerate}
-%  \item Строгая стратегия call-by-value .    Для $(\lambda x. P)Q$ вычисляет $Q\cbv Q'$ и потом подставляет $Q'$ вместо $x$ в $P$.
-%  \item Ленивая стратегия call-by-name.   Для $(\lambda x. P)Q$ сразу подставляет $Q$ вместо $x$ в $P$.
-%  \item Обе стратегии оставляют абстракции и переменные как есть
-%\end{enumerate}
-\end{frame}
-
-\begin{frame}{Ленивая vs. Строгая}
-Пример 1 ($\cbv$ выглядит лучше)\\
-$(\lambda x. f x x)((\lambda x. x)A) \cbv (\lambda x. f x x)A \cbv (f A A) \cbv \dots $\\
-
-$(\lambda x. f x x)((\lambda x. x)A) \cbn (\lambda x. f ((\lambda x. x)A) ((\lambda x. x)A))A \cbn \dots $
-
-\vspace{3em}
-Пример 2 ($\cbn$ выглядит лучше)\\
-$(\lambda x. \lambda y. y)((\lambda x. xx)(\lambda x. xx)) \cbv (\lambda x. \lambda y. y)((\lambda x. xx)(\lambda x. xx)) \cbv \dots \text{зависло}$
-
-$(\lambda x. \lambda y. y)((\lambda x. xx)(\lambda x. xx)) \cbn (\lambda y. y)\quad\text{ответ!}$
-\end{frame}
-\end{comment}
-
-
-
-\begin{comment}
 
 
 \newcommand{\ite}[3]{\ensuremath{(\text{if } #1\text{ then }#2\text{ else }#3})}}
-\begin{frame}{Рекурсия в call-by-name}
-$$
-Y\equiv \lam{f}{\lam{x}{f(xx)}\lam{x}{f(xx)}}
-$$
+\begin{frame}{Рекурсия в call-by-value (упрощенно)}
+  \framesubtitle{Настолько упрощенно, что даже не совсем правильно}
+
 %Основное свойство
 \[
-YR = \lam{x}{R(xx)} \lam{x}{R(xx)} \nor
-R\big( \lam{x}{R(xx)}\lam{x}{R(xx)} \big) =
-R(YR)
+FIX\ R = R\ (FIX\ R)
 \]
 
 \vspace{1em}
 
-Факториал: $fac \equiv (\lambda self.\lambda n . \ite{n<2}{1}{n \cdot self(n-1)})$
+Факториал: $fac \equiv (\lambda self.\lambda n . \ite{n<2}{1}{n \cdot self(n-1)})$\\
+
 \begin{align*}
-  Y(\lambda self.\lambda n . \ite{n<2}{1}{n \cdot self(n-1)}) 2 &\cbn \\
-  (\lambda n . \ite{n<2}{1}{n \cdot Y\ fac(n-1)}) 2 &\cbn \\
-   2 \cdot Y\ fac\ (2-1) &\cbn \\
-   2 \cdot (Y(\lambda self.\lambda n . \ite{n<2}{1}{n \cdot self(n-1)})\ 1) &\cbn \\
-   2 \cdot \ite{1<2}{1}{n \cdot (Y\ fac\ (1-1))} &\cbn \\
-  2 \cdot 1 & \cbn 2
+  FIX(\lambda self.\lambda n . \ite{n<2}{1}{n \cdot self(n-1)}) 2 &\arr \\
+  (\lambda n . \ite{n<2}{1}{n \cdot FIX\ fac(n-1)}) 2 &\arr \\
+  2 \cdot FIX\ fac\ (2-1) &\arr \\
+  2 \cdot (FIX(\lambda self.\lambda n . \ite{n<2}{1}{n \cdot self(n-1)})\ 1) &\arr \\
+  2 \cdot \ite{1<2}{1}{n \cdot (FIX\ fac\ (1-1))} &\arr \\
+  2 \cdot 1 & \arr 2
 \end{align*}
-
-\end{frame}
-\end{comment}
-
-
-\section{Демка интерпретатора на Си}
-\begin{frame}{Дэмка на Си}
-  Не забыть показать позднее связывание
-\end{frame}
-
-\section{Дополнительные слайды}
-
-\begin{frame}{Нормальные формы}
-
-  У нас как минимум четыре возможности
-  \begin{itemize}
-    \item Редуцируем ли под абстракциями? (да/нет)
-    \item Редуцируем ли аргументы перед подстановкой? (да/нет)
-  \end{itemize}
-
-  \begin{center}
-    \begin{table}[]
-      \begin{tabular}{|c|m{6cm}|m{6cm}|}
-        \hline\hline
-        \multirow{2}{*}{\thead{Редуцируем \\аргументы?}} & \multicolumn{2}{c|}{Редуцируем под абстракциями?} \\ \cline{2-3}
-        &   Да(strong)        &     Нет(weak)     \\ \hline\hline
-        Да(strict)  & \thead{Normal form \\
-          $E ::=\lam{x}{E} \mid xE_1\dots E_n$} &
-        \thead{Weak normal form \\
-          $E ::=\lam{x}{e} \mid xE_1\dots E_n$}    \\
-        Нет(lazy) & \thead{Head normal form \\
-          $E ::=\lam{x}{E} \mid xe_1\dots e_n$} &
-        \thead{Weak head normal form \\
-          $E ::=\lam{x}{e} \mid xe_1\dots e_n$}  \\ \hline\hline
-      \end{tabular}
-    \end{table}
-  \end{center}
-
-  В таблице $E_j$  -- это выражение в соответствующей нормальной форме, а $e_i$ -- произвольный $\lambda$-терм.\\
-  \footnotetext{То, что у некоторых $E$ нет индексов -- не опечатка}
-\end{frame}
-
-%
-\begin{frame}{Порядков редукции бывает много...\cite{setsoft}}
-  \begin{enumerate}
-    \item Call-by-Name
-    \item Normal Order
-    \item Call-by-Value (OCaml)
-    \item Applicative Order
-    \item Hybrid Applicative Order
-    \item Head Spine Reduction
-    \item Hybrid Normal Order
-  \end{enumerate}
-  И ещё есть оптимизации связанные с мемоизацией (кешированием) нормальных форм подвыражений.
-
-  Так Call-by-Name + кеширование = Call-by-Need (\Haskell{})
 \end{frame}
 
 
+\defverbatim[colored]{\cast}{
+  \begin{minted}{c}
+enum Tag { VAR, APP, ABS };
+struct ulc {
+  Tag tag;
+  union body {
+    struct Var { char* name; } Var;
+    struct App { ulc* f; ulc* arg; } App;
+    struct Abs { char* name; ulc* body; } Abs;
+  } body;
+};
+  \end{minted}
+}
 
-\subsection{Call-By-Name}
+\defverbatim[colored]{\strat}{
+\begin{minted}{c}
+struct Strategy {
+  ulc* (*onvar)(Strategy* self, char* name);
+  ulc* (*onApp)(Strategy* self, struct ulc *f, struct ulc *arg);
+  ulc* (*onAbs)(Strategy* self, char *name, struct ulc *arg);
+};
 
-\begin{frame}{Call-By-Name $\rightsquigarrow$ Weak Head Normal Form}
-  Редуцирует \textbf{самый левый внешний} редекс, который \textbf{не под абстракцией}. Например, $\lam{x}{\lam{y}{M}N}$ уже в WHNF, потому что единственный редекс $\lam{y}{M}N$ под абстракцией.
-  \begin{mathpar}
-    \inferrule* [Right=Var] {\\}
-    {x \cbn x}
-    \and
-    \inferrule*  [Right=Abs] {\\}
-    {\lam{x}{e} \cbn \lam{x}{e}}
-  \end{mathpar}
-  \begin{mathpar}
-    \inferrule*  [Right=App-abs]
-    {e_1 \cbn \lam{x}{e} \\
-      [e_2/x]e \cbn e'
+struct ulc* applyStrategy(Strategy *self, struct ulc *root) {
+  switch (root->tag) {
+    case VAR: return self->onvar(self, root->body.Var.name);
+    case APP: return self->onApp(self, root->body.App.f, root->body.App.arg);
+    case ABS: return self->onAbs(self, root->body.Abs.name, root->body.Abs.body);
+  }
+  assert(false);   return nullptr; // unreachable
+}
+\end{minted}
+}
+
+
+\defverbatim[colored]{\nostrat}{
+\begin{minted}{c}
+struct ulc *evalVar(Strategy *this, char *name) {
+  return var(name);
+}
+struct ulc *dontReduceUnderAbstraction(Strategy *this, char  *name, ulc *body) {
+  return abs(name, body);
+}
+struct ulc *dontReduceApplication(Strategy *this, ulc* f, ulc* arg) {
+  return app(f, arg);
+}
+
+struct Strategy NoStrategy = {
+  .onvar = evalVar,
+  .onApp = dontReduceApplication,
+  .onAbs = dontReduceUnderAbstraction,
+};
+\end{minted}
+}
+
+\defverbatim[colored]{\cbvstrat}{
+\begin{minted}{c}
+struct ulc *evalApplyByValue(Strategy *this, ulc *f, ulc *arg) {
+  auto f2 = applyStrategy(this, f);
+  switch (f2->tag) {
+    case VAR:    case APP:      return app(f2, arg);
+    case ABS: {
+      auto arg2 = applyStrategy(this, arg);
+      auto rez = subst(arg2, f2->body.Abs.name, f2->body.Abs.body);
+      return applyStrategy(this, rez);
     }
-    { (e_1 e_2) \cbn e'}
-  \end{mathpar}
-  \begin{mathpar}
-    \inferrule*  [Right=App-non-abs]
-    {e_1 \cbn e_1' \neq \lam{x}{e}}
-    { (e_1 e_2) \cbn (e_1' e_2) }
-  \end{mathpar}
+  }
+  assert(false); return nullptr; // unreachable
+}
+struct Strategy CallByValue = {
+  .onvar = evalVar,
+  .onApp = evalApplyByValue,
+  .onAbs = dontReduceUnderAbstraction };
+\end{minted}
+}
 
-  CBN может посчитать 1 аргумент несколько раз по сравнению с CBV.
+\defverbatim[colored]{\inheritance}{
+  \begin{minted}{c}
+struct ulc *evalApplyByValue(Strategy *this, ulc *f, ulc *arg)
+struct ulc *evalVar(Strategy *this, char *name);
+struct ulc *dontReduceUnderAbstraction(Strategy *this, char *name, ulc *body);
+struct ulc *dontReduceApplication(Strategy *this, ulc *f, ulc *arg);
+
+struct Strategy NoStrategy = {
+  .onvar = evalVar,
+  .onAbs = dontReduceUnderAbstraction,
+  .onApp = dontReduceApplication,
+};
+struct Strategy CallByValue = {
+  .onvar = evalVar,
+  .onAbs = dontReduceUnderAbstraction
+  .onApp = evalApplyByValue,
+};
+  \end{minted}
+}
+\section{Как писать интерпретатор на Си?}
+\begin{frame}{Дэмка на Си (1/5): представление выражений}
+\cast
 \end{frame}
 
-\subsection{Call-By-Value}
-\begin{frame}{Call-by-Value $\rightsquigarrow$ Weak Normal Form}
-  Редуцирует \textbf{самый левый внутренний} редекс, который \textbf{не под абстракцией}. Например, в
-  $\lam{x}{\lam{y}{U}V} (\lam{z}{M}N)$ самый левый внутренний -- это $\lam{y}{U}V$, но редуцироваться первым будет
-  $(\lam{z}{M}N)$.
-
-  \begin{mathpar}
-    \inferrule* [Right=Var]  {\\}
-    {x \cbv x}
-    \and
-    \inferrule*  [Right=Abs] {\\}
-    {\lam{x}{e} \cbv \lam{x}{e}}
-  \end{mathpar}
-  \begin{mathpar}
-    \inferrule* [Right=App-abs]
-    { e_1 \cbv \lam{x}{e} \\
-      e_2 \cbv e_2' \\
-      [e_2'/x]e \cbv e'
-    }
-    { (e_1 e_2) \cbv e'}
-  \end{mathpar}
-  \begin{mathpar}
-    \inferrule*  [Right=App-non-abs]
-    { e_1 \cbv e_1' \neq \lam{x}{e} \\
-      e_2 \cbv e_2'}
-    { (e_1 e_2) \cbv (e_1' e_2') }
-  \end{mathpar}
-  Стандарт для большинства языков программирования.
+\begin{frame}{Дэмка на Си (2/5): объявление стратегии}
+\strat
 \end{frame}
 
-\begin{frame}{Нормальной формы может не быть!}
-  \begin{definition}
-    Нормализация -- процесс поиска соответствующей нормальной формы с помощью применения $\beta$-редукции согласно соответствующей стратегии
-  \end{definition}\vspace{1cm}
-
-  Пример: комбинатор $\Omega = \lam{x}{xx} \lam{x}{xx}$
-
-  $$
-  \lam{x}{xx} \lam{x}{xx} \cbv
-  [\lam{x}{xx}/x] (xx) \cbv
-  \lam{x}{xx}\lam{x}{xx} \cbv \dots
-  $$
+\begin{frame}{Дэмка на Си (3/5): тривиальная константная стратегия}
+\nostrat
 \end{frame}
 
-\begin{frame}{CBN vs. CBV}
-  Call-by-Name чаще завершается
-  $$
-  \lam{x}{\lam{y}{y}}\Omega \cbv \text{расходится}
-  $$
-  $$
-  \lam{x}{\lam{y}{y}} \Omega \cbn \lam{y}{y}
-  $$
-
-  \vspace{1cm}
-  Но Call-by-Name иногда вычисляет аргументы больше одного раза
-  $$
-  \lam{x}{(A x)(B x)} (\lam{y}{y}C) \cbn (A (\lam{y}{y}C))\ (B (\lam{y}{y}C))
-  $$
-
-  $$
-  \lam{x}{(A x)(B x)} (\lam{y}{y}C) \cbv
-  \lam{x}{(A x)(B x)} C \cbv
-  (A C) (B C)
-  $$
-
+\begin{frame}{Дэмка на Си (4/5): Call-by-value}
+\cbvstrat
 \end{frame}
-
-\subsection{Аппликативный порядок}
-
-\begin{frame}{Applicative Order $\rightsquigarrow$ Normal Form}
-  Редуцирует \textbf{самый левый внутренний} редекс, и \textbf{под абстракцией тоже}.
-  Например, в $\lam{x}{\lam{y}{U}V} (\lam{z}{M}N)$ самый левый внутренний -- это $\lam{y}{U}V$.
-  \begin{mathpar}
-    \inferrule* [Right=Var] {\\}
-    {x \ao x}
-    \and
-    \inferrule* [Right=Abs] {e \ao e'}
-    {\lam{x}{e} \ao \lam{x}{e'}}
-  \end{mathpar}
-  \begin{mathpar}
-    \inferrule*  [Right=App-abs]
-    { e_1 \ao \lam{x}{e} \\
-      e_2 \ao e_2' \\
-      [e_2'/x]e \ao e'
-    }
-    { (e_1 e_2) \ao e'}
-  \end{mathpar}
-  \begin{mathpar}
-    \inferrule*  [Right=App-non-abs]
-    { e_1 \ao e' \neq \lam{x}{e} \\
-      e_2 \ao e_2'}
-    { (e_1 e_2) \ao (e_1' e_2') }
-  \end{mathpar}
-  N.B. Аппликативный порядок совершает больше редукций и выдает более простой ответ по сравнению с CBV, но не гарантирует, что редукция завершится.
-\end{frame}
-%
-%\begin{frame}{"Другой" Applicative Order}
-%  \begin{center}
-%    Иногда (в википедии или книге SICP~\cite{sicp}) аппликативным порядком называют Call-By-Value, где явно упорядочивают порядок вычисления фактических аргументов у $\lambda$-абстракций.\\ \vspace{1em}
-%
-%    Согласно~\cite{setsoft} это аппликативным порядком не является.\\ \vspace{1em}
-%
-%    Короче говоря, стратегии с редукцией под абстракциями (applicative order, normal order) в программировании не используются.
-%  \end{center}
-%\end{frame}
-
-\subsection{"Нормальный" порядок}
-
-\begin{frame}{Normal Order $\rightsquigarrow$ Normal Form}
-  Сначала редуцирует \textbf{самый левый внешний} редекс. Встретив применение
-  $(e_1e_2)$ вначале пытается редуцировать $e_1$ как CBN. Если не получилась абстракция -- принимается за аргументы.
-  \begin{mathpar}
-    \inferrule* [Right=Var]
-    {\\}
-    {x \nor x}
-    \and
-    \inferrule* [Right=Abs]{e \nor e'}
-    {\lam{x}{e} \nor \lam{x}{e'}}
-  \end{mathpar}
-  \begin{mathpar}
-    \inferrule* [Right=App-abs]
-    { e_1 \cbn \lam{x}{e} \\
-      [e_2/x]e \nor e'
-    }
-    { (e_1 e_2) \nor e'}
-  \end{mathpar}
-  \begin{mathpar}
-    \inferrule* [Right=App-non-abs]
-    { e_1 \cbn e_1' \neq \lam{x}{e} \\
-      e_1' \nor e_1''\\
-      e_2 \nor e_2'}
-    { (e_1 e_2) \nor (e_1'' e_2') }
-  \end{mathpar}
-  N.B. Нормальный порядок сочетает две стратегии, позволяет получить более простые результаты, чем CBN. Чаще завершается, чем AO.
+\begin{frame}{Дэмка на Си (5/5): понятие наследования}
+\inheritance
 \end{frame}
 
 
-
-
-%\section*{Вопросы к экзамену (TODO)}
-%\begin{frame}{Вопросы к экзамену}
-%\begin{enumerate}
-%  \item Разрешимые и неразрешимые задачи
-%  \item $\lambda$-исчисление. $\alpha$ и $\beta$ правила
-%  \item Нумералы Чёрча. Сложение
-%  \item Рекурсия и факториал
-%\end{enumerate}
-%\end{frame}
+\section{Вопросы к экзамену}
+\begin{frame}{Вопросы к экзамену}
+\begin{itemize}
+  \item Разрешимые и неразрешимые задачи
+  \item $\lambda$-исчисление. $\alpha$ и $\beta$ правила
+  \item Нумералы Чёрча. Сложение
+  \item Рекурсия и факториал на ``пальцах''
+  \item Наследование, но оно будет ещё в других билетах
+\end{itemize}
+\end{frame}
 
 

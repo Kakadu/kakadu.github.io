@@ -1,0 +1,316 @@
+% !TeX root = lambda2023.tex
+
+
+\section{Проблема останова}
+
+\begin{frame}{Проблема останова (1/2)}
+  \begin{block}{Вопрос}
+    Можем ли мы написать алгоритм, который будет брать на вход произвольную $\lambda$-абстракцию и аргумент, и говорить посчитается ли для их применения нормальная форма?\\
+  \end{block}
+  \pause
+  Положим наши программы либо зависают, либо выдают значение \texttt{true}.\\
+
+  Положим существует гипотетическая $(Halting\ P\ w)$, которая всегда завершается, и возвращает \texttt{true}, если $(P\ w)$ редуцируется в \texttt{true}, иначе $(Halting\ P\ w)$ возвращает \texttt{false}.\\
+
+  Покажем от противного, что $Halting$ не может существовать.
+\end{frame}
+
+\begin{frame}{Проблема останова (2/2)}
+  Вопрос: во что редуцируется $E$, в \texttt{true} или в \texttt{false}?
+  \[
+  E = Halting\big( \lam{m}{not(Halting\ m\ m)},\ \ \lam{m}{not(Halting \ m\ m)} \big)
+  \]
+  Если E редуцируется в \texttt{true}, то применим функцию $\lam{m}{not(Halting(m,m))}$ к аргументу $\lam{m}{not(Halting(m,m))}$ и получим
+  \[
+  not ( Halting\big(\lam{m}{not(Halting \ m\ m)},\ \ \lam{m}{not(Halting \ m\ m)}\big)) = \neg E
+  \]
+  что является отрицание истинного факта выше.\\
+
+  Если $E$ редуцируется в \texttt{false}, то это означает, $Halting$ иногда зависает, что противоречит определению функции $Halting$.
+  \qed
+\end{frame}
+
+
+%\section{Две стратегии}
+\begin{comment}
+
+  \begin{frame}{Как происходят вычисления (редукция) $\lambda$-исчислении?}
+    \begin{definition}[Процесс вычислений регламентирует стратегия]
+      Ищем редексы $(\lambda x. P)Q$
+      \begin{itemize}
+        \item Если редексов нет, то вычисление закончилось
+        \item Если редексы есть, стратегия регламентирует какой на данном шаге редекс стоит $\beta$редуцировать
+        \item Или же, стратегия может сказать, что все редексы нужно оставить как есть, и выдать ответ.
+      \end{itemize}
+    \end{definition}
+    %Стратегий бывает много разных
+    %\begin{enumerate}
+    %  \item Строгая стратегия call-by-value .    Для $(\lambda x. P)Q$ вычисляет $Q\cbv Q'$ и потом подставляет $Q'$ вместо $x$ в $P$.
+    %  \item Ленивая стратегия call-by-name.   Для $(\lambda x. P)Q$ сразу подставляет $Q$ вместо $x$ в $P$.
+    %  \item Обе стратегии оставляют абстракции и переменные как есть
+    %\end{enumerate}
+  \end{frame}
+
+  \begin{frame}{Ленивая vs. Строгая}
+    Пример 1 ($\cbv$ выглядит лучше)\\
+    $(\lambda x. f x x)((\lambda x. x)A) \cbv (\lambda x. f x x)A \cbv (f A A) \cbv \dots $\\
+
+    $(\lambda x. f x x)((\lambda x. x)A) \cbn (\lambda x. f ((\lambda x. x)A) ((\lambda x. x)A))A \cbn \dots $
+
+    \vspace{3em}
+    Пример 2 ($\cbn$ выглядит лучше)\\
+    $(\lambda x. \lambda y. y)((\lambda x. xx)(\lambda x. xx)) \cbv (\lambda x. \lambda y. y)((\lambda x. xx)(\lambda x. xx)) \cbv \dots \text{зависло}$
+
+    $(\lambda x. \lambda y. y)((\lambda x. xx)(\lambda x. xx)) \cbn (\lambda y. y)\quad\text{ответ!}$
+  \end{frame}
+\end{comment}
+
+
+
+\begin{comment}
+
+
+  \newcommand{\ite}[3]{\ensuremath{(\text{if } #1\text{ then }#2\text{ else }#3})}}
+\begin{frame}{Рекурсия в call-by-name}
+  $$
+  Y\equiv \lam{f}{\lam{x}{f(xx)}\lam{x}{f(xx)}}
+  $$
+  %Основное свойство
+  \[
+  YR = \lam{x}{R(xx)} \lam{x}{R(xx)} \nor
+  R\big( \lam{x}{R(xx)}\lam{x}{R(xx)} \big) =
+  R(YR)
+  \]
+
+  \vspace{1em}
+
+  Факториал: $fac \equiv (\lambda self.\lambda n . \ite{n<2}{1}{n \cdot self(n-1)})$
+  \begin{align*}
+    Y(\lambda self.\lambda n . \ite{n<2}{1}{n \cdot self(n-1)}) 2 &\cbn \\
+    (\lambda n . \ite{n<2}{1}{n \cdot Y\ fac(n-1)}) 2 &\cbn \\
+    2 \cdot Y\ fac\ (2-1) &\cbn \\
+    2 \cdot (Y(\lambda self.\lambda n . \ite{n<2}{1}{n \cdot self(n-1)})\ 1) &\cbn \\
+    2 \cdot \ite{1<2}{1}{n \cdot (Y\ fac\ (1-1))} &\cbn \\
+    2 \cdot 1 & \cbn 2
+  \end{align*}
+
+\end{frame}
+\end{comment}
+
+
+
+\section{Дополнительные слайды}
+
+\begin{frame}{Нормальные формы}
+
+У нас как минимум четыре возможности
+\begin{itemize}
+  \item Редуцируем ли под абстракциями? (да/нет)
+  \item Редуцируем ли аргументы перед подстановкой? (да/нет)
+\end{itemize}
+
+\begin{center}
+  \begin{table}[]
+    \begin{tabular}{|c|m{6cm}|m{6cm}|}
+      \hline\hline
+      \multirow{2}{*}{\thead{Редуцируем \\аргументы?}} & \multicolumn{2}{c|}{Редуцируем под абстракциями?} \\ \cline{2-3}
+      &   Да(strong)        &     Нет(weak)     \\ \hline\hline
+      Да(strict)  & \thead{Normal form \\
+        $E ::=\lam{x}{E} \mid xE_1\dots E_n$} &
+      \thead{Weak normal form \\
+        $E ::=\lam{x}{e} \mid xE_1\dots E_n$}    \\
+      Нет(lazy) & \thead{Head normal form \\
+        $E ::=\lam{x}{E} \mid xe_1\dots e_n$} &
+      \thead{Weak head normal form \\
+        $E ::=\lam{x}{e} \mid xe_1\dots e_n$}  \\ \hline\hline
+    \end{tabular}
+  \end{table}
+\end{center}
+
+В таблице $E_j$  -- это выражение в соответствующей нормальной форме, а $e_i$ -- произвольный $\lambda$-терм.\\
+\footnotetext{То, что у некоторых $E$ нет индексов -- не опечатка}
+\end{frame}
+
+%
+\begin{frame}{Порядков редукции бывает много...\cite{setsoft}}
+\begin{enumerate}
+  \item Call-by-Name
+  \item Normal Order
+  \item Call-by-Value (OCaml)
+  \item Applicative Order
+  \item Hybrid Applicative Order
+  \item Head Spine Reduction
+  \item Hybrid Normal Order
+\end{enumerate}
+И ещё есть оптимизации связанные с мемоизацией (кешированием) нормальных форм подвыражений.
+
+Так Call-by-Name + кеширование = Call-by-Need (\Haskell{})
+\end{frame}
+
+
+
+\subsection{Call-By-Name}
+
+\begin{frame}{Call-By-Name $\rightsquigarrow$ Weak Head Normal Form}
+Редуцирует \textbf{самый левый внешний} редекс, который \textbf{не под абстракцией}. Например, $\lam{x}{\lam{y}{M}N}$ уже в WHNF, потому что единственный редекс $\lam{y}{M}N$ под абстракцией.
+\begin{mathpar}
+  \inferrule* [Right=Var] {\\}
+  {x \cbn x}
+  \and
+  \inferrule*  [Right=Abs] {\\}
+  {\lam{x}{e} \cbn \lam{x}{e}}
+\end{mathpar}
+\begin{mathpar}
+  \inferrule*  [Right=App-abs]
+  {e_1 \cbn \lam{x}{e} \\
+    [e_2/x]e \cbn e'
+  }
+  { (e_1 e_2) \cbn e'}
+\end{mathpar}
+\begin{mathpar}
+  \inferrule*  [Right=App-non-abs]
+  {e_1 \cbn e_1' \neq \lam{x}{e}}
+  { (e_1 e_2) \cbn (e_1' e_2) }
+\end{mathpar}
+
+CBN может посчитать 1 аргумент несколько раз по сравнению с CBV.
+\end{frame}
+
+\subsection{Call-By-Value}
+\begin{frame}{Call-by-Value $\rightsquigarrow$ Weak Normal Form}
+Редуцирует \textbf{самый левый внутренний} редекс, который \textbf{не под абстракцией}. Например, в
+$\lam{x}{\lam{y}{U}V} (\lam{z}{M}N)$ самый левый внутренний -- это $\lam{y}{U}V$, но редуцироваться первым будет
+$(\lam{z}{M}N)$.
+
+\begin{mathpar}
+  \inferrule* [Right=Var]  {\\}
+  {x \cbv x}
+  \and
+  \inferrule*  [Right=Abs] {\\}
+  {\lam{x}{e} \cbv \lam{x}{e}}
+\end{mathpar}
+\begin{mathpar}
+  \inferrule* [Right=App-abs]
+  { e_1 \cbv \lam{x}{e} \\
+    e_2 \cbv e_2' \\
+    [e_2'/x]e \cbv e'
+  }
+  { (e_1 e_2) \cbv e'}
+\end{mathpar}
+\begin{mathpar}
+  \inferrule*  [Right=App-non-abs]
+  { e_1 \cbv e_1' \neq \lam{x}{e} \\
+    e_2 \cbv e_2'}
+  { (e_1 e_2) \cbv (e_1' e_2') }
+\end{mathpar}
+Стандарт для большинства языков программирования.
+\end{frame}
+
+\begin{frame}{Нормальной формы может не быть!}
+\begin{definition}
+  Нормализация -- процесс поиска соответствующей нормальной формы с помощью применения $\beta$-редукции согласно соответствующей стратегии
+\end{definition}\vspace{1cm}
+
+Пример: комбинатор $\Omega = \lam{x}{xx} \lam{x}{xx}$
+
+$$
+\lam{x}{xx} \lam{x}{xx} \cbv
+[\lam{x}{xx}/x] (xx) \cbv
+\lam{x}{xx}\lam{x}{xx} \cbv \dots
+$$
+\end{frame}
+
+\begin{frame}{CBN vs. CBV}
+Call-by-Name чаще завершается
+$$
+\lam{x}{\lam{y}{y}}\Omega \cbv \text{расходится}
+$$
+$$
+\lam{x}{\lam{y}{y}} \Omega \cbn \lam{y}{y}
+$$
+
+\vspace{1cm}
+Но Call-by-Name иногда вычисляет аргументы больше одного раза
+$$
+\lam{x}{(A x)(B x)} (\lam{y}{y}C) \cbn (A (\lam{y}{y}C))\ (B (\lam{y}{y}C))
+$$
+
+$$
+\lam{x}{(A x)(B x)} (\lam{y}{y}C) \cbv
+\lam{x}{(A x)(B x)} C \cbv
+(A C) (B C)
+$$
+
+\end{frame}
+
+\subsection{Аппликативный порядок}
+
+\begin{frame}{Applicative Order $\rightsquigarrow$ Normal Form}
+Редуцирует \textbf{самый левый внутренний} редекс, и \textbf{под абстракцией тоже}.
+Например, в $\lam{x}{\lam{y}{U}V} (\lam{z}{M}N)$ самый левый внутренний -- это $\lam{y}{U}V$.
+\begin{mathpar}
+  \inferrule* [Right=Var] {\\}
+  {x \ao x}
+  \and
+  \inferrule* [Right=Abs] {e \ao e'}
+  {\lam{x}{e} \ao \lam{x}{e'}}
+\end{mathpar}
+\begin{mathpar}
+  \inferrule*  [Right=App-abs]
+  { e_1 \ao \lam{x}{e} \\
+    e_2 \ao e_2' \\
+    [e_2'/x]e \ao e'
+  }
+  { (e_1 e_2) \ao e'}
+\end{mathpar}
+\begin{mathpar}
+  \inferrule*  [Right=App-non-abs]
+  { e_1 \ao e' \neq \lam{x}{e} \\
+    e_2 \ao e_2'}
+  { (e_1 e_2) \ao (e_1' e_2') }
+\end{mathpar}
+N.B. Аппликативный порядок совершает больше редукций и выдает более простой ответ по сравнению с CBV, но не гарантирует, что редукция завершится.
+\end{frame}
+%
+%\begin{frame}{"Другой" Applicative Order}
+%  \begin{center}
+%    Иногда (в википедии или книге SICP~\cite{sicp}) аппликативным порядком называют Call-By-Value, где явно упорядочивают порядок вычисления фактических аргументов у $\lambda$-абстракций.\\ \vspace{1em}
+%
+%    Согласно~\cite{setsoft} это аппликативным порядком не является.\\ \vspace{1em}
+%
+%    Короче говоря, стратегии с редукцией под абстракциями (applicative order, normal order) в программировании не используются.
+%  \end{center}
+%\end{frame}
+
+\subsection{"Нормальный" порядок}
+
+\begin{frame}{Normal Order $\rightsquigarrow$ Normal Form}
+Сначала редуцирует \textbf{самый левый внешний} редекс. Встретив применение
+$(e_1e_2)$ вначале пытается редуцировать $e_1$ как CBN. Если не получилась абстракция -- принимается за аргументы.
+\begin{mathpar}
+  \inferrule* [Right=Var]
+  {\\}
+  {x \nor x}
+  \and
+  \inferrule* [Right=Abs]{e \nor e'}
+  {\lam{x}{e} \nor \lam{x}{e'}}
+\end{mathpar}
+\begin{mathpar}
+  \inferrule* [Right=App-abs]
+  { e_1 \cbn \lam{x}{e} \\
+    [e_2/x]e \nor e'
+  }
+  { (e_1 e_2) \nor e'}
+\end{mathpar}
+\begin{mathpar}
+  \inferrule* [Right=App-non-abs]
+  { e_1 \cbn e_1' \neq \lam{x}{e} \\
+    e_1' \nor e_1''\\
+    e_2 \nor e_2'}
+  { (e_1 e_2) \nor (e_1'' e_2') }
+\end{mathpar}
+N.B. Нормальный порядок сочетает две стратегии, позволяет получить более простые результаты, чем CBN. Чаще завершается, чем AO.
+\end{frame}
+
+
+
