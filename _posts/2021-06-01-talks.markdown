@@ -24,10 +24,10 @@ In russian during seminar of our lab :
 In russian:
 
 * About "Relational programming in OCaml" (during PLC2017 conference, Rostov-on-don, Russia)
-* About ocsigen on IT Meetup 2018
+* About OCsigen on IT Meetup 2018
 * "Pure functional data structures" (for students in 2019)
 * "Pure functional data structures" (for students in 2020)
-* ["Lambda-calculus"](lambda-2023) (for students in 2023)
+* ["Lambda-calculus"][lambda-2023] (for students in 2023)
 
 
 
