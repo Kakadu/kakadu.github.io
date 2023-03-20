@@ -21,6 +21,7 @@
 \newcommand\alphaequiv{\overset{\alpha}{\equiv}}
 \newcommand{\xarr}[1]{\xrightarrow{\ #1\ }}
 \newcommand{\arr}{\rightarrow}
+\newcommand{\arrmany}{\xarr{*}}
 \newcommand{\cbv}{\xarr{cbv}}
 \newcommand{\cbn}{\xarr{cbn}}
 \newcommand{\nor}{\xarr{nor}}
@@ -29,6 +30,9 @@
 \newcommand{\abs}[2]{\ensuremath{(\lambda #1 . #2)}}
 \newcommand{\lam}[2]{\ensuremath{\abs{#1}{#2}}}
 \newcommand{\app}[2]{\ensuremath{(#1 #2)}}
+\newcommand{\subst}[3]{\ensuremath{[#1 \mapsto #2]#3}}
+\newcommand{\substt}[3]{\ensuremath{[#2/#1]#3}}
+
 \usepackage{mathpartir}
 \usepackage{tabulary}
 \usepackage{multirow}
@@ -107,6 +111,8 @@
   \tableofcontents
 \end{frame}
 
+
+\input{01implementation.tex}
 
 \section*{Введение}
 \input{02intro.tex}

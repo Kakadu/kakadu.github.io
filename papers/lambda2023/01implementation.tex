@@ -1,0 +1,97 @@
+% !TeX root = lambda2023.tex
+
+
+\defverbatim[colored]{\cast}{
+\begin{minted}{c}
+enum Tag { VAR, ABS, APP };
+struct ulc {
+  Tag tag;
+  union body {
+    struct Var { char* name; } Var;
+    struct Abs { char* name; ulc* body; } Abs;
+    struct App { ulc* f; ulc* arg; } App;
+  } body;
+};
+\end{minted}
+}
+
+\defverbatim[colored]{\strat}{
+\begin{minted}{c}
+struct Strategy {
+  ulc* (*onVar)(Strategy* self, char* name);
+  ulc* (*onApp)(Strategy* self, struct ulc *f, struct ulc *arg);
+  ulc* (*onAbs)(Strategy* self, char *name, struct ulc *arg);
+};
+
+struct ulc* applyStrategy(Strategy *self, struct ulc *root) {
+  switch (root->tag) {
+    case VAR: return self->onVar(self, root->body.Var.name);
+    case APP: return self->onApp(self, root->body.App.f, root->body.App.arg);
+    case ABS: return self->onAbs(self, root->body.Abs.name, root->body.Abs.body);
+  }
+  assert(false);   return nullptr; // unreachable
+}
+\end{minted}
+}
+
+
+\defverbatim[colored]{\nostrat}{
+  \begin{minted}{c}
+struct ulc *evalVar(Strategy *this, char *name) {
+  return var(name);
+}
+struct ulc *dontReduceUnderAbstraction(Strategy *this, char  *name, ulc *body) {
+  return abs(name, body);
+}
+struct ulc *dontReduceApplication(Strategy *this, ulc* f, ulc* arg) {
+  return app(f, arg);
+}
+
+struct Strategy NoStrategy = {
+  .onvar = evalVar,
+  .onApp = dontReduceApplication,
+  .onAbs = dontReduceUnderAbstraction,
+};
+  \end{minted}
+}
+
+\defverbatim[colored]{\cbvstrat}{
+  \begin{minted}{c}
+struct ulc *evalApplyByValue(Strategy *self, ulc *f, ulc *a1) {
+  auto f2 = applyStrategy(self, f);
+  switch (f2->tag) {
+    case VAR:    case APP:      return app(f2, a1);
+    case ABS: {
+      auto a2 = applyStrategy(self, a1);
+      auto r = subst(a2, f2->body.Abs.name, f2->body.Abs.body);
+      return applyStrategy(self, r);
+    }
+  }
+  assert(false); return nullptr; // unreachable
+}
+struct Strategy CallByValue = {
+  .onvar = evalVar,
+  .onApp = evalApplyByValue,
+  .onAbs = dontReduceUnderAbstraction };
+  \end{minted}
+}
+
+\defverbatim[colored]{\inheritance}{
+\begin{minted}{c}
+struct ulc *evalApplyByValue(Strategy *this, ulc *f, ulc *arg)
+struct ulc *evalVar(Strategy *this, char *name);
+struct ulc *dontReduceUnderAbstraction(Strategy *this, char *name, ulc *body);
+struct ulc *dontReduceApplication(Strategy *this, ulc *f, ulc *arg);
+
+struct Strategy NoStrategy = {
+  .onvar = evalVar,
+  .onAbs = dontReduceUnderAbstraction,
+  .onApp = dontReduceApplication,
+};
+struct Strategy CallByValue = {
+  .onvar = evalVar,
+  .onAbs = dontReduceUnderAbstraction
+  .onApp = evalApplyByValue,
+};
+\end{minted}
+}

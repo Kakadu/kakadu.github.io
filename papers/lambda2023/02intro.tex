@@ -225,20 +225,26 @@ $\forall x z\ \exists y (x < y) \wedge (y < z)$\\
 
 \begin{frame}{$\lambda$-исчисление}
 \begin{figure}[t]
-  \begin{subfigure}[t]{0.45\textwidth}
+  \begin{subfigure}[t]{0.35\textwidth}
+    \only<2>{
+      \vspace{-5em}
+    }
     \vspace{-1em}
 Синтаксис:
 \begin{itemize}
   \item Переменные: $x,y,z,\dots$
-  \item Абстракция $(\lambda \nu. A)$, где $A$ -- $\lambda$-выражение, а $\nu$ --- произвольное имя переменной
+  \item Абстракция $(\lambda \nu. A)$, где \\
+  $A$ -- $\lambda$-выражение, \\
+  а $\nu$ --- произвольное имя переменной
   \item Применение $(AB)$, где $A$ и $B$ --- $\lambda$-выражения
 \end{itemize}
 \begin{definition}{Редекс}
   --- это $\lambda$-выражение вида $(\lambda \nu. A)B$
 \end{definition}
   \end{subfigure}
-\hspace{1cm}
-  \begin{subfigure}[t]{0.45\textwidth}
+\hspace{0.4cm}
+  \begin{subfigure}[t]{0.55\textwidth}
+\only<1>{
 В терминах программирования:
 \begin{itemize}
   \item Переменные
@@ -247,9 +253,19 @@ $\forall x z\ \exists y (x < y) \wedge (y < z)$\\
 \end{itemize}
     \vspace{1em}
 Процесс вычисления --- это процеcc устранения редексов (возможно, не всех) путём подстановок $\lambda$-выражений вместо переменных.
+}
+\only<2>{
+\begin{minipage}{2cm}
+  \cast
+\end{minipage}
+}
   \end{subfigure}
 \end{figure}
 \end{frame}
+
+%\begin{frame}{Дэмка на С++ (1/5): представление выражений}
+%  \cast
+%\end{frame}
 
 \begin{frame}{Каррирование}
 \begin{figure}[t]
@@ -300,19 +316,40 @@ $\forall x z\ \exists y (x < y) \wedge (y < z)$\\
   \item связанных вхождения и т.д.
 \end{itemize}
 
-%  \[
-%  (\lambda \tikz\node[na](word6){x}; . (\lambda \tikz\node[na](word7){y};.  \tikz\node[na](word8){y}; )) (\lambda \tikz\node[na](word9){y}; .  \tikz\node[na](word10){y}; )
-%  \]
-%  \begin{tikzpicture}[overlay]
-%    \path[draw,->,red,thick] (word8.north) -- ++(0,0.3cm) -- ++(-0.3cm,0) -- (word7.north);
-%    \path[draw,->,blue,thick] (word10.north) -- ++(0,0.3cm) -- ++(-0.3cm,0) -- (word9.north);
-%  \end{tikzpicture}
-%
-%  %\vspace{1em}
-%  Индексы: $ \lam{}{\lam{}{0}}\lam{}{0}$\\
-%  Уровни: $ \lam{}{\lam{}{1}}\lam{}{0}$
-%
-%  Стрёмно: одинаковые лямбда-выражения в разных местах представлены по-разному
+\footnotetext{TODO: сказать про скобочки}
+\end{frame}
+
+
+\begin{frame}[fragile]{Подстановка}
+Редекс $\lam{x}{\lam{x}{x} x}y$ вида $(\lambda \nu. A)B$, где
+\begin{itemize}
+  \item  $A \equiv \lam{x}{x} x$
+  \item  $B \equiv  y$
+  \item $\nu \equiv x$
+\end{itemize}
+
+  \tikzstyle{every picture}+=[remember picture]
+  \tikzstyle{na} = [shape=rectangle,inner sep=0pt,text depth=0pt]
+  {\Large
+    \[
+    (\lambda \tikz\node[na](dbI1){x}; .
+      (\lambda \tikz\node[na](dbI2){x};.  \tikz\node[na](dbI3){x}; )
+      \tikz\node[na](dbI5){x};)
+    y    \arr \lam{x}{x}y
+    \]
+    \begin{tikzpicture}[overlay]
+%      \path[->,red,thick](dbI1) edge [out=90, in=90] (dbI3);
+      \path[->,red,thick](dbI1) edge [out=-90, in=-90] (dbI5);%      \path[draw,->,blue,thick] (dbI2) edge [out=-90, in=-90] (dbI3);
+      \path[draw,->,blue,thick] (dbI2.south) -- ++(0,-0.2cm) -- ++(0.4cm,0) -- (dbI3.south);
+    \end{tikzpicture}
+  }
+
+\vspace{2em}
+Подстановка ``$x$ вместо $A$ в $B$'' в лит-ре обозначается по-разному:
+  \begin{itemize}
+    \item \subst{x}{A}{B}
+    \item \substt{x}{A}{B}
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{Определения алгоритма}
@@ -345,6 +382,10 @@ $\forall x z\ \exists y (x < y) \wedge (y < z)$\\
   %\end{enumerate}
 \end{frame}
 
+\begin{frame}{Дэмка на С++ (2/5): объявление стратегии}
+  \strat
+\end{frame}
+
 \begin{frame}{Две стратегии: Call-by-value и аппликативная}
   \begin{figure}[t]
     \begin{subfigure}[t]{0.45\textwidth}
@@ -366,21 +407,21 @@ $\forall x z\ \exists y (x < y) \wedge (y < z)$\\
 \hrulefill
 \only<1>{
 \begin{mathpar}
-  \inferrule*  [Right=App-abs]
-  { e_1 \arr \lam{x}{e} \\
-    e_2 \arr e_2' \\
-    [e_2'/x]e \arr e'
-  }
-  { (e_1 e_2) \arr e'}
+\inferrule*  [Right=App-abs]
+{ f_1 \arr \lam{x}{e} \\
+  a_1 \arr a_2 \\
+  \subst{x}{a_2}{e} \arr r
+}
+{ (f_1 a_1) \arr r}
 \end{mathpar}
 \begin{mathpar}
   \inferrule* [Right=Var] {\\}
   {x \arr x}
   \and
   \inferrule*  [Right=App-non-abs]
-  { e_1 \arr e' \neq \lam{x}{e} \\
-    e_2 \arr e_2'}
-  { (e_1 e_2) \arr (e_1' e_2') }
+{ f_1 \arr f_2 \neq \lam{x}{e} \\
+  a_1 \arr a_2}
+{ (f_1 a_1) \arr (f_2 a_2) }
 \end{mathpar}
 }
 \only<2>{
@@ -404,6 +445,27 @@ $\forall x z\ \exists y (x < y) \wedge (y < z)$\\
 \end{frame}
 
 
+\begin{frame}
+\vspace{-1em}
+\begin{mathpar}
+\inferrule*  [Right=App-abs]
+{ f_1 \arr \lam{x}{e} \\
+  a_1 \arr a_2 \\
+  \subst{x}{a_2}{e} \arr r
+}
+{ (f_1 a_1) \arr r}
+\end{mathpar}
+\begin{mathpar}
+  \inferrule*  [Right=App-non-abs]
+  { f_1 \arr f_2 \neq \lam{x}{e} \\
+    a_1 \arr a_2}
+  { (f_1 a_1) \arr (f_2 a_2) }
+\end{mathpar}
+\vspace{1em}
+
+\cbvstrat
+\end{frame}
+
 \section{Написание алгоритмов с помощью $\lambda$-исчисления}
 
 \begin{frame}{Что нужно для представления алгоритмов?}
@@ -425,9 +487,11 @@ F\equiv \lam{x}{\lam{y}{y}}\equiv snd
 
 \begin{align*}
   ite \quad\equiv &\quad \lambda c. \lambda th. \lambda el. (c\ th\ el)\\
-  (ite\ T) \quad\equiv &\quad  \lambda th. \lambda el. (T\ th\ el) \rightsquigarrow th\\
-  (ite\ F) \quad\equiv &\quad  \lambda th. \lambda el. (F\ th\ el) \rightsquigarrow el
+  (ite\ T) \quad\equiv &\quad  \lambda th. \lambda el. (T\ th\ el) \arrmany th\\
+  (ite\ F) \quad\equiv &\quad  \lambda th. \lambda el. (F\ th\ el) \arrmany el
 \end{align*}
+
+\footnotetext{Здесь $\arrmany$ означает редукцию за несколько шагов}
 \end{frame}
 
 %\section{Представление данных в $\lambda$ исчислении}
@@ -493,6 +557,7 @@ $ 2 \sim \lam{s}{\lam{x}{s\ (s\ x)}}$
   \end{align*}
 \end{frame}
 
+\begin{comment}
 
 \begin{frame}{2+2}
   \begin{figure}[t]
@@ -523,6 +588,8 @@ $ 2 \sim \lam{s}{\lam{x}{s\ (s\ x)}}$
     \end{subfigure}
   \end{figure}
 \end{frame}
+\end{comment}
+
 
 \begin{frame}{Рекурсия через комбинатор неподвижной точки}
 \framesubtitle{англ. FIXed point combinator}
@@ -571,121 +638,41 @@ FIX\ R = R\ (FIX\ R)
 \end{align*}
 \end{frame}
 
-
-\defverbatim[colored]{\cast}{
-  \begin{minted}{c}
-enum Tag { VAR, APP, ABS };
-struct ulc {
-  Tag tag;
-  union body {
-    struct Var { char* name; } Var;
-    struct App { ulc* f; ulc* arg; } App;
-    struct Abs { char* name; ulc* body; } Abs;
-  } body;
-};
-  \end{minted}
-}
-
-\defverbatim[colored]{\strat}{
-\begin{minted}{c}
-struct Strategy {
-  ulc* (*onvar)(Strategy* self, char* name);
-  ulc* (*onApp)(Strategy* self, struct ulc *f, struct ulc *arg);
-  ulc* (*onAbs)(Strategy* self, char *name, struct ulc *arg);
-};
-
-struct ulc* applyStrategy(Strategy *self, struct ulc *root) {
-  switch (root->tag) {
-    case VAR: return self->onvar(self, root->body.Var.name);
-    case APP: return self->onApp(self, root->body.App.f, root->body.App.arg);
-    case ABS: return self->onAbs(self, root->body.Abs.name, root->body.Abs.body);
-  }
-  assert(false);   return nullptr; // unreachable
-}
-\end{minted}
-}
-
-
-\defverbatim[colored]{\nostrat}{
-\begin{minted}{c}
-struct ulc *evalVar(Strategy *this, char *name) {
-  return var(name);
-}
-struct ulc *dontReduceUnderAbstraction(Strategy *this, char  *name, ulc *body) {
-  return abs(name, body);
-}
-struct ulc *dontReduceApplication(Strategy *this, ulc* f, ulc* arg) {
-  return app(f, arg);
-}
-
-struct Strategy NoStrategy = {
-  .onvar = evalVar,
-  .onApp = dontReduceApplication,
-  .onAbs = dontReduceUnderAbstraction,
-};
-\end{minted}
-}
-
-\defverbatim[colored]{\cbvstrat}{
-\begin{minted}{c}
-struct ulc *evalApplyByValue(Strategy *this, ulc *f, ulc *arg) {
-  auto f2 = applyStrategy(this, f);
-  switch (f2->tag) {
-    case VAR:    case APP:      return app(f2, arg);
-    case ABS: {
-      auto arg2 = applyStrategy(this, arg);
-      auto rez = subst(arg2, f2->body.Abs.name, f2->body.Abs.body);
-      return applyStrategy(this, rez);
-    }
-  }
-  assert(false); return nullptr; // unreachable
-}
-struct Strategy CallByValue = {
-  .onvar = evalVar,
-  .onApp = evalApplyByValue,
-  .onAbs = dontReduceUnderAbstraction };
-\end{minted}
-}
-
-\defverbatim[colored]{\inheritance}{
-  \begin{minted}{c}
-struct ulc *evalApplyByValue(Strategy *this, ulc *f, ulc *arg)
-struct ulc *evalVar(Strategy *this, char *name);
-struct ulc *dontReduceUnderAbstraction(Strategy *this, char *name, ulc *body);
-struct ulc *dontReduceApplication(Strategy *this, ulc *f, ulc *arg);
-
-struct Strategy NoStrategy = {
-  .onvar = evalVar,
-  .onAbs = dontReduceUnderAbstraction,
-  .onApp = dontReduceApplication,
-};
-struct Strategy CallByValue = {
-  .onvar = evalVar,
-  .onAbs = dontReduceUnderAbstraction
-  .onApp = evalApplyByValue,
-};
-  \end{minted}
-}
 \section{Как писать интерпретатор на Си?}
-\begin{frame}{Дэмка на Си (1/5): представление выражений}
+\begin{frame}{Дэмка на С++ (1/5): представление выражений}
 \cast
 \end{frame}
 
-\begin{frame}{Дэмка на Си (2/5): объявление стратегии}
+\begin{frame}{Дэмка на С++ (2/5): объявление стратегии}
 \strat
 \end{frame}
 
-\begin{frame}{Дэмка на Си (3/5): тривиальная константная стратегия}
+\begin{frame}{Дэмка на С++ (3/5): тривиальная константная стратегия}
 \nostrat
 \end{frame}
 
-\begin{frame}{Дэмка на Си (4/5): Call-by-value}
+\begin{frame}{Дэмка на С++ (4/5): Call-by-value}
 \cbvstrat
 \end{frame}
-\begin{frame}{Дэмка на Си (5/5): понятие наследования}
+\begin{frame}{Дэмка на С++ (5/5): понятие наследования}
 \inheritance
 \end{frame}
 
+%\begin{frame}{Несколько слайдов про определение Функционального Программирования}
+%\begin{figure}[t]
+%  \begin{subfigure}[t]{0.45\textwidth}
+%    Нетипизированное a la Scheme
+%    \begin{itemize}
+%      \item
+%      \item
+%      \item
+%    \end{itemize}
+%  \end{subfigure}
+%  \begin{subfigure}[t]{0.45\textwidth}
+%    Типизированное a la ML
+%  \end{subfigure}
+%\end{figure}
+%\end{frame}
 
 \section{Вопросы к экзамену}
 \begin{frame}{Вопросы к экзамену}
@@ -697,5 +684,3 @@ struct Strategy CallByValue = {
   \item Наследование, но оно будет ещё в других билетах
 \end{itemize}
 \end{frame}
-
-
