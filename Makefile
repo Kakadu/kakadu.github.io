@@ -22,12 +22,17 @@ celan: clean
 clean:
 	$(RM) $(FILES_OUT)
 
-.PHONY: deps watch
-deps:
+.PHONY: deps dev-deps watch
+dev-deps:
 	sudo apt install ruby-dev ruby-ffi ruby-http-parser
 	GEM_HOME=$(HOME)/.gem gem install bundler jekyll
 	GEM_HOME=$(HOME)/.gem PATH=$(HOME)/.gem/bin:$(PATH) bundle install
 
+# Only repo packaged
+deps:
+	sudo apt install --yes --no-install-recommends \
+		ruby-dev ruby-ffi ruby-http-parser ruby-jekyll-redirect-from jekyll-theme-minima jekyll
 
 watch:
-	GEM_HOME=$(HOME)/.gem PATH=$(HOME)/.gem/bin:$(PATH) bundle exec jekyll serve --livereload
+	@#GEM_HOME=$(HOME)/.gem PATH=$(HOME)/.gem/bin:$(PATH) bundle exec 
+	jekyll serve --livereload
