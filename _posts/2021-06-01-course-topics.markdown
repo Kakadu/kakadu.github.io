@@ -382,6 +382,7 @@ Tема [с прошлого года](https://kakadu.github.io/fp2020/projects.
 
 ## Совсем неформально описанное
 
+- YAML parser in pure OCaml https://discuss.ocaml.org/t/ocaml-yaml-library/4297/2
 - lamlqml?
 - Remake Turbo Vision
   - для 2го курса
