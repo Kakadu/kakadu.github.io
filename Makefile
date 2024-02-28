@@ -34,5 +34,5 @@ deps:
 		ruby-dev ruby-ffi ruby-http-parser ruby-jekyll-redirect-from jekyll-theme-minima jekyll
 
 watch:
-	@#GEM_HOME=$(HOME)/.gem PATH=$(HOME)/.gem/bin:$(PATH) bundle exec 
-	jekyll serve --livereload
+	@#GEM_HOME=$(HOME)/.gem PATH=$(HOME)/.gem/bin:$(PATH) bundle exec
+	bundle exec jekyll serve --livereload
