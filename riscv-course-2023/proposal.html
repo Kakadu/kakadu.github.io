@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Компиляторы, в том числе для RISC-V &#8212; документация Компиляторы </title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css?v=4468db6d" />
+    <script src="_static/documentation_options.js?v=372fde1a"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=29b1f277"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="index.html">
+          Компиляторы</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="index.html">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Компиляторы, в том числе для RISC-V</a></li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/proposal.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <section id="risc-v">
+<h1>Компиляторы, в том числе для RISC-V<a class="headerlink" href="#risc-v" title="Link to this heading">¶</a></h1>
+<p>Курс «Трансляция языков программирования» читается на математико-механическом факультете СПбГУ для студентов <a class="reference external" href="https://se.math.spbu.ru/bachelor/software-engineering.html">специальности</a> «Программная инженерия» 3 курса (Бакалавриат 09.03.04).
+Курс является обязательным и системообразующим, в 2023 году его должны сдавать 25 студентов.
+Занятия ведутся 2 пары в неделю, кроме теоретического экзамена студентам необходимо сдавать домашнее задание по написанию на функциональном языке OCaml компилятора упрощенного OCaml.
+(Курс «Функциональное программирование» на примере языка OCaml студенты сдают за год до курса по компиляторам.)
+В материалах курса нет жесткой привязки к языку реализации компилятора, и их будет возможно переиспользовать для других специальностей.</p>
+<p>Лекции состоят из общих вопросов по компиляции, и прикладных, непосредственно полезных в домашнем задании,
+которое они <a class="reference external" href="https://github.com/Kakadu/comp23hw">сдают в репозитории на GitHub</a>.
+<a class="reference external" href="https://disk.yandex.ru/d/k9p_q6Y3jEm-Rg">Материалы</a> курса постепенно выкладываются в сеть.</p>
+<p>На практических занятиях студенты реализуют компилятор, и состоящий из следующих частей:</p>
+<ul class="simple">
+<li><p>Синтаксический анализ и проверка типов.</p></li>
+<li><p>Избавление от вложенных и анонимных функций.</p></li>
+<li><p>Трансляция в ANF представление, для облегчения последующей генерации кода.</p></li>
+<li><p>Компиляция с помощью инфраструктуры LLVM.</p></li>
+<li><p>Компиляция в ассемблер amd64 вручную, с помощью ассемблера nasm.</p></li>
+<li><p>Реализация библиотеки времени выполнения на языке Си, включая сборку мусора.</p></li>
+</ul>
+<p>Идея такого наполнения домашнего задания навеяна <a class="reference external" href="https://compscicenter.ru/courses/compilers/2021-spring">курсом Д. Булычева</a> «Языки программирования и компиляторы».
+В курсе не подразумевается, что будут выдаваться шаблоны конкретных частей домашнего задания, все студенты пишут компилятор одного и того же языка, парно и с нуля.</p>
+<p>Некоторым недостатком данного курса является специализация на ассемблере amd64, так как эта подзадача является самой объемной из всех.
+Поэтому, хочется продемнострировать обучающимся, что бывают другие языки ассемблера, например, используя RISC-V 64. К тому же в 2023 году появились студенты, пожелавшие реализовывать компилятор в архитектуру RISC-V 64 вместо amd64.</p>
+<p>При добавлении ещё одной поддерживаемой архитектуры текущий курс должен существенно улучшиться.</p>
+<ul class="simple">
+<li><p>Студенты будут мотивированы вводить низкоуровневое представление скомпилированных программ, выделяя похожие части языков ассемблера amd64 и RISC-V 64, чтобы избегать дупликации кода.</p></li>
+<li><p>Появляется возможность продемонстрировать понятие retargetable compiler на практике.</p></li>
+</ul>
+<p>Разработка компилятора для RISC-V позволит ярче раскрыть отличия различных микроархитектур процессоров друг от друга.
+Например, станут естественными задачи по условному включению оптимизаций, связанных с битовыми манипуляциями (расширения ZBA и ZBB).
+С их помощью обучающиеся смогут не только попробовать оптимизировать алгоритмы вычислительной математики, но и поэкспериментировать с представлениями данных в памяти в контексте написания сборщика мусора (например, реализовав не только теггированные целые числа как в OCaml, но и NaN-теггинг из Lua и SpiderMonkey).</p>
+<p>Разработка компиляторов является хорошо проработанной темой в научном сообществе, поэтому курс можно расширять множеством тем. Например:</p>
+<ul class="simple">
+<li><p>После появления RISC-V расширения J задачи по сборке мусора должны стать более интересными.</p></li>
+<li><p>Курс только теоретически затрагивает процесс проведения оптимизаций. С появлением новых процессорных инструкций, можно будет выделить отдельные и разные подзадачи по оптимизации программ.ж</p></li>
+</ul>
+</section>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2023, Косарев Дмитрий.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>

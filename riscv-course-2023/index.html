@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Выбор инструкций в компиляторах &#8212; документация Компиляторы </title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=fa44fd50" />
+    <link rel="stylesheet" type="text/css" href="_static/bootstrap-sphinx.css?v=4468db6d" />
+    <script src="_static/documentation_options.js?v=372fde1a"></script>
+    <script src="_static/doctools.js?v=888ff710"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=29b1f277"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script type="text/javascript" src="_static/js/jquery-1.12.4.min.js"></script>
+<script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+<script type="text/javascript" src="_static/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+
+  </head><body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+          Компиляторы</a>
+        <span class="navbar-text navbar-version pull-left"><b></b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">Выбор инструкций в компиляторах</a><ul>
+<li><a class="reference internal" href="#id2">Введение</a><ul>
+<li><a class="reference internal" href="#id3">Компилятор</a></li>
+<li><a class="reference internal" href="#id4">Выбор инструкций</a></li>
+<li><a class="reference internal" href="#id5">Сравнение разных методов выбора инструкций</a></li>
+<li><a class="reference internal" href="#id6">Классификация инструкций</a></li>
+<li><a class="reference internal" href="#id7">Что такое порождение «оптимальных» инструкций?</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#macro-expansion">Раскрытие макросов (Macro Expansion)</a><ul>
+<li><a class="reference internal" href="#id8">Наивное раскрытие макросов</a></li>
+<li><a class="reference internal" href="#id12">Промежуточные представления вместо деревьев абстрактного синтаксиса</a></li>
+<li><a class="reference internal" href="#id15">Порождение макросов из описания целевой машины</a></li>
+<li><a class="reference internal" href="#peephole">Использование peephole-оптимизаций</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id22">Покрытие деревьев</a><ul>
+<li><a class="reference internal" href="#fig-cc-teddy">Использование синтаксического анализа</a></li>
+<li><a class="reference internal" href="#id27">Порождение кода путём анализа сверху вниз</a></li>
+<li><a class="reference internal" href="#id30">Отделение сопоставления с образцами-шаблонами и порождения кода</a></li>
+<li><a class="reference internal" href="#id32">Динамическое программирование</a></li>
+<li><a class="reference internal" href="#id35">Ограничения покрытия деревьев</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#dag">Покрытие ациклических графов (DAGов)</a><ul>
+<li><a class="reference internal" href="#id36">Сложность</a></li>
+<li><a class="reference internal" href="#id38">Жадные подходы</a></li>
+<li><a class="reference internal" href="#id40">Методы выбора инструкций для DAGов</a></li>
+<li><a class="reference internal" href="#id42">Ограничения покрытия DAGов</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id43">Покрытие графов</a><ul>
+<li><a class="reference internal" href="#id44">Решение задачи поиска проверки через изоморфизм графов</a></li>
+<li><a class="reference internal" href="#sea-of-nodes">Промежуточные представления на основе Sea-of-Nodes</a><ul>
+<li><a class="reference internal" href="#static-single-assignment">Static Single Assignment</a></li>
+<li><a class="reference internal" href="#id50">Универсальное представление</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id53">Заключение</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm">
+<div id="sourcelink">
+  <a href="_sources/index.rst.txt"
+     rel="nofollow">Source</a>
+</div></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="body col-md-12 content" role="main">
+      
+  <section id="id1">
+<h1>Выбор инструкций в компиляторах<a class="headerlink" href="#id1" title="Link to this heading">¶</a></h1>
+<p>Ниже мы уделим внимание финальной части компилятора, которая занимается выбором инструкций целевой архитекутры (англ. instruction selection).
+После этой фазы для получения исполняемого кода компилятору останется сделать только  переупорядочивание инстуркций (instruction scheduling) и распределение регистров (англ. register allocation).</p>
+<section id="id2">
+<h2>Введение<a class="headerlink" href="#id2" title="Link to this heading">¶</a></h2>
+<p>Исполнитель, для которого собирается программа обычно называют <strong>целевой машиной</strong> (англ. target machine).
+Она состоит в первую очередь из процессора, который постоянно исполняет некоторый <strong>машинный код</strong>. Код состоит из <strong>инстукций</strong>, а множетсво доступных инстукций и их поведение задается с помощью  архитектуры набора команд (англ. Instruction Set Architecture, ISA).
+Машинный код, приготовленный для конкретной ISA должен корректно работать на всех машинах и процессорах, которые поддерживают данную ISA. Конкретные инстуркции бывают разнообразные, простые и сложные.</p>
+<p>Теоретически, программировать можно и в машинных кодах. Но сейчас принято использовать <strong>язык ассемблера</strong>, который преобразуется в машинные коды с помощью программы, называемой <strong>ассемблером</strong>.</p>
+<p>Обычно, ассемблерные инструкции являются более простыми, чем синтаксические конструкции языков высокго или низкого уровня.
+Но встречаются такие инстукции, которым соответсвуют в языке программирования целые функции.
+Для процессоров, где такие «хитрые» инстукции поддерживаются, естесственно использовать именно их. Если таких инстукций нет, то необходимо порождать несколько более простых инстукций.
+Вообще, задачей преобразования кода на языке программира в машинные инструкции занимается <strong>компилятор</strong>.</p>
+<section id="id3">
+<h3>Компилятор<a class="headerlink" href="#id3" title="Link to this heading">¶</a></h3>
+<p>Компиляторы традиционно состоят из нескольких частей.
+Традиционно, всё начинается с синтаксического анализа, где разбирается исходный текст программы, отлавливаются синтаксические ошибки, ошибки типизации и программа преобразовывается в некоторое промежуточное представление (англ. intermediate representation). За это отвечает часть компилятора именуемая frontend.</p>
+<p>Затем (middle-end) представление программы проходит множество фаз оптимизации.
+Формально, эта часть не особенно нужна, чтобы получить работающую программу, но для получения эффективно работающей программы без неё не обойтись. Часть компилятора, связанная с оптимизациями, может запросто стать самой большой частью компилятора.</p>
+<p>После оптимизаций представление программы передается в back-end, где происходит порождение кода, обычно в три этапа.</p>
+<ul class="simple">
+<li><p><strong>Выбор инструкций</strong> (англ. instruction selection), котороые будут исполняться в процессоре.</p></li>
+<li><p><strong>Переупорядочивание инстукций</strong> (англ. instruction scheduling), чтобы задействовать все мощности параллелизма конвейера процессора.</p></li>
+<li><p><strong>Распределение регистров</strong> (англ. register allocation) для использования встроенных в процессоров регистров и сокращения нагрузки на память.</p></li>
+</ul>
+</section>
+<section id="id4">
+<h3>Выбор инструкций<a class="headerlink" href="#id4" title="Link to this heading">¶</a></h3>
+<p>Для некоторого  куска P представления программы задачей выбора инстукций является подбор машинных инстурукций таким образом, чтобы они десонстрировали поведение такое же как у P.
+Задача осложняется тем, чтобы зачастую существуют последовательности инстукций которые справляются с симулированием поведения P лучше, чем другие последовательности инстукций.
+Особенно это касается специализированный процессоров (например, DSP), где заготовлены специальные инструкции для конкретных задач из реального мира.</p>
+<p>Семантику инструкций можно представлять с помощью так называемых шаблонов, а задачу выбора инструкций сводить к двум подзадачам.</p>
+<ul class="simple">
+<li><p><strong>Поиск шаблонов</strong> (англ. pattern matching). Здесь мы ищем все последовательности-кандидаты в порождаемый код. Обычно доступные  инструкции пересекаются по демонстрируемому поведению, из-за чего кандидтов может получаться много.</p></li>
+<li><p><strong>Выбор шаблонов</strong> (англ. pattern selection) заключается в непосредственном выборе из кандидатов.</p></li>
+</ul>
+<p>Обычно вторая задача формулируется как задача оптимизации, где мы пытаемся либо минимизировать размер кода, либо минимизровать суммарное время исполнения инстуркций, чтобы максимизировать производительность программы.</p>
+</section>
+<section id="id5">
+<h3>Сравнение разных методов выбора инструкций<a class="headerlink" href="#id5" title="Link to this heading">¶</a></h3>
+<p>В ISA описаны множества инструкций и они разные по сложности.
+В самых первых процессорах простыми считались инструкции, работающие с регистрами, а сложными — работающие с памятью.
+В литературе упоминаются различные схемы адресации, которые позволяют сокращать размер кода и улучшать пролизводительность.
+Например, предположим, что нам надо из массива байт загрузить некоторый элемент. По сути у нас есть <em>базовый адрес</em> начала массива и некоторое <em>смещение</em>, и нам нужно сложить эти два адреса и загрузить из памяти по адресу суммы. Для RISC-V мы это должны сделать буквально, а AMD64 имеет специальные инструкции для <em>индексированной адресации</em>.
+Поддержка такого вида адресации в современных компиляторах давно реализована, поэтому в современной литературе сложными считаются инструкции, у которых много результатов, или те, которые можно использвать только в определенных ситуациях.</p>
+</section>
+<section id="id6">
+<h3>Классификация инструкций<a class="headerlink" href="#id6" title="Link to this heading">¶</a></h3>
+<p>Чтобы проще сравнивать различные подходы к выбору инструкций, давайте введем классы инструкций.</p>
+<p><strong>С единичным результатом</strong> (англ. single-output instructions).
+Такие инцструкции производят только один наблюдаемый результат, который можно прочитать другими инстуркциями в ассемблерном коде.
+Сюда относятся большниство инструкций в современных процессорах, например, сложнение и умножения, загрузка из памяти с учетом индекса выше, в том числе сложные инструкции типа <code class="docutils literal notranslate"><span class="pre">cpop</span></code> из RISCV, которая считает количество единиц в битовом представлении числа.</p>
+<p>Обычно, из таких простых инструкций состоят ISA RISC процессоров, например, MIPS или RISC-V с базовым набором инстукций.</p>
+<p><strong>С множественными результатами</strong> (англ. multi-output instructions) имеют более одного наблюдаемого результата. Классическим примером будут инстукции, которые сразу вычисляют и остаток, и частное, или арифметические иснтукции, выставляющие флаги переполнения.
+Большинство архитектур предоставляют такого рода инструкции, в том числе и AMD64, и RISC-V (например,  <a class="reference external" href="https://msyksphinz-self.github.io/riscv-isadoc/html/rv64a.html">расширение atomic</a>).</p>
+<p><strong>С непересекающимися результатами</strong> (англ. disjoint-output instructions) порождают из набора входных данных набор выходных.
+От предыдущего вида они отличаются тем, что тут результат не зависит от всех входных данных, и входы и результаты сгруппированы в виде некоторых шаблонов, которые не пересекаются.
+Сюда относятся SIMD-инструкции (англ. single-instruction, multiple-data), которые запускают одновременно несколько однотипных действий над данными.
+Для AMD64 такие иснтукции есть в расширенияз SSE и AVX, для ARM — в NEON, в RISC-V — векторные инстуркции.</p>
+<p><strong>Межблоковые</strong> инстукции получаются из нескольких блоков графа потока управления высокоуровневого языка.
+Каночиным примером будет арифметика с насыщением, например <code class="docutils literal notranslate"><span class="pre">max</span></code> для из <a class="reference external" href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/insns/max.adoc">RISC-V с расширением bitmanip</a>.</p>
+<p><strong>Зависимые между собой</strong> инстукции обычно встречаются в специализированных архитектурах типа DSP. Зависимости заключаются в том, что некоторые инстукрции не могут стоять рядом с другими в зависимости от используемого способа адресации.
+Современным методам такие инструкции даются тяжело, обычно потому что они нарушают некоторые предположения, которые вшиты в методы выбора инстукций.</p>
+</section>
+<section id="id7">
+<h3>Что такое порождение «оптимальных» инструкций?<a class="headerlink" href="#id7" title="Link to this heading">¶</a></h3>
+<p>Говоря про «оптимальный выбор инстукций» часто подразумевают следующее определение. Для некоторого набора I инструкций, где каждая инструкция <span class="math notranslate nohighlight">\(i\in I\)</span> имеет стоимость <span class="math notranslate nohighlight">\(c_i\)</span>, алгоритм выбора инструкций дает оптимальный результат, если для любой входной программы P он находит набор (с повторами) S из I такой, что S реализует P, и не сужествует другого такого набора <span class="math notranslate nohighlight">\(S'\)</span>, что он тоже реализует программу P, и
+при этом <span class="math notranslate nohighlight">\(\sum_{s' \in S'} c_{s'} &lt; \sum_{s \in S} c_s\)</span>.</p>
+<p>У этого определения есть нескольно недостатков. Во-первых, алгоритмы выбора инстукций могут иметь различные наборы поддерживаемых инструкций, игнорируя некоторые, которые в перспективе могут дать более эффективный код.
+Алгоритмы, использующие похожий набор инструкций, можно сравнивать.
+Алгоритмы с непохожими наборами инстукций могут быть каждый по-своему оптимальными, но при это различаться в разы по производительности.
+Поддерживать все возмножные инструкции ISA тоже затруднительно, так как алгоритмы порождения инструкций становятся полуоптимальны.</p>
+<p>Во-вторых, два срванимых подхода к выбору инструкций могут породить код, который после фаз переупорядочивания иснтуркций и распределения регистров будет непохожего качества.
+Например, нам нужно породить инструкции, которые независимы друг от друга.
+ISA предлагает два варианта: использовать две инструкции со стоимостью 2 каждая, либо использовать одну инструкцию со стоимостью 3.
+Согласно критерию выше, нужно выбирать второй подход, так как там суммарная стоимость будет меньше.
+Но если целевая архитектура умеет исполнять несколько инструкций параллельно, то лучше первый подход.</p>
+</section>
+</section>
+<section id="macro-expansion">
+<h2>Раскрытие макросов (Macro Expansion)<a class="headerlink" href="#macro-expansion" title="Link to this heading">¶</a></h2>
+<p>Раскрытие маркосов исторически является первым и достаточно простым подходом к порождению инструкций.
+Зачастую реализация разделяется на две части: непосредственно макросы-шаблоны и процедура, которая применяет эти макросы к коду (macro expander).
+За счет этого разделения первая часть может быть специализирована под различные архитектуры, в то врeмя как вторая может быть написана один раз для всех архитектур.</p>
+<p><strong>Преимущества</strong>: просто и прямолинейно.</p>
+<table class="docutils align-default" id="id86">
+<caption><span class="caption-text">Пример раскрытия макросов для архитектуры RISC-V. Одной инструкции языка Си слева соответсвуют от 1 до 3 инструкций ассемблера.</span><a class="headerlink" href="#id86" title="Link to this table">¶</a></caption>
+<tbody>
+<tr class="row-odd"><td><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>li r1, 1
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">+</span><span class="mi">4</span><span class="p">;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>addi r2, r1, 4
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>lw r3, @p ; адрес начала массива
+addi r4, r3, 4*8
+sw r4, r5
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<section id="id8">
+<h3>Наивное раскрытие макросов<a class="headerlink" href="#id8" title="Link to this heading">¶</a></h3>
+<p>Одной из первых работ по порождению кода с помощью маркосов является SIMCMP (SIMple CoMPiler) <span id="id9">[<a class="reference internal" href="#id61" title="Richard J. Orgass and William M. Waite. A base for a mobile programming system. Commun. ACM, 12:507-510, 1969. URL: https://api.semanticscholar.org/CorpusID:8164996.">Orgass and Waite, 1969</a>]</span>.
+В этом проекте код программы читался строчка за строчкой, и на ходу порождался машинный код. Сделано это для того, чтобы писать компилятор языка на самом этом языке (англ. bootstraping).</p>
+<div class="figure compound align-center">
+<div class="literal-block-wrapper docutils container" id="id87">
+<span id="simcmp-1"></span><div class="code-block-caption"><span class="caption-text">Объявление макроса</span><a class="headerlink" href="#id87" title="Link to this code">¶</a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>* = CAR.*.
+    I = CDR(&#39;21)
+    CDR(&#39;11) = CAR(I).
+.X
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id88">
+<span id="simcmp-2"></span><div class="code-block-caption"><span class="caption-text">Строка программы, которую компилируем.</span><a class="headerlink" href="#id88" title="Link to this code">¶</a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>A = CAR B.
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id89">
+<span id="simcmp-3"></span><div class="code-block-caption"><span class="caption-text">Порожденный код</span><a class="headerlink" href="#id89" title="Link to this code">¶</a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>I = CDR(38)
+CDR(36) = CAR(I)
+</pre></div>
+</div>
+</div>
+<p><span class="caption-text">Пример использования системы SIMCMP <span id="id10">[<a class="reference internal" href="#id61" title="Richard J. Orgass and William M. Waite. A base for a mobile programming system. Commun. ACM, 12:507-510, 1969. URL: https://api.semanticscholar.org/CorpusID:8164996.">Orgass and Waite, 1969</a>]</span></span></p>
+</div><p>Другой пример — GCL <span id="id11">[<a class="reference internal" href="#id62" title="M. Elson and S. T. Rake. Code-generation technique for large-language compilers. IBM Systems Journal, 9(3):166-188, 1970. doi:10.1147/sj.93.0166.">Elson and Rake, 1970</a>]</span>, который использовался в компиляторе PL/1 и код порождался из деревьев абстрактного синтаксиса (англ. abstract syntax tree, AST).
+По сравнению с чтением программы построчно, AST гарантирует, что программа написана без синтаксических ошибок, что упрощает задачу порождения кода.</p>
+<div class="figure compound align-center" id="fig-cc-teddy">
+<figure class="align-center" id="id90">
+<span id="fig-cc-teddy-base"></span><a class="reference internal image-reference" href="images/sel1.png"><img alt="Base Mesh + 128x128 Texture (334 KB)" src="images/sel1.png" style="width: 150px;" /></a>
+<figcaption>
+<p><span class="caption-text">Дерево выражений</span><a class="headerlink" href="#id90" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<div class="literal-block-wrapper docutils container" id="id91">
+<span id="fig-cc-teddy-original"></span><div class="code-block-caption"><span class="caption-text">Пример кода на RISCV</span><a class="headerlink" href="#id91" title="Link to this code">¶</a></div>
+<div class="highlight-asm notranslate"><div class="highlight"><pre><span></span><span class="nf">add</span><span class="w"> </span><span class="no">t0</span><span class="p">,</span><span class="w"> </span><span class="no">r1</span><span class="p">,</span><span class="w"> </span><span class="no">r2</span>
+<span class="nf">mulw</span><span class="w"> </span><span class="no">t0</span><span class="p">,</span><span class="w"> </span><span class="no">t0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+<p><span class="caption-text">Пример простого выражения и его схема компиляции для RISC-V.
+Значения переменных <code class="docutils literal notranslate"><span class="pre">a</span></code> и <code class="docutils literal notranslate"><span class="pre">b</span></code> хранятся в регистрах <code class="docutils literal notranslate"><span class="pre">r1</span></code> и <code class="docutils literal notranslate"><span class="pre">r2</span></code> соответсвенно.</span></p>
+<span class="target" id="fig-cc-teddy"></span></div></section>
+<section id="id12">
+<h3>Промежуточные представления вместо деревьев абстрактного синтаксиса<a class="headerlink" href="#id12" title="Link to this heading">¶</a></h3>
+<p>Первые компиляторы занимались порождением кода непосредственно на основе кода на языке программирования.
+Это прямолинейный подход, который не может анализировать исходную программу в целом, а только по отдельным инструкциям.
+К тому же оно привязывает порождение кода (т.е. компилятор) к конкретному языку программирования.</p>
+<p>Более удачным вариантом является порождение кода из деревьев абстрактного синтаксиса.
+В наши дни из AST порождается из специальное представления программ, в которых совершаются различные оптимизации.
+Примерами таких представлений могут быть ANF, SSA и <code class="docutils literal notranslate"><span class="pre">C--</span></code>.</p>
+<p>Одно из первых промежуточных представлений было разработано <span id="id13">[<a class="reference internal" href="#id58" title="Thomas Richard Wilcox. Generating machine code for high-level programming languages. PhD thesis, USA, 1971.">Wilcox, 1971</a>]</span>
+для компилятора PL/C, где AST преобразовывалось в SLM-инструкции (англ. source level machine).
+Порождатель кода отображает SLM-инструкции в машинные, используя правила на языке ICL (Interpretative Codeing Language).
+На практике оказалось, что такие правила очень сложно писать, потому что много тонкостей (разные виды адресации, местоположения данных) надо поддерживать вручную.</p>
+<div class="literal-block-wrapper docutils container" id="id92">
+<div class="code-block-caption"><span class="caption-text">Макрос для сложения чисел на языке ICL <span id="id14">[<a class="reference internal" href="#id58" title="Thomas Richard Wilcox. Generating machine code for high-level programming languages. PhD thesis, USA, 1971.">Wilcox, 1971</a>]</span></span><a class="headerlink" href="#id92" title="Link to this code">¶</a></div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>ADDB BR A,ADDB1      Если A в регистре, переход на ADDB1
+     BR B,ADDB2      Если B в регистре, переход на ADDB2
+     LGPR A          Породить код, загружающий A в регистр
+
+ADDB1 BR B,ADDB3     Если B в регистре, переход на ADDB3
+      GRX A,A,B      Породить A+B
+      B ADDB4        Слияние
+
+ADDB3 GRR AR,A,B     Породить A+B
+ADDB4 FREE B         Освободить ресурсы, связанные с B
+ADDB5 POP 1          Удалить дескриптор для B со стэка
+      EXIT
+
+ADDB2 GRI A,B,A      Породить A+B
+      FREE A         Освободить ресурсы, связанные с A
+      SET A,B        Удалить дескриптор для A со стэка
+      B ADDB5        Слияние
+</pre></div>
+</div>
+</div>
+</section>
+<section id="id15">
+<h3>Порождение макросов из описания целевой машины<a class="headerlink" href="#id15" title="Link to this heading">¶</a></h3>
+<p>Реалистичные компиляторы с какого-то момента времени должны начать поддерживать несколько целевых машин.
+Проблемы с рукописными макросами начинаются, если машины начинают существенно различаться между собой.
+Например, бывают разные классы регистров (TODO ссылка), в которые можно класть только данные определенного вида,
+или некоторые архитектуры могут не иметь подходящих команд, и для выполнения операции над данными из DRAM необходимо задействовать дополнительный регистр.</p>
+<table class="docutils align-default" id="id93">
+<caption><span class="caption-text">Доступ к 0му элементу массива в памяти для RISCV64 и AMD64</span><a class="headerlink" href="#id93" title="Link to this table">¶</a></caption>
+<tbody>
+<tr class="row-odd"><td><div class="literal-block-wrapper docutils container" id="id94">
+<div class="code-block-caption"><span class="caption-text">Код на Си</span><a class="headerlink" href="#id94" title="Link to this code">¶</a></div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="n">a</span><span class="p">;</span>
+</pre></div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="literal-block-wrapper docutils container" id="id95">
+<div class="code-block-caption"><span class="caption-text">AMD64</span><a class="headerlink" href="#id95" title="Link to this code">¶</a></div>
+<div class="highlight-asm notranslate"><div class="highlight"><pre><span></span><span class="c1">; AMD64</span>
+<span class="nf">mov</span><span class="w"> </span><span class="no">rax</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="no">sp</span><span class="p">)</span>
+
+<span class="c1">; RISCV64</span>
+<span class="nf">ldw</span><span class="w"> </span><span class="no">t0</span><span class="p">,</span><span class="w"> </span><span class="p">(</span><span class="no">sp</span><span class="p">)</span>
+<span class="nf">mv</span><span class="w"> </span><span class="no">a0</span><span class="p">,</span><span class="w"> </span><span class="no">t0</span>
+</pre></div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<p>В примере выше мы обращаемся к элементу в начале массива, массив находится на вершине стека.
+В архитекутре AMD64 мы можем сделать это непосредственно, в RISCV64 необходимо пользоваться промежуточным регистром.
+При генерации кода с помощью макросов приходится одновременно заниматься распределением регистров, что усложняется задачу порождения оптимального кода.</p>
+<p>Писать макросы руками сложно, хотелось бы иметь генератор, который по описанию машины порождает соответствующие макросы.
+Одна из первых попыток <span id="id16">[<a class="reference internal" href="#id63" title="P. L. Miller. Automatic creation of a code generator from a machine description. Technical Report, USA, 1971.">Miller, 1971</a>]</span> сделать это была система Dmacs.
+Она предлагала два проприетарных языка: первый (Machine-Independent Macro Language (MIML))
+определят 2-адресные команды, которые являлись представлением программы, а второй (Object Machine Macro Language (OMML)) декларативный язык использовался, чтобы преобразовывать MIML команды в ассемблерный код.</p>
+<div class="literal-block-wrapper docutils container" id="id96">
+<div class="code-block-caption"><span class="caption-text">Представление арифметического выражения  A[I] = B + C[J] * D с помощью команд MIML.
+Команда SS используется, чтобы переслать данные между разными источниками.
+На аргументы ссылаются либо по имени, либо по номеру строки, где он использовался.</span><a class="headerlink" href="#id96" title="Link to this code">¶</a></div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>1: SS C,J
+2: IMUL 1,D
+3: IADD 2,B
+4: SS A,I
+5: ASSG 4,3
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id97">
+<div class="code-block-caption"><span class="caption-text">Часть описания компьютера IBM-360 на языке OMML <span id="id17">[<a class="reference internal" href="#id63" title="P. L. Miller. Automatic creation of a code generator from a machine description. Technical Report, USA, 1971.">Miller, 1971</a>]</span>.
+Команда <cite>rclass</cite> описывает виды регистров, а <cite>rpath</cite> —  разрешенные способы пересылки между видами регистров и памятью.</span><a class="headerlink" href="#id97" title="Link to this code">¶</a></div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>rclass REG:  r2, r3, r4, r5, r6
+rclass FREG: fr0, fr2, fr4, fr6
+...
+rpath WORD -&gt; REG:    L  REG,WORD
+rpath REG  -&gt; WORD:  ST  REG,WORD
+rpath FREG -&gt; WORD:  LE FREG,WORD
+rpath WORD -&gt; FREG: STE FREG,WORD
+...
+ISUB s1 ,s2
+from REG(s1),REG(s2) emit SR s1 ,s2
+from REG(s1),WORD(s2) emit S s1 ,s2
+resultresultREG(s1)
+REG(s2)
+FMUL m1, m2 (commutative)
+from FREG(m1),FREG(m2) emit MER m1 ,m2
+from FREG(m1),WORD(m2) emit ME m1 ,m2
+resultresultFREG(m1)
+FREG(m1)
+</pre></div>
+</div>
+</div>
+</section>
+<section id="peephole">
+<h3>Использование peephole-оптимизаций<a class="headerlink" href="#peephole" title="Link to this heading">¶</a></h3>
+<p>Основным недостатком подхоа на основе раскрытия маркосов является то,
+что отдельные части IR раскрываются без учета рядом находящихся частей IR.
+Попытаться обойти этот недостаток можно с помощью peephole (в перевода на русский — «глазок») оптимизаций.
+Их суть заключается в том, что выбирается «окно» небольшого размера, которое двигают по порожденному коду и пытаются объединить видимые инструкции.
+Данный метод может применяться и в отрыве от выбора инструкций, к уже порожденному коду.
+Одним из самых известных применений являются «супероптимизаторы» <span id="id18">[<a class="reference internal" href="#id60" title="Henry Massalin. Superoptimizer: a look at the smallest program. In Proceedings of the Second International Conference on Architectual Support for Programming Languages and Operating Systems, ASPLOS II, 122–126. New York, NY, USA, 1987. Association for Computing Machinery. URL: https://doi.org/10.1145/36206.36194, doi:10.1145/36206.36194.">Massalin, 1987</a>]</span>, например <code class="docutils literal notranslate"><span class="pre">Souper</span></code> <span id="id19">[<a class="reference internal" href="#id59" title="Raimondas Sasnauskas, Yang Chen, Peter Collingbourne, Jeroen Ketema, Gratian Lup, Jubi Taneja, and John Regehr. Souper: a synthesizing superoptimizer. 2018. arXiv:1711.04422.">Sasnauskas <em>et al.</em>, 2018</a>]</span>.
+Идея подхода заключается кодировании семантики текущего набора инсрукций в представление, понятное SMT-решателям, и затем нахождение минимальной программы с такой же семантикой с помощью синтеза программ (англ. Counter Example Guided Inductive Synthesis, CEGIS).
+К сожалению, Souper поддерживает набор инструкций размером только в несколько десятков, и масштабирование этого подхода на разнообразные архитектуры является предметом дальнейших исследований.</p>
+<p>Оптимизации методом peephole можно использовать <span id="id20">[<a class="reference internal" href="#id73" title="Jack W. Davidson and Christopher W. Fraser. Code selection through object code optimization. ACM Trans. Program. Lang. Syst., 6(4):505–526, oct 1984. URL: https://doi.org/10.1145/1780.1783, doi:10.1145/1780.1783.">Davidson and Fraser, 1984</a>]</span> и в контексте выбора инструкций, такой подход используется в компиляторе GCC <span id="id21">[<a class="reference internal" href="#id72" title="R. Stallman. Internals of gnu cc. apr 1988. URL: https://web.archive.org/web/20120112142027/http://trinity.engr.uconn.edu/~vamsik/internals.pdf, doi:10.1145/69558.75700.">Stallman, 1988</a>]</span>.
+Суть подхода заключается в том, что раскрытие макросов порождает не код целевой машины, а некоторое описание на языке RTL (англ. Register Transfer List).
+В примере ниже трехадресная инструкций сложения складывает констансту imm с регистром <span class="math notranslate nohighlight">\(r_s\)</span> и сохраняет результат в <span class="math notranslate nohighlight">\(r_d\)</span>, выставляя флаг нуля <span class="math notranslate nohighlight">\(Z\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}RTL(add) =
+     \begin{cases}
+         r_d &amp; \leftarrow r_s + imm \\
+         Z   &amp; \leftarrow (r_s + imm) \Leftrightarrow 0
+     \end{cases}\end{split}\]</div>
+<p>В предлагаемом подходе представление программы с помощью правил RTL превращается в описание «эффекта» этой программы.
+В отличие других подходов на основе макросов распределения регистров не происходит.
+Все используемые регситры — виртуальные, предполагается, что их бесконечно много.
+После раскрытия макросов и до распределния регистров запускается так называемый комбинатор (англ. combiner), который пытается объединить несколько RTL описний в большее RTL-описание, соответсвующее какой-то инструкции целевой архитектуры.
+Чтобы такой подход работал, надо поддерживать инвариант, что все RTL-описания выразимы с помощью одной инструкции целевой архитектуры.</p>
+<p>Теоретически, такой подход позволяет порождать код, рассматривая не одну команду языка программирования, а сразу несколько, даже лежащих в разных блоках потока управления.
+Сложность порожденных инструкций сильно зависит от размера «окна» оптимизатора, так, например, не получится породить инстукции, соответсвующие трём RTL, если мы смотрим только на два RTL.</p>
+</section>
+</section>
+<section id="id22">
+<h2>Покрытие деревьев<a class="headerlink" href="#id22" title="Link to this heading">¶</a></h2>
+<p>Одним из основных ограничений раскрытия макросов является то, что в нём порождается код, рассматривая только одну инструкцию или только один узел промежуточного представления.
+Из-за этого порождается код плохого качества.
+Другой сложностью является то, что поиск кандидатов в порожденный код и выбор наилучшего осуществляется за один шаг, что делает задачу исследования разных компинаций инстукций затруднительной.
+Эти недостатки решает порождение кода с помощью деревьев.</p>
+<p>Суть идеи заключается в том, что нам дано некоторое дерево, которое представляется собой программы, а также некоторый наблон древовидных шаблонов (англ. pattern).
+Задача порождения кода сводится к задаче покрытия нашего дерева подмножеством этих шаблонов оптимальным образом,
+т.е. задача разбивается на поиск всех возможных покрытий и выбор оптимального покрытия шаблонами-образцами.
+Для большинства архитектур шаблоны будут пересекаться, и поэтому различных покрытий будет много.
+Обычно, мы будет стараться воспользоваться минимальным количеством шаблонов:</p>
+<ul class="simple">
+<li><p>Предпочитая крупные шаблоны мы будет использовать специализированные инструкции, которые, как правило, исполняются быстрее.</p></li>
+<li><p>С меньшим количеством шаблонов они будут меньше пересекаться, а значит меньше данных будет пересчитываться заново, что приведет к улучшению производительности и размера кода.</p></li>
+</ul>
+<p>В общем случае, оптимальное решение сводится  к минимизации не количества использованных шаблонов, а к снижению суммарной <em>стоимости</em> этих шаблонов,
+хотя существует сильная корреляция между количеством шаблонов и их суммарной стоимостью.
+Также стоит отметить, что выбор оптимальных шаблонов не всегда приводит к оптимальному коду (в том числе из-за участия других фаз компиляции).
+Но постановка задачи выбора оптимального покрытия шаблонами, гораздо менее спорна, чем задача порождения эффективного кода,
+так как мы всегда выбираем из фиксированного набора шаблонов, порожденных из ISA.</p>
+<div class="figure compound align-center" id="fig-cc-teddy">
+<div class="literal-block-wrapper docutils container" id="id98">
+<span id="fig-tree-covering-0"></span><div class="code-block-caption"><span class="caption-text">Пример кода на Си</span><a class="headerlink" href="#id98" title="Link to this code">¶</a></div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="mi">1</span><span class="p">];</span>
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id99">
+<span id="fig-tree-covering-1"></span><div class="code-block-caption"><span class="caption-text">Инструкции-шаблоны, построенные на основе ISA. Астериск обозначает взятие из памяти по адресу.</span><a class="headerlink" href="#id99" title="Link to this code">¶</a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>mv r &lt;- var
+add r &lt;- s + t
+mul r &lt;- s × t
+muladd r &lt;- s × t + u
+load r &lt;- ∗s
+maload r &lt;- ∗(s × t + u)
+</pre></div>
+</div>
+</div>
+<figure class="align-center" id="id100">
+<span id="fig-tree-covering-2"></span><img alt="images/sel2covering.png" src="images/sel2covering.png" />
+<figcaption>
+<p><span class="caption-text">Дерево выражений и его покрытие шаблонами</span><a class="headerlink" href="#id100" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p><span class="caption-text">Пример простого выражения, которое загружает из массива чисел A по индексу i+1.
+Предполагается, что индекс i находится в регистре, <code class="docutils literal notranslate"><span class="pre">A</span></code> — в памяти, а числе 8байтные.
+Всего тип полных покрытия дерева шаблонами:
+<span class="math notranslate nohighlight">\(\{ m_1, \dots, m_7, m_9 \}\)</span>,
+<span class="math notranslate nohighlight">\(\{ m_1, \dots, m_5, m_8, m_9 \}\)</span> и
+<span class="math notranslate nohighlight">\(\{ m_1, \dots, m_5, m_{10} \}\)</span>,</span></p>
+</div><section id="fig-cc-teddy">
+<span id="id23"></span><h3>Использование синтаксического анализа<a class="headerlink" href="#fig-cc-teddy" title="Link to this heading">¶</a></h3>
+<p>В попытке преоделеть «наколеночность» методов с раскрытием макросов, были предложены подходы к выбору инструкций с использованием формализмов.
+Одним из них может быть использование формальных грамматик и подходов на основе синтаксического анализа языков.
+Было предложено <span id="id24">[<a class="reference internal" href="#id67" title="R. Steven Glanville and Susan L. Graham. A new method for compiler code generation. In Proceedings of the 5th ACM SIGACT-SIGPLAN Symposium on Principles of Programming Languages, POPL '78, 231–254. New York, NY, USA, 1978. Association for Computing Machinery. URL: https://doi.org/10.1145/512760.512785, doi:10.1145/512760.512785.">Glanville and Graham, 1978</a>]</span> описывать промежуточное представление программы с помощью контекстно-свободных грамматик, где правила  аугментированна стоимостью операций и некотороые действием (англ. action code), которое будет заниматься непосредственно порождением кода.</p>
+<table class="docutils align-default" id="id101">
+<caption><span class="caption-text">Грамматика для порождения кода для арифметических выражений</span><a class="headerlink" href="#id101" title="Link to this table">¶</a></caption>
+<tbody>
+<tr class="row-odd"><td rowspan="2"><p>Инструкция</p></td>
+<td rowspan="2"><p>Стоимость</p></td>
+<td rowspan="2"><p>Действие</p></td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2"><p>r1 &lt;- r1 + r2</p></td>
+<td rowspan="2"><p>1</p></td>
+<td rowspan="2"><p>emit <code class="docutils literal notranslate"><span class="pre">add</span> <span class="pre">r1,r1,r2</span></code></p></td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2"><p>r1 &lt;- r1 × r2</p></td>
+<td rowspan="2"><p>1</p></td>
+<td rowspan="2"><p>emit <code class="docutils literal notranslate"><span class="pre">mul</span> <span class="pre">r1,r1,r2</span></code></p></td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2"><p>r3  &lt;- Int</p></td>
+<td rowspan="2"><p>1</p></td>
+<td rowspan="2"><p>emit <code class="docutils literal notranslate"><span class="pre">li</span> <span class="pre">r1,</span> <span class="pre">I</span></code></p></td>
+</tr>
+<tr class="row-even"></tr>
+</tbody>
+</table>
+<p>В грамматике используются так называетмые терминальные символы (в нашем примере названия арифметических действий и числа),
+и нетерминальные символы (названия регистров-локаций)</p>
+<figure class="align-center" id="id102">
+<a class="reference internal image-reference" href="images/Expr_parsing1.png"><img alt="images/Expr_parsing1.png" src="images/Expr_parsing1.png" style="width: 150px;" /></a>
+<figcaption>
+<p><span class="caption-text">Пример выражения, для которого будем порождать инстукции с помощью синтаксического анализа</span><a class="headerlink" href="#id102" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Во время анализа на стеке накапливаются текущие терминалы и нетерминалы.
+После получения  нового терминала и добавления его на стек, анализатор может сделать два действия:</p>
+<ul class="simple">
+<li><p>shift — продолжить чтение терминалов и оставив стек без изменений;</p></li>
+<li><p>reduce — выбрать правило грамматики, снять с вершины стека нетерминалы из правой части правила, и заменить на левую часть правила; вместе с этим сгенерировать некоторый код на ассемблере.</p></li>
+</ul>
+<p>Таким образом для входа <span class="math notranslate nohighlight">\(a+b*c\)</span>, где <span class="math notranslate nohighlight">\(a,b,c\)</span> — целые числа, мы породим примерно такой код, соверишив следующией действия:
+<span class="math notranslate nohighlight">\(s\ r_3\ s\ s\ r_3\ s\ s\ r_3\ r_2\ r_1\)</span>, где <span class="math notranslate nohighlight">\(s\)</span> — shift, а <span class="math notranslate nohighlight">\(r_N\)</span> — reduce по правилу N.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">li</span>  <span class="n">R1</span><span class="p">,</span> <span class="n">a</span>
+<span class="n">li</span>  <span class="n">R2</span><span class="p">,</span> <span class="n">b</span>
+<span class="n">mul</span> <span class="n">R1</span><span class="p">,</span> <span class="n">R1</span><span class="p">,</span> <span class="n">R2</span>
+<span class="n">li</span>  <span class="n">R3</span><span class="p">,</span> <span class="n">c</span>
+<span class="n">add</span> <span class="n">R1</span><span class="p">,</span> <span class="n">R1</span><span class="p">,</span> <span class="n">R3</span>
+</pre></div>
+</div>
+<p>В правилах у регистров есть индексы, которые позволяют выражать случаи, когда вход и выход инструкций приходятся на один и тот же регистр.</p>
+<p>Основной сложностью такого вида синтаксического анализа, является то, что не всегда очевидно, когда предпочитать shift, а когда reduce.
+Обычно это решается переписыванием грамматики так, чтобы конфликтные случаи не случались. Но для больших грамматик делать это вручную затруднительно. В изначальном подходе конфликт между shift и reset всегда разрешался в пользу shift, а если на стеке получалось слишком много терминалов, то применялись ad hoc правила, чтобы сгенрировать код как-нибудь и исправить (почти) аварийное состояние. В случае reduce/reduce конфликта, выглядит разумным пытаться применить самое длинное правило. (Случаи, когда два правила одинаковой длины конфиктуют, можно задетектировать до запуска синтаксического анализа.)</p>
+<p><strong>Преимущества</strong>. В процессе синаксического анализ сниз вверх строится таблица состояний с переходами, которая позволяет вести анализ за время пропорциональное размеру входа. Также такой вид синтаксического анализа выступает в роли формальной теории, чтобы, например, обосновывать полноту грамматики инструкций</p>
+<p><strong>Недостатки</strong>. Во-первых, из-за использования грамматик в момент синтаксического анализа мы не имеем доступа к конкретным значениям, например, констант.
+Из-за этого невозможно выразить какие-то ограничения на диапозоны констант и т.п. Так же, если инструкции имеют много видов адресации операндов (эта проблема должна обойти RISC-V стороной), то появляется много похожих правил, специализированных под местонахождение операндов.
+Так для CISC архитектуры VAX, грамматика разрослась до миллионов правил  <span id="id25">[<a class="reference internal" href="#id66" title="Susan L. Graham, Robert R. Henry, and Robert A. Schulman. An experiment in table driven code generation. In Proceedings of the 1982 SIGPLAN Symposium on Compiler Construction, SIGPLAN '82, 32–43. New York, NY, USA, 1982. Association for Computing Machinery. URL: https://doi.org/10.1145/800230.806978, doi:10.1145/800230.806978.">Graham <em>et al.</em>, 1982</a>]</span>.
+Методы рефакторинга и упрощения грамматик известны, но их в данном случае надо применять с осторожностью, чтобы не повредить качеству порождаемого кода.</p>
+<p>В контексте RISC-V можно привести такой пример. Существуют расширения, которые позволяют сделать
+<a class="reference external" href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/insns/sh3add.adoc">сложение-со-сдвигом</a>,
+c помощью них можно реализовать умножение на некоторые константы.
+Например, можно <cite>mul r0, r1, 9</cite> заменить на <cite>sh3add r0, r1, r1</cite>, за счет соотношения r*9 = r + r lsl 3.</p>
+<p>Во-вторых, такой вид синтаксического анализа порождает код для левого операнда, а потом для правого, не откатываясь назад.
+Таким образом, код левого операнда не знает о содержимом правого операнда, что может привести к плохому порожденному коду.</p>
+</section>
+<section id="id27">
+<h3>Порождение кода путём анализа сверху вниз<a class="headerlink" href="#id27" title="Link to this heading">¶</a></h3>
+<p>Анализ сверху вниз вначале выбирает правило порождения кода, а уже потом проталкивает вниз все необходимые ограничения для операндов паттерна.
+Таким образом можно выражать, например, ограничения на константы, которые учавсвуют в операндах.
+При выборе правила можно не угадать, что приведет к невозможности породить код для операндов. В этих случаях процесс возврщается назад (англ. backtracking) и пробует применить другое правило.
+К сожалению большое количество возвратов назад, негативно влияет на производительности, из-за чего и первые испытания такого подхода
+<span id="id28">[<a class="reference internal" href="#id68" title="Joseph Michael Newcomer. Machine-independent generation of optimal local code. PhD thesis, USA, 1975. AAI7521781.">Newcomer, 1975</a>]</span>, и последующие <span id="id29">[<a class="reference internal" href="#id69" title="Albert Nymeyer, Joost-Pieter Katoen, Ymte Westra, and Henk Alblas. Code generation = a* + burs. In 12 1995. doi:10.1007/3-540-61053-7_60.">Nymeyer <em>et al.</em>, 1995</a>]</span> не сыскали широкого распространения.</p>
+<p>Отличительной чертой подходов сверху вниз является сопасталение  представления программы с шаблонами с учетом некоторых аксиом (например, <cite>not (E1&lt;=E2)</cite> заменяется на <cite>E1&gt;E2</cite>, <cite>E+0</cite> на <cite>E</cite>, и т.п.), чтобы получать более эффективный результат.</p>
+</section>
+<section id="id30">
+<h3>Отделение сопоставления с образцами-шаблонами и порождения кода<a class="headerlink" href="#id30" title="Link to this heading">¶</a></h3>
+<p>В предыдущих подходах выбор шаблонов и порождение кода делались вместе, что позволяет порождать код за один проход и получать более быстрый компилятор.
+Но при этом, при порождении кода сложно учесть влияние разных комбинаций шаблонов.
+Поэтому можно исследовать идею разделения фаз покрытия дерева образцами-шаблонами и порождение кода по этим шаблонам.</p>
+<p>В литературе также встречаются исследования по оптимизации поиска подходящих шаблонов для дерева.
+Они заключаются в сведении задачи сопоставления с образцом к задаче поиска подстроки в строке <span id="id31">[<a class="reference internal" href="#id70" title="Alfred V. Aho and Margaret J. Corasick. Efficient string matching: an aid to bibliographic search. Commun. ACM, 18(6):333–340, jun 1975. URL: https://doi.org/10.1145/360825.360855, doi:10.1145/360825.360855.">Aho and Corasick, 1975</a>]</span>, также построение таблиц для сопоставления с образцом, и последующее сжатие их.
+Основным достижением этих подходов является поиск всех возможных корректных сочетаний шаблонов за линейное время от размера программы.
+В данном документе они не освещены.</p>
+</section>
+<section id="id32">
+<h3>Динамическое программирование<a class="headerlink" href="#id32" title="Link to this heading">¶</a></h3>
+<p>С появлением возможности получения всех подходящих сочетаний шаблонов за линейное время, начали появляться идеи выполнения выбора инструкций также за линейное время.
+Первые идеи <span id="id33">[<a class="reference internal" href="#id71" title="K. Ripken. Formale beschreibung von maschinen, implementierungen und optimierender maschinencodeerzeugung aus attributierten program- mgraphen. Tech. rep. TUM-INFO-7731, 1977.">Ripken, 1977</a>]</span> использования динамического программирования позже привели к появлению генератора компиляторов Twig <span id="id34">[<a class="reference internal" href="#id64" title="Alfred V. Aho, Mahadevan Ganapathi, and Steven W. K. Tjiang. Code generation using tree matching and dynamic programming. ACM Trans. Program. Lang. Syst., 11(4):491–516, oct 1989. URL: https://doi.org/10.1145/69558.75700, doi:10.1145/69558.75700.">Aho <em>et al.</em>, 1989</a>]</span>, которые принимал на вход описание архитектуры на языке CGL (Code Generator Language) и дерево компилируемой программы,
+и порождал код за три прохода.</p>
+<ul class="simple">
+<li><p>Проход сверху вниз, который находил для каждого узла дерева множества подходящих шаблонов.</p></li>
+<li><p>Снизу вверх вычислялась стоимость выбора соответсвующего шаблона для каждого узла.</p></li>
+<li><p>Последний проход сверху вниз выбирал покрытие наименьшей стоимости, и по дороге порождал код.</p></li>
+</ul>
+<p>Такой подход имеет преимущества, по сравнению с подходом на основе синтаксического LR анализа. Основным является то, что конфликты теперь сами разрешаются путём вычисления стоимости применения конкретных шаблонов. Также описания шаблонов для архитектур становятся существенно короче.</p>
+<p>К сожалению, подход динамического программирования предполагает, что задача может быть разбита на подзадачи, которые могут быть решены оптимально по-отдельности, и потом скомбинированы.
+На практике, задача порождения кода не обладает такими свойствами.</p>
+</section>
+<section id="id35">
+<h3>Ограничения покрытия деревьев<a class="headerlink" href="#id35" title="Link to this heading">¶</a></h3>
+<p>Основным недостатком работы с деревьями выражений является то, что одинаковые подвыражения должны быть разделены по рёбрам и продублированы при построении дерева.
+Такие преобразования известны в литературе как edge splitting и node duplication.
+В зависимости от набора инструкций, не разделяя подвыражения можно добивать лучшего качества кода.</p>
+<p>В примере ниже общее выражение для вычисления значения t было разделено, что приводит к покрытию m1,…m7,m9 со стоимостью 0+…+0+2+3+5=10.
+Если представить дерево как граф без циклов, то его можно покрывать шаблонами m8 и m10, что даст стоимость 0+…+0+4+5=9.</p>
+<div class="figure compound align-center" id="fig-tree-covering-bad">
+<div class="literal-block-wrapper docutils container" id="id103">
+<span id="fig-dag-covering-0"></span><div class="code-block-caption"><span class="caption-text">Пример кода на Си</span><a class="headerlink" href="#id103" title="Link to this code">¶</a></div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">t</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="n">x</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+<span class="n">y</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="o">*</span><span class="p">((</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="o">*</span><span class="p">)</span><span class="w"> </span><span class="n">t</span><span class="p">);</span>
+</pre></div>
+</div>
+</div>
+<span id="fig-dag-covering-1"></span><table class="docutils align-default" id="id104">
+<caption><span class="caption-text">Инструкции. Нотация <cite>*s</cite> означает получения данных по адресу в памяти.</span><a class="headerlink" href="#id104" title="Link to this table">¶</a></caption>
+<tbody>
+<tr class="row-odd"><td rowspan="2"><p>Инструкция</p></td>
+<td rowspan="2"><p>Стоимость</p></td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2"><p>add r &lt;- s + t</p></td>
+<td rowspan="2"><p>2</p></td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2"><p>mul r &lt;- s × t</p></td>
+<td rowspan="2"><p>3</p></td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2"><p>addmul r &lt;- (s + t) × u</p></td>
+<td rowspan="2"><p>4</p></td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2"><p>load r &lt;- * s</p></td>
+<td rowspan="2"><p>5</p></td>
+</tr>
+<tr class="row-even"></tr>
+<tr class="row-odd"><td rowspan="2"><p>addload r &lt;- * (s + t)</p></td>
+<td rowspan="2"><p>5</p></td>
+</tr>
+<tr class="row-even"></tr>
+</tbody>
+</table>
+<figure class="align-center" id="id105">
+<span id="fig-dag-covering-3"></span><a class="reference internal image-reference" href="images/sel2dag0.png"><img alt="images/sel2dag0.png" src="images/sel2dag0.png" style="width: 400px;" /></a>
+<figcaption>
+<p><span class="caption-text">Expression trees after edge splitting.</span><a class="headerlink" href="#id105" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-center" id="id106">
+<span id="fig-dag-covering-4"></span><a class="reference internal image-reference" href="images/sel2dag1.png"><img alt="Base Mesh + 128x128 Texture (334 KB)" src="images/sel2dag1.png" style="width: 300px;" /></a>
+<figcaption>
+<p><span class="caption-text">Дерево выражений</span><a class="headerlink" href="#id106" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p><span class="caption-text">Пример простого выражения и его схема компиляции для RISC-V</span></p>
+</div><p id="fig-tree-covering-bad">Также деревья ограничивают разнообразие поддерживаемых инструкций процессора.
+Так как у дереве всегда один корень, то инструкции с большим количеством выходов (англ. multi-output instructions ) не представимы, так как требуют больше одного корня.
+Даже инструкции с непересекающимися выходами непредствимы, так как алгоритм выбора инструкций рассматривает деревья по одному.</p>
+<p>В-третьих, представление с помощью деревьев не может моделировать граф потока управления. Цикл for требудет циклический путь в графе, что не ложится в деревья. По этой причине представление с помощью деревьев годится только для выбора инструкций внутри базового блока (англ. basic block) графа потока управления.
+Это не позволяет выбирать инструкции процессора, которые соотвествуют коду сразу в нескольких базовых блоках, что может негативно влиять на производительность.</p>
+<p>В итоге, представление с помощью деревьем позволяет получить более качественный код по сравнению с наивным раскрытием макросов, но для современных архитектур инструкций нужны более сложные представления.</p>
+</section>
+</section>
+<section id="dag">
+<h2>Покрытие ациклических графов (DAGов)<a class="headerlink" href="#dag" title="Link to this heading">¶</a></h2>
+<p>Если ослабить ограничение, что у одного узла дерева — максимум один родитель, то вместо деревьев мы получим представление с помощью направленных ациклических графов (англ. Directed Acyclic Graph).
+За счет наличия нескольких родителей можно представлять значения, которые являются аргументами нескольких других выражений  одновременно.
+Шаблонам теперь также разрешено иметь несколько корней, что позволяет осуществить поддержку инструкций со множественными результатами.</p>
+<p>Так как DAGи менее ограничительны чем деревья, то для них можно применять новые подходы для порождения кода. Основных два</p>
+<ul class="simple">
+<li><p>Разделить DAG на деревья, породить код и объединить получившиеся результаты.</p></li>
+<li><p>Сопоставлять с образцам непосредственно граф, используя алгоритмы изоморфизма графов. В общем случае алгоритмы экспоненциально сложны, но зачастую они работают за линейное время.</p></li>
+</ul>
+<section id="id36">
+<h3>Сложность<a class="headerlink" href="#id36" title="Link to this heading">¶</a></h3>
+<p>Задача оптимального порождения кода по представлению в форме DAG NP-полна <span id="id37">[<a class="reference internal" href="#id57" title="David Ryan Koes and Seth Copen Goldstein. Near-optimal instruction selection on dags. In Proceedings of the 6th Annual IEEE/ACM International Symposium on Code Generation and Optimization, CGO '08, 45–54. New York, NY, USA, 2008. Association for Computing Machinery. URL: https://doi.org/10.1145/1356058.1356065, doi:10.1145/1356058.1356065.">Koes and Goldstein, 2008</a>]</span>.
+Доказать это можно сведя (за полиномиальное время) задачу SAT  к задаче выбора шаблона в DAG .</p>
+</section>
+<section id="id38">
+<h3>Жадные подходы<a class="headerlink" href="#id38" title="Link to this heading">¶</a></h3>
+<p>Порождение кода на основе DAG применяется в компиляторе  LLVM,
+но исследование деталей затруднено тем, что основная документация — исходный код.
+Согласно <span id="id39">[<a class="reference internal" href="#id74" title="E. Bendersky. A deeper look into the llvm code generator: part 1. URL: http://eli.thegreenplace.net/2013/02/25/a-deeper-look-into-the-llvm-code-generator-part-1/.">Bendersky, n.d.</a>]</span>, попрождение кода состоит из последовательного переписываться DAG, где инструкции промежуточного представления заменяются на машинные инструкции.</p>
+<p>В LLVM шаблоны-деревья записываются на специальном языке, который компилируются в специальный предметно-ориентированные языки (bytecode), который осуществляет анализ представления программы.
+Все шаблоны перед компиляцией сортируются:</p>
+<ul class="simple">
+<li><p>по убыванию сложности, на которую влияет размер паттерна, и специальные константы, которые эвристически  дают приоритет некоторым паттернам;</p></li>
+<li><p>по возрастанию стоимости порожденного кода;</p></li>
+<li><p>по возрастанию размера подграфа, который покрывается шаблоном.</p></li>
+</ul>
+<p>Так как в шаблонах учавствуют только деревья, то инструкции с множественными выходами генерировать не получится, для них нужен отдельный ad hoc алгоритм порождения.
+Также, за счет особенностей жадных алгоритмов, они не могут претендовать на оптимальность.</p>
+<p>Также в LLVM присутсвуют два других подхода к выбору инструкций:
+<code class="docutils literal notranslate"><span class="pre">FastISel</span></code> и <code class="docutils literal notranslate"><span class="pre">GlobalISel</span></code>, который позволяет порождать также и межблоковые инструкции.</p>
+</section>
+<section id="id40">
+<h3>Методы выбора инструкций для DAGов<a class="headerlink" href="#id40" title="Link to this heading">¶</a></h3>
+<p>Методы можно условно разделить на те, которые адаптируют подходы для деревьев, и на все остальные.
+Можно придумывать эвристики, которые преобразуют граф без циклов в деревья так, чтобы затраты на копирование узлов были незначительны или отсутствовали.
+Также можно адаптировать методы на основе динамического программирования.</p>
+<p>Также существуют методы, специфические для задачи оптимального выбора инструкций для графов без циклов.
+Они могут быть основаны на сведение задачи выбора к задаче оптимизации какой-либо предметной области.
+Были попытки сведения к задаче линейного программирования,
+MWIS (англ. maximum weighted independent set) проблемам,
+а также задаче программирования в ограничениях (англ. constraint programming), и др.
+В <span id="id41">[<a class="reference internal" href="#id75" title="Mirza Omer Beg. Combinatorial Problems in Compiler Optimization. PhD thesis, University of Waterloo, Ontario, Canada, 2013. URL: https://hdl.handle.net/10012/7423.">Beg, 2013</a>]</span> исследовалось введение <em>глобальных ограничений</em> для решения задачи оптимального порождения кода с помощью программирования в ограничениях, и пришли к выводу, что для простых архитектур (MIPS и ARM) оптимальные решения примерно так же эффективны как и полуоптимальные на основе LLVM.
+Скорее всего для RISC-V можно ожидать таких же результатов.</p>
+</section>
+<section id="id42">
+<h3>Ограничения покрытия DAGов<a class="headerlink" href="#id42" title="Link to this heading">¶</a></h3>
+<p>Графы без циклов являются обобщением деревьев.
+С помощью них можно непосредственно моделировать общие подвыражения, и большее разнообразие инструкций, а именно с множественными выходами и непересекающимися выходами, что существенно улучшает производительность и размеры кода.
+Подходы на основе покрытия DAGов сейчас наиболее распространенные.</p>
+<p>Цена этому заключается в том, что оптимальный результат больше не получить за линейное время, так как задача становится NP-полной.
+В то же время, DAGи недостаточно выразительны, чтобы промоделировать все аспекты программ.
+Например, циклы for не представимы как ациклические графы, что не позволяет моделировать инструкции, что затрагивают сразу несколько блоков графа потока управления программ.</p>
+</section>
+</section>
+<section id="id43">
+<h2>Покрытие графов<a class="headerlink" href="#id43" title="Link to this heading">¶</a></h2>
+<p>Некоторые конструкции языков программирования, например циклы, не ложатся в представление с помощью DAGов.
+Поэтому существует наиболее ощая форма представления программ с помошью графов, где присутсвует информация и о данных, и о потоке управления программы.
+Порождение инстукций для таких графов называется <em>глобальным порождением инстукций</em> (англ. global instruction selection),
+потому что учитывается информация не только в одном базовом блоке программы, а в нескольких блоках сразу.
+К тому же, появляются возможности передвигать инструкции из одного блока в другой (англ. global code motion),
+и выбирать межблоковые инструкции.
+Это делает графы наиболее мощным инструментом для порождения кода для архитектур, где много специализированных инструкций (например, различные DSP).</p>
+<div class="literal-block-wrapper docutils container" id="id107">
+<div class="code-block-caption"><span class="caption-text">Пример кода на C, который складывает (с насыщением) массивы A и B, c получением массива C.
+Предполагается, что массивы равной длины, и размер элемента — 8 байт.
+Переменные <code class="docutils literal notranslate"><span class="pre">N</span></code> и <code class="docutils literal notranslate"><span class="pre">MAX</span></code> обозначают длину и верхнюю границу.</span><a class="headerlink" href="#id107" title="Link to this code">¶</a></div>
+<div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">i</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">0</span><span class="p">;</span>
+<span class="k">while</span><span class="w"> </span><span class="p">(</span><span class="n">i</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">N</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">A</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">B</span><span class="p">[</span><span class="n">i</span><span class="p">];</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">MAX</span><span class="w"> </span><span class="o">&lt;</span><span class="w"> </span><span class="n">c</span><span class="p">)</span>
+<span class="w">        </span><span class="n">c</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MAX</span><span class="p">;</span>
+<span class="w">    </span><span class="n">C</span><span class="p">[</span><span class="n">i</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">c</span><span class="p">;</span>
+<span class="w">    </span><span class="n">i</span><span class="o">++</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+<figure class="align-center" id="id108">
+<a class="reference internal image-reference" href="images/cfg1satsum.png"><img alt="Base Mesh + 128x128 Texture (334 KB)" src="images/cfg1satsum.png" style="width: 250px;" /></a>
+<figcaption>
+<p><span class="caption-text">Граф потока управления для вычисления насыщенной суммы двух массивов.</span><a class="headerlink" href="#id108" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Пример выше посвящен использованию межблоковых инстукций, а именно максимум двух чисел,
+доступной в том числе <a class="reference external" href="https://msyksphinz-self.github.io/riscv-isadoc/html/rvfd.html#fmax-d">для RISC-V</a>.
+Одна такая инструкция могла бы заменить сравнение с максимумом, ветвление и полностью убрать блок <code class="docutils literal notranslate"><span class="pre">b4</span></code>, что сократило бы размер кода с 16 до 13 инстукций (почти 25%).</p>
+<p>В программе выше также присутсвуют четыре сложения, которые не зависят друг от друга.
+Если начать передвигать инструкции между блоками, можно добиться применения векторных (или SIMD) инструкции, которая сделает четыре сложения одновременно.
+Если затраты на копирование и подготовку данных (англ. data copying ) для векторных инструкций незначительны, то автовекторизация ещё больше сократит затрачиваемые такты.</p>
+<section id="id44">
+<h3>Решение задачи поиска проверки через изоморфизм графов<a class="headerlink" href="#id44" title="Link to this heading">¶</a></h3>
+<p>Методы для DAG не масштабируются для графов, поэтому для графов нужны свои алгоритмы поиска подходящих шаблонов.
+Для выбора оптимального шаблона можно использовать алгоритмы, подходящие для DAGов.
+<em>Задача изоморфизма графов</em> проверяет, можно ли исходный грaф поворачивать, перекручивать или зеркально отображать, в нём нашелся искомый подграф.
+Эта задача является обощением поиска шаблонов для DAG при наличии разумных ограничений.
+Например, шаблоны для коммутативных операций (сложение или умножение) можно зеркально отображать, чтобы операнды поменялись местами, а для вычитания или деления — нет.</p>
+<p>В литературе задача изоморфизма графов встречается в различных областях и известны методы её решения.
+Например, алгоритм Ульмана <span id="id45">[<a class="reference internal" href="#id76" title="J. R. Ullmann. An Algorithm for Subgraph Isomorphism. PhD thesis, New York, NY, USA, jan 1976. URL: https://doi.org/10.1145/321921.321925, doi:10.1145/321921.321925.">Ullmann, 1976</a>]</span> имеет сложность в худшем случае <span class="math notranslate nohighlight">\(O(n!n^2)\)</span>,
+а алгоритм VF2 <span id="id46">[<a class="reference internal" href="#id77" title="Luigi P. Cordella, Pasquale Foggia, Carlo Sansone, and Mario Vento. An improved algorithm for matching large graphs. In 2001. URL: https://api.semanticscholar.org/CorpusID:15968654.">Cordella <em>et al.</em>, 2001</a>]</span> — <span class="math notranslate nohighlight">\(O(n!n)\)</span>.</p>
+</section>
+<section id="sea-of-nodes">
+<h3>Промежуточные представления на основе Sea-of-Nodes<a class="headerlink" href="#sea-of-nodes" title="Link to this heading">¶</a></h3>
+<p>Функции, так как в них используется граф потока управления, мы вынуждены представлять с помощью графов.
+По соглашению, представления для них называются sea-of-nodes.</p>
+<section id="static-single-assignment">
+<h4>Static Single Assignment<a class="headerlink" href="#static-single-assignment" title="Link to this heading">¶</a></h4>
+<p>Если каждая переменная присваивается только один раз, то можно говорить, что программа находится в SSA-форме <span id="id47">[<a class="reference internal" href="#id78" title="Ron Cytron, Jeanne Ferrante, Barry K. Rosen, Mark N. Wegman, and F. Kenneth Zadeck. Efficiently computing static single assignment form and the control dependence graph. ACM Trans. Program. Lang. Syst., 13(4):451–490, oct 1991. URL: https://doi.org/10.1145/115372.115320, doi:10.1145/115372.115320.">Cytron <em>et al.</em>, 1991</a>]</span>.
+В программе можно исследовать промежутки активности переменных (англ. live range),
+которые неформально обозначают места для в программе, где значения переменных нужны и их нельзя удалть.
+Для SSA формы эти промежутки непрерывны и по сути упрощаются до одно промежутка (за счет размножения количества переменных).
+Оказывается, что проведение оптимизаций в такой форме более удобно, чем без неё.</p>
+<p>В примере ниже приведена реализация и SSA-форма факториала на языке Си.
+В ней используются так называемые φ-функции, которые присваивают значение переменной в зависимости от того, из какого блока к данной точке программы пришло исполнение.
+На основе SSA-представления функций можно строит SSA-графы <span id="id48">[<a class="reference internal" href="#id79" title="Michael P. Gerlek, Eric Stoltz, and Michael Wolfe. Beyond induction variables: detecting and classifying sequences using a demand-driven ssa form. ACM Trans. Program. Lang. Syst., 17(1):85–122, jan 1995. URL: https://doi.org/10.1145/200994.201003, doi:10.1145/200994.201003.">Gerlek <em>et al.</em>, 1995</a>]</span>, которые напоминают графы потока данных.
+Каждой операции соответствует узел графа, а рёбра обозначают поток данных, игнорируя факты того, что данные могут быть в разных базовых блоках графа потока управления. Такие SSA-графы не являются самостоятельными объектами в компиляторах, их используют вместе с графами потока управления для представления программ.</p>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><div class="literal-block-wrapper docutils container" id="id109">
+<div class="code-block-caption"><span class="caption-text">Реализация факториала на Си</span><a class="headerlink" href="#id109" title="Link to this code">¶</a></div>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">factorial</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nl">entry</span><span class="p">:</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="nl">head</span><span class="p">:</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">goto</span><span class="w"> </span><span class="n">end</span><span class="p">;</span>
+<span class="w">  </span><span class="nl">body</span><span class="p">:</span>
+<span class="w">    </span><span class="n">f</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n</span><span class="p">;</span>
+<span class="w">    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">goto</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+<span class="w">  </span><span class="nl">end</span><span class="p">:</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">f</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="literal-block-wrapper docutils container" id="id110">
+<div class="code-block-caption"><span class="caption-text">Код в SSA форме</span><a class="headerlink" href="#id110" title="Link to this code">¶</a></div>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">factorial</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">n1</span><span class="w"> </span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nl">entry</span><span class="p">:</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">f1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">  </span><span class="nl">head</span><span class="p">:</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">f2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">φ</span><span class="p">(</span><span class="n">f1</span><span class="o">:</span><span class="w"> </span><span class="n">entry</span><span class="p">,</span><span class="w"> </span><span class="n">f3</span><span class="o">:</span><span class="w"> </span><span class="n">body</span><span class="p">);</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">φ</span><span class="p">(</span><span class="n">n1</span><span class="o">:</span><span class="w"> </span><span class="n">entry</span><span class="p">,</span><span class="w"> </span><span class="n">n3</span><span class="o">:</span><span class="w"> </span><span class="n">body</span><span class="p">);</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">n2</span><span class="w"> </span><span class="o">&lt;=</span><span class="w"> </span><span class="mi">1</span><span class="p">)</span><span class="w"> </span><span class="k">goto</span><span class="w"> </span><span class="n">end</span><span class="p">;</span>
+<span class="w">  </span><span class="nl">body</span><span class="p">:</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">f3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">f2</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="n">n2</span><span class="p">;</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">n3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">n2</span><span class="w"> </span><span class="o">-</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+<span class="w">    </span><span class="k">goto</span><span class="w"> </span><span class="n">head</span><span class="p">;</span>
+<span class="w">   </span><span class="nl">end</span><span class="p">:</span>
+<span class="w">     </span><span class="k">return</span><span class="w"> </span><span class="n">f2</span><span class="p">;</span>
+<span class="w"> </span><span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+<figure class="align-center" id="id111">
+<a class="reference internal image-reference" href="images/ssa_graph1.png"><img alt="images/ssa_graph1.png" src="images/ssa_graph1.png" style="width: 450px;" /></a>
+<figcaption>
+<p><span class="caption-text">Пример SSA-графа для факториала</span><a class="headerlink" href="#id111" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<p>Также существует представление <span id="id49">[<a class="reference internal" href="#id81" title="Cliff Click and Michael Paleczny. A simple graph-based intermediate representation. In Papers from the 1995 ACM SIGPLAN Workshop on Intermediate Representations, IR '95, 35–49. New York, NY, USA, 1995. Association for Computing Machinery. URL: https://doi.org/10.1145/202529.202534, doi:10.1145/202529.202534.">Click and Paleczny, 1995</a>]</span>, объединяющее SSA граф и граф потока управления.
+Такое представление используется в <em>Java Hotspot Server Compiler (JHSC)</em>, где граф разбивается на, возможно, пересекающиеся деревья выражений.
+Корни деревьев выбираются так, чтобы они представляли собой общие подвыражения, или операции у который есть побочный эффект, который не может быть раскопирован.
+А сами деревья выбираются так, чтобы попытаться их представить одной машинной инстуркцией. Учитывая, что операции всё ещё представлены деревьями, инструкции с множественными результатами так породить не получится.</p>
+<figure class="align-center" id="id112">
+<a class="reference internal image-reference" href="images/Click_Paleczny1.png"><img alt="images/Click_Paleczny1.png" src="images/Click_Paleczny1.png" style="width: 650px;" /></a>
+<figcaption>
+<p><span class="caption-text">Пример графа Клика-Палечны, соответсвующий факториалу.
+Тонкие линии объединяют операции над данными и поток данных.
+Толстые линии обозначают рёбра графа потока управления.
+Пунктирные линии обозначают принадлежность операций блокам.</span><a class="headerlink" href="#id112" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="id50">
+<h4>Универсальное представление<a class="headerlink" href="#id50" title="Link to this heading">¶</a></h4>
+<p>Одной из последних работ по выбору инструкций является подход <span id="id51">[<a class="reference internal" href="#id82" title="Hjort Gabriel Blindell. Universal Instruction Selection. PhD thesis, KTH Royal Institute of Technology, 2018.">Blindell, 2018</a>]</span> на основе <em>универсальноего порождения инструкций</em> (англ. Universal Instruction Selection).
+Оно является дальнейшим усложнением графов Клика-Палечны, что делает его достаточно полным, чтобы на нём проводить выбор инструкций.
+В частности, туда  добавляются:</p>
+<ul class="simple">
+<li><p>Операции для явного изменения потока управления в графе потока управления.</p></li>
+<li><p>В граф потока данных добавляются узлы для конкретных значений (англ. value nodes), к уже имеющимся узлам для вычислений (англ. computation nodes)</p></li>
+<li><p>Операции над данными соединяются с блоками, где они происходят.</p></li>
+<li><p>Объявления новых переменных с помощью φ-функций также соединяются с блоками, где они происходят.</p></li>
+<li><p>Узлы для конкретных констант, используемых в операциях. Такие узлы раскопируются, если они используются в разных блоках, потому что присутсвует ограничение, что одно и то же значение не может быть использовано одновременно в разных блоках.</p></li>
+<li><p>Так называемые <em>state nodes</em>, которые запрещают переставлять некоторые операции с неявными зависимостями, например, вызовы функций с побочными эффектами</p></li>
+<li><p>Номера ребер, чтобы упростить задачу поиска шаблонов в графе, так как при упорядоченных рёбрах она решается эффективнее.</p></li>
+</ul>
+<p>По сравнению с графами Клика-Палечны, в универсальном представлении <em>все</em> операции надо потоком данных и управления представлены в виде узлов, что дает больше информации.
+Поиск шаблонов осуществляется с помощью изоморфизма графов.
+Если для конкретного шаблона находятся несколько подходящих подграфов, то это возможность использования инструкций с дизъюнктными результатами (SIMD или векторные), при условии, что подграфы не персекаются и нет циклических зависимостей по данным. В предыдущих подходах такое было неосуществимо.</p>
+<p>Данный подход был <a class="reference external" href="https://github.com/unison-code/uni-instr-sel_">реализован</a>, как дополнение к LLVM 3.8, и протестирован на DSP процессорах Hexagon.
+К сожалению, дело не дошло до реальной практической апробации, по видимому, вместо процессора используется его эмулятор, а оценка качества кода дается только статическим вычислением стоимости.
+Апробация подхода для RISC-V — это задача будещего.</p>
+<figure class="align-center" id="id113">
+<a class="reference internal image-reference" href="images/UPsetadd.png"><img alt="images/UPsetadd.png" src="images/UPsetadd.png" style="width: 550px;" /></a>
+<figcaption>
+<p><span class="caption-text">Пример универсального представления для функции сложения с насыщением.</span><a class="headerlink" href="#id113" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<table class="docutils align-default">
+<tbody>
+<tr class="row-odd"><td><div class="literal-block-wrapper docutils container" id="id114">
+<div class="code-block-caption"><span class="caption-text">Сложение с насыщением в SSA форме</span><a class="headerlink" href="#id114" title="Link to this code">¶</a></div>
+<div class="highlight-C notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="nf">satadd</span><span class="w"> </span><span class="p">(</span><span class="kt">int</span><span class="w"> </span><span class="n">s</span><span class="p">,</span><span class="w"> </span><span class="kt">int</span><span class="w"> </span><span class="n">t</span><span class="p">)</span><span class="w"> </span><span class="p">{</span>
+<span class="w">  </span><span class="nl">entry</span><span class="p">:</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">d1</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">s</span><span class="w"> </span><span class="o">+</span><span class="w"> </span><span class="n">t</span><span class="p">;</span>
+<span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">d1</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="n">MAX</span><span class="p">)</span><span class="w"> </span><span class="k">goto</span><span class="w"> </span><span class="n">clamp</span><span class="p">;</span>
+<span class="w">  </span><span class="nl">clamp</span><span class="p">:</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">d2</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">MAX</span><span class="p">;</span>
+<span class="w">  </span><span class="nl">end</span><span class="p">:</span>
+<span class="w">    </span><span class="kt">int</span><span class="w"> </span><span class="n">d3</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">φ</span><span class="p">(</span><span class="n">d3</span><span class="o">:</span><span class="w"> </span><span class="n">entry</span><span class="p">,</span><span class="w"> </span><span class="n">d2</span><span class="o">:</span><span class="w"> </span><span class="n">clamp</span><span class="p">);</span>
+<span class="w">    </span><span class="k">return</span><span class="w"> </span><span class="n">d3</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+</section>
+<section id="id53">
+<h2>Заключение<a class="headerlink" href="#id53" title="Link to this heading">¶</a></h2>
+<p>Не смотря на полвека исследований алгоритмов порождения инструкций, компиляция в оптимизированный код является всё ещё не до конца решенной задачей.
+Существуют разные подходы, каждый из которых не является вполне универсальным.
+Из-за этого обход этих недостатков обычно делается с помощью отдельной фазы компиляции.
+Например, если выбор SIMD, NEON и векторных инструкций не поддерживается в фазе порождения кода, то стоит добавлять отдельный проходы, которые порождают такие инструкции, часто с помощью так называемых polyhedral оптимизаций, или используя super-word parallelism <span id="id54">[<a class="reference internal" href="#id84" title="Samuel Larsen and Saman Amarasinghe. Exploiting superword level parallelism with multimedia instruction sets. In Proceedings of the ACM SIGPLAN 2000 Conference on Programming Language Design and Implementation, PLDI '00, 145–156. New York, NY, USA, 2000. Association for Computing Machinery. URL: https://doi.org/10.1145/349299.349320, doi:10.1145/349299.349320.">Larsen and Amarasinghe, 2000</a>]</span>.</p>
+<p>При порождении инстукций для заказных процессоров (англ. Application-specific instruction-set processor, ASIP) задача усложняется другим образом.
+Так как в процессор можно добавлять пользовательские инстукции, то шаблоны распознования инстукций больше не становятся статчески известными при сборке компилятора.</p>
+<p>Как было уже сказно ранее, оптимальное порождения инстукций должен производится вместе с другими фазами порождения кода.
+Переупорядочивание инструкций ради более грамотного использования конвейера особенно актуально для VLIW-процессоров.
+Другой проблемой является рематериализация при распределении регистров: иногда значения легче пересчитать заново, чтобы снизить количество занятых регистров и сократить пересылки между процессором и памятью.</p>
+<p>Также существуют методы порождения инстукций <span id="id55">[<a class="reference internal" href="#id85" title="Hugh Leather. Deep learning for compilers. 2019. URL: https://www.inf.ed.ac.uk/teaching/courses/copt/lecture-15.pdf.">Leather, 2019</a>]</span>, которые стоят особняком от выше упомянутых, так как они основаны на машинном обучении.</p>
+<div class="docutils container" id="id56">
+<div role="list" class="citation-list">
+<div class="citation" id="id70" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id31">AC75</a><span class="fn-bracket">]</span></span>
+<p>Alfred V. Aho and Margaret J. Corasick. Efficient string matching: an aid to bibliographic search. <em>Commun. ACM</em>, 18(6):333–340, jun 1975. URL: <a class="reference external" href="https://doi.org/10.1145/360825.360855">https://doi.org/10.1145/360825.360855</a>, <a class="reference external" href="https://doi.org/10.1145/360825.360855">doi:10.1145/360825.360855</a>.</p>
+</div>
+<div class="citation" id="id64" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id34">AGT89</a><span class="fn-bracket">]</span></span>
+<p>Alfred V. Aho, Mahadevan Ganapathi, and Steven W. K. Tjiang. Code generation using tree matching and dynamic programming. <em>ACM Trans. Program. Lang. Syst.</em>, 11(4):491–516, oct 1989. URL: <a class="reference external" href="https://doi.org/10.1145/69558.75700">https://doi.org/10.1145/69558.75700</a>, <a class="reference external" href="https://doi.org/10.1145/69558.75700">doi:10.1145/69558.75700</a>.</p>
+</div>
+<div class="citation" id="id75" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id41">Beg13</a><span class="fn-bracket">]</span></span>
+<p>Mirza Omer Beg. <em>Combinatorial Problems in Compiler Optimization</em>. PhD thesis, University of Waterloo, Ontario, Canada, 2013. URL: <a class="reference external" href="https://hdl.handle.net/10012/7423">https://hdl.handle.net/10012/7423</a>.</p>
+</div>
+<div class="citation" id="id74" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id39">Ben</a><span class="fn-bracket">]</span></span>
+<p>E. Bendersky. A deeper look into the llvm code generator: part 1. URL: <a class="reference external" href="http://eli.thegreenplace.net/2013/02/25/a-deeper-look-into-the-llvm-code-generator-part-1/">http://eli.thegreenplace.net/2013/02/25/a-deeper-look-into-the-llvm-code-generator-part-1/</a>.</p>
+</div>
+<div class="citation" id="id82" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id51">Bli18</a><span class="fn-bracket">]</span></span>
+<p>Hjort Gabriel Blindell. <em>Universal Instruction Selection</em>. PhD thesis, KTH Royal Institute of Technology, 2018.</p>
+</div>
+<div class="citation" id="id81" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id49">CP95a</a><span class="fn-bracket">]</span></span>
+<p>Cliff Click and Michael Paleczny. A simple graph-based intermediate representation. In <em>Papers from the 1995 ACM SIGPLAN Workshop on Intermediate Representations</em>, IR '95, 35–49. New York, NY, USA, 1995. Association for Computing Machinery. URL: <a class="reference external" href="https://doi.org/10.1145/202529.202534">https://doi.org/10.1145/202529.202534</a>, <a class="reference external" href="https://doi.org/10.1145/202529.202534">doi:10.1145/202529.202534</a>.</p>
+</div>
+<div class="citation" id="id80" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>CP95b<span class="fn-bracket">]</span></span>
+<p>Cliff Click and Michael Paleczny. A simple graph-based intermediate representation. <em>SIGPLAN Not.</em>, 30(3):35–49, mar 1995. URL: <a class="reference external" href="https://doi.org/10.1145/202530.202534">https://doi.org/10.1145/202530.202534</a>, <a class="reference external" href="https://doi.org/10.1145/202530.202534">doi:10.1145/202530.202534</a>.</p>
+</div>
+<div class="citation" id="id77" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id46">CFSV01</a><span class="fn-bracket">]</span></span>
+<p>Luigi P. Cordella, Pasquale Foggia, Carlo Sansone, and Mario Vento. An improved algorithm for matching large graphs. In 2001. URL: <a class="reference external" href="https://api.semanticscholar.org/CorpusID:15968654">https://api.semanticscholar.org/CorpusID:15968654</a>.</p>
+</div>
+<div class="citation" id="id78" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id47">CFR+91</a><span class="fn-bracket">]</span></span>
+<p>Ron Cytron, Jeanne Ferrante, Barry K. Rosen, Mark N. Wegman, and F. Kenneth Zadeck. Efficiently computing static single assignment form and the control dependence graph. <em>ACM Trans. Program. Lang. Syst.</em>, 13(4):451–490, oct 1991. URL: <a class="reference external" href="https://doi.org/10.1145/115372.115320">https://doi.org/10.1145/115372.115320</a>, <a class="reference external" href="https://doi.org/10.1145/115372.115320">doi:10.1145/115372.115320</a>.</p>
+</div>
+<div class="citation" id="id73" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id20">DF84</a><span class="fn-bracket">]</span></span>
+<p>Jack W. Davidson and Christopher W. Fraser. Code selection through object code optimization. <em>ACM Trans. Program. Lang. Syst.</em>, 6(4):505–526, oct 1984. URL: <a class="reference external" href="https://doi.org/10.1145/1780.1783">https://doi.org/10.1145/1780.1783</a>, <a class="reference external" href="https://doi.org/10.1145/1780.1783">doi:10.1145/1780.1783</a>.</p>
+</div>
+<div class="citation" id="id62" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id11">ER70</a><span class="fn-bracket">]</span></span>
+<p>M. Elson and S. T. Rake. Code-generation technique for large-language compilers. <em>IBM Systems Journal</em>, 9(3):166–188, 1970. <a class="reference external" href="https://doi.org/10.1147/sj.93.0166">doi:10.1147/sj.93.0166</a>.</p>
+</div>
+<div class="citation" id="id79" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id48">GSW95</a><span class="fn-bracket">]</span></span>
+<p>Michael P. Gerlek, Eric Stoltz, and Michael Wolfe. Beyond induction variables: detecting and classifying sequences using a demand-driven ssa form. <em>ACM Trans. Program. Lang. Syst.</em>, 17(1):85–122, jan 1995. URL: <a class="reference external" href="https://doi.org/10.1145/200994.201003">https://doi.org/10.1145/200994.201003</a>, <a class="reference external" href="https://doi.org/10.1145/200994.201003">doi:10.1145/200994.201003</a>.</p>
+</div>
+<div class="citation" id="id67" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id24">GG78</a><span class="fn-bracket">]</span></span>
+<p>R. Steven Glanville and Susan L. Graham. A new method for compiler code generation. In <em>Proceedings of the 5th ACM SIGACT-SIGPLAN Symposium on Principles of Programming Languages</em>, POPL '78, 231–254. New York, NY, USA, 1978. Association for Computing Machinery. URL: <a class="reference external" href="https://doi.org/10.1145/512760.512785">https://doi.org/10.1145/512760.512785</a>, <a class="reference external" href="https://doi.org/10.1145/512760.512785">doi:10.1145/512760.512785</a>.</p>
+</div>
+<div class="citation" id="id66" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id25">GHS82a</a><span class="fn-bracket">]</span></span>
+<p>Susan L. Graham, Robert R. Henry, and Robert A. Schulman. An experiment in table driven code generation. In <em>Proceedings of the 1982 SIGPLAN Symposium on Compiler Construction</em>, SIGPLAN '82, 32–43. New York, NY, USA, 1982. Association for Computing Machinery. URL: <a class="reference external" href="https://doi.org/10.1145/800230.806978">https://doi.org/10.1145/800230.806978</a>, <a class="reference external" href="https://doi.org/10.1145/800230.806978">doi:10.1145/800230.806978</a>.</p>
+</div>
+<div class="citation" id="id65" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>GHS82b<span class="fn-bracket">]</span></span>
+<p>Susan L. Graham, Robert R. Henry, and Robert A. Schulman. An experiment in table driven code generation. <em>SIGPLAN Not.</em>, 17(6):32–43, jun 1982. URL: <a class="reference external" href="https://doi.org/10.1145/872726.806978">https://doi.org/10.1145/872726.806978</a>, <a class="reference external" href="https://doi.org/10.1145/872726.806978">doi:10.1145/872726.806978</a>.</p>
+</div>
+<div class="citation" id="id57" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id37">KG08</a><span class="fn-bracket">]</span></span>
+<p>David Ryan Koes and Seth Copen Goldstein. Near-optimal instruction selection on dags. In <em>Proceedings of the 6th Annual IEEE/ACM International Symposium on Code Generation and Optimization</em>, CGO '08, 45–54. New York, NY, USA, 2008. Association for Computing Machinery. URL: <a class="reference external" href="https://doi.org/10.1145/1356058.1356065">https://doi.org/10.1145/1356058.1356065</a>, <a class="reference external" href="https://doi.org/10.1145/1356058.1356065">doi:10.1145/1356058.1356065</a>.</p>
+</div>
+<div class="citation" id="id84" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id54">LA00a</a><span class="fn-bracket">]</span></span>
+<p>Samuel Larsen and Saman Amarasinghe. Exploiting superword level parallelism with multimedia instruction sets. In <em>Proceedings of the ACM SIGPLAN 2000 Conference on Programming Language Design and Implementation</em>, PLDI '00, 145–156. New York, NY, USA, 2000. Association for Computing Machinery. URL: <a class="reference external" href="https://doi.org/10.1145/349299.349320">https://doi.org/10.1145/349299.349320</a>, <a class="reference external" href="https://doi.org/10.1145/349299.349320">doi:10.1145/349299.349320</a>.</p>
+</div>
+<div class="citation" id="id83" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>LA00b<span class="fn-bracket">]</span></span>
+<p>Samuel Larsen and Saman Amarasinghe. Exploiting superword level parallelism with multimedia instruction sets. <em>SIGPLAN Not.</em>, 35(5):145–156, may 2000. URL: <a class="reference external" href="https://doi.org/10.1145/358438.349320">https://doi.org/10.1145/358438.349320</a>, <a class="reference external" href="https://doi.org/10.1145/358438.349320">doi:10.1145/358438.349320</a>.</p>
+</div>
+<div class="citation" id="id85" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id55">Lea19</a><span class="fn-bracket">]</span></span>
+<p>Hugh Leather. Deep learning for compilers. 2019. URL: <a class="reference external" href="https://www.inf.ed.ac.uk/teaching/courses/copt/lecture-15.pdf">https://www.inf.ed.ac.uk/teaching/courses/copt/lecture-15.pdf</a>.</p>
+</div>
+<div class="citation" id="id60" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id18">Mas87</a><span class="fn-bracket">]</span></span>
+<p>Henry Massalin. Superoptimizer: a look at the smallest program. In <em>Proceedings of the Second International Conference on Architectual Support for Programming Languages and Operating Systems</em>, ASPLOS II, 122–126. New York, NY, USA, 1987. Association for Computing Machinery. URL: <a class="reference external" href="https://doi.org/10.1145/36206.36194">https://doi.org/10.1145/36206.36194</a>, <a class="reference external" href="https://doi.org/10.1145/36206.36194">doi:10.1145/36206.36194</a>.</p>
+</div>
+<div class="citation" id="id63" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Mil71<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id16">1</a>,<a role="doc-backlink" href="#id17">2</a>)</span>
+<p>P. L. Miller. Automatic creation of a code generator from a machine description. Technical Report, USA, 1971.</p>
+</div>
+<div class="citation" id="id68" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id28">New75</a><span class="fn-bracket">]</span></span>
+<p>Joseph Michael Newcomer. <em>Machine-independent generation of optimal local code.</em> PhD thesis, USA, 1975. AAI7521781.</p>
+</div>
+<div class="citation" id="id69" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id29">NKWA95</a><span class="fn-bracket">]</span></span>
+<p>Albert Nymeyer, Joost-Pieter Katoen, Ymte Westra, and Henk Alblas. Code generation = a* + burs. In 12 1995. <a class="reference external" href="https://doi.org/10.1007/3-540-61053-7_60">doi:10.1007/3-540-61053-7_60</a>.</p>
+</div>
+<div class="citation" id="id61" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>OW69<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id9">1</a>,<a role="doc-backlink" href="#id10">2</a>)</span>
+<p>Richard J. Orgass and William M. Waite. A base for a mobile programming system. <em>Commun. ACM</em>, 12:507–510, 1969. URL: <a class="reference external" href="https://api.semanticscholar.org/CorpusID:8164996">https://api.semanticscholar.org/CorpusID:8164996</a>.</p>
+</div>
+<div class="citation" id="id71" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id33">Rip77</a><span class="fn-bracket">]</span></span>
+<p>K. Ripken. Formale beschreibung von maschinen, implementierungen und optimierender maschinencodeerzeugung aus attributierten program- mgraphen. <em>Tech. rep. TUM-INFO-7731</em>, 1977.</p>
+</div>
+<div class="citation" id="id59" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id19">SCC+18</a><span class="fn-bracket">]</span></span>
+<p>Raimondas Sasnauskas, Yang Chen, Peter Collingbourne, Jeroen Ketema, Gratian Lup, Jubi Taneja, and John Regehr. Souper: a synthesizing superoptimizer. 2018. <a class="reference external" href="https://arxiv.org/abs/1711.04422">arXiv:1711.04422</a>.</p>
+</div>
+<div class="citation" id="id72" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id21">Sta88</a><span class="fn-bracket">]</span></span>
+<p>R. Stallman. Internals of gnu cc. apr 1988. URL: <a class="reference external" href="https://web.archive.org/web/20120112142027/http://trinity.engr.uconn.edu/~vamsik/internals.pdf">https://web.archive.org/web/20120112142027/http://trinity.engr.uconn.edu/~vamsik/internals.pdf</a>, <a class="reference external" href="https://doi.org/10.1145/69558.75700">doi:10.1145/69558.75700</a>.</p>
+</div>
+<div class="citation" id="id76" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id45">Ull76</a><span class="fn-bracket">]</span></span>
+<p>J. R. Ullmann. <em>An Algorithm for Subgraph Isomorphism</em>. PhD thesis, New York, NY, USA, jan 1976. URL: <a class="reference external" href="https://doi.org/10.1145/321921.321925">https://doi.org/10.1145/321921.321925</a>, <a class="reference external" href="https://doi.org/10.1145/321921.321925">doi:10.1145/321921.321925</a>.</p>
+</div>
+<div class="citation" id="id58" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Wil71<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id13">1</a>,<a role="doc-backlink" href="#id14">2</a>)</span>
+<p>Thomas Richard Wilcox. <em>Generating machine code for high-level programming languages</em>. PhD thesis, USA, 1971.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2023, Косарев Дмитрий.<br/>
+      Created using <a href="http://sphinx-doc.org/">Sphinx</a> 7.2.6.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
