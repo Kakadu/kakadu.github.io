@@ -1,7 +1,5 @@
 % !TeX spellcheck = ru_RU
-% !TEX TS-program = xelatex
-% !TEX TS-program = lualatex
-
+%% !TEX TS-program = pdflatex
 \documentclass[aspectratio=169
   , xcolor={svgnames}
   , hyperref=
@@ -11,7 +9,11 @@
   , russian  % This line affects translation of theorem titles
   ]{beamer}
 
-\input{heading.tex}
+\usetheme{CambridgeUS}
+\usefonttheme{professionalfonts}
+
+\input{preamble.tex}
+
 \usepackage{tabulary}
 \usepackage{verbatim}
 \usepackage{amsmath}
@@ -20,7 +22,7 @@
 \newcommand{\term}[2]{\textit{#1} (#2)}
 \newcommand\alphaequiv{\overset{\alpha}{\equiv}}
 \newcommand{\xarr}[1]{\xrightarrow{\ #1\ }}
-\newcommand{\arr}{\rightarrow}
+\renewcommand{\arr}{\rightarrow}
 \newcommand{\arrmany}{\xarr{*}}
 \newcommand{\cbv}{\xarr{cbv}}
 \newcommand{\cbn}{\xarr{cbn}}

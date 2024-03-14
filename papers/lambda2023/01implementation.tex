@@ -2,7 +2,7 @@
 
 
 \defverbatim[colored]{\cast}{
-\begin{minted}{c}
+\begin{lstinline}{c}
 enum Tag { VAR, ABS, APP };
 struct ulc {
   Tag tag;
@@ -12,11 +12,11 @@ struct ulc {
     struct App { ulc* f; ulc* arg; } App;
   } body;
 };
-\end{minted}
+\end{lstinline}
 }
 
 \defverbatim[colored]{\strat}{
-\begin{minted}{c}
+\begin{lstlisting}{c}
 struct Strategy {
   ulc* (*onVar)(Strategy* self, char* name);
   ulc* (*onApp)(Strategy* self, struct ulc *f, struct ulc *arg);
@@ -31,12 +31,12 @@ struct ulc* applyStrategy(Strategy *self, struct ulc *root) {
   }
   assert(false);   return nullptr; // unreachable
 }
-\end{minted}
+\end{lstlisting}
 }
 
 
 \defverbatim[colored]{\nostrat}{
-  \begin{minted}{c}
+\begin{lstinline}
 struct ulc *evalVar(Strategy *this, char *name) {
   return var(name);
 }
@@ -52,11 +52,11 @@ struct Strategy NoStrategy = {
   .onApp = dontReduceApplication,
   .onAbs = dontReduceUnderAbstraction,
 };
-  \end{minted}
+  \end{lstinline}
 }
 
 \defverbatim[colored]{\cbvstrat}{
-  \begin{minted}{c}
+  \begin{lstinline}{c}
 struct ulc *evalApplyByValue(Strategy *self, ulc *f, ulc *a1) {
   auto f2 = applyStrategy(self, f);
   switch (f2->tag) {
@@ -73,11 +73,11 @@ struct Strategy CallByValue = {
   .onvar = evalVar,
   .onApp = evalApplyByValue,
   .onAbs = dontReduceUnderAbstraction };
-  \end{minted}
+  \end{lstinline}
 }
 
 \defverbatim[colored]{\inheritance}{
-\begin{minted}{c}
+\begin{lstinline}{c}
 struct ulc *evalApplyByValue(Strategy *this, ulc *f, ulc *arg)
 struct ulc *evalVar(Strategy *this, char *name);
 struct ulc *dontReduceUnderAbstraction(Strategy *this, char *name, ulc *body);
@@ -93,5 +93,5 @@ struct Strategy CallByValue = {
   .onAbs = dontReduceUnderAbstraction
   .onApp = evalApplyByValue,
 };
-\end{minted}
+\end{lstinline}
 }
