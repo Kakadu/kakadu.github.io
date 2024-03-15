@@ -2,6 +2,9 @@
 % !TeX root = lambda2023.tex
 
 
+\newcommand{\tb}[1]{\textcolor{blue}{#1}}
+\newcommand{\tr}[1]{\textcolor{red}{#1}}
+
 \begin{frame}{Введение: $\lambda$-исчисление}
   \begin{figure}
     \centering
@@ -19,7 +22,7 @@
 Аналогичный подход от А.~Тьюринга с его машинами Тьюринга
 \vspace{1em}
 
-Это разные подходы для формализации понятия ``алгоритм''
+Это разные подходы для формализации понятия \enquote{алгоритм}
 \vspace{1em}
 
 В принципе, могло быть изобретено уже в 1910-х г.г.
@@ -27,58 +30,138 @@
 
     \end{subfigure}
   \end{figure}
+\end{frame}
+
+\begin{frame}{Для формализации алгоритмов}
+$\lambda$-исчисление можно использовать как формализацию понятия \enquote{алгоритм}
+
+\begin{definition}[Алгоритм (неформально)]
+Это конечная последовательность действий (или операций), к которым относятся все компьютерные программы, бюрократические процедуры, кулинарные рецепты и т.п.
+\end{definition}
+
+Алгоритмы, которые иногда дают ответ, а иногда не завершаются, называются \textit{разрешающими процедурами}.
+\end{frame}
+
+\begin{frame}{Проблемы неформального определения}
+	\begin{itemize}
+		\item Зависимо от естественного языка
+		\item Не совсем понятно, что является допустимой операцией, а что нет.
+		\begin{itemize}
+            \item \enquote{Возьмите два любых решения уравнения $a^n+b^n=c^n$, для $n>2$ и $a,b,c\in \mathcal{N}$...}
+			\item \enquote{Если это утверждение ложно, то ...}
+			\item \enquote{Объявим как $A$ множество всех множеств. Если $A\in A$, то делаем одно, иначе --- другое}
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Зачем формализовывать то, что и так понятно?}
+\framesubtitle{\enquote{Наивная} теория множеств}
+ 	\begin{figure}[t]
+ 		\begin{subfigure}[t]{0.60\textwidth}
+ 			\vspace{-7em}
+% 			Множества можно делить на два типа
+% 			\begin{enumerate}
+% 				\item   набор не является элементом самого себя
+% 				\item Расселовские: набор является элементом самого себя.
+% 			\end{enumerate}
+ 			Рассмотрим $P=\{y: y\notin P\}$ и задумаемся про $P\in P$?
+ 			\begin{itemize}
+ 				\item Если формула верна, то нарушается определение
+ 				\item Если ложна, то не принадлежит, но по определению должна
+ 			\end{itemize}
+ 			\footnotetext{Изображение из \href{https://en.wikipedia.org/wiki/Bertrand\_Russell}{Википедии}}
+
+ 		\end{subfigure}
+ 		\hspace{0.05\textwidth}
+ 		\begin{subfigure}[t]{0.30\textwidth}
+ 			\begin{minipage}{0.7\textwidth}
+ 				\includegraphics[width=1\textwidth]{800px-Bertrand_Russell_transparent_bg.png}\\
+ 				\centering
+ 				Bertrand~Russell \\(1872--1970)
+ 			\end{minipage}
+ 		\end{subfigure}
+ 	\end{figure}
+\end{frame}
+
+\begin{frame}{Цель формализации}
+Придумать набор недвусмысленных правил, таких что обычный офисный бюрократ (читайте, компьютер) мог им следовать и получать ожидаемый результат.\\
+
+\vspace{1em}
+Существуют много различных формализаций:
+\begin{itemize}
+\item $\lambda$-исчисление
+\item Машины Тьюринга\footnote{Мало имеют общего с компьютерами. Считать А.Тьюринга изобретателем компьютеров ---~неправильно}
+\item Машины Поста
+\item Частично (объявленные) рекурсивные функции (англ. partial recursive function)
+\item Алгорифмы Маркова
+\end{itemize}
+\end{frame}
+
+
+\begin{frame}{Вывод из формализации в современности}
+Всё, что соответствует формальному описанию алгоритма, можно запрограммировать на компьютере
+
+\begin{definition}[Тезис Чёрча-Тьюринга]
+Алгоритмом является всё то, что можно записать и исполнить в $\lambda$-исчислении (машине Тьюринга), с точностью до представления данных. И ничего более.
+\end{definition}
 
 \end{frame}
 
+
+\begin{frame}{$\lambda$-исчисление}
+Процессом вычислений является переписывание программы ($\lambda$-выражения, $\lambda$-терма) на бесконечном листе бумаги.
+
+\vspace{1em}
+Программы конечны и состоят из символов следующего вида.
+\begin{enumerate}
+\item Переменные, в слайдах будем их обозначать строчными латинскими буквами
+\item Скобки открывающиеся \texttt{(} и закрывающиеся \texttt{)}
+\item Точка как разделитель
+\item Символ $\lambda$
+\end{enumerate}
+\end{frame}
 
 
 \begin{frame}{$\lambda$-исчисление}
 \begin{figure}[t]
   \begin{subfigure}[t]{0.35\textwidth}
-    \only<2>{
-      \vspace{-5em}
-    }
+    \vspace{-5em}
     \vspace{-1em}
     Синтаксис:
     \begin{itemize}
       \item Переменные: $x,y,z,\dots$
       \item Абстракция $(\lambda \nu. A)$, где \\
-      $A$ -- $\lambda$-выражение, \\
+      $A$ --- $\lambda$-выражение, \\
       а $\nu$ --- произвольное имя переменной
       \item Применение $(AB)$, где $A$ и $B$ --- $\lambda$-выражения
     \end{itemize}
-    \begin{definition}{Редекс}
-      --- это $\lambda$-выражение вида $(\lambda \nu. A)B$
-    \end{definition}
+%    \begin{definition}{Редекс}
+%      --- это $\lambda$-выражение вида $(\lambda \nu. A)B$
+%    \end{definition}
   \end{subfigure}
-\hspace{0.4cm}
+\hspace{1cm}
   \begin{subfigure}[t]{0.55\textwidth}
-\only<1>{
+
+      \vspace{-5.5em}
 В терминах программирования:
 \begin{itemize}
   \item Переменные
   \item Объявления 1-аргументных функций
   \item Вызов функции от одного аргумента
 \end{itemize}
-    \vspace{1em}
-Процесс вычисления --- это процеcc устранения редексов (возможно, не всех) путём подстановок $\lambda$-выражений вместо переменных.
-}
-%\only<2>{
-%\begin{minipage}{2cm}
-%  \cast
-%\end{minipage}
-%}
-  \end{subfigure}
+%    \vspace{1em}
+%Процесс вычисления --- это процеcc устранения редексов (возможно, не всех) путём подстановок $\lambda$-выражений вместо переменных.
+\end{subfigure}
 \end{figure}
 \end{frame}
 
-
 \begin{frame}{Каррирование}
 \begin{figure}[t]
-  \begin{subfigure}[t]{0.6\textwidth}
+  \begin{subfigure}[t]{0.4 \textwidth}
         \vspace{-10em}
-\begin{definition}{Каррирование}
-  --- это представление n-арных функций через 1-арные функции
+\begin{definition}[Каррирование]
+представление n-арных функций через 1-арные функции
 \end{definition}
 
 \vspace{1em}
@@ -91,29 +174,148 @@
 
   \end{subfigure}
 \hspace{1cm}
-  \begin{subfigure}[t]{0.3\textwidth}
+  \begin{subfigure}[t]{0.25\textwidth}
       \begin{minipage}{1\textwidth}
-    \vspace{-3mm}  \includegraphics[width=1\textwidth]{440px-Moses_Schonfinkel_1922_(cropped).jpg}\\
-      \centering
-  Моисей Исаевич Шейнфинкель \\
-  (1888 -- 1942)
-\end{minipage}
+      %\vspace{-3mm}
+      \includegraphics[width=1\textwidth]{440px-Moses_Schonfinkel_1922_(cropped).jpg}\\
+      \centering      Моисей Исаевич Шейнфинкель \\(1888--1942)
+    \end{minipage}
+  \end{subfigure}
+  \begin{subfigure}[t]{.25\textwidth}
+    \begin{minipage}{1\textwidth}
+      \vspace{-1mm}
+      \includegraphics[width=1\textwidth]{Haskell_Curry.jpg}\\
+      \centering Хаскел Карри \\(1900--1982)
+    \end{minipage}
   \end{subfigure}
 \end{figure}
 \end{frame}
+
+\begin{frame}{Историческое напоминание: числа Пеано}
+\begin{figure}[ht]
+  \begin{subfigure}[t]{.55\textwidth}
+  \vspace{-8em}
+  Первым ввел аксиоматику арифметики в 1889 году. Натуральные числа определяются через \textbf{\enquote{базу}} и \textbf{\enquote{следующий}}\\
+
+  \begin{enumerate}
+  \item[1.] 0 --- натуральное число
+  \item[6.] Для любого натурального $n$, $S(n)$ тоже натуральное. т.е. натуральные числа замкнуты относительно операции $S(\cdot)$
+  \item [9.] Аксиома индукции.
+  \end{enumerate}
+  \footnotetext{
+  \href{https://www.researchgate.net/publication/240358753\_Peano's\_axioms\_in\_their\_historical\_context}{Peano's axioms in their historical context}
+  }
+
+  \footnotetext{Изображение взято с \href{https://en.wikipedia.org/wiki/Moses\_Sch\%C3\%B6nfinkel}{Википедии}}
+  \end{subfigure}
+\hspace{1cm}
+\begin{subfigure}[t]{.35\textwidth}
+  \begin{minipage}{1\textwidth}
+    \includegraphics[width=1\textwidth]{Giuseppe_Peano.jpg}\\
+    Джузеппе Пеано (1858--1932)
+  \end{minipage}
+\end{subfigure}
+\end{figure}
+\end{frame}
+
+
+\defverbatim[colored]{\numeralIsFor}{
+\begin{lstlisting}[language=c]
+// Church numeral N
+for (int i=0; i<N; i++)
+  x = f(x);
+\end{lstlisting}
+}
+
+\begin{frame}{Представление чисел (нумералы Чёрча). Сложение}
+\begin{figure}[t]
+    \begin{subfigure}[t]{0.45\textwidth}
+$ 0 \sim \lam{f}{\lam{x}{\ x}}$
+
+$ 1 \sim \lam{f}{\lam{x}{\ s\ x}}$
+
+$ 2 \sim \lam{f}{\lam{x}{\ s\ (s\ x)}}$
+
+  и т.д.
+    \end{subfigure}
+    \begin{subfigure}[t]{0.45\textwidth}
+    \begin{minipage}{\textwidth}
+    \numeralIsFor
+    \end{minipage}
+    \end{subfigure}
+\end{figure}
+
+  \vspace{1cm}
+
+  Сложение (один из вариантов): взять два нумерала $m$ и $n$, взять $f$ и $x$, а затем к $x$ применить $f$ $n$ раз, а затем к результату применить $f$ $m$ раз.
+
+\begin{align*}
+add \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{m\ f\ }{\app{n\ f\ }{x}}}}}}\\
+\equiv &\ \lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}
+\end{align*}
+\end{frame}
+
+
+\begin{frame}{Представление чисел (нумералы Чёрча). Умножение}
+\begin{figure}[t]
+    \begin{subfigure}[t]{0.45\textwidth}
+$ 0 \sim \lam{f}{\lam{x}{\ x}}$
+
+$ 1 \sim \lam{f}{\lam{x}{\ f\ x}}$
+
+$ 2 \sim \lam{f}{\lam{x}{\ f\ (f\ x)}}$
+
+  и т.д.
+    \end{subfigure}
+    \begin{subfigure}[t]{0.45\textwidth}
+    \begin{minipage}{\textwidth}
+    \numeralIsFor
+    \end{minipage}
+    \end{subfigure}
+\end{figure}
+
+  \vspace{1cm}
+
+
+Умножение: взять два нумерала $m$ и $n$, взять $f$ и $x$, а затем к $x$ применить $n$ раз $f$, и повторить это $m$ раз.
+
+\begin{align*}
+mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}\\
+\equiv &\ \lambda m. \lambda n. \lambda f. \lambda x. \app{\app{m}{\app{n\ f}}}{\ x} \\
+\simeq &\ \lambda m. \lambda n. \lambda f. \app{m}{\app{n\ f}} \\
+\end{align*}
+\end{frame}
+
 
 
 \begin{frame}[fragile]{Символ $\lambda$ работает как квантор}
   \tikzstyle{every picture}+=[remember picture]
   \tikzstyle{na} = [shape=rectangle,inner sep=0pt,text depth=0pt]
+%  {\Large
+%  \[
+%  \lambda \tikz\node[na](dbI1){x}; . (\lambda \tikz\node[na](dbI2){z};.  \tikz\node[na](dbI3){x}; \tikz\node[na](dbI4){z};)  \tikz\node[na](dbI5){x};
+%  \]
+%  \begin{tikzpicture}[overlay]
+%    \path[->,red,thick](dbI1) edge [out=90, in=90] (dbI3);
+%    \path[->,red,thick](dbI1) edge [out=-90, in=-90] (dbI5);
+%    \path[draw,->,blue,thick] (dbI2.south) -- ++(0,-0.2cm) -- ++(0.6cm,0) -- (dbI4.south);
+%  \end{tikzpicture}
+%}
   {\Large
   \[
-  \lambda \tikz\node[na](dbI1){x}; . (\lambda \tikz\node[na](dbI2){z};.  \tikz\node[na](dbI3){x}; \tikz\node[na](dbI4){z};)  \tikz\node[na](dbI5){x};
+  \lambda \tikz\node[na](dbM){m};.
+  \lambda \tikz\node[na](dbN){n};.
+  \lambda \tikz\node[na](dbF){f};.
+  \lambda \tikz\node[na](dbX){x};.
+  \app{\tikz\node[na](UM){m};\ \tikz\node[na](UF1){f};\ }{\app{\tikz\node[na](UN){n};\  \tikz\node[na](UF2){f};\ }{\tikz\node[na](UX){x};}}
   \]
   \begin{tikzpicture}[overlay]
-    \path[->,red,thick](dbI1) edge [out=90, in=90] (dbI3);
-    \path[->,red,thick](dbI1) edge [out=-90, in=-90] (dbI5);
-    \path[draw,->,blue,thick] (dbI2.south) -- ++(0,-0.2cm) -- ++(0.6cm,0) -- (dbI4.south);
+    \path[->, red,thick](dbM) edge [out=90, in=90] (UM);
+    \path[->,blue,thick](dbN) edge [out=90, in=90] (UN);
+    \path[->, red,thick](dbF) edge [out=-90, in=-90] (UF1);
+    \path[->, red,thick](dbF) edge [out=-90, in=-90] (UF2);
+    \path[->, red,thick](dbX) edge [out=90, in=90] (UX);
+%    \path[draw,->,blue,thick] (dbF.south) -- ++(0,-0.2cm) -- ++(0.6cm,0) -- (dbI4.south);
   \end{tikzpicture}
 }
 \begin{itemize}
@@ -126,13 +328,34 @@
 
 
 \begin{frame}[fragile]{Подстановка}
-Редекс $\lam{x}{\lam{x}{x} x}y$ вида $(\lambda \nu. A)B$, где
+ \begin{figure}[t]
+   \begin{subfigure}[t]{0.45\textwidth}
+   \vspace{-5em}
+    \begin{definition}{Редекс}
+      --- это $\lambda$-выражение вида $(\lambda x. B)A$
+    \end{definition}
+
+    \vspace{2em}
+    Подстановка \enquote{$A$ вместо $x$ в выражении $B$} в лит-ре обозначается по-разному:
+      \begin{itemize}
+        \item \subst{x}{A}{B}
+        \item \substt{x}{A}{B}
+      \end{itemize}
+      \vspace{1em}
+      \[
+          (\lambda x. B)A \xarr{\beta}    \subst{x}{A}{B}
+      \]
+   \end{subfigure}
+   \hspace{1cm}
+   \begin{subfigure}[t]{0.45\textwidth}
+   \begin{minipage}{\textwidth}
+
+Редекс $\lam{x}{\lam{x}{x} x}y$ вида $(\lambda \nu. B)A$, где
 \begin{itemize}
-  \item  $A \equiv \lam{x}{x} x$
-  \item  $B \equiv  y$
+  \item $B \equiv \lam{x}{x} x$
+  \item $A \equiv  y$
   \item $\nu \equiv x$
 \end{itemize}
-
   \tikzstyle{every picture}+=[remember picture]
   \tikzstyle{na} = [shape=rectangle,inner sep=0pt,text depth=0pt]
   {\Large
@@ -148,13 +371,72 @@
       \path[draw,->,blue,thick] (dbI2.south) -- ++(0,-0.2cm) -- ++(0.4cm,0) -- (dbI3.south);
     \end{tikzpicture}
   }
+   \end{minipage}
+   \begin{definition}{Один шаг ($\beta$-)редукции}
+   --- это избавление от редекса  $(\lambda x. B)A$ путём совершения подстановки $A$ вместо $x$ в выражении $B$
+   \end{definition}
+   \end{subfigure}
+ \end{figure}
+\end{frame}
 
-\vspace{2em}
-Подстановка ``$x$ вместо $A$ в $B$'' в лит-ре обозначается по-разному:
+
+
+
+\begin{frame}{Как происходят вычисления (редукция) $\lambda$-исчислении?}
+\begin{definition}[Редукция]
+Процесс постепенного избавления от редексов. Редукция $\equiv$ вычисление $\lambda$-выражения
+\end{definition}
+
+\begin{definition}[Стратегия]
+  Порядок выбора редексов регламентирует стратегия. Ищем редексы $(\lambda x. B)A$
   \begin{itemize}
-    \item \subst{x}{A}{B}
-    \item \substt{x}{A}{B}
+    \item Если редексов нет, то вычисление закончилось
+    \item Если редексы есть, стратегия регламентирует какой на данном шаге редекс стоит $\beta$-редуцировать
+    \item Или же, стратегия может сказать, что все редексы нужно оставить как есть, и выдать ответ
   \end{itemize}
+\end{definition}
+    %Стратегий бывает много разных
+    %\begin{enumerate}
+    %  \item Строгая стратегия call-by-value .    Для $(\lambda x. P)Q$ вычисляет $Q\cbv Q'$ и потом подставляет $Q'$ вместо $x$ в $P$.
+    %  \item Ленивая стратегия call-by-name.   Для $(\lambda x. P)Q$ сразу подставляет $Q$ вместо $x$ в $P$.
+    %  \item Обе стратегии оставляют абстракции и переменные как есть
+    %\end{enumerate}
+\end{frame}
+
+
+
+\begin{frame}{Вычисление (т.е. редукция, упрощение) 2+2}
+\def\betaarr{\longrightarrow\!\!\beta}
+\vspace{-2em}
+  \begin{align*}
+    (\lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}){} 2 2 & \betaarr \\
+    \textcolor{blue}{(\lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}) {}} \textcolor{red}{2} 2 & \betaarr \\
+    \textcolor{blue}{( \lambda n. \lambda f. \lambda x. \app{2\ f\ }{\app{n\ f\ }{x}}){}} \textcolor{red}{2} & \betaarr \\
+    \lambda f. \lambda x. \app{2\ f\ }{\app{2\ f\ }{x}}   & \longrightarrow \\
+    \lambda f. \lambda x. \app{\tb{\lam{f}{\lam{x}{f (f x)}}} \ \tr{f}\ }{\app{2\ f\ }{x}} & \betaarr \\
+    \lambda f. \lambda x. \app{\lam{x}{f (f x)} \ \ }{\app{2\ f\ }{x}} & \longrightarrow \\
+    \lambda f. \lambda x. \app{\lam{x}{f (f x)} \ \ } {\app{\app{\tb{\lam{f}{\lam{x}{f (f x)}}}\ \tr{f}\ }{x}}} & \betaarr \\
+    \lambda f. \lambda x. \app{\lam{x}{f (f x)}  } {\app{\tb{\lam{x}{f (f x)} } }{\tr{x}}} & \betaarr \\
+    \lambda f. \lambda x. \app{\tb{\lam{x}{f (f x)} } } {\tr{(f (f x))}} & \betaarr \\
+    \lambda f. \lambda x. f (f (f (f x))) & \equiv 4
+  \end{align*}
+\end{frame}
+
+
+\begin{frame}{Вычисление (т.е. редукция, упрощение) 2$\times$2}
+\def\betaarr{\longrightarrow\!\!\beta}
+\vspace{-2em}
+\begin{align*}
+  \lam{m }{\lam{n}{\lam{z}{\app{m}{\app{n}{z}}}}} 2 2  & \longrightarrow \\
+  \tb{\lam{m }{\lam{n}{\lam{z}{\app{m}{\app{n}{z}}}}}} \tr{2} 2  & \betaarr \\
+  \tb{\lam{n}{\lam{z}{\app{2}{\app{n}{z}}}}} \textcolor{red}{2}  & \betaarr \\
+  \lam{z}{\tb{2} \textcolor{red}{\app{2}{z}}}  & \betaarr \\
+  \lam{z x}{\app{\tb{2} \tr{z}}{(2 z x)}}  & \betaarr \\
+  \lam{z x}{\textcolor{blue}{\lam{x}{\app{z}{\app{z}{x}}}} \tr{(2 z x)}}  & \betaarr \\
+  \lam{z x}{\app{z}{\app{z}{\app{\tb{2} \tr{z}}{x}}}}  & \betaarr \\
+  \lam{z x}{\app{z}{\app{z}{\textcolor{blue}{\lam{x}{\app{z}{\app{z}{x}}}} \tr{x}}}}  & \betaarr \\
+  \lam{z x}{\app{z}{\app{z}{\app{z}{\app{z}{x}}}}} &  \equiv 4
+  \end{align*}
 \end{frame}
 
 \begin{frame}{Определения алгоритма}
@@ -170,27 +452,9 @@
 Т.е. теперь под алгоритмом понимается только то, что можно записать в формализ\-ме~(-ах).
 \end{frame}
 
-\begin{frame}{Как происходят вычисления (редукция) $\lambda$-исчислении?}
-  \begin{definition}[Процесс вычислений регламентирует стратегия]
-    Ищем редексы $(\lambda x. P)Q$
-    \begin{itemize}
-      \item Если редексов нет, то вычисление закончилось
-      \item Если редексы есть, стратегия регламентирует какой на данном шаге редекс стоит $\beta$-редуцировать
-      \item Или же, стратегия может сказать, что все редексы нужно оставить как есть, и выдать ответ.
-    \end{itemize}
-  \end{definition}
-  %Стратегий бывает много разных
-  %\begin{enumerate}
-  %  \item Строгая стратегия call-by-value .    Для $(\lambda x. P)Q$ вычисляет $Q\cbv Q'$ и потом подставляет $Q'$ вместо $x$ в $P$.
-  %  \item Ленивая стратегия call-by-name.   Для $(\lambda x. P)Q$ сразу подставляет $Q$ вместо $x$ в $P$.
-  %  \item Обе стратегии оставляют абстракции и переменные как есть
-  %\end{enumerate}
-\end{frame}
 
-%\begin{frame}{Дэмка на С++ (2/5): объявление стратегии}
-%  \strat
-%\end{frame}
 
+\begin{comment}
 \begin{frame}{Две стратегии: Call-by-value и аппликативная}
   \begin{figure}[t]
     \begin{subfigure}[t]{0.45\textwidth}
@@ -270,14 +534,15 @@
 
 \cbvstrat
 \end{frame}
+\end{comment}
 
-\section{Написание алгоритмов с помощью лямбда-исчисления}
+%\section{Написание алгоритмов с помощью лямбда-исчисления}
 
 \begin{frame}{Что нужно для представления алгоритмов?}
   \begin{itemize}
     \item Принимать входные данные
     \item Делать ветвления  в зависимости от входных данных
-    \item Совершать некоторое количество однотипных действий в зависимости от входных данных (т.е. должны быть циклы или их аналог -- рекурсия)
+    \item Совершать некоторое количество однотипных действий в зависимости от входных данных (т.е. должны быть циклы или их аналог --- рекурсия)
     \begin{itemize}
 \item       Чтобы понимать, сколько действий уже сделали нужны натуральные числа
     \end{itemize}
@@ -286,81 +551,23 @@
 
 \begin{frame}{Ветвления}
 \[
-T\equiv\lam{x}{\lam{y}{x}} \equiv fst \qquad \qquad \qquad \qquad
+T\equiv\lam{x}{\lam{y}{x}} \equiv f\!st \qquad \qquad \qquad \qquad
 F\equiv \lam{x}{\lam{y}{y}}\equiv snd
 \]
 
 \begin{align*}
-  ite \quad\equiv &\quad \lambda c. \lambda th. \lambda el. (c\ th\ el)\\
-  (ite\ T) \quad\equiv &\quad  \lambda th. \lambda el. (T\ th\ el) \arrmany th\\
-  (ite\ F) \quad\equiv &\quad  \lambda th. \lambda el. (F\ th\ el) \arrmany el
+  ite \quad\equiv &\quad \lam{c}{\lam{t}{\lam{e}{\ \app{\app{c}{t}}{e}}}}\\
+  (ite\ T) \quad\equiv &\quad  \lambda t. \lambda e. (T\ t\ e) \arrmany \lam{t}{\lam{e}{t}} \equiv T\\
+  (ite\ F) \quad\equiv &\quad  \lambda t. \lambda e. (F\ t\ e) \arrmany \lam{t}{\lam{e}{e}} \equiv F
 \end{align*}
 
-\footnotetext{Здесь $\arrmany$ означает редукцию за несколько шагов}
-\end{frame}
-
-%\section{Представление данных в $\lambda$ исчислении}
-\begin{frame}{Историческое напоминание: числа Пеано}
-\begin{figure}[ht]
-  \begin{subfigure}[t]{.55\textwidth}
-  \vspace{-8em}
-  Первым ввел аксиоматику арифметики в 1889 году. Натуральные числа определяются через ``базу'' и ``следующий''\\
-
-  \begin{enumerate}
-  \item[1.] 0 --- натуральное число
-  \item[6.] Для любого натурального $n$, $S(n)$ тоже натуральное. т.е. натуральные числа замкнуты относительно операции $S(\cdot)$
-  \item [9.] Аксиома индукции.
-  \end{enumerate}
-  \footnotetext{
-  \href{https://www.researchgate.net/publication/240358753\_Peano's\_axioms\_in\_their\_historical\_context}{Peano's axioms in their historical context}
-  }
-
-  \footnotetext{Изображение взято с \href{https://en.wikipedia.org/wiki/Moses\_Sch\%C3\%B6nfinkel}{Википедии}}
-  \end{subfigure}
-\hspace{1cm}
-\begin{subfigure}[t]{.35\textwidth}
-  \begin{minipage}{1\textwidth}
-    \includegraphics[width=1\textwidth]{Giuseppe_Peano.jpg}\\
-    Giuseppe Peano (1858 -- 1932)
-  \end{minipage}
-\end{subfigure}
-\end{figure}
+%\footnotetext{
+Здесь $\arrmany$ означает редукцию за несколько шагов
+%}
 \end{frame}
 
 
-\begin{frame}{Представление чисел (нумералы Чёрча)}
 
-$ 0 \sim \lam{s}{\lam{x}{x}}$
-
-$ 1 \sim \lam{s}{\lam{x}{s\ x}}$
-
-$ 2 \sim \lam{s}{\lam{x}{s\ (s\ x)}}$
-
-  и т.д.
-  \vspace{1cm}
-
-  Сложение (один из вариантов): взять два нумерала $m$ и $n$, взять $f$ и $x$, а затем к $x$ применить $n$ раз $f$, а затем к результату применить $m$ раз $f$.
-
-  \[
-  add \equiv \lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}
-  \]
-\end{frame}
-\newcommand{\tb}[1]{\textcolor{blue}{#1}}
-\newcommand{\tr}[1]{\textcolor{red}{#1}}
-\begin{frame}{2+2}
-  \begin{align*}
-    (\lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}){} 2 2 &\cbv \\
-    \textcolor{blue}{(\lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}) {}} \textcolor{red}{2} 2 &\cbv \\
-    \textcolor{blue}{( \lambda n. \lambda f. \lambda x. \app{2\ f\ }{\app{n\ f\ }{x}}){}} \textcolor{red}{2} & \cbv \\
-    \lambda f. \lambda x. \app{2\ f\ }{\app{2\ f\ }{x}}   &\xarr{\ \ } \\
-    \lambda f. \lambda x. \app{\tb{\lam{f}{\lam{x}{f (f x)}}} \ \tr{f}\ }{\app{2\ f\ }{x}} &\ao \\
-    \lambda f. \lambda x. \app{\lam{x}{f (f x)} \ \ }{\app{2\ f\ }{x}} &\xarr{\ \ } \\
-    \lambda f. \lambda x. \app{\lam{x}{f (f x)} \ \ } {\app{\app{\tb{\lam{f}{\lam{x}{f (f x)}}}\ \tr{f}\ }{x}}} &\ao \\
-    \lambda f. \lambda x. \app{\lam{x}{f (f x)}  } {\app{\tb{\lam{x}{f (f x)} } }{\tr{x}}} &\ao \\
-    \lambda f. \lambda x. \app{\tb{\lam{x}{f (f x)} } } {\tr{(f (f x))}} &\ao \\
-    \lambda f. \lambda x. f (f (f (f x))) &
-  \end{align*}
-\end{frame}
 
 \begin{comment}
 
@@ -402,13 +609,12 @@ $ 2 \sim \lam{s}{\lam{x}{s\ (s\ x)}}$
 
 Идея:
 \begin{itemize}
-  \item записываем функцию $f$, чтобы она принимала первый аргумент, который будет вызываться вместо рекурсивного вызова
-  \item Везде, где надо вызвать эту ``рекурсивную'' функцию, будем писать $Yf$  или $Zf$
+  \item Записываем функцию $f$ так, чтобы она принимала первый аргумент, который будет вызываться вместо рекурсивного вызова
+  \item Везде, где надо вызвать эту \enquote{рекурсивную} функцию, будем писать $Yf$
 
-      \begin{align*}
-  \text{FIX для $\ao$ и $\cbv$:}\quad\quad \quad  & Z\equiv \lam{f}{\lam{x}{f\lam{v}{\ x\ x\ v}}\lam{x}{f\lam{v}{\ x\ x\ v}}} \\
-  \text{FIX для ``ленивых`` стратегий:}\quad\quad \quad  & Y\equiv \lam{f}{\lam{x}{f(x\ x)}\lam{x}{f(x\ x)}}
-\end{align*}
+  \begin{align*}
+     Y\equiv \lam{f}{\lam{x}{f(x\ x)}\lam{x}{f(x\ x)}}
+  \end{align*}
 \end{itemize}
 \vspace{1em}
 Откуда такое название?
@@ -417,79 +623,69 @@ YR = \lam{x}{R(x\ x)} \lam{x}{R(x\ x)} \arr
 R\big( \lam{x}{R(x\ x)}\lam{x}{R(x\ x)} \big) =
 R(YR)
 \]
+Получается, что $YR$ --- неподвижная точка $R$
 \end{frame}
 
 
-\newcommand{\ite}[3]{\ensuremath{(\text{if } #1\text{ then }#2\text{ else }#3})}
-\begin{frame}{Рекурсия в call-by-value (упрощенно)}
-  \framesubtitle{Настолько упрощенно, что даже не совсем правильно}
+\newcommand{\ite}[3]{\ensuremath{(\text{\textbf{if }} #1\text{\textbf{ then }}#2\text{\textbf{ else }}#3})}
+\newcommand{\FIX}{\texttt{FIX}}
+\newcommand{\self}{\ensuremath{sel\!f}}
 
+\begin{frame}{Факториал с помощью комбинатора неподвижной точки (сокращённо)}
+\vspace{-1em}
+\newcommand{\FAC}{\ensuremath{\lam{\self}{\lam{n}{ \ite{n<2}{1}{n \times \self(n-1)}}}}}
 %Основное свойство
 \[
-FIX\ R = R\ (FIX\ R)
+\FIX\ R = R\ (\FIX\ R)
 \]
 
-\vspace{1em}
+%\vspace{1em}
 
-Факториал: $fac \equiv (\lambda self.\lambda n . \ite{n<2}{1}{n \cdot self(n-1)})$\\
+Факториал: $fac \equiv \FAC$\\
 
 \begin{align*}
-  FIX(\lambda self.\lambda n . \ite{n<2}{1}{n \cdot self(n-1)}) 2 &\arr \\
-  (\lambda n . \ite{n<2}{1}{n \cdot FIX\ fac(n-1)}) 2 &\arr \\
-  2 \cdot FIX\ fac\ (2-1) &\arr \\
-  2 \cdot (FIX(\lambda self.\lambda n . \ite{n<2}{1}{n \cdot self(n-1)})\ 1) &\arr \\
-  2 \cdot \ite{1<2}{1}{n \cdot (FIX\ fac\ (1-1))} &\arr \\
-  2 \cdot 1 & \arr 2
+  \FIX \FAC 2 & \longrightarrow\\
+  (\lambda n . \ite{n<2}{1}{n \times \FIX\ f\!ac\ (n-1)}) 2 & \arrmany \\
+  2 \times \FIX\ f\!ac\ (2-1) & \arrmany \\
+  2 \times (\FIX \FAC\ 1) & \arrmany \\
+  2 \times \ite{1<2}{1}{n \times (\FIX\ f\!ac\ (1-1))} & \arrmany \\
+  2 \times 1 & \arrmany 2
 \end{align*}
-\end{frame}
+ \end{frame}
 
-\section{Как писать интерпретатор на Си?}
-\begin{frame}{Дэмка на С++ (1/5): представление выражений}
-\cast
-\end{frame}
 
-\begin{frame}{Дэмка на С++ (2/5): объявление стратегии}
-\strat
-\end{frame}
 
-\begin{frame}{Дэмка на С++ (3/5): тривиальная константная стратегия}
-\nostrat
-\end{frame}
 
-\begin{frame}{Дэмка на С++ (4/5): Call-by-value}
-\cbvstrat
-\end{frame}
-\begin{frame}{Дэмка на С++ (5/5): понятие наследования}
-\inheritance
-\end{frame}
+%\section{Введение и историческая справка}
+%\input{00hist}
 
-%\begin{frame}{Несколько слайдов про определение Функционального Программирования}
-%\begin{figure}[t]
-%  \begin{subfigure}[t]{0.45\textwidth}
-%    Нетипизированное a la Scheme
-%    \begin{itemize}
-%      \item
-%      \item
-%      \item
-%    \end{itemize}
-%  \end{subfigure}
-%  \begin{subfigure}[t]{0.45\textwidth}
-%    Типизированное a la ML
-%  \end{subfigure}
-%\end{figure}
+%\section{Вопросы к экзамену}
+%\begin{frame}{Вопросы к экзамену}
+%\begin{itemize}
+%  \item Разрешимые и неразрешимые задачи
+%  \item $\lambda$-исчисление. $\alpha$ и $\beta$ правила
+%  \item Нумералы Чёрча. Сложение
+%  \item Рекурсия и факториал на ``пальцах''
+%  \item Наследование, но оно будет ещё в других билетах
+%\end{itemize}
 %\end{frame}
 
-
-\section{Введение и историческая справка}
-\input{00hist}
-
-\section{Вопросы к экзамену}
-\begin{frame}{Вопросы к экзамену}
-\begin{itemize}
-  \item Разрешимые и неразрешимые задачи
-  \item $\lambda$-исчисление. $\alpha$ и $\beta$ правила
-  \item Нумералы Чёрча. Сложение
-  \item Рекурсия и факториал на ``пальцах''
-  \item Наследование, но оно будет ещё в других билетах
-\end{itemize}
-\end{frame}
+%\section{Как писать интерпретатор на Си?}
+%\begin{frame}{Дэмка на С++ (1/5): представление выражений}
+%\cast
+%\end{frame}
+%
+%\begin{frame}{Дэмка на С++ (2/5): объявление стратегии}
+%\strat
+%\end{frame}
+%
+%\begin{frame}{Дэмка на С++ (3/5): тривиальная константная стратегия}
+%\nostrat
+%\end{frame}
+%
+%\begin{frame}{Дэмка на С++ (4/5): Call-by-value}
+%\cbvstrat
+%\end{frame}
+%\begin{frame}{Дэмка на С++ (5/5): понятие наследования}
+%\inheritance
+%\end{frame}
