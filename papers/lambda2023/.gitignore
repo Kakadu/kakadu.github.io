@@ -1,4 +1,5 @@
 _minted*
 *.synctex.gz
+*.synctex(busy)
 *.pyg
 
