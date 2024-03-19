@@ -12,11 +12,13 @@ pics:
 $(TARGET).pdf: $(TARGET).tex
 
 %.pdf: %.tex
-	xelatex -$(ENGINE) -synctex=1 -shell-escape -interaction=nonstopmode $< -o $@
+	latexmk -$(ENGINE) $<
+	#xelatex -$(ENGINE) -synctex=1 -shell-escape -interaction=nonstopmode $< -o $@
+
 
 clean:
 	@$(RM) -r _minted* 
-	@$(RM) *.aux *.log *.bbl *.blg *.vrb *.xdv *.nav *.out *.snm *.toc *.synctex.gz *.pdf 
+	@$(RM) *.aux *.log *.bbl *.blg *.vrb *.xdv *.nav *.out *.snm *.toc *_latexmk *.synctex.gz *.pdf 
 
 cleanminted:
 	@$(RM) -r _minted* *.pdf
