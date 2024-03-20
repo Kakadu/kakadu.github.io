@@ -26,7 +26,8 @@
 \newcommand{\cbn}{\xarr{cbn}}
 \newcommand{\nor}{\xarr{nor}}
 \newcommand{\ao}{\xarr{ao}}
-\newcommand{\betaarr}{\xarr{\beta}}
+\newcommand{\arrbeta}{\xarr{\beta}}
+\def\betaarr{\longrightarrow\!\!\beta}
 
 \newcommand{\abs}[2]{\ensuremath{(\lambda #1 . #2)}}
 \newcommand{\lam}[2]{\ensuremath{\abs{#1}{#2}}}
@@ -34,13 +35,8 @@
 \newcommand{\subst}[3]{\ensuremath{[#1 \mapsto #2]#3}}
 \newcommand{\substt}[3]{\ensuremath{[#2/#1]#3}}
 
-%\usepackage{mathpartir}
-%\usepackage{tabulary}
-%\usepackage{multirow}
-%\usepackage{makecell}
-%\usepackage{appendixnumberbeamer}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title[]{Лямбда-исчисление}
+\title[Введение в лямбда-исчисление]{Введение в лямбда-исчисление}
 \author{Косарев Дмитрий}
 \date{20 марта 2024 г.}
 
@@ -89,8 +85,13 @@
 \begin{frame}%[allowframebreaks]
   \frametitle<presentation>{Ссылки}
   \begin{thebibliography}{10}
+\setbeamertemplate{bibliography item}[online]
     \bibitem{litvinov}
       {\em Слайды Ю.~Литвинова} \newblock\url{https://github.com/yurii-litvinov/courses/tree/master/structures-and-algorithms/03-lambda-calculus}
+
+%    \bibitem{}
+%      What's the point of $eta$-conversion in lambda calculus?
+%      \newblock \url{https://cstheory.stackexchange.com/a/8261/34931}
   \end{thebibliography}
 \end{frame}
 
@@ -100,29 +101,30 @@
 
 \section{Дополнительные слайды}
 
+\newcommand{\lazy}{\xarr{lazy}}
+\newcommand{\strict}{\xarr{strict}}
 
 \begin{frame}{Бывают различные стратегии}
 Например,
 \begin{itemize}
-\item Строгие (например, call-by-value $\cbv$) вычисляют аргумент до его подстановки
-\item Ленивые (например, call-by-name $\cbn$)  оставляют вычисление аргумента на потом
+\item Строгие (англ. strict, например, call-by-value) вычисляют аргумент до его подстановки
+\item Ленивые (англ. lazy, например, call-by-name)  оставляют вычисление аргумента на потом
 \end{itemize}
-
 
 На практике больше любят стратегии, которые эффективно можно посчитать
 \end{frame}
 
 \begin{frame}{Ленивая vs. Строгая}
-Пример 1 ($\cbv$ выглядит лучше)\\
-$\lam{x}{f x x}(\tr{(\lambda x. x)}\tb{A}) \cbv \tr{(\lambda x. f x x)}\tb{A} \cbv (f A\ A) \cbv \dots $\\
+Пример 1 ($\strict$ выглядит лучше)\\
+$\lam{x}{f x x}(\tr{(\lambda x. x)}\tb{A}) \strict \tr{(\lambda x. f x x)}\tb{A} \strict (f A\ A) \strict \dots $\\
 
-$\tr{\lam{x}{f x x}}\tb{((\lambda x. x)A)} \cbn (\lambda x. f ((\lambda x. x)A) ((\lambda x. x)A))A \cbn \dots $
+$\tr{\lam{x}{f x x}}\tb{((\lambda x. x)A)} \lazy (\lambda x. f ((\lambda x. x)A) ((\lambda x. x)A))A \lazy \dots $
 
 \vspace{2em}
-Пример 2 ($\cbn$ выглядит лучше)\\
-$(\lambda x. \lambda y. y)(\tr{(\lambda x. xx)}\tb{(\lambda x. xx)}) \cbv (\lambda x. \lambda y. y)(\tr{(\lambda x. xx)}\tb{(\lambda x. xx)}) \cbv \dots \text{зависло}$
+Пример 2 ($\lazy$ выглядит лучше)\\
+$(\lambda x. \lambda y. y)(\tr{(\lambda x. xx)}\tb{(\lambda x. xx)}) \strict (\lambda x. \lambda y. y)(\tr{(\lambda x. xx)}\tb{(\lambda x. xx)}) \strict \dots \text{зависло}$
 
-$\tr{(\lambda x. \lambda y. y)}\tb{((\lambda x. xx)(\lambda x. xx)) \cbn (\lambda y. y)}\quad\text{ответ!}$
+$\tr{(\lambda x. \lambda y. y)}\tb{((\lambda x. xx)(\lambda x. xx))} \lazy (\lambda y. y)\quad\text{ответ!}$
 
 \vspace{2em}
 В обычных языках программирования:

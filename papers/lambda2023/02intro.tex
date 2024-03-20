@@ -1,5 +1,5 @@
 % !TeX spellcheck = ru_RU
-% !TeX root = lambda2023.tex
+% !TeX root = lambda2024.tex
 
 
 \newcommand{\tb}[1]{\textcolor{blue}{#1}}
@@ -43,15 +43,16 @@ $\lambda$-исчисление можно использовать как фор
 \end{frame}
 
 \begin{frame}{Проблемы неформального определения}
-	\begin{itemize}
-		\item Зависимо от естественного языка
-		\item Не совсем понятно, что является допустимой операцией, а что нет.
-		\begin{itemize}
-            \item \enquote{Возьмите два любых решения уравнения $a^n+b^n=c^n$, для $n>2$ и $a,b,c\in \mathcal{N}$...}
-			\item \enquote{Если это утверждение ложно, то ...}
-			\item \enquote{Объявим как $A$ множество всех множеств. Если $A\in A$, то делаем одно, иначе --- другое}
-		\end{itemize}
-	\end{itemize}
+Зависимо от естественного языка\\
+
+
+\vspace{1em}
+Не совсем понятно, что является допустимой операцией, а что нет.
+\begin{itemize}
+    \item \enquote{Возьмите два любых решения уравнения $a^n+b^n=c^n$, для $n>2$ и $a,b,c\in \mathcal{N}$...}
+	\item \enquote{Если это утверждение ложно, то ...}
+	\item \enquote{Объявим как $A$ множество всех множеств. Если $A\in A$, то делаем одно, иначе --- другое}
+\end{itemize}
 \end{frame}
 
 
@@ -91,7 +92,7 @@ $\lambda$-исчисление можно использовать как фор
 Существуют много различных формализаций:
 \begin{itemize}
 \item $\lambda$-исчисление
-\item Машины Тьюринга\footnote{Мало имеют общего с компьютерами. Считать А.Тьюринга изобретателем компьютеров ---~неправильно}
+\item Машины Тьюринга\footnote{Мало имеют общего с компьютерами. Считать А.Тьюринга изобретателем компьютеров~--- неправильно}
 \item Машины Поста
 \item Частично (объявленные) рекурсивные функции (англ. partial recursive function)
 \item Алгорифмы Маркова
@@ -191,101 +192,6 @@ $\lambda$-исчисление можно использовать как фор
 \end{figure}
 \end{frame}
 
-\begin{frame}{Историческое напоминание: числа Пеано}
-\begin{figure}[ht]
-  \begin{subfigure}[t]{.55\textwidth}
-  \vspace{-8em}
-  Первым ввел аксиоматику арифметики в 1889 году. Натуральные числа определяются через \textbf{\enquote{базу}} и \textbf{\enquote{следующий}}\\
-
-  \begin{enumerate}
-  \item[1.] 0 --- натуральное число
-  \item[6.] Для любого натурального $n$, $S(n)$ тоже натуральное. т.е. натуральные числа замкнуты относительно операции $S(\cdot)$
-  \item [9.] Аксиома индукции.
-  \end{enumerate}
-  \footnotetext{
-  \href{https://www.researchgate.net/publication/240358753\_Peano's\_axioms\_in\_their\_historical\_context}{Peano's axioms in their historical context}
-  }
-
-  \footnotetext{Изображение взято с \href{https://en.wikipedia.org/wiki/Moses\_Sch\%C3\%B6nfinkel}{Википедии}}
-  \end{subfigure}
-\hspace{1cm}
-\begin{subfigure}[t]{.35\textwidth}
-  \begin{minipage}{1\textwidth}
-    \includegraphics[width=1\textwidth]{Giuseppe_Peano.jpg}\\
-    Джузеппе Пеано (1858--1932)
-  \end{minipage}
-\end{subfigure}
-\end{figure}
-\end{frame}
-
-
-\defverbatim[colored]{\numeralIsFor}{
-\begin{lstlisting}[language=c]
-// Church numeral N
-for (int i=0; i<N; i++)
-  x = f(x);
-\end{lstlisting}
-}
-
-\begin{frame}{Представление чисел (нумералы Чёрча). Сложение}
-\begin{figure}[t]
-    \begin{subfigure}[t]{0.45\textwidth}
-$ 0 \sim \lam{f}{\lam{x}{\ x}}$
-
-$ 1 \sim \lam{f}{\lam{x}{\ s\ x}}$
-
-$ 2 \sim \lam{f}{\lam{x}{\ s\ (s\ x)}}$
-
-  и т.д.
-    \end{subfigure}
-    \begin{subfigure}[t]{0.45\textwidth}
-    \begin{minipage}{\textwidth}
-    \numeralIsFor
-    \end{minipage}
-    \end{subfigure}
-\end{figure}
-
-  \vspace{1cm}
-
-  Сложение (один из вариантов): взять два нумерала $m$ и $n$, взять $f$ и $x$, а затем к $x$ применить $f$ $n$ раз, а затем к результату применить $f$ $m$ раз.
-
-\begin{align*}
-add \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{m\ f\ }{\app{n\ f\ }{x}}}}}}\\
-\equiv &\ \lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}
-\end{align*}
-\end{frame}
-
-
-\begin{frame}{Представление чисел (нумералы Чёрча). Умножение}
-\begin{figure}[t]
-    \begin{subfigure}[t]{0.45\textwidth}
-$ 0 \sim \lam{f}{\lam{x}{\ x}}$
-
-$ 1 \sim \lam{f}{\lam{x}{\ f\ x}}$
-
-$ 2 \sim \lam{f}{\lam{x}{\ f\ (f\ x)}}$
-
-  и т.д.
-    \end{subfigure}
-    \begin{subfigure}[t]{0.45\textwidth}
-    \begin{minipage}{\textwidth}
-    \numeralIsFor
-    \end{minipage}
-    \end{subfigure}
-\end{figure}
-
-  \vspace{1cm}
-
-
-Умножение: взять два нумерала $m$ и $n$, взять $f$ и $x$, а затем к $x$ применить $n$ раз $f$, и повторить это $m$ раз.
-
-\begin{align*}
-mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}\\
-\equiv &\ \lambda m. \lambda n. \lambda f. \lambda x. \app{\app{m}{\app{n\ f}}}{\ x} \\
-\simeq &\ \lambda m. \lambda n. \lambda f. \app{m}{\app{n\ f}} \\
-\end{align*}
-\end{frame}
-
 
 
 \begin{frame}[fragile]{Символ $\lambda$ работает как квантор}
@@ -331,8 +237,8 @@ mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}
  \begin{figure}[t]
    \begin{subfigure}[t]{0.45\textwidth}
    \vspace{-5em}
-    \begin{definition}{Редекс}
-      --- это $\lambda$-выражение вида $(\lambda x. B)A$
+    \begin{definition}[Редекс]
+      $\lambda$-выражение вида $(\lambda x. B)A$
     \end{definition}
 
     \vspace{2em}
@@ -366,21 +272,17 @@ mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}
     y    \arr \lam{x}{x}y
     \]
     \begin{tikzpicture}[overlay]
-%      \path[->,red,thick](dbI1) edge [out=90, in=90] (dbI3);
       \path[->,red,thick](dbI1) edge [out=-90, in=-90] (dbI5);%      \path[draw,->,blue,thick] (dbI2) edge [out=-90, in=-90] (dbI3);
       \path[draw,->,blue,thick] (dbI2.south) -- ++(0,-0.2cm) -- ++(0.4cm,0) -- (dbI3.south);
     \end{tikzpicture}
   }
    \end{minipage}
-   \begin{definition}{Один шаг ($\beta$-)редукции}
-   --- это избавление от редекса  $(\lambda x. B)A$ путём совершения подстановки $A$ вместо $x$ в выражении $B$
+   \begin{definition}[Один шаг ($\beta$-)редукции]
+   это избавление от редекса  $(\lambda x. B)A$ путём совершения подстановки $A$ вместо $x$ в выражении $B$
    \end{definition}
    \end{subfigure}
  \end{figure}
 \end{frame}
-
-
-
 
 \begin{frame}{Как происходят вычисления (редукция) $\lambda$-исчислении?}
 \begin{definition}[Редукция]
@@ -403,12 +305,96 @@ mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}
     %\end{enumerate}
 \end{frame}
 
+\begin{comment}
+\begin{frame}{Экстенсиональность}
+Есть хорошая причина для произвольного $f$ считать выражение $\lam{x}{f\ x}$ и $f$ эквивалентными
+
+\begin{align*}
+\app{\lam{x}{f\ x}}{\xi} \betaarr \app{f}{\xi}
+\end{align*}
+\end{frame}
+\end{comment}
+
+\begin{frame}{Что нужно для представления алгоритмов?}
+  \begin{itemize}
+    \item Принимать входные данные
+    \item Делать ветвления  в зависимости от входных данных
+    \item Совершать некоторое количество однотипных действий в зависимости от входных данных (т.е. должны быть циклы или их аналог --- рекурсия)
+    \begin{itemize}
+\item       Чтобы понимать, сколько действий уже сделали нужны натуральные числа
+    \end{itemize}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Историческое напоминание: числа Пеано}
+\begin{figure}[ht]
+  \begin{subfigure}[t]{.55\textwidth}
+  \vspace{-8em}
+  Первым ввёл аксиоматику арифметики в 1889 году. Натуральные числа определяются через \textbf{\enquote{базу}} и \textbf{\enquote{следующий}}\\
+
+  \begin{enumerate}
+  \item[1.] 0 --- натуральное число
+  \item[6.] Для любого натурального $n$, $S(n)$ тоже натуральное. т.е. натуральные числа замкнуты относительно операции $S(\cdot)$
+  \item [9.] Аксиома индукции.
+  \end{enumerate}
+  \footnotetext{
+  \href{https://www.researchgate.net/publication/240358753\_Peano's\_axioms\_in\_their\_historical\_context}{Peano's axioms in their historical context}
+  }
+
+  \footnotetext{Изображение взято с \href{https://en.wikipedia.org/wiki/Moses\_Sch\%C3\%B6nfinkel}{Википедии}}
+  \end{subfigure}
+\hspace{1cm}
+\begin{subfigure}[t]{.35\textwidth}
+  \begin{minipage}{1\textwidth}
+    \includegraphics[width=1\textwidth]{Giuseppe_Peano.jpg}\\
+    Джузеппе Пеано (1858--1932)
+  \end{minipage}
+\end{subfigure}
+\end{figure}
+\end{frame}
+
+
+\defverbatim[colored]{\numeralIsFor}{
+\begin{lstlisting}[language=c]
+// Church numeral N
+for (int i=0; i<N; i++)
+  x = f(x);
+\end{lstlisting}
+}
+
+\begin{frame}{Представление чисел (нумералы Чёрча). Сложение}
+\begin{figure}[t]
+    \begin{subfigure}[t]{0.45\textwidth}
+$ 0 \sim \lam{f}{\lam{x}{\ x}}$
+
+$ 1 \sim \lam{f}{\lam{x}{\ f\ x}}$
+
+$ 2 \sim \lam{f}{\lam{x}{\ f\ (f\ x)}}$
+
+  и т.д.
+    \end{subfigure}
+    \begin{subfigure}[t]{0.45\textwidth}
+    \begin{minipage}{\textwidth}
+    \numeralIsFor
+    \end{minipage}
+    \end{subfigure}
+\end{figure}
+
+  \vspace{1cm}
+
+  Сложение (один из вариантов): взять два нумерала $m$ и $n$, взять $f$ и $x$, а затем к $x$ применить $f$ $n$ раз, а затем к результату применить $f$ $m$ раз.
+
+\begin{align*}
+add \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{m\ f\ }{\app{n\ f\ }{x}}}}}}\\
+\equiv &\ \lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}
+\end{align*}
+\end{frame}
 
 
 \begin{frame}{Вычисление (т.е. редукция, упрощение) 2+2}
 \def\betaarr{\longrightarrow\!\!\beta}
 \vspace{-2em}
-  \begin{align*}
+  \begin{align}
     (\lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}){} 2 2 & \betaarr \\
     \textcolor{blue}{(\lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}) {}} \textcolor{red}{2} 2 & \betaarr \\
     \textcolor{blue}{( \lambda n. \lambda f. \lambda x. \app{2\ f\ }{\app{n\ f\ }{x}}){}} \textcolor{red}{2} & \betaarr \\
@@ -419,24 +405,82 @@ mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}
     \lambda f. \lambda x. \app{\lam{x}{f (f x)}  } {\app{\tb{\lam{x}{f (f x)} } }{\tr{x}}} & \betaarr \\
     \lambda f. \lambda x. \app{\tb{\lam{x}{f (f x)} } } {\tr{(f (f x))}} & \betaarr \\
     \lambda f. \lambda x. f (f (f (f x))) & \equiv 4
-  \end{align*}
+  \end{align}
+\end{frame}
+
+\begin{frame}{Представление чисел (нумералы Чёрча). Умножение}
+\begin{figure}[t]
+    \begin{subfigure}[t]{0.45\textwidth}
+$ 0 \sim \lam{f}{\lam{x}{\ x}}$
+
+$ 1 \sim \lam{f}{\lam{x}{\ f\ x}}$
+
+$ 2 \sim \lam{f}{\lam{x}{\ f\ (f\ x)}}$
+
+  и т.д.
+    \end{subfigure}
+    \begin{subfigure}[t]{0.45\textwidth}
+    \begin{minipage}{\textwidth}
+    \numeralIsFor
+    \end{minipage}
+    \end{subfigure}
+\end{figure}
+
+  \vspace{1cm}
+
+
+Умножение: взять два нумерала $m$ и $n$, взять $f$ и $x$, а затем к $x$ применить $n$ раз $f$, и повторить это $m$ раз.
+
+\begin{align*}
+mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}\\
+\equiv &\ \lambda m. \lambda n. \lambda f. \lambda x. \app{\app{m}{\app{n\ f}}}{\ x} \\
+%\simeq &\ \lambda m. \lambda n. \lambda f. \app{m}{\app{n\ f}} \\
+\end{align*}
 \end{frame}
 
 
-\begin{frame}{Вычисление (т.е. редукция, упрощение) 2$\times$2}
+
+\newcommand{\redex}[2]{\app{\tr{#1}}{\tb{#2}}}
+
+%\begin{frame}{Вычисление (т.е. редукция, упрощение) 2$\times$2 без $\eta$-экспансии}
+%\def\betaarr{\longrightarrow\!\!\beta}
+%\setcounter{equation}{0}
+%\vspace{-2em}
+%\begin{align}
+%  (\lam{m }{\lam{n}{\lam{z}{\app{m}{\app{n}{z}}}}} 2) 2  & \longrightarrow \\
+%  \redex{\lam{m }{\lam{n}{\lam{z}{\app{m}{\app{n}{z}}}}}}{2} 2  & \betaarr \\
+%  \redex{\lam{n}{\lam{z}{\app{2}{\app{n}{z}}}}}{2}  & \betaarr \\
+%  \lam{z}{2 \app{2}{z}}  & \longrightarrow \\
+%  \lam{z}{\tb{\lam{f}{\lam{x}{f(f\ x)}}} \textcolor{red}{\app{2}{z}}}  & \betaarr \\
+%  \lam{z}{\lam{x}{\app{\app{2}{ z}}{(2\ z\ x)}}}  & \longrightarrow \\
+%  \lam{z}{\lam{x}{\app{\app{\tb{\lam{f}{\lam{x}{f(f\ x)}}}}{\tr{z}}}{(2\ z\ x)}}}  & \betaarr \\
+%    \lam{z}{\lam{x}{\textcolor{blue}{\lam{x}{\app{z}{\app{z}{x}}}} \tr{(2 z x)}}} & \betaarr \\
+%  \lam{z}{\lam{x}{\app{z}{\app{z}{\app{\tb{2} \tr{z}}{x}}}}}  & \betaarr \\
+%  \lam{z}{\lam{x}{\app{z}{\app{z}{\textcolor{blue}{\lam{x}{\app{z}{\app{z}{x}}}} \tr{x}}}}}  & \betaarr \\
+%  \lam{z}{\lam{x}{\app{z}{\app{z}{\app{z}{\app{z}{x}}}}}} &  \equiv 4
+%  \end{align}
+%\end{frame}
+
+\begin{frame}{Вычисление (т.е. редукция, упрощение) 2$\times$2 длинно}
 \def\betaarr{\longrightarrow\!\!\beta}
+\def\numTWO{\ensuremath{\lam{f}{\lam{x}{f(f\ x)}}}}
+\setcounter{equation}{0}
 \vspace{-2em}
-\begin{align*}
-  \lam{m }{\lam{n}{\lam{z}{\app{m}{\app{n}{z}}}}} 2 2  & \longrightarrow \\
-  \tb{\lam{m }{\lam{n}{\lam{z}{\app{m}{\app{n}{z}}}}}} \tr{2} 2  & \betaarr \\
-  \tb{\lam{n}{\lam{z}{\app{2}{\app{n}{z}}}}} \textcolor{red}{2}  & \betaarr \\
-  \lam{z}{\tb{2} \textcolor{red}{\app{2}{z}}}  & \betaarr \\
-  \lam{z x}{\app{\tb{2} \tr{z}}{(2 z x)}}  & \betaarr \\
-  \lam{z x}{\textcolor{blue}{\lam{x}{\app{z}{\app{z}{x}}}} \tr{(2 z x)}}  & \betaarr \\
-  \lam{z x}{\app{z}{\app{z}{\app{\tb{2} \tr{z}}{x}}}}  & \betaarr \\
-  \lam{z x}{\app{z}{\app{z}{\textcolor{blue}{\lam{x}{\app{z}{\app{z}{x}}}} \tr{x}}}}  & \betaarr \\
-  \lam{z x}{\app{z}{\app{z}{\app{z}{\app{z}{x}}}}} &  \equiv 4
-  \end{align*}
+\begin{align}
+  \app{\app{\lam{m}{\lam{n}{\lam{z}{\lam{x}{(m \app{n}{z} x)}}}}}{2}}{2} & \longrightarrow \\
+  \app{\redex{\lam{m}{\lam{n}{\lam{z}{\lam{x}{(m \app{n}{z} x)}}}}}{2}}{2} & \betaarr \\
+  \redex{\lam{n}{\lam{z}{\lam{x}{(2 \app{n}{z} x)}}}}{2} & \betaarr \\
+  \lam{z}{\lam{x}{\app{\app{2}{\app{2}{z}}}{x}}} & \longrightarrow \\
+  \lam{z}{\lam{x}{\app{\redex{\numTWO}{\app{2}{z}}}{x}}} & \betaarr \\
+  \lam{z}{\lam{x}{\redex{\lam{x}{(2 z (2 z x))}}{x}}} & \betaarr \\
+  \lam{z}{\lam{x}{\app{\app{2}{z}}{(2 z x)}}} & \longrightarrow \\
+  \lam{z}{\lam{x}{\app{\redex{\numTWO}{z}}{(2 z x)}}} & \betaarr \\
+  \lam{z}{\lam{x}{\redex{\lam{x}{\app{z}{\app{z}{x}}}}{(2 z x)}}} & \betaarr \\
+  \lam{z}{\lam{x}{\app{z}{\app{z}{\app{\app{2}{z}}{x}}}}} & \longrightarrow \\
+    \lam{z}{\lam{x}{\app{z}{\app{z}{\app{\redex{\numTWO}{z}}{x}}}}} & \betaarr \\
+  \lam{z}{\lam{x}{\app{z}{\app{z}{\redex{\lam{x}{\app{z}{\app{z}{x}}}}{x}}}}} & \betaarr \\
+  \lam{z}{\lam{x}{\app{z}{\app{z}{\app{z}{\app{z}{x}}}}}} & \equiv 4
+\end{align}
 \end{frame}
 
 \begin{frame}{Определения алгоритма}
@@ -538,27 +582,19 @@ mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}
 
 %\section{Написание алгоритмов с помощью лямбда-исчисления}
 
-\begin{frame}{Что нужно для представления алгоритмов?}
-  \begin{itemize}
-    \item Принимать входные данные
-    \item Делать ветвления  в зависимости от входных данных
-    \item Совершать некоторое количество однотипных действий в зависимости от входных данных (т.е. должны быть циклы или их аналог --- рекурсия)
-    \begin{itemize}
-\item       Чтобы понимать, сколько действий уже сделали нужны натуральные числа
-    \end{itemize}
-  \end{itemize}
-\end{frame}
+
 
 \begin{frame}{Ветвления}
+\def\ite{\lam{c}{\lam{t}{\lam{e}{\ \app{\app{c}{t}}{e}}}}}
 \[
 T\equiv\lam{x}{\lam{y}{x}} \equiv f\!st \qquad \qquad \qquad \qquad
-F\equiv \lam{x}{\lam{y}{y}}\equiv snd
+F\equiv \lam{x}{\lam{y}{y}}\equiv snd \equiv 0
 \]
 
 \begin{align*}
   ite \quad\equiv &\quad \lam{c}{\lam{t}{\lam{e}{\ \app{\app{c}{t}}{e}}}}\\
-  (ite\ T) \quad\equiv &\quad  \lambda t. \lambda e. (T\ t\ e) \arrmany \lam{t}{\lam{e}{t}} \equiv T\\
-  (ite\ F) \quad\equiv &\quad  \lambda t. \lambda e. (F\ t\ e) \arrmany \lam{t}{\lam{e}{e}} \equiv F
+  (ite\ T) \quad\equiv &\quad \ite T \arrbeta \lambda t. \lambda e. (\app{T}{t}\ e) \arrmany \lam{t}{\lam{e}{t}}\equiv T\\
+  (ite\ F) \quad\equiv &\quad \ite F \arrbeta \lambda t. \lambda e. (\app{F}{t}\ e) \arrmany \lam{t}{\lam{e}{e}}\equiv F
 \end{align*}
 
 %\footnotetext{
@@ -602,9 +638,10 @@ F\equiv \lam{x}{\lam{y}{y}}\equiv snd
 \end{frame}
 \end{comment}
 
-
+\newcommand\Y{\ensuremath{Y}}
 \begin{frame}{Рекурсия через комбинатор неподвижной точки}
 \framesubtitle{англ. FIXed point combinator}
+\def\Yimpl{\ensuremath{\lam{f}{\lam{x}{f(x\ x)}\lam{x}{f(x\ x)}}}}
 Не понятно как вызвать самого себя, так как имен нет.\\
 
 Идея:
@@ -613,16 +650,15 @@ F\equiv \lam{x}{\lam{y}{y}}\equiv snd
   \item Везде, где надо вызвать эту \enquote{рекурсивную} функцию, будем писать $Yf$
 
   \begin{align*}
-     Y\equiv \lam{f}{\lam{x}{f(x\ x)}\lam{x}{f(x\ x)}}
+     Y\equiv \Yimpl
   \end{align*}
 \end{itemize}
-\vspace{1em}
+
 Откуда такое название?
-\[
-YR = \lam{x}{R(x\ x)} \lam{x}{R(x\ x)} \arr
-R\big( \lam{x}{R(x\ x)}\lam{x}{R(x\ x)} \big) =
-R(YR)
-\]
+\begin{align*}
+YR &\equiv     \redex{\Yimpl}{R} \arrbeta \redex{\lam{x}{R(x\ x)}}{\lam{x}{R(x\ x)}} \\
+&\arrbeta  R\big( \lam{x}{R(x\ x)}\lam{x}{R(x\ x)} \big)  \equiv R(YR)
+\end{align*}
 Получается, что $YR$ --- неподвижная точка $R$
 \end{frame}
 
@@ -631,24 +667,28 @@ R(YR)
 \newcommand{\FIX}{\texttt{FIX}}
 \newcommand{\self}{\ensuremath{sel\!f}}
 
-\begin{frame}{Факториал с помощью комбинатора неподвижной точки (сокращённо)}
-\vspace{-1em}
+\begin{frame}{Факториал с помощью $Y$-комбинатора (сокращённо)}
+\def\Yfac{\ensuremath{\app{\Y}{f\!ac}}}
+\vspace{-1.6em}
+
 \newcommand{\FAC}{\ensuremath{\lam{\self}{\lam{n}{ \ite{n<2}{1}{n \times \self(n-1)}}}}}
 %Основное свойство
 \[
-\FIX\ R = R\ (\FIX\ R)
+\Y\ R = R\ (\Y\ R)
 \]
 
 %\vspace{1em}
 
-Факториал: $fac \equiv \FAC$\\
+Факториал: $f\!ac \equiv \FAC$\\
 
 \begin{align*}
-  \FIX \FAC 2 & \longrightarrow\\
-  (\lambda n . \ite{n<2}{1}{n \times \FIX\ f\!ac\ (n-1)}) 2 & \arrmany \\
-  2 \times \FIX\ f\!ac\ (2-1) & \arrmany \\
-  2 \times (\FIX \FAC\ 1) & \arrmany \\
-  2 \times \ite{1<2}{1}{n \times (\FIX\ f\!ac\ (1-1))} & \arrmany \\
+  \Y\ fac\ 2 & \equiv \\
+  \Y \FAC 2 & \longrightarrow\\
+  \FAC \Yfac 2 & \longrightarrow\\
+  (\lambda n . \ite{n<2}{1}{n \times \Yfac (n-1)}) 2 & \arrmany \\
+  2 \times \Yfac (2-1) & \betaarr \\
+  2 \times (\Yfac 1) & \arrmany \\
+  2 \times \ite{1<2}{1}{n \times (\Y\ f\!ac\ (1-1))} & \arrmany \\
   2 \times 1 & \arrmany 2
 \end{align*}
  \end{frame}

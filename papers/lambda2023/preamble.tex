@@ -130,8 +130,13 @@
 
 %%\DeclareMathOperator{->}{\rightarrow}
 
-
+% https://tex.stackexchange.com/a/132994/171947
 \usepackage{amsmath}
+\ifxetexorluatex
+\else
+\patchcmd{\definition}{Definition}{Определение}{}{}
+\fi
+
 \usepackage{amssymb}
 %\usepackage{amsfonts}
 \usepackage{scalerel}
