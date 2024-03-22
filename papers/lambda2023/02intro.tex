@@ -393,17 +393,18 @@ add \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{m\ f\ }{\app{n\ f\ }{x}}}}}}\
 
 \begin{frame}{Вычисление (т.е. редукция, упрощение) 2+2}
 \def\betaarr{\longrightarrow\!\!\beta}
+\def\numTWO{\ensuremath{\lam{f}{\lam{x}{f(f\ x)}}}}
 \vspace{-2em}
   \begin{align}
-    (\lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}){} 2 2 & \betaarr \\
-    \textcolor{blue}{(\lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}) {}} \textcolor{red}{2} 2 & \betaarr \\
-    \textcolor{blue}{( \lambda n. \lambda f. \lambda x. \app{2\ f\ }{\app{n\ f\ }{x}}){}} \textcolor{red}{2} & \betaarr \\
+    \App{\lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}} }{2} 2 & \betaarr \\
+    \Redex{(\lambda m. \lambda n. \lambda f. \lambda x. \app{m\ f\ }{\app{n\ f\ }{x}}) {}}{2} 2 & \betaarr \\
+    \Redex{( \lambda n. \lambda f. \lambda x. \app{2\ f\ }{\app{n\ f\ }{x}}){}}{2} & \betaarr \\
     \lambda f. \lambda x. \app{2\ f\ }{\app{2\ f\ }{x}}   & \longrightarrow \\
-    \lambda f. \lambda x. \app{\tb{\lam{f}{\lam{x}{f (f x)}}} \ \tr{f}\ }{\app{2\ f\ }{x}} & \betaarr \\
-    \lambda f. \lambda x. \app{\lam{x}{f (f x)} \ \ }{\app{2\ f\ }{x}} & \longrightarrow \\
-    \lambda f. \lambda x. \app{\lam{x}{f (f x)} \ \ } {\app{\app{\tb{\lam{f}{\lam{x}{f (f x)}}}\ \tr{f}\ }{x}}} & \betaarr \\
-    \lambda f. \lambda x. \app{\lam{x}{f (f x)}  } {\app{\tb{\lam{x}{f (f x)} } }{\tr{x}}} & \betaarr \\
-    \lambda f. \lambda x. \app{\tb{\lam{x}{f (f x)} } } {\tr{(f (f x))}} & \betaarr \\
+    \lambda f. \lambda x. \App{\Redex{\numTWO}{f}\ }{\app{2\ f\ }{x}} & \betaarr \\
+    \lambda f. \lambda x. \App{\lam{x}{f (f x)} \ \ }{\app{2\ f\ }{x}} & \longrightarrow \\
+    \lambda f. \lambda x. \app{\lam{x}{f (f x)}} {\app{\App{\Redex{\numTWO}{f}}{x}}} & \betaarr \\
+    \lambda f. \lambda x. \App{\lam{x}{f (f x)}  } {\Redex{\lam{x}{f (f x)} }{x}} & \betaarr \\
+    \lambda f. \lambda x. \redex{\Lam{x}{f (f x)}}{\App{f}{\app{f}{x}}} & \betaarr \\
     \lambda f. \lambda x. f (f (f (f x))) & \equiv 4
   \end{align}
 \end{frame}
@@ -440,7 +441,6 @@ mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}
 
 
 
-\newcommand{\redex}[2]{\app{\tr{#1}}{\tb{#2}}}
 
 %\begin{frame}{Вычисление (т.е. редукция, упрощение) 2$\times$2 без $\eta$-экспансии}
 %\def\betaarr{\longrightarrow\!\!\beta}
@@ -461,42 +461,35 @@ mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}
 %  \end{align}
 %\end{frame}
 
-\begin{frame}{Вычисление (т.е. редукция, упрощение) 2$\times$2 длинно}
+\begin{frame}[plain]{Вычисление \\(т.е. редукция, упрощение) \\2$\times$2 длинно}
 \def\betaarr{\longrightarrow\!\!\beta}
 \def\numTWO{\ensuremath{\lam{f}{\lam{x}{f(f\ x)}}}}
 \setcounter{equation}{0}
-\vspace{-2em}
-\begin{align}
-  \app{\app{\lam{m}{\lam{n}{\lam{z}{\lam{x}{(m \app{n}{z} x)}}}}}{2}}{2} & \longrightarrow \\
-  \app{\redex{\lam{m}{\lam{n}{\lam{z}{\lam{x}{(m \app{n}{z} x)}}}}}{2}}{2} & \betaarr \\
-  \redex{\lam{n}{\lam{z}{\lam{x}{(2 \app{n}{z} x)}}}}{2} & \betaarr \\
-  \lam{z}{\lam{x}{\app{\app{2}{\app{2}{z}}}{x}}} & \longrightarrow \\
-  \lam{z}{\lam{x}{\app{\redex{\numTWO}{\app{2}{z}}}{x}}} & \betaarr \\
-  \lam{z}{\lam{x}{\redex{\lam{x}{(2 z (2 z x))}}{x}}} & \betaarr \\
-  \lam{z}{\lam{x}{\app{\app{2}{z}}{(2 z x)}}} & \longrightarrow \\
-  \lam{z}{\lam{x}{\app{\redex{\numTWO}{z}}{(2 z x)}}} & \betaarr \\
-  \lam{z}{\lam{x}{\redex{\lam{x}{\app{z}{\app{z}{x}}}}{(2 z x)}}} & \betaarr \\
-  \lam{z}{\lam{x}{\app{z}{\app{z}{\app{\app{2}{z}}{x}}}}} & \longrightarrow \\
-    \lam{z}{\lam{x}{\app{z}{\app{z}{\app{\redex{\numTWO}{z}}{x}}}}} & \betaarr \\
-  \lam{z}{\lam{x}{\app{z}{\app{z}{\redex{\lam{x}{\app{z}{\app{z}{x}}}}{x}}}}} & \betaarr \\
-  \lam{z}{\lam{x}{\app{z}{\app{z}{\app{z}{\app{z}{x}}}}}} & \equiv 4
-\end{align}
+\begin{figure}[t]
+  \begin{subfigure}[t]{0.35\textwidth}
+  $\qquad$
+  \end{subfigure}
+  \begin{subfigure}[t]{0.55\textwidth}
+        \vspace{-8em}
+        \begin{align}
+          \apppl{\app{\lam{m}{\lam{n}{\lam{z}{\lam{x}{(m \app{n}{z} x)}}}}}{2}}{2} & \longrightarrow \\
+          \Apppl{\Redex{\lam{m}{\lam{n}{\lam{z}{\lam{x}{(m \app{n}{z} x)}}}}}{2}}{2} & \betaarr \\
+          \Redex{\lam{n}{\lam{z}{\lam{x}{(2 \app{n}{z} x)}}}}{2} & \betaarr \\
+          \lam{z}{\lam{x}{\app{\app{2}{\app{2}{z}}}{x}}} & \longrightarrow \\
+          \lam{z}{\lam{x}{\App{\Redex{\numTWO}{\app{2}{z}}}{x}}} & \betaarr \\
+          \lam{z}{\lam{x}{\Redex{\lam{x}{(2 z (2 z x))}}{x}}} & \betaarr \\
+          \lam{z}{\lam{x}{\App{\app{2}{z}}{(2 z x)}}} & \longrightarrow \\
+          \lam{z}{\lam{x}{\app{\Redex{\numTWO}{z}}{(2 z x)}}} & \betaarr \\
+          \lam{z}{\lam{x}{\redex{\lam{x}{\app{z}{\app{z}{x}}}}{(2 z x)}}} & \betaarr \\
+          \lam{z}{\lam{x}{\app{z}{\app{z}{\App{\app{2}{z}}{x}}}}} & \longrightarrow \\
+          \lam{z}{\lam{x}{\app{z}{\app{z}{\App{\Redex{\numTWO}{z}}{x}}}}} & \betaarr \\
+          \lam{z}{\lam{x}{\app{z}{\App{z}{\Redex{\lam{x}{\app{z}{\app{z}{x}}}}{x}}}}} & \betaarr \\
+          \lam{z}{\lam{x}{\app{z}{\app{z}{\app{z}{\app{z}{x}}}}}} & \equiv 4
+        \end{align}
+  \end{subfigure}
+\end{figure}
+
 \end{frame}
-
-\begin{frame}{Определения алгоритма}
- \begin{theorem}[Тезис Чёрча]
-  Используя $\lambda$-исчисление можно реализовать произвольный алгоритм
-  \emph{(с точностью до представления данных)}.
-\end{theorem}
-\begin{theorem}[Тезис Тьюринга]
-Используя машину Тьюринга можно реализовать произвольный алгоритм
-\emph{(с точностью до представления данных)}.
-\end{theorem}
-\vspace{1em}
-Т.е. теперь под алгоритмом понимается только то, что можно записать в формализ\-ме~(-ах).
-\end{frame}
-
-
 
 \begin{comment}
 \begin{frame}{Две стратегии: Call-by-value и аппликативная}

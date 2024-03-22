@@ -10,6 +10,7 @@
 *.fls
 *_latexmk
 *.xdv
+*.txss2
 
 *.synctex.gz
 _minted-*

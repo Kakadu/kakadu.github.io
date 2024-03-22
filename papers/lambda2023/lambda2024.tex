@@ -16,6 +16,7 @@
 
 \usepackage{verbatim}
 \usepackage{amsmath}
+\usepackage{mathpartir}
 
 \newcommand{\term}[2]{\textit{#1} (#2)}
 \newcommand\alphaequiv{\overset{\alpha}{\equiv}}
@@ -30,15 +31,24 @@
 \def\betaarr{\longrightarrow\!\!\beta}
 
 \newcommand{\abs}[2]{\ensuremath{(\lambda #1 . #2)}}
+\newcommand{\Abs}[2]{\ensuremath{\big{(}\lambda #1 . #2\big{)}}}
 \newcommand{\lam}[2]{\ensuremath{\abs{#1}{#2}}}
+\newcommand{\lampl}[2]{\ensuremath{\lambda #1. #2}}
+\newcommand{\Lam}[2]{\ensuremath{\Abs{#1}{#2}}}
 \newcommand{\app}[2]{\ensuremath{(#1 #2)}}
+\newcommand{\apppl}[2]{\ensuremath{#1 #2}}
+\newcommand{\Apppl}[2]{\apppl{#1}{#2}}
+\newcommand{\App}[2]{\ensuremath{\big{(}#1 #2\big{)}}}
 \newcommand{\subst}[3]{\ensuremath{[#1 \mapsto #2]#3}}
 \newcommand{\substt}[3]{\ensuremath{[#2/#1]#3}}
+\newcommand{\redex}[2]{\app{\tr{#1}}{\tb{#2}}}
+\newcommand{\Redex}[2]{\App{\tr{#1}}{\tb{#2}}}
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title[Введение в лямбда-исчисление]{Введение в лямбда-исчисление}
 \author{Косарев Дмитрий}
-\date{20 марта 2024 г.}
+\date{25 марта 2024 г.}
 
 \AtBeginSection[]
 {
@@ -83,16 +93,27 @@
 \input{02intro.tex}
 
 \begin{frame}%[allowframebreaks]
-  \frametitle<presentation>{Ссылки}
-  \begin{thebibliography}{10}
+\frametitle<presentation>{Ссылки}
+\begin{thebibliography}{10}
+\setbeamertemplate{bibliography item}[book]
+    \bibitem{Harper}
+      {\em Practical Foundations for Programming Languages}
+      \newblock\url{https://web.archive.org/web/20210308082040/http://www.cs.cmu.edu/~rwh/pfpl/2nded.pdf}
 \setbeamertemplate{bibliography item}[online]
+    \bibitem{harvard}
+      {\em Slides form Harvard}
+      \newblock\url{https://groups.seas.harvard.edu/courses/cs152/2021sp/lectures/sld07-lambdacalc.pdf}
     \bibitem{litvinov}
       {\em Слайды Ю.~Литвинова} \newblock\url{https://github.com/yurii-litvinov/courses/tree/master/structures-and-algorithms/03-lambda-calculus}
-
+\setbeamertemplate{bibliography item}[article]
+    \bibitem{sestoft}
+      {\em Peter Sestoft}
+      \newblock  {Demonstrating Lambda Calculus Reduction}
 %    \bibitem{}
 %      What's the point of $eta$-conversion in lambda calculus?
 %      \newblock \url{https://cstheory.stackexchange.com/a/8261/34931}
-  \end{thebibliography}
+
+\end{thebibliography}
 \end{frame}
 
 %\appendix
@@ -105,11 +126,17 @@
 \newcommand{\strict}{\xarr{strict}}
 
 \begin{frame}{Бывают различные стратегии}
-Например,
 \begin{itemize}
 \item Строгие (англ. strict, например, call-by-value) вычисляют аргумент до его подстановки
 \item Ленивые (англ. lazy, например, call-by-name)  оставляют вычисление аргумента на потом
 \end{itemize}
+\vspace{1em}
+Классификация по обработке $\lambda$-абстракции
+\begin{itemize}
+\item Не вычисляют под абстракцией (например, call-by-value $\cbv$)
+\item Вычисляют под абстракцией (например, call-by-name $\cbn$)
+\end{itemize}
+\vspace{2em}
 
 На практике больше любят стратегии, которые эффективно можно посчитать
 \end{frame}
@@ -118,17 +145,192 @@
 Пример 1 ($\strict$ выглядит лучше)\\
 $\lam{x}{f x x}(\tr{(\lambda x. x)}\tb{A}) \strict \tr{(\lambda x. f x x)}\tb{A} \strict (f A\ A) \strict \dots $\\
 
-$\tr{\lam{x}{f x x}}\tb{((\lambda x. x)A)} \lazy (\lambda x. f ((\lambda x. x)A) ((\lambda x. x)A))A \lazy \dots $
+$\redex{\lam{x}{f x x}}{((\lambda x. x)A)} \lazy f \App{\app{\lam{x}{x}}{A}} {\app{\lam{x}{x}}{A}} \lazy \dots $
 
 \vspace{2em}
 Пример 2 ($\lazy$ выглядит лучше)\\
-$(\lambda x. \lambda y. y)(\tr{(\lambda x. xx)}\tb{(\lambda x. xx)}) \strict (\lambda x. \lambda y. y)(\tr{(\lambda x. xx)}\tb{(\lambda x. xx)}) \strict \dots \text{зависло}$
+$\lam{x}{\lam{y}{y}}\Redex{\lam{x}{xx}} {\lam{x}{xx}} \strict (\lambda x. \lambda y. y)\Redex{\lam{x}{xx}} {\lam{x}{xx}} \strict \dots \text{зависло}$
 
-$\tr{(\lambda x. \lambda y. y)}\tb{((\lambda x. xx)(\lambda x. xx))} \lazy (\lambda y. y)\quad\text{ответ!}$
+$\tr{\lam{x}{\lam{y}{y}}}\tb{\App{\lam{x}{xx}}{\lam{x}{xx}}} \lazy (\lambda y. y)\quad\text{ответ!}$
 
 \vspace{2em}
 В обычных языках программирования:
 \lstinline[language=c]=(c>0) ? f() : g() =
+\end{frame}
+
+
+\begin{frame}[fragile]{Правила вывода в исчислении}
+Пусть дан некоторый язык L, c помощью которого записываются $P_i$ и $C$.\\
+
+\vspace{1em}
+Все $(n+1)$-местные правила вывода имеют форму:
+\begin{mathpar}
+ \inferrule* [leftskip=2em,rightskip=2em,Right={$\qquad$ Название}]
+ { P_1\\ ... \\ P_n}
+ {C}
+\end{mathpar}
+
+\begin{itemize}
+  \item $P_i$ --- посылки (premises)
+  \item $C_i$ --- заключение (conclusion)
+\end{itemize}\vspace{1em}
+
+По смыслу означает <<если и $P_1$, и $P_2$, ..., и $P_n$, то $C$>>
+
+\end{frame}
+
+
+\begin{frame}{Исчисление}
+Состоит из
+\begin{itemize}
+  \item непустого множества аксиом
+  \item множества правил вывода
+\end{itemize}
+\begin{definition}
+Аксиома --- это правило вывода без посылок. Их можно рисовать без черты
+\end{definition}
+\vspace{2em}
+%Формальное определение можно прочитать в книжке Герасимова~\cite{gerasimov}.
+\end{frame}
+
+
+\begin{frame}{Пример исчисления. Дифференциальное исчисление}
+Языком L будет язык задания функций (который вообще-то надо формально определять, но не будем)
+
+\begin{mathpar}
+  \inferrule* [Right=sin]{\\}
+  {sin'(x) = cos(x)}
+  \and
+  \inferrule* [Right=cos]{\\}
+  {cos'(x) = -sin(x)}
+  \and
+  \inferrule* [Right=var]{\\}
+  {x' = 1}
+  \and
+  \inferrule* [Right=const]{\\}
+  {c' = 0, \text{если } c\in N}
+
+\end{mathpar}
+\begin{mathpar}
+  \inferrule* [Right=mul,leftskip=2em,rightskip=2em]
+  {f\ '(x) = u(x) \\ g'(x) = v(x)}
+  {((f\cdot g)(x))' = u(x)\cdot g(x) + f(x) \cdot v(x)}
+\end{mathpar}
+\begin{mathpar}
+  \inferrule* [Right=cmps,leftskip=2em,rightskip=2em]
+  {f'(x) = u(x) \\ g'(x) = v(x)}
+  {(f(g(x)))' = u(g(x)) \cdot v(x)}
+\end{mathpar}
+\end{frame}
+
+
+\begin{frame}{Дифференциальное исчисление. Пример вывода}
+Вывод обычно рисуется снизу вверх
+\begin{mathpar}
+\inferrule* []
+{ \inferrule* [Right=sin]{ }{\uncover<2- >{sin'(x) =} \uncover<3- >{cos(x)}} \\
+  \inferrule* {
+    \inferrule* [Right=cos]{ }{\uncover<3- >{cos'(x) =} \uncover<4- >{-sin(x)}} \\
+    \inferrule* []
+      { \inferrule* [Right=const]{ }{\uncover<4- >{2' = 0}} \\
+        \inferrule* [Right=var]{ }{\uncover<4- >{x' = 1}} \\
+      }
+      {\uncover<3- >{(2\cdot x)' =} \uncover<5- >{0\cdot x + 2\cdot 1} }
+  }{\uncover<2- >{cos'(2\cdot x) =} \uncover<6- >{-sin(2\cdot x)\cdot 2} }
+}
+{(sin(x)\cdot cos(2\cdot x))' = \uncover<7>{cos(x)\cdot cos(2\cdot x) + sin(x)\cdot( -sin(2\cdot x)\cdot 2) }}
+
+\end{mathpar}
+
+На вывод можно смотреть как на \textbf{доказательство} того, что производная действительно посчитана правильно.\\
+
+Результат вывода можно было бы упростить и дальше, но у нас недостаточно правил вывода для этого.
+\end{frame}
+
+
+\begin{frame}{Две стратегии: Call-by-value vs. Full Reduction}
+\begin{figure}[ht]
+  \begin{subfigure}[t]{.48\textwidth}
+     \begin{mathpar}
+     \lam{x}{e} \arr \lam{x}{e}
+     \and
+     \inferrule*  %[Right=App-abs]
+     { f \arr \lam{x}{e} \\
+       a \arr a_2 \\
+       \subst{x}{a_2}{e} \arr r
+     }
+     { (f a) \arr r}
+     \and
+     \inferrule* % [Right=App-non-abs]
+     { f \arr f_2 \neq \lam{x}{e} \\
+       a \arr a_2}
+     { (f a) \arr (f_2 a_2) }\\
+     v \cbv v\\
+    \end{mathpar}
+  \end{subfigure}
+  \begin{subfigure}[t]{.48\textwidth}
+     \begin{mathpar}
+     \inferrule* % [Right=App-non-abs]
+     { a \arr b }
+     { \lam{x}{a} \arr \lam{x}{b}}
+      \and
+    \inferrule*  %[Right=App-abs]
+    { f \arr \lam{x}{e} \\
+      a \arr a_2 \\
+      \subst{x}{a_2}{e} \arr r
+    }
+    { (f a) \arr r}
+      \and
+      \inferrule* % [Right=App-non-abs]
+    { f \arr f_2 \neq \lam{x}{e} \\
+      a \arr a_2}
+    { (f a) \arr (f_2 a_2) }\\
+     v \xarr{f\!ull} v
+    \end{mathpar}
+   \end{subfigure}
+\end{figure}
+
+
+    \begin{figure}[t]
+      \begin{subfigure}[t]{0.45\textwidth}
+    \begin{itemize}
+    \item[\faGood]    Используется в большинстве языков программирования
+    \vspace{4em}
+    \end{itemize}
+      \end{subfigure}
+      \begin{subfigure}[t]{0.45\textwidth}
+    \begin{itemize}
+      \item[\faGood] Cчитает под абстракцией, поэтому короткий ответ
+    \end{itemize}
+      \end{subfigure}
+    \end{figure}
+\end{frame}
+
+\begin{frame}{$\lambda$-исчисление. Пример вывода}
+Вывод обычно рисуется снизу вверх
+\begin{mathpar}
+\inferrule* []
+{ \inferrule* {
+     \inferrule* {
+           \inferrule* []{
+                \inferrule* []{ }{\uncover<5- >{y \arr y}}
+           }{\uncover<4- >{\lam{y}{y} \arr \lam{y}{y}}} \\
+           \inferrule* []{ }{\uncover<4- >{x \arr x}} \\
+           \inferrule* []{ }{\uncover<6- >{\subst{a}{x}{x} \arr a} } \\
+        }{\uncover<3- >{ \apppl{\lam{y}{y}}{x} \arr} \uncover<7- >{ x } }
+  }{\uncover<2- >{ \lampl{x}{\apppl{\lam{y}{y}}{x}} \arr} \uncover<8- >{ \lam{x}{x} } }\\
+  \inferrule* []{ }{\uncover<2- >{a \arr} \uncover<9- >{a}} \\
+  \inferrule* []{ }{\uncover<9- >{\subst{a}{x}{x} \arr} \uncover<10- >{a}}
+}
+{\apppl{\lam{x}{\apppl{\lam{y}{y}}{x}}}{a} \arr \uncover<11- >{a}}
+\end{mathpar}
+
+
+Отличием от дифференциального исчисления будет то, что от результата вывода надо запуститься рекурсивно пока оно не остановится.
+Там могло быть также, если бы были правила упрощения (например, $x-x\equiv0$)
+%На вывод можно смотреть как на \textbf{доказательство} того, что производная действительно посчитана правильно.\\
+
+%Результат вывода можно было бы упростить и дальше, но у нас недостаточно правил вывода для этого.
 \end{frame}
 
 \end{document}
