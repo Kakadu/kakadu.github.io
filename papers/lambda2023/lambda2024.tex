@@ -314,9 +314,9 @@ $\tr{\lam{x}{\lam{y}{y}}}\tb{\App{\lam{x}{xx}}{\lam{x}{xx}}} \lazy (\lambda y. y
      \inferrule* {
            \inferrule* []{
                 \inferrule* []{ }{\uncover<5- >{y \arr y}}
-           }{\uncover<4- >{\lam{y}{y} \arr \lam{y}{y}}} \\
-           \inferrule* []{ }{\uncover<4- >{x \arr x}} \\
-           \inferrule* []{ }{\uncover<6- >{\subst{a}{x}{x} \arr a} } \\
+           }{\uncover<4- >{\lam{y}{y} \arr} \uncover<6- >{\lam{y}{y}} } \\
+           \inferrule* []{ }{\uncover<4- >{x \arr} \uncover<6- >{x} } \\
+           \inferrule* []{ }{\uncover<6- >{\subst{x}{y}{y} \arr x} } \\
         }{\uncover<3- >{ \apppl{\lam{y}{y}}{x} \arr} \uncover<7- >{ x } }
   }{\uncover<2- >{ \lampl{x}{\apppl{\lam{y}{y}}{x}} \arr} \uncover<8- >{ \lam{x}{x} } }\\
   \inferrule* []{ }{\uncover<2- >{a \arr} \uncover<9- >{a}} \\
