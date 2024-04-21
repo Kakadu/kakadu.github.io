@@ -282,6 +282,22 @@ TODO: Check https://github.com/ahrefs/atd/tree/master/atdgen
 
 
 
+{: #marknote }
+
+## Marknote
+
+KDE делают свою поделку для ведения заметок. Я сейчас пользуюсь Onsidian.md, написанной на Electron. Хотелось бы от него избавиться. Для этого надо дополнить фичами [Marknote](https://invent.kde.org/office/marknote)
+
+* Поддержка заметок из Git
+* древовидные заметки
+* поиск по тегами
+* прочие мелочи: [раз](https://invent.kde.org/office/marknote/-/issues/31) и
+[два](https://bugs.kde.org/show_bug.cgi?id=485882)
+
+Технологии: С++ и Qt
+
+
+
 {: #ocaml-meson }
 
 ## OCaml + Meson
