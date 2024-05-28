@@ -16,19 +16,23 @@
 title: Deus ex OCaml
 email: Kakadu@pm.me
 description: >- # this means to ignore newlines until "baseurl:"
-  Write an awesome description for your new site here. You can edit this
-  line in _config.yml. It will appear in your document head meta (for
-  Google search results) and in your feed.xml site description.
+# Write an awesome description for your new site here. You can edit this
+# line in _config.yml. It will appear in your document head meta (for
+# Google search results) and in your feed.xml site description.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "" # the base hostname & protocol for your site, e.g. http://example.com
-twitter_username: Kakadu18
-telegram_username: jekyll
-github_username:  Kakadu
+#twitter_username: Kakadu18
+#telegram_username: Kakadu18
+#github_username:  Kakadu
 
 # Build settings
 safe: false
 markdown: kramdown
 theme: minima
+minima:
+  social_links:
+    - { platform: github, user_url: "https://github.com/Kakadu" }
+    - { platform: telegram, user_url: "https://t.me/Kakadu18" }
 plugins:
   - jekyll-redirect-from
   #- jekyll-feed # https://github.com/jekyll/jekyll-feed
