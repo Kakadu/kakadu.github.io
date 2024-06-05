@@ -2,7 +2,7 @@
 layout: post
 title: "Курсовые работы"
 date: 2024-02-08
-categories: teaching
+categories: teaching, russian
 permalink: /:year/topics
 redirect_from:
   - /2021/topics
