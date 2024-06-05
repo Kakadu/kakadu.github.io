@@ -55,6 +55,12 @@ categories: teaching
 #### Зачем оно Ядру?
 
 Было бы неплохо, чтобы студенты имели общее представление о компиляторах, это должно увеличить привлекательность околокомпиляторных вакансий. Да, отдельные курсы про это читаются, но поздно (3-4 год бакалавриата), и если начать рассказывать про это пораньше, то больше человек будут этим интересоваться на практиках.
+
+
+**Пожелания**. Желательно, чтобы вы Qt/QML до этого видели.
+
+**Требования**. Без знакомства с С++ будет тяжело.
+
 {:/comment}
 
 [1]: https://blog.janestreet.com/oxidizing-ocaml-locality
@@ -64,10 +70,5 @@ categories: teaching
 [5]: https://icfp23.sigplan.org/details/ocaml-2023-papers/8/Efficient-OCaml-compilation-with-Flambda-2
 [6]: https://cyberleninka.ru/article/n/proekt-rusi-dlya-obucheniya-i-sozdaniya-vysokonadezhnyh-programmnyh-sistem
 [7]: Intel Haskell Compiler  https://github.com/IntelLabs/flrc
-
-
-**Пожелания**. Желательно, чтобы вы Qt/QML до этого видели.
-
-**Требования**. Без знакомства с С++ будет тяжело.
 
 
