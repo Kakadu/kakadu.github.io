@@ -2,6 +2,7 @@
 layout: post
 title:  "Useful system settings"
 date:   2021-09-05
+categories: english
 permalink: /system-settings
 ---
 

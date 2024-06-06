@@ -2,7 +2,7 @@
 layout: post
 title:  "Грядущий курс по ФП"
 date:   2021-07-06 13:57:56 +0300
-categories: teaching, fp
+categories: teaching, fp, russian
 permalink: /:year/:title:output_ext
 ---
 
