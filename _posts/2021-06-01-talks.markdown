@@ -2,7 +2,7 @@
 layout: post
 title:  "Talks (доклады)"
 date:   2021-06-01 13:57:56 +0300
-categories: teaching
+categories: teaching, english
 ---
 
 This is a list of talks I prepared during last years.
