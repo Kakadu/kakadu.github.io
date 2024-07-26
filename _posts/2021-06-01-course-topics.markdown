@@ -281,6 +281,16 @@ TODO: Check https://github.com/ahrefs/atd/tree/master/atdgen
 {% endcomment %}
 
 
+{: #simd-parsing }
+
+## Parsing with SIMD
+
+На идеях и статьях этой либы: https://github.com/simdjson/simdjson добавитьэ
+
+* Вариант для JSON с векторными расширениями RISC-V
+* парсинг дригих языков: s-expressions, OCaml (?), etc.
+
+
 
 {: #marknote }
 
