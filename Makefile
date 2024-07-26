@@ -35,4 +35,5 @@ deps:
 
 watch:
 	@#GEM_HOME=$(HOME)/.gem PATH=$(HOME)/.gem/bin:$(PATH) bundle exec
-	bundle exec jekyll serve --livereload
+	PATH=$(GOME)/.gen/bin:$(PATH) bundle exec jekyll serve --livereload
+
