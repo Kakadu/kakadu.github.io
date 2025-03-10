@@ -5,6 +5,8 @@
 \newcommand{\tb}[1]{\textcolor{blue}{#1}}
 \newcommand{\tr}[1]{\textcolor{red}{#1}}
 
+
+
 \begin{frame}{Введение: $\lambda$-исчисление}
   \begin{figure}
     \centering
@@ -47,7 +49,7 @@ $\lambda$-исчисление можно использовать как фор
 
 \begin{figure}[ht]
   \begin{subfigure}[t]{.55\textwidth}
-     \vspace{-13em}
+     \vspace{-15em}
      Зависимо от естественного языка\\
 
      \vspace{1em}
@@ -121,17 +123,17 @@ $\lambda$-исчисление можно использовать как фор
 Всё, что соответствует формальному описанию алгоритма, можно запрограммировать на компьютере
 
 \begin{definition}[Тезис Чёрча-Тьюринга]
-Алгоритмом является всё то, что можно записать и исполнить в $\lambda$-исчислении (машине Тьюринга), с точностью до представления данных. И ничего более.
+Алгоритмом является всё то, что можно записать и исполнить в $\lambda$-исчислении (машине Тьюринга), с точностью до представления данных. И ничего более
 \end{definition}
 
 \end{frame}
 
 
 \begin{frame}{$\lambda$-исчисление}
-Процессом вычислений является переписывание программы ($\lambda$-выражения, $\lambda$-терма) на бесконечном листе бумаги.
+Процессом вычислений является переписывание программы ($\lambda$-выражения, $\lambda$-терма) на бесконечном листе бумаги
 
 \vspace{1em}
-Программы конечны и состоят из символов следующего вида.
+Программы конечны и состоят из символов следующего вида
 \begin{enumerate}
 \item Переменные, в слайдах будем их обозначать строчными латинскими буквами
 \item Скобки закрывающиеся \texttt{)} и открывающиеся \texttt{(}
@@ -186,9 +188,9 @@ $\lambda$-исчисление можно использовать как фор
 
 \vspace{1em}
 
-В $\lambda$-исчислении функция $n$ аргументов представляются как функция одного аргумента, которые возвращает функцию от $n-1$ аргумента.\\
+В $\lambda$-исчислении функция $n$ аргументов представляются как функция одного аргумента, которые возвращает функцию от $n-1$ аргумента\\
 
-В мире названо в честь Хаскеля Карри. Впервые появилось в 1924 в работе М.~И.~Шейнфинкеля.\\
+В мире названо в честь Хаскеля Карри. Впервые появилось в 1924 в работе М.~И.~Шейнфинкеля\\
 
 \footnotetext{Изображение взято с \href{https://en.wikipedia.org/wiki/Moses\_Sch\%C3\%B6nfinkel}{Википедии}}
 
@@ -229,11 +231,12 @@ lim_{\textcolor{red}{n}\rightarrow\infty}\ u_n
 \begin{figure}[ht]
   \begin{subfigure}[t]{.45\textwidth}
     \uncover<2->{\large
-    \begin{align*}
-    \forall x\ P(x)\ & \equiv & \forall \lam{x}{P(x)} &\\
-    \sum_{n=0}^{\infty}  \frac{1}{n^2} & \equiv & sum(0,\infty,\lam{n}{\frac{1}{n^2}})&\\
-    \int_{a}^{b} f(x)\ dx& \equiv & integr(a,b,\lam{x}{f(x)})&
-    \end{align*}}
+    \begin{flalign*}
+    \forall x\ P(x)\ &&{}\equiv{}& \forall \lam{x}{P(x)} &\\
+    \sum_{n=0}^{\infty}  \frac{1}{n^2} &&{}\equiv{}& sum(0,\infty,\lam{n}{\frac{1}{n^2}})&\\
+    \int_{a}^{b} f(x)\ dx&&{}\equiv{}& integr(a,b,\lam{x}{f(x)})&
+    \end{flalign*}}
+% https://stackoverflow.com/a/21035901/1065436
   \end{subfigure}
 \hspace{1cm}
   \begin{subfigure}[t]{.45\textwidth}
@@ -313,24 +316,22 @@ lim_{\textcolor{red}{n}\rightarrow\infty}\ u_n
 \end{frame}
 
 \begin{frame}{Как происходят вычисления (редукция) $\lambda$-исчислении?}
+\vspace{-0.5em}
 \begin{definition}[Редукция]
 Процесс постепенного избавления от редексов. Редукция $\equiv$ вычисление $\lambda$-выражения
 \end{definition}
 
-\begin{definition}[Стратегия]
-  Порядок выбора редексов регламентирует стратегия. Ищем редексы $(\lambda x. B)A$
-  \begin{itemize}
-    \item Если редексов нет, то вычисление закончилось
-    \item Если редексы есть, стратегия регламентирует какой на данном шаге редекс стоит $\beta$-редуцировать
-    \item Или же, стратегия может сказать, что все редексы нужно оставить как есть, и выдать ответ
-  \end{itemize}
-\end{definition}
-    %Стратегий бывает много разных
-    %\begin{enumerate}
-    %  \item Строгая стратегия call-by-value .    Для $(\lambda x. P)Q$ вычисляет $Q\cbv Q'$ и потом подставляет $Q'$ вместо $x$ в $P$.
-    %  \item Ленивая стратегия call-by-name.   Для $(\lambda x. P)Q$ сразу подставляет $Q$ вместо $x$ в $P$.
-    %  \item Обе стратегии оставляют абстракции и переменные как есть
-    %\end{enumerate}
+%\begin{definition}[Стратегия]
+%  Порядок выбора редексов регламентирует стратегия. Ищем редексы $(\lambda x. B)A$
+%  \begin{itemize}
+%    \item Если редексов нет, то вычисление закончилось
+%    \item Если редексы есть, стратегия регламентирует какой на данном шаге редекс стоит $\beta$-редуцировать
+%    \item Или же, стратегия может сказать, что все редексы нужно оставить как есть, и выдать ответ
+%  \end{itemize}
+%\end{definition}
+%\begin{definition}[Нормальная форма]
+%Это $\lambda$-терм без редексов
+%\end{definition}
 \end{frame}
 
 \begin{comment}
@@ -365,7 +366,7 @@ lim_{\textcolor{red}{n}\rightarrow\infty}\ u_n
   \begin{enumerate}
   \item[1.] 0 --- натуральное число
   \item[6.] Для любого натурального $n$, $S(n)$ тоже натуральное. т.е. натуральные числа замкнуты относительно операции $S(\cdot)$
-  \item [9.] Аксиома индукции.
+  \item [9.] Аксиома индукции
   \end{enumerate}
   \footnotetext{
   \href{https://www.researchgate.net/publication/240358753\_Peano's\_axioms\_in\_their\_historical\_context}{Peano's axioms in their historical context}
@@ -413,7 +414,7 @@ $ 2 \sim \lam{f}{\lam{x}{\ f\ (f\ x)}}$
 
   \vspace{2em}
 
-  Сложение (один из вариантов): взять два нумерала $m$ и $n$, взять $f$ и $x$, а затем к $x$ применить $f$ $n$ раз, а затем к результату применить $f$ $m$ раз.
+  Сложение (один из вариантов): взять два нумерала $m$ и $n$, взять $f$ и $x$, а затем к $x$ применить $f$ $n$ раз, а затем к результату применить $f$ $m$ раз
 
 {\Large \begin{align*}
 add \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{m\ f\ }{\app{n\ f\ }{x}}}}}}\\
@@ -441,6 +442,29 @@ add \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{m\ f\ }{\app{n\ f\ }{x}}}}}}\
   \end{align}}
 \end{frame}
 
+\begin{frame}{Что означит \enquote{вычислить $\lambda$-выражение до конца}?}
+
+\def\into{\ensuremath{\xrightarrow{\ *\ }_{\beta}}}
+\vspace{-0.5em}
+%\begin{definition}[Стратегия]
+%  Порядок выбора редексов регламентирует стратегия. Ищем редексы $(\lambda x. B)A$
+%  \begin{itemize}
+%    \item Если редексов нет, то вычисление закончилось
+%    \item Если редексы есть, стратегия регламентирует какой на данном шаге редекс стоит $\beta$-редуцировать
+%    \item Или же, стратегия может сказать, что все редексы нужно оставить как есть, и выдать ответ
+%  \end{itemize}
+%\end{definition}
+\begin{definition}[Нормальная форма]
+Это $\lambda$-терм без редексов
+\end{definition}
+
+\begin{theorem}[Чёрча-Россера]
+Если для некоторого $\lambda$-выражения $A$ при разных порядках выбора редексов
+$A \into B$ и $A \into C$,
+то существуют порядки выбора редексов и $\lambda$-выражение $D$, что $A\into B \into D$ и $A\into C \into D$
+\end{theorem}
+\end{frame}
+
 \begin{frame}{Представление чисел (нумералы Чёрча). Умножение}
 \begin{figure}[t]
     \begin{subfigure}[t]{0.35\textwidth}
@@ -462,9 +486,10 @@ $ 2 \sim \lam{f}{\lam{x}{\ f\ (f\ x)}}$
   \vspace{1cm}
 
 
-Умножение: взять два нумерала $m$ и $n$, взять $f$ и $x$, а затем к $x$ применить $n$ раз $f$, и повторить это $m$ раз.
-
+Умножение: взять два нумерала $m$ и $n$, взять $f$ и $x$, а затем к $x$ применить $n$ раз $f$, и повторить это $m$ раз
+\vspace{-0.5em}
 {\Large \begin{align*}
+add \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{m\ f\ }{\app{n\ f\ }{x}}}}}}\\
 mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}\\
 %\equiv &\ \lambda m. \lambda n. \lambda f. \lambda x. \app{\app{m}{\app{n\ f}}}{\ x} \\
 %\simeq &\ \lambda m. \lambda n. \lambda f. \app{m}{\app{n\ f}} \\
@@ -510,10 +535,10 @@ mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}
           \Redex{\lam{n}{\lam{z}{\lam{x}{(2 \app{n}{z} x)}}}}{2} & \betaarr \\
           \lam{z}{\lam{x}{\app{\app{2}{\app{2}{z}}}{x}}} & \longrightarrow \\
           \lam{z}{\lam{x}{\App{\Redex{\numTWO}{\app{2}{z}}}{x}}} & \betaarr \\
-          \lam{z}{\lam{x}{\Redex{\lam{x}{(2 z (2 z x))}}{x}}} & \betaarr \\
-          \lam{z}{\lam{x}{\App{\app{2}{z}}{(2 z x)}}} & \longrightarrow \\
-          \lam{z}{\lam{x}{\app{\Redex{\numTWO}{z}}{(2 z x)}}} & \betaarr \\
-          \lam{z}{\lam{x}{\redex{\lam{x}{\app{z}{\app{z}{x}}}}{(2 z x)}}} & \betaarr \\
+          \lam{z}{\lam{x}{\Redex{\lam{x}{(2 z (\app{2}{z} x))}}{x}}} & \betaarr \\
+          \lam{z}{\lam{x}{\App{\app{2}{z}}{(\app{2}{z} x)}}} & \longrightarrow \\
+          \lam{z}{\lam{x}{\app{\Redex{\numTWO}{z}}{(\app{2}{z} x)}}} & \betaarr \\
+          \lam{z}{\lam{x}{\redex{\lam{x}{\app{z}{\app{z}{x}}}}{(\app{2}{z} x)}}} & \betaarr \\
           \lam{z}{\lam{x}{\app{z}{\app{z}{\App{\app{2}{z}}{x}}}}} & \longrightarrow \\
           \lam{z}{\lam{x}{\app{z}{\app{z}{\App{\Redex{\numTWO}{z}}{x}}}}} & \betaarr \\
           \lam{z}{\lam{x}{\app{z}{\App{z}{\Redex{\lam{x}{\app{z}{\app{z}{x}}}}{x}}}}} & \betaarr \\
@@ -522,6 +547,20 @@ mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}
   \end{subfigure}
 \end{figure}
 
+\end{frame}
+
+\begin{frame}{$\alpha$-эквивалентность}
+\begin{definition}[$\alpha$-эквивалентность]
+Два $\lambda$-выражения $\alpha$-эквивалентны, если можно переименовать связанные вхождения так, что получатся синтаксически одинаковые выражения
+\end{definition}
+Например:
+\begin{itemize}
+\item $\lam{z}{\lam{x}{\app{z}{\app{z}{\app{z}{\app{z}{x}}}}}}$ и $\lam{f}{\lam{x}{\app{f}{\app{f}{\app{f}{\app{f}{x}}}}}}$ эквивалентны 4
+\end{itemize}
+\begin{definition}[Эквивалентность с точки зрения наблюдателя]
+Объекты ведут себя одинаково, если на них подействовать одинаково
+\end{definition}
+В этом смысле quick sort эквивалентен пузырьку
 \end{frame}
 
 \begin{comment}
@@ -606,12 +645,12 @@ mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}
 \end{frame}
 \end{comment}
 
-%\section{Написание алгоритмов с помощью лямбда-исчисления}
 
 
 
 \begin{frame}{Ветвления}
 \def\ite{\lam{c}{\lam{t}{\lam{e}{\ \app{\app{c}{t}}{e}}}}}
+Хотим определить функцию $ite$ от трех аргументов $c, th, el$, которая работает в синтаксисе Си как $c\ ?\ th\ :\ el$
 \[
 T\equiv\lam{x}{\lam{y}{x}} \equiv f\!st \qquad \qquad \qquad \qquad
 F\equiv \lam{x}{\lam{y}{y}}\equiv snd \equiv 0
@@ -668,7 +707,7 @@ F\equiv \lam{x}{\lam{y}{y}}\equiv snd \equiv 0
 \begin{frame}{Рекурсия через комбинатор неподвижной точки}
 \framesubtitle{англ. FIXed point combinator}
 \def\Yimpl{\ensuremath{\lam{f}{\Lam{x}{f(x\ x)}\Lam{x}{f(x\ x)}}}}
-Не понятно как вызвать самого себя, так как имен нет.\\
+Не понятно как вызвать самого себя, так как имен нет\\
 
 Идея:
 \begin{itemize}
@@ -694,7 +733,7 @@ YR &\equiv     \redex{\Yimpl}{R} \arrbeta \redex{\lam{x}{R(x\ x)}}{\lam{x}{R(x\ 
 \newcommand{\self}{\ensuremath{self}}
 
 \begin{frame}{Факториал с помощью $Y$-комбинатора (сокращённо)}
-\def\Yfac{\ensuremath{\app{\Y}{f\!ac}}}
+\def\Yfac{\ensuremath{\app{\Y}{f\!ac_o}}}
 \vspace{-1.6em}
 
 \newcommand{\FAC}{\ensuremath{\lam{\self}{\lam{n}{ \ite{n<2}{1}{n \times \self(n-1)}}}}}
@@ -705,13 +744,13 @@ YR &\equiv     \redex{\Yimpl}{R} \arrbeta \redex{\lam{x}{R(x\ x)}}{\lam{x}{R(x\ 
 
 %\vspace{1em}
 
-Факториал: $f\!ac \equiv \FAC$\\
+Факториал: $f\!ac_o \equiv \FAC$\\
 
 \begin{align*}
-  \Y\ fac\ 2 & \equiv \\
-  \Y \FAC 2 & \longrightarrow\\
-  \FAC \Yfac 2 & \longrightarrow\\
-  (\lambda n . \ite{n<2}{1}{n \times \Yfac (n-1)}) 2 & \arrmany \\
+  \Yfac\ 2 & \equiv \\
+  \redex{\Y}{\FAC}\ 2 & \longrightarrow\\
+  \redex{\FAC}{\Yfac}\ 2 & \longrightarrow\\
+  \redex{(\lambda n . \ite{n<2}{1}{n \times \Yfac (n-1)})}{2} & \arrmany \\
   2 \times \Yfac (2-1) & \betaarr \\
   2 \times (\Yfac 1) & \arrmany \\
   2 \times \ite{1<2}{1}{n \times (\Y\ f\!ac\ (1-1))} & \arrmany \\
