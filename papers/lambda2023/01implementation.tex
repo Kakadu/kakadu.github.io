@@ -1,8 +1,6 @@
-% !TeX root = lambda2023.tex
-
 
 \defverbatim[colored]{\cast}{
-\begin{lstlisting}{c}
+\begin{lstlisting}[language=c]
 enum Tag { VAR, ABS, APP };
 struct ulc {
   Tag tag;
@@ -16,7 +14,7 @@ struct ulc {
 }
 
 \defverbatim[colored]{\strat}{
-\begin{lstlisting}{c}
+\begin{lstlisting}[language=c]
 struct Strategy {
   ulc* (*onVar)(Strategy* self, char* name);
   ulc* (*onApp)(Strategy* self, struct ulc *f, struct ulc *arg);
@@ -36,28 +34,28 @@ struct ulc* applyStrategy(Strategy *self, struct ulc *root) {
 
 
 \defverbatim[colored]{\nostrat}{
-\begin{lstlisting}
-struct ulc *evalVar(Strategy *this, char *name) {
+\begin{lstlisting}[language=c]
+ulc *evalVar(Strategy *this, char *name) {
   return var(name);
 }
-struct ulc *dontReduceUnderAbstraction(Strategy *this, char  *name, ulc *body) {
+ulc *dontReduceUnderAbstr(Strategy *this, char  *name, ulc *body) {
   return abs(name, body);
 }
-struct ulc *dontReduceApplication(Strategy *this, ulc* f, ulc* arg) {
+ulc *dontReduceApp(Strategy *this, ulc* f, ulc* arg) {
   return app(f, arg);
 }
 
 struct Strategy NoStrategy = {
   .onvar = evalVar,
-  .onApp = dontReduceApplication,
-  .onAbs = dontReduceUnderAbstraction,
+  .onApp = dontReduceApp,
+  .onAbs = dontReduceUnderAbstr,
 };
   \end{lstlisting}
 }
 
 \defverbatim[colored]{\cbvstrat}{
-  \begin{lstlisting}{c}
-struct ulc *evalApplyByValue(Strategy *self, ulc *f, ulc *a1) {
+  \begin{lstlisting}[language=c]
+ulc *evalApplyByValue(Strategy *self, ulc *f, ulc *a1) {
   auto f2 = applyStrategy(self, f);
   switch (f2->tag) {
     case VAR:    case APP:      return app(f2, a1);
@@ -72,26 +70,49 @@ struct ulc *evalApplyByValue(Strategy *self, ulc *f, ulc *a1) {
 struct Strategy CallByValue = {
   .onvar = evalVar,
   .onApp = evalApplyByValue,
-  .onAbs = dontReduceUnderAbstraction };
+  .onAbs = dontReduceUnderAbstr };
   \end{lstlisting}
 }
 
 \defverbatim[colored]{\inheritance}{
-\begin{lstlisting}{c}
-struct ulc *evalApplyByValue(Strategy *this, ulc *f, ulc *arg)
-struct ulc *evalVar(Strategy *this, char *name);
-struct ulc *dontReduceUnderAbstraction(Strategy *this, char *name, ulc *body);
-struct ulc *dontReduceApplication(Strategy *this, ulc *f, ulc *arg);
+\begin{lstlisting}[language=c]
+ulc *evalApplyByValue(Strategy *this, ulc *f, ulc *arg)
+ulc *evalVar(Strategy *this, char *name);
+ulc *dontReduceUnderAbstr(Strategy *this, char *name, ulc *body);
+ulc *dontReduceApplication(Strategy *this, ulc *f, ulc *arg);
 
 struct Strategy NoStrategy = {
   .onvar = evalVar,
-  .onAbs = dontReduceUnderAbstraction,
   .onApp = dontReduceApplication,
+  .onAbs = dontReduceUnderAbstr
 };
 struct Strategy CallByValue = {
   .onvar = evalVar,
-  .onAbs = dontReduceUnderAbstraction
   .onApp = evalApplyByValue,
+  .onAbs = dontReduceUnderAbstr
 };
 \end{lstlisting}
 }
+
+
+
+\section{Как писать интерпретатор на Си?}
+\begin{frame}{Дэмка на С++ (1/5): представление выражений}
+\cast
+\end{frame}
+
+\begin{frame}{Дэмка на С++ (2/5): объявление стратегии}
+\strat
+\end{frame}
+
+\begin{frame}{Дэмка на С++ (3/5): тривиальная константная стратегия}
+\nostrat
+\end{frame}
+
+\begin{frame}{Дэмка на С++ (4/5): Call-by-value}
+\vspace{-0.5em}
+\cbvstrat
+\end{frame}
+\begin{frame}{Дэмка на С++ (5/5): понятие наследования}
+\inheritance
+\end{frame}

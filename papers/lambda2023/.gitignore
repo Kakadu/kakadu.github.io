@@ -2,4 +2,6 @@ _minted*
 *.synctex.gz
 *.synctex(busy)
 *.pyg
+*-blx.bib
+*.run.xml
 
