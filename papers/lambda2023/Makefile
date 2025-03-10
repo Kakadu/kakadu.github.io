@@ -1,7 +1,7 @@
 .PHONY: debs depexts all pics 
 .SUFFIXES: .tex .pdf
 
-TARGET = lambda2024
+TARGET = lambda2025
 ENGINE ?= xelatex
 
 all: $(TARGET).pdf
@@ -18,7 +18,7 @@ $(TARGET).pdf: $(TARGET).tex
 
 clean:
 	@$(RM) -r _minted* 
-	@$(RM) *.aux *.log *.bbl *.blg *.vrb *.xdv *.nav *.out *.snm *.toc *_latexmk *.synctex.gz *.pdf 
+	@$(RM) *.aux *.log *.bbl *.blg *.vrb *.xdv *.nav *.out *.snm *.toc *_latexmk *.synctex.gz *.pdf *-blx.bib *.run.xml
 
 cleanminted:
 	@$(RM) -r _minted* *.pdf
