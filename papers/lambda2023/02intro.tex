@@ -5,6 +5,8 @@
 \newcommand{\tb}[1]{\textcolor{blue}{#1}}
 \newcommand{\tr}[1]{\textcolor{red}{#1}}
 
+
+
 \begin{frame}{Введение: $\lambda$-исчисление}
   \begin{figure}
     \centering
@@ -229,11 +231,12 @@ lim_{\textcolor{red}{n}\rightarrow\infty}\ u_n
 \begin{figure}[ht]
   \begin{subfigure}[t]{.45\textwidth}
     \uncover<2->{\large
-    \begin{align*}
-    \forall x\ P(x)\ & \equiv & \forall \lam{x}{P(x)} &\\
-    \sum_{n=0}^{\infty}  \frac{1}{n^2} & \equiv & sum(0,\infty,\lam{n}{\frac{1}{n^2}})&\\
-    \int_{a}^{b} f(x)\ dx& \equiv & integr(a,b,\lam{x}{f(x)})&
-    \end{align*}}
+    \begin{flalign*}
+    \forall x\ P(x)\ &&{}\equiv{}& \forall \lam{x}{P(x)} &\\
+    \sum_{n=0}^{\infty}  \frac{1}{n^2} &&{}\equiv{}& sum(0,\infty,\lam{n}{\frac{1}{n^2}})&\\
+    \int_{a}^{b} f(x)\ dx&&{}\equiv{}& integr(a,b,\lam{x}{f(x)})&
+    \end{flalign*}}
+% https://stackoverflow.com/a/21035901/1065436
   \end{subfigure}
 \hspace{1cm}
   \begin{subfigure}[t]{.45\textwidth}
