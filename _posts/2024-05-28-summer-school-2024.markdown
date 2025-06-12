@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Летняя школа на матмехе 2024"
+title: "Летняя школа 2024 на матмехе"
 date: 2024-05-28
 categories: teaching, russian
 permalink: /2024/summer_school
