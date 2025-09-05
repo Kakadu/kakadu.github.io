@@ -189,14 +189,20 @@ redirect_from:
 
 В процессе придется много разбираться с XML спецификацией документов.
 
-{% spoiler **Спойлер** %}
-  * [OCaml-ooxml](https://github.com/brendanlong/ocaml-ooxml) умеет только Excel
-  * [MiniDOCX](https://github.com/totravel/minidocx) простые примеры, скорее всего мало что умеет
-  * [OpenXLSX](https://github.com/troldal/OpenXLSX) походу толко Excel
-  * [DuckX](https://github.com/amiremohamadi/DuckX)
+{% spoiler Библиотеки на посмотреть (спойлер) %}
+
+* [OCaml-ooxml](https://github.com/brendanlong/ocaml-ooxml) умеет только Excel
+* [MiniDOCX](https://github.com/totravel/minidocx) простые примеры, скорее всего мало что умеет
+* [OpenXLSX](https://github.com/troldal/OpenXLSX) походу толко Excel
+* [DuckX](https://github.com/amiremohamadi/DuckX)
+
 {% endspoiler %}
 
-Доработать #ocaml библиотеку для создания DOCX файлов: https://github.com/brendanlong/ocaml-ooxml
+<!-- {% spoiler **Спойлер** %} -->
+
+<!-- {% endspoiler %} -->
+
+<br/>
 
 Хочется, чтобы библиотека была могущественна достаточно, чтобы порождать учебные планы матмеха, не отличимые от сверстанных вручную: титульник, стрёмные таблицы и т.п.
 
@@ -655,7 +661,7 @@ Tема [с прошлого года](https://kakadu.github.io/fp2020/projects.
 
 ## miniKanren + Расписание
 
-{% spoiler title="Спойлер" %}
+{% spoiler Спойлер %}
 
   На матмехе беда с расписанием. Оно состовляется вручную, поэтому оно появляется с запозданием и не отличается качеством, так как очень тяжело учесть все пожелания студентов и преподователей. Также присутствует большое количество ограничений. Вот, например, некоторые из них:
 
