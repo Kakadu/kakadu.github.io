@@ -46,6 +46,7 @@ feed:
 # to override the default setting.
 exclude:
   - papers/parsley2021
+  - vendor/bundle # https://github.com/jekyll/jekyll/issues/9258
 #   - Gemfile
 #   - Gemfile.lock
 #   - node_modules
