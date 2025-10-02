@@ -1,0 +1,31 @@
+****************************
+Система типов Хиндли-Милнера
+****************************
+
+
+
+
+.. contents:: Оглавление
+    :depth: 3
+
+
+.. figure:: images/HM1.png
+    :alt: Base Mesh + 128x128 Texture (334 KB)
+    :width: 400
+    :align: center
+
+    Дерево выражений
+
+.. figure:: images/HM2.png
+    :alt: Base Mesh + 128x128 Texture (334 KB)
+    :width: 500
+    :align: center
+
+    Дерево выражений
+
+
+Упомянуть
+---------
+
+* https://www.haskellforall.com/2021/08/namespaced-de-bruijn-indices.html
+* ?
