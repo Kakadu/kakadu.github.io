@@ -70,6 +70,10 @@ redirect_from:
         и научиться оптимизировать компиляцию с их участием.
       * [Bit-Stealing Made Legal: Compilation for Custom Memory Representations of Algebraic Data Types](https://dl.acm.org/doi/10.1145/3607858)
     * multicore
+    * OOP
+
+      [Тут ](https://github.com/ocaml/ocaml/issues/14131) есть сслыка на какое-то описание того, как это сейчас в OCaml устроено.
+
 * Backend
     * Выделения памяти на стеке и хвостовая рекурсия.
 
@@ -103,6 +107,9 @@ redirect_from:
     * Universal Instruction Selection
     * Порождение кода с помощью Sea-of-Nodes ([как в Java HotSpot](https://www.youtube.com/watch?v=9epgZ-e6DUU))
       * https://github.com/dstogov/rcc
+    * Отладчик как плагин к GDB/LLDB
+
+      В языке специализирвоанное представление данных, плюс типы скорее всего будут стираться после компиляции, а значит будут проблемы с их распечаткой в  отладчике. Можно вдохновлсять libmonda [раз](https://mshinwell.github.io/libmonda/), [два](https://github.com/ocaml/ocaml/pull/574/files#diff-9e4c9ef215129616554eb8f91394cacd335632cff271b3bf226fc5a8851b9210), и прикручивать в компилятор DWARF информацию для отладки и играться с отладчиком. Ещё вот такое есть: https://kcsrk.info/ocaml/gdb/2024/01/20/gdb-ocaml
 
 * Можно немного отклониться, и позаниматься добавлением процессорно-специфичных инструкций в настоящий  OCaml.
   На вскидку можно заняться расширениями для RISC-V про bitmanip, про векторные расширения или про T-HEADовские векторные расширения. Можно вдохновляться [ocaml-flambda](https://github.com/ocaml-flambda/flambda-backend), где бойцы занимаются чем-то подобным для amd64 и aarch64, но ничего про RISC-V там нет. (Этим уже частично занимался Габдрахманов.)
