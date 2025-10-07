@@ -376,6 +376,15 @@ ANTRL --- генератор синтаксических анализаторо
 
 # Недооформленные/идеи
 
+{: #chicken-miniKanren }
+
+Адаптировать реализацию https://github.com/michaelballantyne/faster-minikanren c ChezScheme/Racket на Chicken scheme 
+([раз](https://www.more-magic.net/posts/internals-data-representation.html),
+[два](https://wiki.call-cc.org/man/4/Data%20representation)).
+Хочется проврить, на сколько будет отличаться производительность у простого компилятора Chicken по сравнению с можным Chez.
+Если окажется, что не сильно, то это означает, что для miniKanren язык Scheme очень удачен. Если сильно --- значит Chez очень крут.
+
+
 {: #asmjit-risc-v }
 
 ## ASMJit
