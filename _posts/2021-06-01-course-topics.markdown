@@ -71,6 +71,7 @@ redirect_from:
       * [Bit-Stealing Made Legal: Compilation for Custom Memory Representations of Algebraic Data Types](https://dl.acm.org/doi/10.1145/3607858)
     * multicore
     * Простой inline (с примерами отсюда: https://ocamlpro.com/blog/2025_02_19_the_flambda2_snippets_4)
+      * Или на тему специализации: https://ocamlpro.com/blog/2018_04_01_ocaml_jtrt/
     * OOP
 
       [Тут ](https://github.com/ocaml/ocaml/issues/14131) есть сслыка на какое-то описание того, как это сейчас в OCaml устроено.
