@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Выбор инструкций в компиляторах &#8212; документация FP и RISC-V </title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=2bf1fcf8" />
+    
+    <script src="_static/documentation_options.js?v=372fde1a"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=cd1d70c9"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Алгебраические типы данных" href="030adt.html" />
+    <link rel="prev" title="Введение" href="intro.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Навигация</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Алфавитный указатель"
+             accesskey="I">указатель</a></li>
+        <li class="right" >
+          <a href="030adt.html" title="Алгебраические типы данных"
+             accesskey="N">вперёд</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Введение"
+             accesskey="P">назад</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">документация FP и RISC-V </a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Выбор инструкций в компиляторах</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="id1">
+<h1><a class="toc-backref" href="#id18" role="doc-backlink">Выбор инструкций в компиляторах</a><a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<p>Данные материалы задумывались как часть переработки и расширения курса по проектированию компиляторов,
+где обучающиеся пишут свой компилятор простого языка программирования.
+Как показывает опыт автора, студенты вполне способны сделать простое порождение инструкций (англ. instruction selection) не изучая ничего, если они знакомы с основами ассемблера целевой архитектуры.
+В данном документе будут кратко изложена история исследования данной части компиляторов, и поведаны основные идеи, которые помогут заинтересованным студентам сделать «навороченный» выбор инструкций.</p>
+<p>Никакой явной завязки на язык реализации, компилируемый язык или целевую архитектуру не задумывалось.</p>
+<p>Информация подготовлена в основном на основе работ <span id="id2">[<a class="reference internal" href="index.html#id9" title="Gabriel Hjort Blindell. Instruction selection: Principles, methods, and applications. 01 2016. doi:10.1007/978-3-319-34019-7.">Blindell, 2016</a>, <a class="reference internal" href="index.html#id10" title="Gabriel Hjort Blindell. Universal Instruction Selection. PhD thesis, KTH Royal Institute of Technology, Sweden, 2018. URL: https://urn.kb.se/resolve?urn=urn:nbn:se:kth:diva-223599.">Blindell, 2018</a>]</span>.
+В тех местах, где это уместно, были приведены примеры использования RISC-V инструкций.</p>
+<p>Разработка данных учебных материалов поддержана в рамках конкурса грантов Альянса RISC-V.
+Материалы допускаются к использованию под лицензией CC BY 4.0.</p>
+<nav class="contents" id="id3">
+<p class="topic-title">Оглавление</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id18">Выбор инструкций в компиляторах</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id4" id="id19">Классификация инструкций</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id20">Что такое порождение «оптимальных» инструкций?</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id6" id="id21">Модуль 1. Раскрытие макросов</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#id7" id="id22">Наивное раскрытие макросов</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id11" id="id23">Вопросы для самопроверки</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+<div class="toctree-wrapper compound">
+</div>
+<section id="id4">
+<h2><a class="toc-backref" href="#id19" role="doc-backlink">Классификация инструкций</a><a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Чтобы проще сравнивать различные подходы к выбору инструкций, давайте введем классы инструкций.</p>
+<p><strong>С единичным результатом</strong> (англ. single-output instructions).
+Такие инструкции производят только один наблюдаемый результат, который можно прочитать другими инструкциями в ассемблерном коде.
+Сюда относятся большинство инструкций в современных процессорах, например, сложение и умножения, загрузка из памяти с учетом индекса выше, в том числе сложные инструкции типа <code class="docutils literal notranslate"><span class="pre">cpop</span></code> из RISCV, которая считает количество единиц в битовом представлении числа.</p>
+<p>Обычно, из таких простых инструкций состоят ISA RISC процессоров, например, MIPS или RISC-V с базовым набором инструкций.</p>
+<p><strong>С множественными результатами</strong> (англ. multi-output instructions) имеют более одного наблюдаемого результата. Классическим примером будут инструкции, которые сразу вычисляют и остаток, и частное, или арифметические инструкции, выставляющие флаги переполнения.
+Большинство архитектур предоставляют такого рода инструкции, в том числе и AMD64, и RISC-V (например,  <a class="reference external" href="https://msyksphinz-self.github.io/riscv-isadoc/html/rv64a.html">расширение atomic</a>).</p>
+<p><strong>С не пересекающимися результатами</strong> (англ. disjoint-output instructions) порождают из набора входных данных набор выходных.
+От предыдущего вида они отличаются тем, что тут результат не зависит от всех входных данных, и входы и результаты сгруппированы в виде некоторых шаблонов, которые не пересекаются.
+Сюда относятся SIMD-инструкции (англ. single-instruction, multiple-data), которые запускают одновременно несколько однотипных действий над данными.
+Для AMD64 такие инструкции есть в расширения SSE и AVX, для ARM — в NEON, в RISC-V — векторные инструкции.</p>
+<p><strong>Межблоковые</strong> инструкции получаются из нескольких блоков графа потока управления высокоуровневого языка.
+Каночиным примером будет арифметика с насыщением, например <code class="docutils literal notranslate"><span class="pre">max</span></code> из <a class="reference external" href="https://github.com/riscv/riscv-bitmanip/blob/main/bitmanip/insns/max.adoc">RISC-V с расширением bitmanip</a>.</p>
+<p><strong>Зависимые между собой</strong> инструкции обычно встречаются в специализированных архитектурах типа DSP. Зависимости заключаются в том, что некоторые инструкции не могут стоять рядом с другими в зависимости от используемого способа адресации.
+Современным методам такие инструкции даются тяжело, обычно потому что они нарушают некоторые предположения, которые вшиты в методы выбора инструкций.</p>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id20" role="doc-backlink">Что такое порождение «оптимальных» инструкций?</a><a class="headerlink" href="#id5" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Говоря про «оптимальный выбор инструкций» часто подразумевают следующее определение. Для некоторого набора I инструкций, где каждая инструкция <span class="math notranslate nohighlight">\(i\in I\)</span> имеет стоимость <span class="math notranslate nohighlight">\(c_i\)</span>, алгоритм выбора инструкций дает оптимальный результат, если для любой входной программы P он находит набор (с повторами) S из I такой, что S реализует P, и не существует другого такого набора <span class="math notranslate nohighlight">\(S'\)</span>, что он тоже реализует программу P, и
+при этом <span class="math notranslate nohighlight">\(\sum_{s' \in S'} c_{s'} &lt; \sum_{s \in S} c_s\)</span>.</p>
+<p>У этого определения есть несколько недостатков. Во-первых, алгоритмы выбора инструкций могут иметь различные наборы поддерживаемых инструкций, игнорируя некоторые, которые в перспективе могут дать более эффективный код.
+Алгоритмы, использующие похожий набор инструкций, можно сравнивать.
+Алгоритмы с непохожими наборами инструкций могут быть каждый по-своему оптимальными, но при это различаться в разы по производительности.
+Поддерживать все возможные инструкции ISA тоже затруднительно, так как алгоритмы порождения инструкций становятся полуоптимальны.</p>
+<p>Во-вторых, два сравнимых подхода к выбору инструкций могут породить код, который после фаз переупорядочивания инструкций и распределения регистров будет непохожего качества.
+Например, нам нужно породить инструкции, которые независимы друг от друга.
+ISA предлагает два варианта: использовать две инструкции со стоимостью 2 каждая, либо использовать одну инструкцию со стоимостью 3.
+Согласно критерию выше, нужно выбирать второй подход, так как там суммарная стоимость будет меньше.
+Но если целевая архитектура умеет исполнять несколько инструкций параллельно, то лучше первый подход.</p>
+<section id="id6">
+<h3><a class="toc-backref" href="#id21" role="doc-backlink">Модуль 1. Раскрытие макросов</a><a class="headerlink" href="#id6" title="Ссылка на этот заголовок">¶</a></h3>
+<p>Раскрытие макросов (англ. macro expansion) исторически является первым и достаточно простым подходом к порождению инструкций.
+Зачастую реализация разделяется на две части: непосредственно макросы-шаблоны и процедура, которая применяет эти макросы к коду (macro expander).
+За счет этого разделения первая часть может быть специализирована под различные архитектуры, в то время как вторая может быть написана один раз для всех архитектур.</p>
+<p><strong>Преимущества</strong>: просто и прямолинейно.</p>
+<table class="docutils align-default" id="id12">
+<caption><span class="caption-text">Пример раскрытия макросов для архитектуры RISC-V. Одной инструкции языка Си слева соответствуют от 1 до 3 инструкций ассемблера.</span><a class="headerlink" href="#id12" title="Ссылка на эту таблицу">¶</a></caption>
+<tbody>
+<tr class="row-odd"><td><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">a</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="mi">1</span><span class="p">;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>li r1, 1
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-even"><td><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="kt">int</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">a</span><span class="o">+</span><span class="mi">4</span><span class="p">;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>addi r2, r1, 4
+</pre></div>
+</div>
+</td>
+</tr>
+<tr class="row-odd"><td><div class="highlight-c notranslate"><div class="highlight"><pre><span></span><span class="n">p</span><span class="p">[</span><span class="mi">4</span><span class="p">]</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">b</span><span class="p">;</span>
+</pre></div>
+</div>
+</td>
+<td><div class="highlight-none notranslate"><div class="highlight"><pre><span></span>lw r3, @p ; адрес начала массива
+addi r4, r3, 4*8
+sw r4, r5
+</pre></div>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="id7">
+<h2><a class="toc-backref" href="#id22" role="doc-backlink">Наивное раскрытие макросов</a><a class="headerlink" href="#id7" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Одной из первых работ по порождению кода с помощью макросов является SIMCMP (SIMple CoMPiler) <span id="id8">[<a class="reference internal" href="index.html#id15" title="Richard J. Orgass and William M. Waite. A base for a mobile programming system. Commun. ACM, 12:507-510, 1969. URL: https://api.semanticscholar.org/CorpusID:8164996.">Orgass and Waite, 1969</a>]</span>.
+В этом проекте код программы читался строчка за строчкой, и на ходу порождался машинный код. Сделано это для того, чтобы писать компилятор языка на самом этом языке (англ. bootstraping).</p>
+<p>Ниже можно найти пример спецификации в  системе SIMCMP <span id="id9">[<a class="reference internal" href="index.html#id15" title="Richard J. Orgass and William M. Waite. A base for a mobile programming system. Commun. ACM, 12:507-510, 1969. URL: https://api.semanticscholar.org/CorpusID:8164996.">Orgass and Waite, 1969</a>]</span>.</p>
+<div class="literal-block-wrapper docutils container" id="id13">
+<div class="code-block-caption"><span class="caption-text">Объявление макроса в  SIMCMP.</span><a class="headerlink" href="#id13" title="Ссылка на этот код">¶</a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>* = CAR.*.
+    I = CDR(&#39;21)
+    CDR(&#39;11) = CAR(I).
+.X
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id14">
+<div class="code-block-caption"><span class="caption-text">Строка программы, которую компилируем.</span><a class="headerlink" href="#id14" title="Ссылка на этот код">¶</a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>A = CAR B.
+</pre></div>
+</div>
+</div>
+<div class="literal-block-wrapper docutils container" id="id15">
+<div class="code-block-caption"><span class="caption-text">Порожденный код</span><a class="headerlink" href="#id15" title="Ссылка на этот код">¶</a></div>
+<div class="highlight-text notranslate"><div class="highlight"><pre><span></span>I = CDR(38)
+CDR(36) = CAR(I)
+</pre></div>
+</div>
+</div>
+<p>Другой пример — GCL <span id="id10">[<a class="reference internal" href="index.html#id16" title="M. Elson and S. T. Rake. Code-generation technique for large-language compilers. IBM Systems Journal, 9(3):166-188, 1970. doi:10.1147/sj.93.0166.">Elson and Rake, 1970</a>]</span>, который использовался в компиляторе PL/1 и код порождался из деревьев абстрактного синтаксиса (англ. abstract syntax tree, AST).
+По сравнению с чтением программы построчно, AST гарантирует, что программа написана без синтаксических ошибок, что упрощает задачу порождения кода.</p>
+<figure class="align-center" id="id16">
+<a class="reference internal image-reference" href="images/sel1.png"><img alt="Base Mesh + 128x128 Texture (334 KB)" src="images/sel1.png" style="width: 150px;" />
+</a>
+<figcaption>
+<p><span class="caption-text">Дерево выражений</span><a class="headerlink" href="#id16" title="Ссылка на это изображение">¶</a></p>
+</figcaption>
+</figure>
+<div class="literal-block-wrapper docutils container" id="id17">
+<div class="code-block-caption"><span class="caption-text">Пример кода на RISCV для простого выражения и его схема компиляции для RISC-V.
+Значения переменных <code class="docutils literal notranslate"><span class="pre">a</span></code> и <code class="docutils literal notranslate"><span class="pre">b</span></code> хранятся в регистрах <code class="docutils literal notranslate"><span class="pre">r1</span></code> и <code class="docutils literal notranslate"><span class="pre">r2</span></code> соответственно.</span><a class="headerlink" href="#id17" title="Ссылка на этот код">¶</a></div>
+<div class="highlight-asm notranslate"><div class="highlight"><pre><span></span><span class="nf">add</span><span class="w"> </span><span class="no">t0</span><span class="p">,</span><span class="w"> </span><span class="no">r1</span><span class="p">,</span><span class="w"> </span><span class="no">r2</span>
+<span class="nf">mulw</span><span class="w"> </span><span class="no">t0</span><span class="p">,</span><span class="w"> </span><span class="no">t0</span><span class="p">,</span><span class="w"> </span><span class="mi">2</span>
+</pre></div>
+</div>
+</div>
+<section id="id11">
+<h3><a class="toc-backref" href="#id23" role="doc-backlink">Вопросы для самопроверки</a><a class="headerlink" href="#id11" title="Ссылка на этот заголовок">¶</a></h3>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>В архитектуре x86/amd64 присутствуют инструкции арифметических операций, а также инструкции ветвелния в зависмости от различных флагов переноса/переполнения, а эти флаги изменяются при выполнении арифметических операций. Какой категории инструкций относятся арифметические инструкции в x86/amd64?</dt><dd><ol class="arabic simple">
+<li><p>С единичным результатом</p></li>
+<li><p>С множественными результатами</p></li>
+<li><p>С не пересекающимися результатами</p></li>
+<li><p>Межблоковые</p></li>
+<li><p>Зависимые между собой</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ol>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Оглавление</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Выбор инструкций в компиляторах</a><ul>
+<li><a class="reference internal" href="#id4">Классификация инструкций</a></li>
+<li><a class="reference internal" href="#id5">Что такое порождение «оптимальных» инструкций?</a><ul>
+<li><a class="reference internal" href="#id6">Модуль 1. Раскрытие макросов</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#id7">Наивное раскрытие макросов</a><ul>
+<li><a class="reference internal" href="#id11">Вопросы для самопроверки</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Предыдущий раздел</h4>
+    <p class="topless"><a href="intro.html"
+                          title="предыдущая глава">Введение</a></p>
+  </div>
+  <div>
+    <h4>Следующий раздел</h4>
+    <p class="topless"><a href="030adt.html"
+                          title="следующая глава">Алгебраические типы данных</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Эта страница</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/020types.rst.txt"
+            rel="nofollow">Исходный текст</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Быстрый поиск</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Навигация</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Алфавитный указатель"
+             >указатель</a></li>
+        <li class="right" >
+          <a href="030adt.html" title="Алгебраические типы данных"
+             >вперёд</a> |</li>
+        <li class="right" >
+          <a href="intro.html" title="Введение"
+             >назад</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">документация FP и RISC-V </a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Выбор инструкций в компиляторах</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Авторские права 2025, Kakadu.
+      Создано с использованием <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+  </body>
+</html>

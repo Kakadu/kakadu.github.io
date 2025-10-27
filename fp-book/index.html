@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>Выбор инструкций в компиляторах &#8212; документация FP и RISC-V </title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=2bf1fcf8" />
+    
+    <script src="_static/documentation_options.js?v=372fde1a"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=cd1d70c9"></script>
+    
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Введение" href="intro.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Навигация</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Алфавитный указатель"
+             accesskey="I">указатель</a></li>
+        <li class="right" >
+          <a href="intro.html" title="Введение"
+             accesskey="N">вперёд</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">документация FP и RISC-V </a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Выбор инструкций в компиляторах</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="id1">
+<h1><a class="toc-backref" href="#id36" role="doc-backlink">Выбор инструкций в компиляторах</a><a class="headerlink" href="#id1" title="Ссылка на этот заголовок">¶</a></h1>
+<p>Данные материалы задумывались как часть переработки и расширения курса по проектированию компиляторов,
+где обучающиеся пишут свой компилятор простого языка программирования.
+Как показывает опыт автора, студенты вполне способны сделать простое порождение инструкций (англ. instruction selection) не изучая ничего, если они знакомы с основами ассемблера целевой архитектуры.
+В данном документе будут кратко изложена история исследования данной части компиляторов, и поведаны основные идеи, которые помогут заинтересованным студентам сделать «навороченный» выбор инструкций.</p>
+<p>Никакой явной завязки на язык реализации, компилируемый язык или целевую архитектуру не задумывалось.</p>
+<p>Информация подготовлена в основном на основе работ <span id="id2">[<a class="reference internal" href="#id9" title="Gabriel Hjort Blindell. Instruction selection: Principles, methods, and applications. 01 2016. doi:10.1007/978-3-319-34019-7.">Blindell, 2016</a>, <a class="reference internal" href="#id10" title="Gabriel Hjort Blindell. Universal Instruction Selection. PhD thesis, KTH Royal Institute of Technology, Sweden, 2018. URL: https://urn.kb.se/resolve?urn=urn:nbn:se:kth:diva-223599.">Blindell, 2018</a>]</span>.
+В тех местах, где это уместно, были приведены примеры использования RISC-V инструкций.</p>
+<p>Разработка данных учебных материалов поддержана в рамках конкурса грантов Альянса RISC-V.
+Материалы допускаются к использованию под лицензией CC BY 4.0.</p>
+<nav class="contents" id="id3">
+<p class="topic-title">Оглавление</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#id1" id="id36">Выбор инструкций в компиляторах</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id4" id="id37">Заключение</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id38">Вопросы для самопроверки</a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id39">Библиография</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="intro.html">Введение</a></li>
+<li class="toctree-l1"><a class="reference internal" href="020types.html">Выбор инструкций в компиляторах</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="020types.html#id4">Классификация инструкций</a></li>
+<li class="toctree-l2"><a class="reference internal" href="020types.html#id5">Что такое порождение «оптимальных» инструкций?</a></li>
+<li class="toctree-l2"><a class="reference internal" href="020types.html#id7">Наивное раскрытие макросов</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="030adt.html">Алгебраические типы данных</a></li>
+<li class="toctree-l1"><a class="reference internal" href="040cps.html">Хвостовая рекурсия. Продолжения</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="040cps.html#id3"><span class="xref std std-term">Хвостовая рекурсия</span></a></li>
+<li class="toctree-l2"><a class="reference internal" href="040cps.html#id5">Демонстрация переполнения стека</a></li>
+<li class="toctree-l2"><a class="reference internal" href="040cps.html#id7"><span class="xref std std-term">Продолжения</span></a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="041anf.html"><span class="xref std std-term">ANF</span> представление</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="041anf.html#id4"><span class="xref std std-term">ANF</span> в примерах</a></li>
+<li class="toctree-l2"><a class="reference internal" href="041anf.html#id5">Некоторые замечания</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="050ulc.html">Нетипизированное лямбда-исчисление</a></li>
+<li class="toctree-l1"><a class="reference internal" href="060hm.html">Система типов Хиндли-Милнера</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="060hm.html#id3">Упомянуть</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="998glossary.html">Continuation passing style</a></li>
+</ul>
+</div>
+<section id="id4">
+<h2><a class="toc-backref" href="#id37" role="doc-backlink">Заключение</a><a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h2>
+<p><span class="target" id="index-0"></span>commit</p>
+<dl class="simple glossary">
+</dl>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id38" role="doc-backlink">Вопросы для самопроверки</a><a class="headerlink" href="#id5" title="Ссылка на этот заголовок">¶</a></h2>
+<ol class="arabic simple">
+<li><dl class="simple">
+<dt>В архитектуре x86/amd64 присутствуют инструкции арифметических операций, а также инструкции ветвелния в зависмости от различных флагов переноса/переполнения, а эти флаги изменяются при выполнении арифметических операций. Какой категории инструкций относятся арифметические инструкции в x86/amd64?</dt><dd><ol class="arabic simple">
+<li><p>С единичным результатом</p></li>
+<li><p>С множественными результатами</p></li>
+<li><p>С не пересекающимися результатами</p></li>
+<li><p>Межблоковые</p></li>
+<li><p>Зависимые между собой</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Какой метод выбора инструкций препочтителен для компиляции исходного кода на языках C#/Kotlin в представление платформ .NET/JVM? Поясните свой ответ</dt><dd><ol class="arabic simple">
+<li><p>На основе макросов</p></li>
+<li><p>На основе деревьев</p></li>
+<li><p>На основе графов без циклов</p></li>
+<li><p>На основе графов</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Метод выбора инструкций А удачнее метода Б, потому что он позволяет смотреть на несколько инструкций целиком, а не по одной. Выберите наиболее подходящие А и Б (несколько вариантов).</dt><dd><ol class="arabic simple">
+<li><p>А = На основе графов, Б = на основе деревьев</p></li>
+<li><p>А = На основе деревьев, Б = на основе макросов</p></li>
+<li><p>А = На основе макросов, Б = на основе деревьев</p></li>
+<li><p>А = На основе графов с циклами и без, Б = на на основе макросов</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Существует метод потимизации инстуркций, когда просматривается некоторое «окно» длиною в N инструкций, и в нём происходят упрощения и переупорядочивания. Такой метод называется …</dt><dd><ol class="arabic simple">
+<li><p>peephole оптимизацией</p></li>
+<li><p>динамическое программирование</p></li>
+<li><p>супероптимизации</p></li>
+<li><p>на основе сопоставления с образцами</p></li>
+<li><p>на основе покрытия графов</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Выберите правильное утверждение о «жадном» метода выбора инструкций на основе графа</dt><dd><ol class="arabic simple">
+<li><p>работает быстро, но дает неоптимальный результат</p></li>
+<li><p>работает медленно, и дает оптимальный результат</p></li>
+<li><p>работает быстро, и дает оптимальный результат</p></li>
+<li><p>некорректен для некоторых архитектур</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Как называется операция, проверяющая, что сумма чисел не выходит за некоторую границу, и возвращающая максимальный результат про выходе за эту границу</dt><dd><ol class="arabic simple">
+<li><p>сложение с умножением (fused multiply-add)</p></li>
+<li><p>SIMD операция сложения</p></li>
+<li><p>сложение с насыщением.</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>В чем проблема осуществелния выбора инструкций на основе динамического программирования?</dt><dd><ol class="arabic simple">
+<li><p>Дает неоптимальный результат из-за особенностей метода</p></li>
+<li><p>Некорректен для некоторых архитектур</p></li>
+<li><p>Предположение, что из оптимальных решений частей задачи можно получить глобальное оптимальное решение – не верно.</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Что не так с выбором инструкций с помощью синтаксического анализа?</dt><dd><ol class="arabic simple">
+<li><p>Нет возможности принимать решения в зависимотси от конкретных констант.</p></li>
+<li><p>Размер грамматик слишком большой</p></li>
+<li><p>Наличие неконфликтной и поддерживаемой грамматики не гарантировано</p></li>
+<li><p>Всё выше перечисленное.</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Что не так с выбором инструкций с помощью деревьев? (несколько вариантов ответов)</dt><dd><ol class="arabic simple">
+<li><p>Не годятся для представления графа потока управления, поэтому стоит применять только на линейных участках</p></li>
+<li><p>Инструкции с множественными выходами и непересекающимся выходами плохо моделируются, так как у деревьев только один корень.</p></li>
+<li><p>Не эффективны, так как не могут представлять общие подвыражения.</p></li>
+<li><p>Всё выше перечисленное.</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Что не так с выбором инструкций с помощью графов без циклов? (несколько вариантов ответов)</dt><dd><ol class="arabic simple">
+<li><p>Не годятся для представления графа потока управления, поэтому стоит применять только на линейных участках</p></li>
+<li><p>Инструкции с множественными выходами и непересекающимся выходами плохо моделируются, так как у деревьев только один корень.</p></li>
+<li><p>Не эффективны, так как не могут представлять общие подвыражения.</p></li>
+<li><p>Задача оптимального выора инструкций вычислительно сложнее, чем для деревьев.</p></li>
+<li><p>Всё выше перечисленное.</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+<li><dl class="simple">
+<dt>Что можно порекомендовать разработчикам компиляторов, если некоторые категории инструкций не ложатся в текущий алгоритм выбора инструкций? (несколько вариантов ответов)</dt><dd><ol class="arabic simple">
+<li><p>Использовать другой алгоритм выбора инструкций</p></li>
+<li><p>Не порождать инструкции данной категории</p></li>
+<li><p>Сделать отдельный проход для порождения инструкций данной категории</p></li>
+</ol>
+</dd>
+</dl>
+</li>
+</ol>
+</section>
+<section id="id6">
+<h2><a class="toc-backref" href="#id39" role="doc-backlink">Библиография</a><a class="headerlink" href="#id6" title="Ссылка на этот заголовок">¶</a></h2>
+<div class="docutils container" id="id7">
+<div role="list" class="citation-list">
+<div class="citation" id="id23" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>AC75<span class="fn-bracket">]</span></span>
+<p>Alfred V. Aho and Margaret J. Corasick. Efficient string matching: an aid to bibliographic search. <em>Commun. ACM</em>, 18(6):333–340, jun 1975. <a class="reference external" href="https://doi.org/10.1145/360825.360855">doi:10.1145/360825.360855</a>.</p>
+</div>
+<div class="citation" id="id18" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>AGT89<span class="fn-bracket">]</span></span>
+<p>Alfred V. Aho, Mahadevan Ganapathi, and Steven W. K. Tjiang. Code generation using tree matching and dynamic programming. <em>ACM Trans. Program. Lang. Syst.</em>, 11(4):491–516, oct 1989. <a class="reference external" href="https://doi.org/10.1145/69558.75700">doi:10.1145/69558.75700</a>.</p>
+</div>
+<div class="citation" id="id28" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Beg13<span class="fn-bracket">]</span></span>
+<p>Mirza Omer Beg. <em>Combinatorial Problems in Compiler Optimization</em>. PhD thesis, University of Waterloo, Ontario, Canada, 2013. URL: <a class="reference external" href="https://hdl.handle.net/10012/7423">https://hdl.handle.net/10012/7423</a>.</p>
+</div>
+<div class="citation" id="id27" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Ben<span class="fn-bracket">]</span></span>
+<p>E. Bendersky. A deeper look into the llvm code generator: part 1. URL: <a class="reference external" href="http://eli.thegreenplace.net/2013/02/25/a-deeper-look-into-the-llvm-code-generator-part-1/">http://eli.thegreenplace.net/2013/02/25/a-deeper-look-into-the-llvm-code-generator-part-1/</a>.</p>
+</div>
+<div class="citation" id="id9" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">Bli16</a><span class="fn-bracket">]</span></span>
+<p>Gabriel Hjort Blindell. <em>Instruction selection: Principles, methods, and applications</em>. 01 2016. <a class="reference external" href="https://doi.org/10.1007/978-3-319-34019-7">doi:10.1007/978-3-319-34019-7</a>.</p>
+</div>
+<div class="citation" id="id10" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">Bli18</a><span class="fn-bracket">]</span></span>
+<p>Gabriel Hjort Blindell. <em>Universal Instruction Selection</em>. PhD thesis, KTH Royal Institute of Technology, Sweden, 2018. URL: <a class="reference external" href="https://urn.kb.se/resolve?urn=urn:nbn:se:kth:diva-223599">https://urn.kb.se/resolve?urn=urn:nbn:se:kth:diva-223599</a>.</p>
+</div>
+<div class="citation" id="id33" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>CP95<span class="fn-bracket">]</span></span>
+<p>Cliff Click and Michael Paleczny. A simple graph-based intermediate representation. In <em>Papers from the 1995 ACM SIGPLAN Workshop on Intermediate Representations</em>, IR '95, 35–49. New York, NY, USA, 1995. Association for Computing Machinery. <a class="reference external" href="https://doi.org/10.1145/202529.202534">doi:10.1145/202529.202534</a>.</p>
+</div>
+<div class="citation" id="id30" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>CFSV01<span class="fn-bracket">]</span></span>
+<p>Luigi P. Cordella, Pasquale Foggia, Carlo Sansone, and Mario Vento. An improved algorithm for matching large graphs. In 2001. URL: <a class="reference external" href="https://api.semanticscholar.org/CorpusID:15968654">https://api.semanticscholar.org/CorpusID:15968654</a>.</p>
+</div>
+<div class="citation" id="id31" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>CFR+91<span class="fn-bracket">]</span></span>
+<p>Ron Cytron, Jeanne Ferrante, Barry K. Rosen, Mark N. Wegman, and F. Kenneth Zadeck. Efficiently computing static single assignment form and the control dependence graph. <em>ACM Trans. Program. Lang. Syst.</em>, 13(4):451–490, oct 1991. <a class="reference external" href="https://doi.org/10.1145/115372.115320">doi:10.1145/115372.115320</a>.</p>
+</div>
+<div class="citation" id="id26" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>DF84<span class="fn-bracket">]</span></span>
+<p>Jack W. Davidson and Christopher W. Fraser. Code selection through object code optimization. <em>ACM Trans. Program. Lang. Syst.</em>, 6(4):505–526, oct 1984. <a class="reference external" href="https://doi.org/10.1145/1780.1783">doi:10.1145/1780.1783</a>.</p>
+</div>
+<div class="citation" id="id16" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>ER70<span class="fn-bracket">]</span></span>
+<p>M. Elson and S. T. Rake. Code-generation technique for large-language compilers. <em>IBM Systems Journal</em>, 9(3):166–188, 1970. <a class="reference external" href="https://doi.org/10.1147/sj.93.0166">doi:10.1147/sj.93.0166</a>.</p>
+</div>
+<div class="citation" id="id8" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>FSDF93<span class="fn-bracket">]</span></span>
+<p>Cormac Flanagan, Amr Sabry, Bruce F. Duba, and Matthias Felleisen. The essence of compiling with continuations. In <em>Proceedings of the ACM SIGPLAN 1993 Conference on Programming Language Design and Implementation</em>, PLDI '93, 237–247. New York, NY, USA, 1993. Association for Computing Machinery. URL: <a class="reference external" href="https://doi.org/10.1145/155090.155113">https://doi.org/10.1145/155090.155113</a>, <a class="reference external" href="https://doi.org/10.1145/155090.155113">doi:10.1145/155090.155113</a>.</p>
+</div>
+<div class="citation" id="id32" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>GSW95<span class="fn-bracket">]</span></span>
+<p>Michael P. Gerlek, Eric Stoltz, and Michael Wolfe. Beyond induction variables: detecting and classifying sequences using a demand-driven ssa form. <em>ACM Trans. Program. Lang. Syst.</em>, 17(1):85–122, jan 1995. <a class="reference external" href="https://doi.org/10.1145/200994.201003">doi:10.1145/200994.201003</a>.</p>
+</div>
+<div class="citation" id="id20" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>GG78<span class="fn-bracket">]</span></span>
+<p>R. Steven Glanville and Susan L. Graham. A new method for compiler code generation. In <em>Proceedings of the 5th ACM SIGACT-SIGPLAN Symposium on Principles of Programming Languages</em>, POPL '78, 231–254. New York, NY, USA, 1978. Association for Computing Machinery. <a class="reference external" href="https://doi.org/10.1145/512760.512785">doi:10.1145/512760.512785</a>.</p>
+</div>
+<div class="citation" id="id19" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>GHS82<span class="fn-bracket">]</span></span>
+<p>Susan L. Graham, Robert R. Henry, and Robert A. Schulman. An experiment in table driven code generation. In <em>Proceedings of the 1982 SIGPLAN Symposium on Compiler Construction</em>, SIGPLAN '82, 32–43. New York, NY, USA, 1982. Association for Computing Machinery. <a class="reference external" href="https://doi.org/10.1145/800230.806978">doi:10.1145/800230.806978</a>.</p>
+</div>
+<div class="citation" id="id11" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>KG08<span class="fn-bracket">]</span></span>
+<p>David Ryan Koes and Seth Copen Goldstein. Near-optimal instruction selection on dags. In <em>Proceedings of the 6th Annual IEEE/ACM International Symposium on Code Generation and Optimization</em>, CGO '08, 45–54. New York, NY, USA, 2008. Association for Computing Machinery. <a class="reference external" href="https://doi.org/10.1145/1356058.1356065">doi:10.1145/1356058.1356065</a>.</p>
+</div>
+<div class="citation" id="id34" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>LA00<span class="fn-bracket">]</span></span>
+<p>Samuel Larsen and Saman Amarasinghe. Exploiting superword level parallelism with multimedia instruction sets. In <em>Proceedings of the ACM SIGPLAN 2000 Conference on Programming Language Design and Implementation</em>, PLDI '00, 145–156. New York, NY, USA, 2000. Association for Computing Machinery. <a class="reference external" href="https://doi.org/10.1145/349299.349320">doi:10.1145/349299.349320</a>.</p>
+</div>
+<div class="citation" id="id35" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Lea19<span class="fn-bracket">]</span></span>
+<p>Hugh Leather. Deep learning for compilers. 2019. URL: <a class="reference external" href="https://www.inf.ed.ac.uk/teaching/courses/copt/lecture-15.pdf">https://www.inf.ed.ac.uk/teaching/courses/copt/lecture-15.pdf</a>.</p>
+</div>
+<div class="citation" id="id14" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Mas87<span class="fn-bracket">]</span></span>
+<p>Henry Massalin. Superoptimizer: a look at the smallest program. In <em>Proceedings of the Second International Conference on Architectual Support for Programming Languages and Operating Systems</em>, ASPLOS II, 122–126. New York, NY, USA, 1987. Association for Computing Machinery. <a class="reference external" href="https://doi.org/10.1145/36206.36194">doi:10.1145/36206.36194</a>.</p>
+</div>
+<div class="citation" id="id17" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Mil71<span class="fn-bracket">]</span></span>
+<p>P. L. Miller. Automatic creation of a code generator from a machine description. Technical Report, USA, 1971.</p>
+</div>
+<div class="citation" id="id21" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>New75<span class="fn-bracket">]</span></span>
+<p>Joseph Michael Newcomer. <em>Machine-independent generation of optimal local code.</em> PhD thesis, USA, 1975. AAI7521781. <a class="reference external" href="https://doi.org/10.5555/907394">doi:10.5555/907394</a>.</p>
+</div>
+<div class="citation" id="id22" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>NKWA95<span class="fn-bracket">]</span></span>
+<p>Albert Nymeyer, Joost-Pieter Katoen, Ymte Westra, and Henk Alblas. Code generation = a* + burs. In 12 1995. <a class="reference external" href="https://doi.org/10.1007/3-540-61053-7_60">doi:10.1007/3-540-61053-7_60</a>.</p>
+</div>
+<div class="citation" id="id15" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>OW69<span class="fn-bracket">]</span></span>
+<p>Richard J. Orgass and William M. Waite. A base for a mobile programming system. <em>Commun. ACM</em>, 12:507–510, 1969. URL: <a class="reference external" href="https://api.semanticscholar.org/CorpusID:8164996">https://api.semanticscholar.org/CorpusID:8164996</a>.</p>
+</div>
+<div class="citation" id="id24" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Rip77<span class="fn-bracket">]</span></span>
+<p>K. Ripken. Formale beschreibung von maschinen, implementierungen und optimierender maschinencodeerzeugung aus attributierten program- mgraphen. <em>Tech. rep. TUM-INFO-7731</em>, 1977.</p>
+</div>
+<div class="citation" id="id13" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>SCC+18<span class="fn-bracket">]</span></span>
+<p>Raimondas Sasnauskas, Yang Chen, Peter Collingbourne, Jeroen Ketema, Gratian Lup, Jubi Taneja, and John Regehr. Souper: a synthesizing superoptimizer. 2018. <a class="reference external" href="https://arxiv.org/abs/1711.04422">arXiv:1711.04422</a>.</p>
+</div>
+<div class="citation" id="id25" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Sta88<span class="fn-bracket">]</span></span>
+<p>R. Stallman. Internals of gnu cc. apr 1988. URL: <a class="reference external" href="https://web.archive.org/web/20120112142027/http://trinity.engr.uconn.edu/~vamsik/internals.pdf">https://web.archive.org/web/20120112142027/http://trinity.engr.uconn.edu/~vamsik/internals.pdf</a>, <a class="reference external" href="https://doi.org/10.1145/69558.75700">doi:10.1145/69558.75700</a>.</p>
+</div>
+<div class="citation" id="id29" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Ull76<span class="fn-bracket">]</span></span>
+<p>J. R. Ullmann. <em>An Algorithm for Subgraph Isomorphism</em>. PhD thesis, New York, NY, USA, jan 1976. <a class="reference external" href="https://doi.org/10.1145/321921.321925">doi:10.1145/321921.321925</a>.</p>
+</div>
+<div class="citation" id="id12" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>Wil71<span class="fn-bracket">]</span></span>
+<p>Thomas Richard Wilcox. <em>Generating machine code for high-level programming languages</em>. PhD thesis, USA, 1971. <a class="reference external" href="https://doi.org/10.5555/906388">doi:10.5555/906388</a>.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="#">Оглавление</a></h3>
+    <ul>
+<li><a class="reference internal" href="#">Выбор инструкций в компиляторах</a><ul>
+<li><a class="reference internal" href="#id4">Заключение</a></li>
+<li><a class="reference internal" href="#id5">Вопросы для самопроверки</a></li>
+<li><a class="reference internal" href="#id6">Библиография</a></li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Следующий раздел</h4>
+    <p class="topless"><a href="intro.html"
+                          title="следующая глава">Введение</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Эта страница</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/index.rst.txt"
+            rel="nofollow">Исходный текст</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Быстрый поиск</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Навигация</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Алфавитный указатель"
+             >указатель</a></li>
+        <li class="right" >
+          <a href="intro.html" title="Введение"
+             >вперёд</a> |</li>
+        <li class="nav-item nav-item-0"><a href="#">документация FP и RISC-V </a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Выбор инструкций в компиляторах</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Авторские права 2025, Kakadu.
+      Создано с использованием <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+  </body>
+</html>

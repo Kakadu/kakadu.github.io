@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+
+<html lang="ru" data-content_root="./">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <title>ANF представление &#8212; документация FP и RISC-V </title>
+    <link rel="stylesheet" type="text/css" href="_static/pygments.css?v=03e43079" />
+    <link rel="stylesheet" type="text/css" href="_static/classic.css?v=2bf1fcf8" />
+    
+    <script src="_static/documentation_options.js?v=372fde1a"></script>
+    <script src="_static/doctools.js?v=9bcbadda"></script>
+    <script src="_static/sphinx_highlight.js?v=dc90522c"></script>
+    <script src="_static/translations.js?v=cd1d70c9"></script>
+    
+    <link rel="index" title="Алфавитный указатель" href="genindex.html" />
+    <link rel="search" title="Поиск" href="search.html" />
+    <link rel="next" title="Нетипизированное лямбда-исчисление" href="050ulc.html" />
+    <link rel="prev" title="Хвостовая рекурсия. Продолжения" href="040cps.html" /> 
+  </head><body>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Навигация</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Алфавитный указатель"
+             accesskey="I">указатель</a></li>
+        <li class="right" >
+          <a href="050ulc.html" title="Нетипизированное лямбда-исчисление"
+             accesskey="N">вперёд</a> |</li>
+        <li class="right" >
+          <a href="040cps.html" title="Хвостовая рекурсия. Продолжения"
+             accesskey="P">назад</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">документация FP и RISC-V </a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="xref std std-term">ANF</span> представление</a></li> 
+      </ul>
+    </div>  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
+            
+  <section id="anf">
+<h1><a class="toc-backref" href="#id11" role="doc-backlink"><a class="reference internal" href="998glossary.html#term-ANF"><span class="xref std std-term">ANF</span></a> представление</a><a class="headerlink" href="#anf" title="Ссылка на этот заголовок">¶</a></h1>
+<nav class="contents" id="id1">
+<p class="topic-title">Оглавление</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#anf" id="id11"><a class="reference internal" href="998glossary.html#term-ANF"><span class="xref std std-term">ANF</span></a> представление</a></p>
+<ul>
+<li><p><a class="reference internal" href="#id4" id="id12"><a class="reference internal" href="998glossary.html#term-ANF"><span class="xref std std-term">ANF</span></a> в примерах</a></p></li>
+<li><p><a class="reference internal" href="#id5" id="id13">Некоторые замечания</a></p>
+<ul>
+<li><p><a class="reference internal" href="#let" id="id14">Случай с <code class="docutils literal notranslate"><span class="pre">let</span></code></a></p></li>
+<li><p><a class="reference internal" href="#id6" id="id15">Порождение свежих идентификаторов</a></p></li>
+<li><p><a class="reference internal" href="#id7" id="id16">Борьба с «мусорными» <code class="docutils literal notranslate"><span class="pre">let</span></code>-связываниями</a></p></li>
+<li><p><a class="reference internal" href="#id8" id="id17">Борьба с «мусорными» <code class="docutils literal notranslate"><span class="pre">let</span></code>-связываниями</a></p></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</nav>
+<p>В <a class="reference internal" href="040cps.html#fibanf"><span class="std std-ref">листинге</span></a> мы реализовали вычисление чисел Фибоначчи не вполне естественным образом.
+Программа была преобразована в ANF (A Normal Form <span id="id2">[<a class="reference internal" href="index.html#id8" title="Cormac Flanagan, Amr Sabry, Bruce F. Duba, and Matthias Felleisen. The essence of compiling with continuations. In Proceedings of the ACM SIGPLAN 1993 Conference on Programming Language Design and Implementation, PLDI '93, 237–247. New York, NY, USA, 1993. Association for Computing Machinery. URL: https://doi.org/10.1145/155090.155113, doi:10.1145/155090.155113.">Flanagan <em>et al.</em>, 1993</a>]</span>) представление, а после этого уже преобразована в CPS.
+ANF представление позволяет преобразовывать программы в более удобное представление для последующего CPS преобразования, и само преобразование в ANF удобнее всего реализовывать с помощью продолжений.</p>
+<p>Программа находится в ANF форме, если все функции вызываются только от <strong>простых</strong> аргументов: констант и идентификаторов.
+Такая форма достигается путём создания дополнительных let-связываний для всех сложных аргументов у вызовов функций.</p>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Такое представление полезно, если мы в компиляторе готовимся к порождению кода на ассемблере.
+В языке процессора (например, в ассемблере RISC-V) не операций над сложными значениями. Например, нельзя умножить на сумм чисел. Необходимо посчитать сумму отдельно, положить в регистр, а затем уже умножить на значение в соответствующем регистре.</p>
+</div>
+<p><a class="reference external" href="https://www.cs.swarthmore.edu/~jpolitz/cs75/s16/n_anf-tutorial.html">Входной язык</a> (числа, идентификаторы, арифметика, <code class="docutils literal notranslate"><span class="pre">let</span></code>):</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">expr</span> <span class="o">=</span>
+<span class="o">|</span> <span class="nc">Num</span> <span class="k">of</span> <span class="kt">int</span>
+<span class="o">|</span> <span class="nc">Id</span> <span class="k">of</span> <span class="kt">string</span>
+<span class="o">|</span> <span class="nc">Plus</span> <span class="k">of</span> <span class="n">expr</span> <span class="o">*</span> <span class="n">expr</span>
+<span class="o">|</span> <span class="nc">Let</span> <span class="k">of</span> <span class="kt">string</span> <span class="o">*</span> <span class="n">expr</span> <span class="o">*</span> <span class="n">expr</span>
+</pre></div>
+</div>
+<p>Переработанный (ограниченный) язык отдельно выделяет примитивные (англ. immediate) данные (идентификаторы и константы), сложные выражение (сложение) и произвольные <code class="docutils literal notranslate"><span class="pre">let</span></code>-выражения.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">immexpr</span> <span class="o">=</span>
+<span class="o">|</span> <span class="nc">ImmNum</span> <span class="k">of</span> <span class="kt">int</span>
+<span class="o">|</span> <span class="nc">ImmId</span> <span class="k">of</span> <span class="kt">string</span>
+
+<span class="k">type</span> <span class="n">cexpr</span> <span class="o">=</span>
+<span class="o">|</span> <span class="nc">CPlus</span> <span class="k">of</span> <span class="n">immexpr</span> <span class="o">*</span> <span class="n">immexpr</span>
+
+<span class="k">type</span> <span class="n">aexpr</span> <span class="o">=</span>
+<span class="o">|</span> <span class="nc">ALet</span> <span class="k">of</span> <span class="kt">string</span> <span class="o">*</span> <span class="n">cexpr</span> <span class="o">*</span> <span class="n">aexpr</span>
+</pre></div>
+</div>
+<p>Нашей задачей является написание фукнции-преобразования с типом <code class="docutils literal notranslate"><span class="pre">expr</span> <span class="pre">-&gt;</span> <span class="pre">aexpr</span></code>.</p>
+<section id="id4">
+<h2><a class="toc-backref" href="#id12" role="doc-backlink"><a class="reference internal" href="998glossary.html#term-ANF"><span class="xref std std-term">ANF</span></a> в примерах</a><a class="headerlink" href="#id4" title="Ссылка на этот заголовок">¶</a></h2>
+<p>Давайте рассмотрим пару простых примеров и обсудим во что именно они должны преобразоваться.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">(</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">4</span><span class="o">)</span> <span class="o">+</span> <span class="mi">2</span>
+<span class="c">(* into *)</span>
+<span class="k">let</span> <span class="n">v</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">4</span> <span class="k">in</span>
+<span class="n">v</span> <span class="o">+</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>В примере выше нам надо выделить слагаемое <code class="docutils literal notranslate"><span class="pre">5+4</span></code> с помощью дополнительного let со свежим именем.
+Но у нас не получится записать это в типе AST, приведенном выше, так как нет возможности сложное выражение <code class="docutils literal notranslate"><span class="pre">v+2</span></code> типа <code class="docutils literal notranslate"><span class="pre">cexpr</span></code> превратить в <code class="docutils literal notranslate"><span class="pre">aexpr</span></code>.</p>
+<p>Программы <code class="docutils literal notranslate"><span class="pre">42</span></code> и <code class="docutils literal notranslate"><span class="pre">let</span> <span class="pre">x</span> <span class="pre">=</span> <span class="pre">5</span> <span class="pre">in</span> <span class="pre">x</span></code> тоже не получится превратить в <code class="docutils literal notranslate"><span class="pre">aexpr</span></code> потому, что у нас нет возмости записывать непосредственные значения-константы как <code class="docutils literal notranslate"><span class="pre">cexpr</span></code>.
+Обе проблемы решаются добавлением дополнительных конструкторов, которые преобразуют <code class="docutils literal notranslate"><span class="pre">iexpr</span></code> в <code class="docutils literal notranslate"><span class="pre">cexpr</span></code> и <code class="docutils literal notranslate"><span class="pre">cexpr</span></code> в <code class="docutils literal notranslate"><span class="pre">aexpr</span></code>.</p>
+<div class="literal-block-wrapper docutils container" id="id9">
+<div class="code-block-caption"><span class="caption-text">Исправленный тип AST для ANF представления</span><a class="headerlink" href="#id9" title="Ссылка на этот код">¶</a></div>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">type</span> <span class="n">immexpr</span> <span class="o">=</span>
+<span class="o">|</span> <span class="nc">ImmNum</span> <span class="k">of</span> <span class="kt">int</span>
+<span class="o">|</span> <span class="nc">ImmId</span> <span class="k">of</span> <span class="kt">string</span>
+
+<span class="k">type</span> <span class="n">cexpr</span> <span class="o">=</span>
+<span class="o">|</span> <span class="nc">CPlus</span> <span class="k">of</span> <span class="n">immexpr</span> <span class="o">*</span> <span class="n">immexpr</span>
+<span class="hll"><span class="o">|</span> <span class="nc">CImmExpr</span> <span class="k">of</span> <span class="n">immexpr</span>
+</span>
+<span class="k">type</span> <span class="n">aexpr</span> <span class="o">=</span>
+<span class="o">|</span> <span class="nc">ALet</span> <span class="k">of</span> <span class="kt">string</span> <span class="o">*</span> <span class="n">cexpr</span> <span class="o">*</span> <span class="n">aexpr</span>
+<span class="hll"><span class="o">|</span> <span class="nc">ACExpr</span> <span class="k">of</span> <span class="n">cexpr</span>
+</span></pre></div>
+</div>
+</div>
+<p>Вооружившись правильным AST, можно рассмотреть более сложные примеры.
+Сделаем два уровня вложенности.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">(</span><span class="mi">5</span> <span class="o">+</span> <span class="o">(</span><span class="mi">4</span> <span class="o">+</span> <span class="mi">3</span><span class="o">))</span> <span class="o">+</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>Чтобы получить ответ, нам нужно задуматься о <strong>порядке</strong>, в котором мы вычисляем выражения.
+В этом примере <code class="docutils literal notranslate"><span class="pre">4+3</span></code> вычисляется первым, поэтому первый <code class="docutils literal notranslate"><span class="pre">let</span></code> будет для него.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">v1</span> <span class="o">=</span> <span class="mi">4</span> <span class="o">+</span> <span class="mi">3</span> <span class="k">in</span>
+<span class="k">let</span> <span class="n">v2</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="n">v1</span> <span class="k">in</span>
+<span class="n">v2</span> <span class="o">+</span> <span class="mi">2</span>
+</pre></div>
+</div>
+<p>Рассмотрим пример, когда вложенность присутствует с обоих сторон бинарной операции.
+В этом случае нам придется выбрать, в каком порядке у нас вычисляются аргументы операции, и в зависимости от него правильно расставить <code class="docutils literal notranslate"><span class="pre">let</span></code>.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">(</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">4</span><span class="o">)</span> <span class="o">+</span> <span class="o">(</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span><span class="o">)</span>
+<span class="c">(* transforms into *)</span>
+<span class="k">let</span> <span class="n">v1</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">4</span> <span class="k">in</span>
+<span class="k">let</span> <span class="n">v2</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span> <span class="k">in</span>
+<span class="n">v1</span> <span class="o">+</span> <span class="n">v2</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Фиксацию порядка вычисления аргументов часто приписывать CPS преобразованию.</p>
+</div>
+<p>Теперь попробуем реализовать функцию, которая делает преобразования.
+Начнем как обычно с использования match</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">anf</span> <span class="o">(</span><span class="n">e</span><span class="o">:</span> <span class="n">expr</span><span class="o">)</span> <span class="o">:</span> <span class="n">aexpr</span> <span class="o">=</span>
+  <span class="k">match</span> <span class="n">e</span> <span class="k">with</span>
+  <span class="o">|</span> <span class="nc">Num</span> <span class="n">n</span> <span class="o">-&gt;</span>
+  <span class="o">|</span> <span class="nc">Id</span> <span class="n">x</span> <span class="o">-&gt;</span>
+  <span class="o">|</span> <span class="nc">Plus</span> <span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span>
+  <span class="o">|</span> <span class="nc">Let</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">value</span><span class="o">,</span> <span class="n">body</span><span class="o">)</span> <span class="o">-&gt;</span>
+</pre></div>
+</div>
+<p>С ходу кажется, что первые два случая простые: нам необходимо только навесить нужное количество конструкторов на значения <code class="docutils literal notranslate"><span class="pre">n</span></code> и <code class="docutils literal notranslate"><span class="pre">x</span></code>. Этого будет вполне достаточно, что преобразовывать в ANF простые программы типа <code class="docutils literal notranslate"><span class="pre">42</span></code>.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="nc">Num</span> <span class="n">n</span> <span class="o">-&gt;</span> <span class="nc">ACExpr</span> <span class="o">(</span><span class="nc">CImmExpr</span> <span class="o">(</span><span class="nc">ImmNum</span> <span class="n">n</span><span class="o">))</span>
+<span class="o">|</span> <span class="nc">Id</span> <span class="n">x</span> <span class="o">-&gt;</span> <span class="nc">ACExpr</span> <span class="o">(</span><span class="nc">CImmExpr</span> <span class="o">(</span><span class="nc">ImmId</span> <span class="n">x</span> <span class="o">))</span>
+</pre></div>
+</div>
+<p>Теперь давайте займемся бинарными операциями.
+В случае конструктора <code class="docutils literal notranslate"><span class="pre">Plus</span></code> нужно разобраться с левыми и правыми подвыражениями.
+Для начала попробуем запуститься рекурсивно от обоих и что-нибудь сделать с полученными результатами:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="nc">Plus</span> <span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span>
+  <span class="k">let</span> <span class="n">aleft</span> <span class="o">=</span> <span class="n">anf</span> <span class="n">left</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">aright</span> <span class="o">=</span> <span class="n">anf</span> <span class="n">right</span> <span class="k">in</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<p>И как теперь заполнить … с помощью  <code class="docutils literal notranslate"><span class="pre">aleft</span></code> и  <code class="docutils literal notranslate"><span class="pre">aright</span></code>. Что вообще мы должны получить?
+Рассмотрим примеры.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">anf</span> <span class="o">(</span><span class="nc">Plus</span> <span class="o">(</span><span class="nc">Plus</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">5</span><span class="o">,</span> <span class="nc">Num</span> <span class="mi">4</span><span class="o">),</span> <span class="nc">Num</span> <span class="mi">2</span><span class="o">))</span>
+<span class="c">(*  становится *)</span>
+<span class="nc">ALet</span> <span class="o">(</span><span class="s2">&quot;v&quot;</span><span class="o">,</span> <span class="nc">CPlus</span> <span class="o">(</span><span class="nc">ImmNum</span> <span class="mi">5</span><span class="o">,</span> <span class="nc">ImmNum</span> <span class="mi">4</span><span class="o">),</span>
+  <span class="nc">CPlus</span> <span class="o">(</span><span class="nc">ImmId</span> <span class="s2">&quot;v&quot;</span> <span class="o">,</span> <span class="nc">ImmNum</span> <span class="mi">2</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>Давайте подумаем, что мы ожидаем получить с помощью рекурсии.
+Вызывая <code class="docutils literal notranslate"><span class="pre">anf</span>&#160; <span class="pre">(Plus</span> <span class="pre">(Num</span> <span class="pre">5,</span> <span class="pre">Num</span> <span class="pre">4)</span></code> (т.е. вычисляя левый аргумент) мы получим <code class="docutils literal notranslate"><span class="pre">ACExpr</span> <span class="pre">(CPlus</span> <span class="pre">(ImmNum</span> <span class="pre">5,</span> <span class="pre">ImmNum</span> <span class="pre">4))</span></code>, так как это очевидное преобразование. Аналогично для правой части <code class="docutils literal notranslate"><span class="pre">anf</span> <span class="pre">(Num</span> <span class="pre">2)</span></code> даст нам <code class="docutils literal notranslate"><span class="pre">ACExpr</span> <span class="pre">(CImmExpr</span> <span class="pre">(ImmNum</span> <span class="pre">2))</span></code>. Итого:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">aleft</span> <span class="o">=</span> <span class="nc">ACExpr</span> <span class="o">(</span><span class="nc">CPlus</span> <span class="o">(</span><span class="nc">ImmNum</span> <span class="mi">5</span><span class="o">,</span> <span class="nc">ImmNum</span> <span class="mi">4</span><span class="o">))</span>
+<span class="n">aright</span> <span class="o">=</span> <span class="nc">ACExpr</span> <span class="o">(</span><span class="nc">CImmExpr</span> <span class="o">(</span><span class="nc">ImmNum</span> <span class="mi">2</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>И мы хотим это как-то скомбинировать, чтобы получить</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="nc">ALet</span><span class="o">(</span><span class="s2">&quot;v&quot;</span><span class="o">,</span> <span class="nc">CPlus</span> <span class="o">(</span><span class="nc">ImmNum</span> <span class="mi">5</span><span class="o">,</span> <span class="nc">ImmNum</span> <span class="mi">4</span><span class="o">),</span> <span class="nc">CMinus</span><span class="o">(</span><span class="nc">ImmId</span> <span class="s2">&quot;v&quot;</span><span class="o">,</span> <span class="nc">ImmNum</span> <span class="mi">2</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>И как это сделать? Не очевидно. Можно назвать два главных вопроса:</p>
+<ul class="simple">
+<li><p>Откуда берется идентификатор «v»?</p></li>
+<li><p>По-видимому, нам нужно залезть во внутренности значений, чтобы достать оттуда куски, из которых потом построить результат. Стоит ли так делать? Что будет, если у нас появится много конструкторов рядом с <code class="docutils literal notranslate"><span class="pre">ALet</span></code>?
+Означает ли это, что надо всегда делать сопоставление с образцом по результатам преобразования левой и правой частей?</p></li>
+</ul>
+<p>Давайте вернемся немного назад, и прежде чем принимать решение, посмотрим ещё на несколько примеров.
+Давайте рассмотрим случай, когда вложенность с обеих сторон бинарной операции.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">anf</span> <span class="o">(</span><span class="nc">Plus</span> <span class="o">(</span><span class="nc">Plus</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">5</span><span class="o">,</span> <span class="nc">Num</span> <span class="mi">4</span><span class="o">),</span> <span class="nc">Plus</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">3</span><span class="o">,</span> <span class="nc">Num</span> <span class="mi">2</span><span class="o">)))</span>
+
+<span class="c">(* Должно превратиться в *)</span>
+
+<span class="nc">ALet</span><span class="o">(</span><span class="s2">&quot;v1&quot;</span><span class="o">,</span> <span class="nc">CPlus</span> <span class="o">(</span><span class="nc">ImmNum</span> <span class="mi">5</span><span class="o">,</span> <span class="nc">ImmNum</span> <span class="mi">4</span><span class="o">),</span>
+  <span class="nc">ALet</span><span class="o">(</span><span class="s2">&quot;v2&quot;</span><span class="o">,</span> <span class="nc">CPlus</span> <span class="o">(</span><span class="nc">ImmNum</span> <span class="mi">3</span><span class="o">,</span> <span class="nc">ImmNum</span> <span class="mi">2</span><span class="o">),</span>
+    <span class="nc">ACExpr</span> <span class="o">(</span><span class="nc">CPlus</span> <span class="o">(</span><span class="nc">ImmId</span> <span class="s2">&quot;v1&quot;</span><span class="o">,</span> <span class="nc">ImmId</span> <span class="s2">&quot;v2&quot;</span><span class="o">))))</span>
+</pre></div>
+</div>
+<p>У этого примера есть интересные особенности.
+Самое вложенное выражение складывает результаты преобразований левой и правой частей операции сложения.
+Так как оба слагаемых не являются примитивными значениям, то их нужно сначала посчитать, сохранить в идентификаторах, и затем использовать введённые идентификаторы вместо них.
+Возможно, нам нужна дополнительная функция, которая делает ANF преобразование, но возвращает значения типа <code class="docutils literal notranslate"><span class="pre">cexpr</span></code>, а не <code class="docutils literal notranslate"><span class="pre">aexpr</span></code>?
+Представим, что такая функция уже написана и попробуем ею воспользоваться:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="nc">Plus</span> <span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span>
+  <span class="k">let</span> <span class="n">aleft</span> <span class="o">=</span> <span class="n">anf_but_as_cexp_not_aexp</span> <span class="n">left</span> <span class="k">in</span>
+  <span class="k">let</span> <span class="n">aright</span> <span class="o">=</span> <span class="n">anf_but_as_cexp_not_aexp</span> <span class="n">right</span> <span class="k">in</span>
+  <span class="nc">ALet</span> <span class="o">(</span><span class="s2">&quot;v1&quot;</span><span class="o">,</span> <span class="n">aleft</span><span class="o">,</span>
+    <span class="nc">ALet</span> <span class="o">(</span><span class="s2">&quot;v2&quot;</span><span class="o">,</span> <span class="n">aright</span><span class="o">,</span>
+      <span class="nc">ACExpr</span><span class="o">(</span><span class="nc">CPlus</span> <span class="o">(</span><span class="nc">ImmId</span><span class="o">(</span><span class="s2">&quot;v1&quot;</span><span class="o">),</span> <span class="nc">ImmId</span><span class="o">(</span><span class="s2">&quot;v2&quot;</span><span class="o">)))))</span>
+</pre></div>
+</div>
+<p>К сожалению, такой подход сломается, если с одной из сторон будет двойная вложенность:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">anf</span> <span class="o">(</span><span class="nc">Plus</span> <span class="o">(</span><span class="nc">Plus</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">5</span><span class="o">,</span> <span class="nc">Minus</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">4</span><span class="o">,</span> <span class="nc">Num</span> <span class="mi">3</span><span class="o">)),</span> <span class="nc">Num</span> <span class="mi">2</span><span class="o">))</span>
+
+<span class="c">(* должно превратиться в  *)</span>
+
+<span class="nc">ALet</span><span class="o">(</span><span class="s2">&quot;v1&quot;</span><span class="o">,</span> <span class="nc">CMinus</span><span class="o">(</span><span class="nc">ImmNum</span> <span class="mi">4</span><span class="o">,</span> <span class="nc">ImmNum</span> <span class="mi">3</span><span class="o">),</span>
+  <span class="nc">ALet</span><span class="o">(</span><span class="s2">&quot;v2&quot;</span><span class="o">,</span> <span class="nc">CPlus</span> <span class="o">(</span><span class="nc">ImmNum</span> <span class="mi">5</span><span class="o">,</span> <span class="nc">ImmId</span><span class="o">(</span><span class="s2">&quot;v1&quot;</span><span class="o">)),</span>
+    <span class="nc">ACExpr</span><span class="o">(</span><span class="nc">CPlus</span> <span class="o">(</span><span class="nc">ImmId</span><span class="o">(</span><span class="s2">&quot;v2&quot;</span><span class="o">),</span> <span class="nc">ImmNum</span> <span class="mi">2</span><span class="o">))))</span>
+</pre></div>
+</div>
+<p>Здесь левой частью выражения выражения является <code class="docutils literal notranslate"><span class="pre">Plus</span> <span class="pre">(Num</span> <span class="pre">5,</span> <span class="pre">Minus</span> <span class="pre">(Num</span> <span class="pre">4,</span> <span class="pre">Num</span> <span class="pre">3))</span></code>, которое не должно превращаться в <code class="docutils literal notranslate"><span class="pre">cexpr</span></code>, потому что для его преобразования надо ввести <code class="docutils literal notranslate"><span class="pre">let</span></code>.
+Это демонстрирует суть нашей проблемы, которая заключается в том, что мы не может узнать без рекурсивного заглядывания вглубь нашего выражения, сколько уровней вложенности <code class="docutils literal notranslate"><span class="pre">let</span></code> связываний необходимо написать, чтобы полностью преобразовать исходное выражение.
+Мы знаем только то, что надо оба слагаемых превратить в последовательность вложенных <code class="docutils literal notranslate"><span class="pre">let</span></code> связываний, подставляя соответствующие примитивные значения (идентификаторы) в правильные позиции.</p>
+<p>Поэтому наши бинарные выражения должны стать выражениями с «дырками», которые мы будет заполнять соответствующими идентификаторами. Получив исходное выражение вида <code class="docutils literal notranslate"><span class="pre">Plus</span> <span class="pre">(Plus</span> <span class="pre">(Num</span> <span class="pre">5,</span> <span class="pre">Plus</span> <span class="pre">(Num</span> <span class="pre">4,</span> <span class="pre">Num</span> <span class="pre">3)),</span> <span class="pre">Num</span> <span class="pre">2)</span></code> нам нужно его разбить на <code class="docutils literal notranslate"><span class="pre">Plus</span> <span class="pre">(●,</span> <span class="pre">●)</span></code> и</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="nc">ALet</span><span class="o">(...</span> <span class="n">много</span> <span class="n">промежуточных</span> <span class="n">шагов</span> <span class="n">для</span> <span class="n">левой</span> <span class="n">части</span> <span class="o">...,</span>
+  <span class="nc">ALet</span><span class="o">(</span><span class="s2">&quot;v1&quot;</span><span class="o">,</span> <span class="o">...</span> <span class="n">финальное</span> <span class="n">значение</span> <span class="n">левой</span> <span class="o">...,</span>
+    <span class="nc">ALet</span><span class="o">(...</span> <span class="n">много</span> <span class="n">промежуточных</span> <span class="n">шагов</span> <span class="n">для</span> <span class="n">правой</span>  <span class="o">...,</span>
+      <span class="nc">ALet</span><span class="o">(</span><span class="s2">&quot;v2&quot;</span><span class="o">,</span> <span class="o">...</span> <span class="n">итоговое</span> <span class="n">значение</span> <span class="n">правой</span> <span class="o">...,</span>
+        <span class="o">...</span> <span class="n">и</span> <span class="n">здесь</span> <span class="n">мы</span> <span class="n">заполняем</span> <span class="n">дырки</span> <span class="n">с</span> <span class="n">помощью</span> <span class="n">v1</span> <span class="n">и</span> <span class="n">v2</span> <span class="o">...))))</span>
+</pre></div>
+</div>
+<p>Если мы сможем выразить это разделение, то нам нужно будет сохранить выражение-с-дырками пока не преобразуются левое и правое слагаемое, а потом заполнить дырки.
+Ключевая идея ANF преобразования заключается в том, что мы может представить дырки как функции языка OCaml.
+А выражения, которые дожидаются своих аргументов мы тоже можем представить как функции, например:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">fun</span> <span class="n">lprim</span> <span class="n">rprim</span> <span class="o">-&gt;</span> <span class="nc">CPlus</span> <span class="o">(</span><span class="n">lprim</span><span class="o">,</span> <span class="n">rprim</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Имена  <code class="docutils literal notranslate"><span class="pre">lprim</span></code> и <code class="docutils literal notranslate"><span class="pre">rprim</span></code> выбраны, чтобы обозначать <em>левое примитивное</em>  (англ. «left immediate») и <em>правое примитивное значение</em> (англ. «right immediate»), поэтому функция, представляющая выражение для суммы ожидает два аргумента с примитивными значениями.
+Затем мы можем запланировать, что функция <code class="docutils literal notranslate"><span class="pre">anf</span></code> построит выражение для суммы, предъявив нужные примитивные значения, после появления соответствующих <code class="docutils literal notranslate"><span class="pre">let</span></code> связываний.</p>
+<p>Чтобы этого добиться, нам нужно исправить сигнатуру.
+Будем принимать дополнительный аргумент-продолжение, которое будет представлять выражение типа <code class="docutils literal notranslate"><span class="pre">aexpr</span></code> с одной дыркой вида <code class="docutils literal notranslate"><span class="pre">immexpr</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">anf</span> <span class="o">(</span><span class="n">e</span> <span class="o">:</span> <span class="n">expr</span><span class="o">)</span> <span class="o">(</span><span class="n">expr_with_hole</span> <span class="o">:</span> <span class="n">immexpr</span> <span class="o">-&gt;</span> <span class="n">aexpr</span><span class="o">)</span> <span class="o">=</span>
+  <span class="o">...</span>
+</pre></div>
+</div>
+<p>Задачей функции anf будет заполнее дырок с типом <cite>immexpr</cite> (как правило, с помощью конструктора <code class="docutils literal notranslate"><span class="pre">ImmId</span></code>)
+The job of anf for each case will be to fill in the hole with a immexpr (usually an ImmId) that is the result of the last let-binding needed to evaluate the sub-expressions of e.
+Для заполнения дырок мы просто применяем функцию  <code class="docutils literal notranslate"><span class="pre">expr_with_hole</span></code>.
+В базовых случаях констант и идентификаторов мы можем передавать примитивное значение непосредственно:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">anf</span> <span class="o">(</span><span class="n">e</span> <span class="o">:</span> <span class="n">expr</span><span class="o">)</span> <span class="o">(</span><span class="n">expr_with_hole</span> <span class="o">:</span> <span class="n">immexpr</span> <span class="o">-&gt;</span> <span class="n">aexpr</span><span class="o">)</span> <span class="o">=</span>
+  <span class="k">match</span> <span class="n">e</span> <span class="k">with</span>
+    <span class="o">|</span> <span class="nc">Num</span><span class="o">(</span><span class="n">n</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">expr_with_hole</span> <span class="o">(</span><span class="nc">ImmNum</span> <span class="n">n</span><span class="o">)</span>
+    <span class="o">|</span> <span class="nc">Id</span><span class="o">(</span><span class="n">x</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">expr_with_hole</span> <span class="o">(</span><span class="nc">ImmId</span> <span class="n">x</span><span class="o">)</span>
+    <span class="o">...</span>
+</pre></div>
+</div>
+<p>Проводя ANF преобразование, мы не просто хотим конвертировать каждое подвыражение (число или идентификатор) само по себе.
+Нам также нужно знать контекст, в котором это выражение будет использоваться.
+Для этого используется продолжение <code class="docutils literal notranslate"><span class="pre">expr_with_hole</span></code>.
+Теперь давайте разберемся что происходит в случае бинарной операции.
+Сначала преобразуем в ANF левую часть.
+Так как функция <code class="docutils literal notranslate"><span class="pre">anf</span></code> принимает два аргумента, нам надо решить, как будет выглядеть второй аргумент-фукнция:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="nc">Plus</span> <span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span>  <span class="n">anf</span> <span class="n">left</span> <span class="o">(</span><span class="k">fun</span> <span class="o">...)</span>
+</pre></div>
+</div>
+<p>За счет типов мы знаем, что аргумент этой функции будет с типом <code class="docutils literal notranslate"><span class="pre">immexpr</span></code>.
+Из рассуждения выше, мы может заключить, что это примитивное значение будет представлять результат левого аргумента.
+Поэтому нам нужно его использовать как первый аргумент конструктора <code class="docutils literal notranslate"><span class="pre">CPlus</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="nc">Plus</span> <span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span>
+    <span class="n">anf</span> <span class="n">left</span> <span class="o">(</span><span class="k">fun</span> <span class="n">lprim</span> <span class="o">-&gt;</span> <span class="nc">CPlus</span> <span class="o">(</span><span class="n">lprim</span><span class="o">,</span> <span class="o">...))</span>
+</pre></div>
+</div>
+<p>Но нам нужно примитивное выражение для правой части тоже.
+Поэтому надо рекурсивно запускать <code class="docutils literal notranslate"><span class="pre">anf</span></code> и для правого аргумента.
+Поэтому, прежде чем пользоваться <code class="docutils literal notranslate"><span class="pre">CPlus</span></code> второй аргумент нужно посчитать:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="nc">Plus</span> <span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span>
+    <span class="n">anf</span> <span class="n">left</span> <span class="o">(</span><span class="k">fun</span> <span class="n">lprim</span> <span class="o">-&gt;</span>
+      <span class="n">anf</span> <span class="n">right</span> <span class="o">(</span><span class="k">fun</span> <span class="n">rprim</span> <span class="o">-&gt;</span>
+        <span class="nc">CPlus</span> <span class="o">(</span><span class="n">lprim</span><span class="o">,</span> <span class="n">rprim</span><span class="o">)))</span>
+</pre></div>
+</div>
+<p>Итак мы запускаем <code class="docutils literal notranslate"><span class="pre">anf</span></code> на левой и правой части, затем  пользуемся  <code class="docutils literal notranslate"><span class="pre">CPlus</span></code> от   аргументов, посчитанных по-отдельности.</p>
+<p>В это коде есть кое-что подозрительное, а именно случай для <code class="docutils literal notranslate"><span class="pre">Plus</span></code> не использует аргумент
+<code class="docutils literal notranslate"><span class="pre">expr_with_hole</span></code> вообще.
+К тому же ошибка типизации: у функции <code class="docutils literal notranslate"><span class="pre">expr_with_hole</span></code> тип <code class="docutils literal notranslate"><span class="pre">(immexpr</span> <span class="pre">-&gt;</span> <span class="pre">aexpr)</span></code>, а мы возвращаем <code class="docutils literal notranslate"><span class="pre">cexpr</span></code>, построенный с помощью конструктора <code class="docutils literal notranslate"><span class="pre">CPlus</span></code>.
+Давайте протрассируем нашу подозрительно написанную функцию, что понять что с ней не так.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">anf</span> <span class="o">(</span><span class="nc">Plus</span> <span class="o">(</span><span class="nc">Plus</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">5</span><span class="o">,</span> <span class="nc">Num</span> <span class="mi">4</span><span class="o">),</span> <span class="nc">Plus</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">3</span><span class="o">,</span> <span class="nc">Num</span> <span class="mi">2</span><span class="o">)))</span>
+
+<span class="c">(* Подставляем большое подвыражение и разбираем случай Plus: *)</span>
+
+<span class="o">=&gt;</span>  <span class="n">anf</span> <span class="o">(</span><span class="nc">Plus</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">5</span><span class="o">,</span> <span class="nc">Num</span> <span class="mi">4</span><span class="o">)</span> <span class="o">(</span><span class="k">fun</span> <span class="n">lprim</span> <span class="o">-&gt;</span>
+      <span class="n">anf</span> <span class="o">(</span><span class="nc">Plus</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">3</span><span class="o">,</span> <span class="nc">Num</span> <span class="mi">2</span><span class="o">))</span> <span class="o">(</span><span class="k">fun</span> <span class="n">rprim</span> <span class="o">-&gt;</span>
+        <span class="nc">CPlus</span> <span class="o">(</span><span class="n">lprim</span><span class="o">,</span> <span class="n">rprim</span><span class="o">)))</span>
+
+<span class="c">(* Делаем рекурсивный вызов, снова случай Plus c аргументами Num 5 и Num 4.</span>
+<span class="c">  Не потеряли ли мы какую-то информацию? *)</span>
+
+<span class="o">=&gt;</span>  <span class="n">anf</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">5</span><span class="o">)</span> <span class="o">(</span><span class="k">fun</span> <span class="n">lprim</span> <span class="o">-&gt;</span>
+      <span class="n">anf</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">4</span><span class="o">)</span> <span class="o">(</span><span class="k">fun</span> <span class="n">rprim</span> <span class="o">-&gt;</span>
+        <span class="nc">CPlus</span> <span class="o">(</span><span class="n">lprim</span><span class="o">,</span> <span class="n">rprim</span><span class="o">)))</span>
+
+<span class="c">(* Для случая констант мы **применяем** переданное продолжение к ImmNum: *)</span>
+
+<span class="o">=&gt;</span>  <span class="o">((</span><span class="k">fun</span> <span class="n">lprim</span> <span class="o">-&gt;</span>
+      <span class="n">anf</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">4</span><span class="o">)</span> <span class="o">(</span><span class="k">fun</span> <span class="n">rprim</span> <span class="o">-&gt;</span>
+        <span class="nc">CPlus</span> <span class="o">(</span><span class="n">lprim</span><span class="o">,</span> <span class="n">rprim</span><span class="o">)))</span>
+     <span class="o">(</span><span class="nc">ImmNum</span> <span class="mi">5</span><span class="o">))</span>
+
+<span class="o">=&gt;</span>  <span class="o">(</span><span class="n">anf</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">4</span><span class="o">)</span> <span class="o">(</span><span class="k">fun</span> <span class="n">rprim</span> <span class="o">-&gt;</span> <span class="nc">CPlus</span> <span class="o">(</span><span class="nc">ImmNum</span> <span class="mi">5</span><span class="o">,</span> <span class="n">rprim</span><span class="o">)))</span>
+
+<span class="o">=&gt;</span>  <span class="o">((</span><span class="k">fun</span> <span class="n">rprim</span> <span class="o">-&gt;</span> <span class="nc">CPlus</span> <span class="o">(</span><span class="nc">ImmNum</span> <span class="mi">5</span><span class="o">,</span> <span class="n">rprim</span><span class="o">))</span> <span class="o">(</span><span class="nc">ImmNum</span> <span class="mi">4</span><span class="o">))</span>
+
+<span class="o">=&gt;</span>  <span class="nc">CPlus</span> <span class="o">(</span><span class="nc">ImmNum</span> <span class="mi">5</span><span class="o">,</span> <span class="nc">ImmNum</span> <span class="mi">4</span><span class="o">)</span>
+</pre></div>
+</div>
+<p>Это не тот ответ, который мы хотели получить, потому что мы потеряли подвыражение <code class="docutils literal notranslate"><span class="pre">Plus</span> <span class="pre">(Num</span> <span class="pre">3,</span> <span class="pre">Num</span> <span class="pre">2)</span></code>,
+вычисляя левую часть.
+Потеря произошла на втором шаге, где мы забыли воспользоваться функцией <code class="docutils literal notranslate"><span class="pre">expr_with_hole</span></code>.
+Поэтому нужно переписать случай конструктора <code class="docutils literal notranslate"><span class="pre">Plus</span></code> и воспользоваться аргументом <code class="docutils literal notranslate"><span class="pre">expr_with_hole</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="nc">Plus</span> <span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span>
+  <span class="n">anf</span> <span class="n">left</span> <span class="o">(</span><span class="k">fun</span> <span class="n">lprim</span> <span class="o">-&gt;</span>
+    <span class="n">anf</span> <span class="n">right</span> <span class="o">(</span><span class="k">fun</span> <span class="n">rprim</span> <span class="o">-&gt;</span>
+      <span class="c">(* где-то тут должен быть вызов  expr_with_hole... *)</span>
+      <span class="nc">CPlus</span> <span class="o">(</span><span class="n">lprim</span><span class="o">,</span> <span class="n">rprim</span><span class="o">)))</span>
+</pre></div>
+</div>
+<p>Согласно рассуждениям выше, нам нужно применить функцию <code class="docutils literal notranslate"><span class="pre">expr_with_hole</span></code> к примитивному выражению, которое соответствует текущему выражению.
+Другими словами, нужен идентификатор, который будет равен текущему выражению, которое соответствует сумме.
+Нужно сделать одно let-связывание, которое равно выражению с конструктором <code class="docutils literal notranslate"><span class="pre">Plus</span></code> и передать его в <code class="docutils literal notranslate"><span class="pre">expr_with_hole</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="nc">Plus</span> <span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span>
+    <span class="n">anf</span> <span class="n">left</span> <span class="o">(</span><span class="k">fun</span> <span class="n">lprim</span> <span class="o">-&gt;</span>
+      <span class="n">anf</span> <span class="n">right</span> <span class="o">(</span><span class="k">fun</span> <span class="n">rprim</span> <span class="o">-&gt;</span>
+        <span class="nc">ALet</span> <span class="o">(</span><span class="s2">&quot;result_of_plus&quot;</span><span class="o">,</span>
+              <span class="nc">CPlus</span> <span class="o">(</span><span class="n">lprim</span><span class="o">,</span> <span class="n">rprim</span><span class="o">),</span>
+              <span class="n">expr_with_hole</span> <span class="o">(</span><span class="nc">ImmId</span> <span class="s2">&quot;result_of_plus&quot;</span><span class="o">))))</span>
+</pre></div>
+</div>
+<p>Последняя вещь, которую надо обсудить, это как вызывать функцию <code class="docutils literal notranslate"><span class="pre">and</span></code> на самом верхнем уровне.
+Если нам дано одинокое выражение, то что передавать как первое продолжение?
+Задачей нашей функции является преобразование оригинального выражения.
+Поэтому, если стартовый <code class="docutils literal notranslate"><span class="pre">expr_with_hole</span></code> просто возвращает примитивное выражение без изменений, то этого будет достаточно.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">anf</span> <span class="n">original_expr</span> <span class="o">(</span><span class="k">fun</span> <span class="n">ie</span> <span class="o">-&gt;</span> <span class="nc">ACExpr</span> <span class="o">(</span><span class="nc">CImmExpr</span> <span class="n">ie</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>will be needed.</p>
+<div class="admonition note">
+<p class="admonition-title">Примечание</p>
+<p>Упражнение</p>
+<p>Протрассируйте</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="n">anf</span> <span class="o">(</span><span class="nc">Plus</span> <span class="o">(</span><span class="nc">Plus</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">5</span><span class="o">,</span> <span class="nc">Num</span> <span class="mi">4</span><span class="o">),</span> <span class="nc">Plus</span> <span class="o">(</span><span class="nc">Num</span> <span class="mi">3</span><span class="o">,</span> <span class="nc">Num</span> <span class="mi">2</span><span class="o">)))</span>
+    <span class="o">(</span><span class="k">fun</span> <span class="n">ie</span> <span class="o">-&gt;</span> <span class="nc">ACExpr</span><span class="o">(</span><span class="nc">CImmExpr</span><span class="o">(</span><span class="n">ie</span><span class="o">)))</span>
+</pre></div>
+</div>
+<p>Is the result what you expected? Does it exactly match the test case we wrote?</p>
+</div>
+</section>
+<section id="id5">
+<h2><a class="toc-backref" href="#id13" role="doc-backlink">Некоторые замечания</a><a class="headerlink" href="#id5" title="Ссылка на этот заголовок">¶</a></h2>
+<section id="let">
+<h3><a class="toc-backref" href="#id14" role="doc-backlink">Случай с <code class="docutils literal notranslate"><span class="pre">let</span></code></a><a class="headerlink" href="#let" title="Ссылка на этот заголовок">¶</a></h3>
+<p>Рассмотрим случай конструкции <code class="docutils literal notranslate"><span class="pre">let</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="nc">Let</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">value</span><span class="o">,</span> <span class="n">body</span><span class="o">)</span> <span class="o">-&gt;</span>      <span class="o">...</span>
+</pre></div>
+</div>
+<p>Исходя из вышесказанного, нам нужно преобразоваться правую часть <code class="docutils literal notranslate"><span class="pre">rhs</span></code> и <code class="docutils literal notranslate"><span class="pre">where</span></code>, а затем передать примитивное значение, обозначающее результат вычисления <code class="docutils literal notranslate"><span class="pre">where</span></code> в продолжение <code class="docutils literal notranslate"><span class="pre">expr_with_hole</span></code>.
+Также нужно не забыть исходный <code class="docutils literal notranslate"><span class="pre">let</span></code> с идентификатором, который был введен.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="nc">Let</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">rhs</span><span class="o">,</span> <span class="n">where</span><span class="o">)</span> <span class="o">-&gt;</span>
+    <span class="n">anf</span> <span class="n">rhs</span> <span class="o">(</span><span class="k">fun</span> <span class="n">immval</span> <span class="o">-&gt;</span>
+      <span class="nc">ALet</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="nc">CImmExpr</span> <span class="n">immval</span><span class="o">,</span>
+        <span class="n">anf</span> <span class="n">where</span> <span class="o">(</span><span class="k">fun</span> <span class="n">immbody</span> <span class="o">-&gt;</span>
+          <span class="o">(</span><span class="n">expr_with_hole</span> <span class="n">immbody</span><span class="o">))))</span>
+</pre></div>
+</div>
+<p>Этот код можно написать чище, используя $eta$-конверсию.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="nc">Let</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="n">rhs</span><span class="o">,</span> <span class="n">where</span><span class="o">)</span> <span class="o">-&gt;</span>
+    <span class="n">anf</span> <span class="n">rhs</span> <span class="o">(</span><span class="k">fun</span> <span class="n">immval</span> <span class="o">-&gt;</span>
+      <span class="nc">ALet</span><span class="o">(</span><span class="n">x</span><span class="o">,</span> <span class="nc">CImmExpr</span> <span class="n">immval</span><span class="o">,</span>
+        <span class="n">anf</span> <span class="n">where</span> <span class="n">expr_with_hole</span><span class="o">))</span>
+</pre></div>
+</div>
+<p>В примере выше мы просто передаем продолжение дальше по ходу преобразования нашего выражения.</p>
+</section>
+<section id="id6">
+<h3><a class="toc-backref" href="#id15" role="doc-backlink">Порождение свежих идентификаторов</a><a class="headerlink" href="#id6" title="Ссылка на этот заголовок">¶</a></h3>
+<p>Другая вещь, которую стоит прояснить — это порождение свежих имен при использовании конструкторов <code class="docutils literal notranslate"><span class="pre">ALet</span></code>.
+Мы не можем везде писать <code class="docutils literal notranslate"><span class="pre">result_of_plus</span></code> как выше, потому что рано или поздно новый <code class="docutils literal notranslate"><span class="pre">let</span></code> скорет в области видимости переменную, объявленную выше.</p>
+<div class="literal-block-wrapper docutils container" id="id10">
+<div class="code-block-caption"><span class="caption-text">Результат  ANF, где новые идентификаторов слились</span><a class="headerlink" href="#id10" title="Ссылка на этот код">¶</a></div>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">(</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">4</span><span class="o">)</span> <span class="o">+</span> <span class="o">(</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span><span class="o">)</span>
+<span class="c">(* становится *)</span>
+<span class="k">let</span> <span class="n">result_of_plus</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">4</span> <span class="k">in</span>
+<span class="k">let</span> <span class="n">result_of_plus</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span> <span class="k">in</span>
+<span class="k">let</span> <span class="n">result_of_plus</span> <span class="o">=</span> <span class="n">result_of_plus</span> <span class="o">+</span> <span class="n">result_of_plus</span> <span class="k">in</span>
+<span class="n">result_of_plus</span>
+</pre></div>
+</div>
+</div>
+<p>Программа выше вычисляется не в тот результат, что было задумано.
+Поэтому, нужен метод порождения новых идентификаторов на лету так, чтобы они не конфликтовали с предыдущими введенными.
+Простейшим вариантом будет использование мутабельного счетчика уже введенных переменных, и функции, которая порождает свежие имена, каждый раз инкрементируя этот счетчик.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">gen_temp</span> <span class="o">=</span>
+  <span class="k">let</span> <span class="n">count</span> <span class="o">=</span> <span class="n">ref</span> <span class="mi">0</span> <span class="k">in</span>
+  <span class="k">fun</span> <span class="n">base</span> <span class="o">-&gt;</span>
+    <span class="n">count</span> <span class="o">:=</span> <span class="o">!</span><span class="n">count</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+    <span class="n">sprintf</span> <span class="s2">&quot;temp_%s_%d&quot;</span> <span class="n">base</span> <span class="o">!</span><span class="n">count</span>
+</pre></div>
+</div>
+<p>В этом случае разбор операции сложения будет выглядеть следующим образом:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">|</span> <span class="nc">Plus</span><span class="o">(</span><span class="n">left</span><span class="o">,</span> <span class="n">right</span><span class="o">)</span> <span class="o">-&gt;</span>
+    <span class="k">let</span> <span class="n">varname</span> <span class="o">=</span> <span class="n">gen_temp</span> <span class="s2">&quot;result_of_plus&quot;</span> <span class="k">in</span>
+    <span class="n">anf</span> <span class="n">left</span> <span class="o">(</span><span class="k">fun</span> <span class="n">lprim</span> <span class="o">-&gt;</span>
+      <span class="n">anf</span> <span class="n">right</span> <span class="o">(</span><span class="k">fun</span> <span class="n">rprim</span> <span class="o">-&gt;</span>
+        <span class="nc">ALet</span><span class="o">(</span><span class="n">varname</span><span class="o">,</span> <span class="nc">CPlus</span> <span class="o">(</span><span class="n">lprim</span><span class="o">,</span> <span class="n">rprim</span><span class="o">),</span>
+          <span class="n">expr_with_hole</span> <span class="o">(</span><span class="nc">ImmId</span> <span class="n">varname</span><span class="o">))))</span>
+</pre></div>
+</div>
+<p>И в результате получится следующий код:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">(</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">4</span><span class="o">)</span> <span class="o">+</span> <span class="o">(</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span><span class="o">)</span>
+<span class="c">(* становится *)</span>
+<span class="k">let</span> <span class="n">result_of_plus1</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">4</span> <span class="k">in</span>
+<span class="k">let</span> <span class="n">result_of_plus2</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span> <span class="k">in</span>
+<span class="k">let</span> <span class="n">result_of_plus3</span> <span class="o">=</span> <span class="n">result_of_plus1</span> <span class="o">+</span> <span class="n">result_of_plus2</span> <span class="k">in</span>
+<span class="n">result_of_plus3</span>
+</pre></div>
+</div>
+<p>Пример выше вычисляется в 14, т.е. то, что мы ожидали.
+Если мы будем использовать «v» вместо «result_of_plus», то получим код, показанный в изначальных примерах.</p>
+</section>
+<section id="id7">
+<h3><a class="toc-backref" href="#id16" role="doc-backlink">Борьба с «мусорными» <code class="docutils literal notranslate"><span class="pre">let</span></code>-связываниями</a><a class="headerlink" href="#id7" title="Ссылка на этот заголовок">¶</a></h3>
+<p>Рассмотрим следующий пример повнимательнее.</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="o">(</span><span class="mi">5</span> <span class="o">+</span> <span class="mi">4</span><span class="o">)</span> <span class="o">+</span> <span class="o">(</span><span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span><span class="o">)</span>
+<span class="c">(* становится *)</span>
+<span class="k">let</span> <span class="n">v1</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">4</span> <span class="k">in</span>
+<span class="k">let</span> <span class="n">v2</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span> <span class="k">in</span>
+<span class="k">let</span> <span class="n">v3</span> <span class="o">=</span> <span class="n">v1</span> <span class="o">+</span> <span class="n">v2</span> <span class="k">in</span>
+<span class="n">v3</span>
+</pre></div>
+</div>
+<p>Это не вполне соответствует тому, что мы написали в самом начале, так как тут присутвует третий <code class="docutils literal notranslate"><span class="pre">let</span></code>:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="n">v1</span> <span class="o">=</span> <span class="mi">5</span> <span class="o">+</span> <span class="mi">4</span> <span class="k">in</span>
+<span class="k">let</span> <span class="n">v2</span> <span class="o">=</span> <span class="mi">3</span> <span class="o">+</span> <span class="mi">2</span> <span class="k">in</span>
+<span class="n">v1</span> <span class="o">+</span> <span class="n">v2</span>
+</pre></div>
+</div>
+<p>Складывается ощущение, что мы делаем какую-то лишнюю работу.
+В данном изложении излагается ANF преобразование в самом простом его виде.
+Существуют модификации, которые позволяют создавать меньше промежуточных переменных.
+Одним из подходов является разделение преобразования на две взаимно рекурсивные функции со следующими сигнатурами:</p>
+<div class="highlight-ocaml notranslate"><div class="highlight"><pre><span></span><span class="k">let</span> <span class="k">rec</span> <span class="n">anf_c</span> <span class="o">(</span><span class="n">e</span> <span class="o">:</span> <span class="n">expr</span><span class="o">)</span> <span class="o">(</span><span class="n">expr_with_c_hole</span> <span class="o">:</span> <span class="n">cexpr</span> <span class="o">-&gt;</span> <span class="n">aexpr</span><span class="o">)</span> <span class="o">:</span> <span class="n">aexpr</span> <span class="o">=</span> <span class="o">...</span>
+
+<span class="k">let</span> <span class="k">rec</span> <span class="n">anf_imm</span> <span class="o">(</span><span class="n">e</span> <span class="o">:</span> <span class="n">expr</span><span class="o">)</span> <span class="o">(</span><span class="n">expr_with_imm_hole</span> <span class="o">:</span> <span class="n">immexpr</span> <span class="o">-&gt;</span> <span class="n">aexpr</span><span class="o">)</span> <span class="o">:</span> <span class="n">aexpr</span> <span class="o">=</span> <span class="o">...</span>
+</pre></div>
+</div>
+<p>Первая будет вызываться в контексте, когда нужно построить <code class="docutils literal notranslate"><span class="pre">cexpr</span></code>, а вторая — примитивное выражение.</p>
+</section>
+<section id="id8">
+<h3><a class="toc-backref" href="#id17" role="doc-backlink">Борьба с «мусорными» <code class="docutils literal notranslate"><span class="pre">let</span></code>-связываниями</a><a class="headerlink" href="#id8" title="Ссылка на этот заголовок">¶</a></h3>
+</section>
+</section>
+</section>
+
+
+            <div class="clearer"></div>
+          </div>
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="Main">
+        <div class="sphinxsidebarwrapper">
+  <div>
+    <h3><a href="index.html">Оглавление</a></h3>
+    <ul>
+<li><a class="reference internal" href="#"><span class="xref std std-term">ANF</span> представление</a><ul>
+<li><a class="reference internal" href="#id4"><span class="xref std std-term">ANF</span> в примерах</a></li>
+<li><a class="reference internal" href="#id5">Некоторые замечания</a><ul>
+<li><a class="reference internal" href="#let">Случай с <code class="docutils literal notranslate"><span class="pre">let</span></code></a></li>
+<li><a class="reference internal" href="#id6">Порождение свежих идентификаторов</a></li>
+<li><a class="reference internal" href="#id7">Борьба с «мусорными» <code class="docutils literal notranslate"><span class="pre">let</span></code>-связываниями</a></li>
+<li><a class="reference internal" href="#id8">Борьба с «мусорными» <code class="docutils literal notranslate"><span class="pre">let</span></code>-связываниями</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+  </div>
+  <div>
+    <h4>Предыдущий раздел</h4>
+    <p class="topless"><a href="040cps.html"
+                          title="предыдущая глава">Хвостовая рекурсия. Продолжения</a></p>
+  </div>
+  <div>
+    <h4>Следующий раздел</h4>
+    <p class="topless"><a href="050ulc.html"
+                          title="следующая глава">Нетипизированное лямбда-исчисление</a></p>
+  </div>
+  <div role="note" aria-label="source link">
+    <h3>Эта страница</h3>
+    <ul class="this-page-menu">
+      <li><a href="_sources/041anf.rst.txt"
+            rel="nofollow">Исходный текст</a></li>
+    </ul>
+   </div>
+<search id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Быстрый поиск</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" autocomplete="off" autocorrect="off" autocapitalize="off" spellcheck="false"/>
+      <input type="submit" value="Искать" />
+    </form>
+    </div>
+</search>
+<script>document.getElementById('searchbox').style.display = "block"</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="related" role="navigation" aria-label="Related">
+      <h3>Навигация</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="genindex.html" title="Алфавитный указатель"
+             >указатель</a></li>
+        <li class="right" >
+          <a href="050ulc.html" title="Нетипизированное лямбда-исчисление"
+             >вперёд</a> |</li>
+        <li class="right" >
+          <a href="040cps.html" title="Хвостовая рекурсия. Продолжения"
+             >назад</a> |</li>
+        <li class="nav-item nav-item-0"><a href="index.html">документация FP и RISC-V </a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href=""><span class="xref std std-term">ANF</span> представление</a></li> 
+      </ul>
+    </div>
+    <div class="footer" role="contentinfo">
+    &#169; Авторские права 2025, Kakadu.
+      Создано с использованием <a href="https://www.sphinx-doc.org/">Sphinx</a> 8.2.3.
+    </div>
+  </body>
+</html>
