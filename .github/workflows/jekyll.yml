@@ -46,8 +46,9 @@ jobs:
           JEKYLL_ENV: "production"
           PAGES_REPO_NWO: ${{ github.repository }}
 
+      - run: cp fp-book _site/fp-book
+      - run: find _site/papers -type f -not -iname '*.pdf' -exec rm -fr {} \;
       - run: tree _site
-      - run: tree fp-book
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
