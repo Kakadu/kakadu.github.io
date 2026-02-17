@@ -1,5 +1,5 @@
 % !TeX spellcheck = ru_RU
-% !TEX TS-program = pdflatex
+% !TEX TS-program = xelatex
 
 \documentclass[aspectratio=169
   , xcolor={svgnames}
@@ -48,7 +48,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \title[Введение в лямбда-исчисление]{Введение в лямбда-исчисление}
 \author{Косарев Дмитрий}
-\date{\DTMDate{2025-03-12}}
+\date{\DTMDate{2026-02-18}}
 
 \AtBeginSection[]
 {
@@ -117,5 +117,55 @@
 \input{010appendix.tex}
 
 \input{01implementation.tex}
+
+\section{Capture avoiding substitution}
+\label{sec:CAS}
+
+\begin{frame}{Осуществление подстановки (1/2)}
+Корректный пример:
+\[
+\mathfrak{II} = \lam{x}{x}\lam{x}{x} =
+\lam{x}{x}\lam{z}{z} =
+\]
+\[
+= [\lam{z}{z}/x]x
+= \lam{z}{z} = \mathfrak{I}
+\]\\
+\pause
+
+\vspace{2em}
+Некорректный пример:
+\[
+\lam{x}{\lam{y}{xy}}y \neq
+\lam{y}{yy}
+\]
+А нужно делать так
+\[
+\lam{x}{\lam{y}{xy}}y =
+\lam{x}{\lam{t}{xt}}y =
+\lam{t}{yt}
+\]
+
+\end{frame}
+
+\begin{frame}{Осуществление подстановки (2/2)}
+Основная идея (capture avoiding substitution):
+\begin{itemize}
+  \item Если у нас есть
+$\lam{x}{e}E$, то мы заменяем все \emph{свободные} вхождения $x$ на $E$
+  \item  Если при замене свободная переменная в $E$ вдруг становится связанной, то мы переименовываем связанную переменную в $e$ перед выполнением подстановки
+ \end{itemize}\vspace{1cm}
+
+Пример:
+\[
+\lam{x}{\lam{y}{x\lam{x}{xy}}}y
+\]
+
+В $\lam{y}{x\lam{x}{xy}}$ только первый $x$ может быть заменен.
+Но перед подстановкой необходимо переименовать $y$ в теле на новое имя $t$
+\[
+[y/x]\lam{t}{x\lam{x}{xt}} =\lam{t}{y\lam{x}{xt}}
+\]
+\end{frame}
 
 \end{document}

@@ -1,6 +1,6 @@
 
 \defverbatim[colored]{\cast}{
-\begin{lstlisting}[language=c]
+\begin{lstlisting}[language=c, morekeywords={ ulc, Strategy, assert }]
 enum Tag { VAR, ABS, APP };
 struct ulc {
   Tag tag;
@@ -14,7 +14,7 @@ struct ulc {
 }
 
 \defverbatim[colored]{\strat}{
-\begin{lstlisting}[language=c]
+\begin{lstlisting}[language=c, morekeywords={ ulc, Strategy, assert }]
 struct Strategy {
   ulc* (*onVar)(Strategy* self, char* name);
   ulc* (*onApp)(Strategy* self, struct ulc *f, struct ulc *arg);
@@ -23,9 +23,10 @@ struct Strategy {
 
 struct ulc* applyStrategy(Strategy *self, struct ulc *root) {
   switch (root->tag) {
-    case VAR: return self->onVar(self, root->body.Var.name);
-    case APP: return self->onApp(self, root->body.App.f, root->body.App.arg);
-    case ABS: return self->onAbs(self, root->body.Abs.name, root->body.Abs.body);
+  case VAR: return self->onVar(self, root->body.Var.name);
+  case APP: return self->onApp(self, root->body.App.f, root->body.App.arg);
+  case ABS:
+    return self->onAbs(self, root->body.Abs.name, root->body.Abs.body);
   }
   assert(false);   return nullptr; // unreachable
 }
@@ -34,7 +35,7 @@ struct ulc* applyStrategy(Strategy *self, struct ulc *root) {
 
 
 \defverbatim[colored]{\nostrat}{
-\begin{lstlisting}[language=c]
+\begin{lstlisting}[language=c, morekeywords={ ulc, Strategy, assert }]
 ulc *evalVar(Strategy *this, char *name) {
   return var(name);
 }
@@ -54,11 +55,11 @@ struct Strategy NoStrategy = {
 }
 
 \defverbatim[colored]{\cbvstrat}{
-  \begin{lstlisting}[language=c]
+  \begin{lstlisting}[language=c, morekeywords={ ulc, Strategy, assert }]
 ulc *evalApplyByValue(Strategy *self, ulc *f, ulc *a1) {
   auto f2 = applyStrategy(self, f);
   switch (f2->tag) {
-    case VAR:    case APP:      return app(f2, a1);
+    case VAR: case APP:  return app(f2, a1);
     case ABS: {
       auto a2 = applyStrategy(self, a1);
       auto r = subst(a2, f2->body.Abs.name, f2->body.Abs.body);
@@ -75,7 +76,7 @@ struct Strategy CallByValue = {
 }
 
 \defverbatim[colored]{\inheritance}{
-\begin{lstlisting}[language=c]
+\begin{lstlisting}[language=c, morekeywords={ ulc, Strategy, assert }]
 ulc *evalApplyByValue(Strategy *this, ulc *f, ulc *arg)
 ulc *evalVar(Strategy *this, char *name);
 ulc *dontReduceUnderAbstr(Strategy *this, char *name, ulc *body);

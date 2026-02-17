@@ -56,8 +56,8 @@ $\lambda$-исчисление можно использовать как фор
      Не совсем понятно, что является допустимой операцией, а что нет.
      \begin{itemize}
          \item \enquote{Возьмите два любых решения уравнения $a^n+b^n=c^n$, для $n>2$ и $a,b,c\in \mathcal{N}$...}
-     	\item \enquote{Если это утверждение ложно, то ...}
-     	\item \enquote{Объявим как $A$ множество всех множеств. Если $A\in A$, то делаем одно, иначе --- другое}
+     	\item \enquote{Если это утверждение ложно, то ...} (парадокс Х.~Карри)
+     	\item \enquote{Объявим как $A$ множество всех множеств. Если $A\in A$, то делаем одно, иначе~--- другое}
      \end{itemize}
 \footnotetext{Изображение из \href{https://en.wikipedia.org/wiki/Pierre\_de\_Fermat}{Википедии}}
 
@@ -104,16 +104,16 @@ $\lambda$-исчисление можно использовать как фор
 \end{frame}
 
 \begin{frame}{Цель формализации}
-Придумать набор недвусмысленных правил, таких что обычный офисный бюрократ (читайте, компьютер) мог им следовать и получать ожидаемый результат.\\
+Придумать \textbf{конечный} набор недвусмысленных правил, таких что обычный офисный бюрократ (читайте, компьютер) мог им следовать и получать ожидаемый результат \textbf{за конечное число шагов}.\\
 
 \vspace{1em}
 Существуют много различных формализаций:
 \begin{itemize}
 \item $\lambda$-исчисление
-\item Машины Тьюринга\footnote{Мало имеют общего с компьютерами. %Считать А.Тьюринга изобретателем компьютеров~--- неправильно
+\item Машины Тьюринга\footnote{\foreignquote{english}{The Annotated Turing} by Charles Petzold. %Считать А.Тьюринга изобретателем компьютеров~--- неправильно
 }
 \item Машины Поста
-\item Частично (объявленные) рекурсивные функции (англ. partial recursive function)
+\item Частичные рекурсивные функции (англ. partial recursive functions)
 \item Алгорифмы Маркова
 \end{itemize}
 \end{frame}
@@ -144,7 +144,7 @@ $\lambda$-исчисление можно использовать как фор
 
 
 \begin{frame}{$\lambda$-исчисление}
-\framesubtitle{(А. Чёрч, в таком виде --- 1935)}
+\framesubtitle{(А. Чёрч, в таком виде~--- 1935)}
 \begin{figure}[t]
   \begin{subfigure}[t]{0.5\textwidth}
     \vspace{-5em}
@@ -153,8 +153,8 @@ $\lambda$-исчисление можно использовать как фор
     \begin{itemize}
       \item Переменные: $x,y,z,\dots$
       \item Абстракция $(\lambda \nu. A)$, где \\
-      $A$ --- $\lambda$-выражение, \\
-      а $\nu$ --- произвольное имя переменной
+      $A$~--- $\lambda$-выражение, \\
+      а $\nu$~--- произвольное имя переменной
       \item Применение $(AB)$, где $A$ и $B$ --- $\lambda$-выражения
       \item Ничего больше нет
     \end{itemize}
@@ -265,6 +265,7 @@ lim_{\textcolor{red}{n}\rightarrow\infty}\ u_n
 
 
 \begin{frame}[fragile]{Подстановка}
+\framesubtitle{Тут бывают грабли, см. \ref{sec:CAS}}
  \begin{figure}[t]
    \begin{subfigure}[t]{0.45\textwidth}
    \vspace{-5em}
@@ -303,8 +304,8 @@ lim_{\textcolor{red}{n}\rightarrow\infty}\ u_n
     y    \arr \lam{x}{x}y
     \]
     \begin{tikzpicture}[overlay]
-      \path[->,red,thick](dbI1) edge [out=-90, in=-90] (dbI5);%      \path[draw,->,blue,thick] (dbI2) edge [out=-90, in=-90] (dbI3);
-      \path[draw,->,blue,thick] (dbI2.south) -- ++(0,-0.2cm) -- ++(0.4cm,0) -- (dbI3.south);
+      \path[->,red,thick] (dbI1) edge [out=-90, in=-90] (dbI5);%      \path[draw,->,blue,thick] (dbI2) edge [out=-90, in=-90] (dbI3);
+      \path[->,red,thick,draw] (dbI2.south) -- ++(0,-0.2cm) -- ++(0.4cm,0) -- (dbI3.south);
     \end{tikzpicture}
   }
    \end{minipage}
@@ -387,16 +388,15 @@ lim_{\textcolor{red}{n}\rightarrow\infty}\ u_n
 
 \defverbatim[colored]{\numeralIsFor}{
 \begin{lstlisting}[language=c]
-// Church numeral N
-// a.k.a. primitive recursive function
 for (int i=0; i<N; i++)
   x = f(x);
 \end{lstlisting}
 }
 
 \begin{frame}{Представление чисел (нумералы Чёрча). Сложение}
-\begin{figure}[t]
-    \begin{subfigure}[t]{0.35\textwidth}
+
+\begin{columns}[T]
+    \begin{column}{0.35\textwidth}
 $ 0 \sim \lam{f}{\lam{x}{\ x}}$
 
 $ 1 \sim \lam{f}{\lam{x}{\ f\ x}}$
@@ -404,13 +404,15 @@ $ 1 \sim \lam{f}{\lam{x}{\ f\ x}}$
 $ 2 \sim \lam{f}{\lam{x}{\ f\ (f\ x)}}$
 
   и т.д.
-    \end{subfigure}
-    \begin{subfigure}[t]{0.55\textwidth}
+    \end{column}
+    \begin{column}{0.55\textwidth}
     \begin{minipage}{\textwidth}
+    Нумерал Чёрча на Си\\
+    Оно же --- примитивная рекурсия
     \numeralIsFor
     \end{minipage}
-    \end{subfigure}
-\end{figure}
+    \end{column}
+\end{columns}
 
   \vspace{2em}
 
@@ -560,7 +562,7 @@ mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}
 \begin{definition}[Эквивалентность с точки зрения наблюдателя]
 Объекты ведут себя одинаково, если на них подействовать одинаково
 \end{definition}
-В этом смысле quick sort эквивалентен пузырьку
+В этом смысле quick sort эквивалентен сортировке пузырьком
 \end{frame}
 
 \begin{comment}
@@ -656,14 +658,28 @@ T\equiv\lam{x}{\lam{y}{x}} \equiv f\!st \qquad \qquad \qquad \qquad
 F\equiv \lam{x}{\lam{y}{y}}\equiv snd \equiv 0
 \]
 
+\only<1>{
+Вариант 1: условие $c$ уже известно
+\begin{align*}
+  & c\ \ \texttt{th}\ \ \texttt{el}\\
+  & T\ \ \texttt{th}\ \ \texttt{el} \arrbeta \texttt{th} \\
+  & F\ \ \texttt{th}\ \ \texttt{el} \arrbeta \texttt{el}
+\end{align*}
+
+}
+\only<2>{
+Вариант 1: условие не известно, нужно делать if-then-else
 \begin{align*}
   ite \quad\equiv &\quad \lam{c}{\lam{t}{\lam{e}{\ \app{\app{c}{t}}{e}}}}\\
   (ite\ T) \quad\equiv &\quad \ite T \arrbeta \lam{t}{\lam{e}{ (\app{T}{t}\ e)}} \arrmany \lam{t}{\lam{e}{t}}\equiv T\\
   (ite\ F) \quad\equiv &\quad \ite F \arrbeta \lam{t}{\lam{e}{ (\app{F}{t}\ e)}} \arrmany \lam{t}{\lam{e}{e}}\equiv F
 \end{align*}
+Здесь $\arrmany$ означает редукцию за несколько шагов
+
+}
+
 
 %\footnotetext{
-Здесь $\arrmany$ означает редукцию за несколько шагов
 %}
 \end{frame}
 
