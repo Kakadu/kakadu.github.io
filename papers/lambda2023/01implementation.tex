@@ -4,11 +4,11 @@
 enum Tag { VAR, ABS, APP };
 struct ulc {
   Tag tag;
-  union body {
-    struct Var { char* name; } Var;
-    struct Abs { char* name; ulc* body; } Abs;
-    struct App { ulc* f; ulc* arg; } App;
-  } body;
+  union {
+    struct { char* name; } Var;
+    struct { ulc* f; ulc* arg; } App;
+    struct { char* name; ulc* body; } Abs;
+  };
 };
 \end{lstlisting}
 }
@@ -23,10 +23,10 @@ struct Strategy {
 
 struct ulc* applyStrategy(Strategy *self, struct ulc *root) {
   switch (root->tag) {
-  case VAR: return self->onVar(self, root->body.Var.name);
-  case APP: return self->onApp(self, root->body.App.f, root->body.App.arg);
+  case VAR: return self->onVar(self, root->Var.name);
+  case APP: return self->onApp(self, root->App.f, root->App.arg);
   case ABS:
-    return self->onAbs(self, root->body.Abs.name, root->body.Abs.body);
+    return self->onAbs(self, root->Abs.name, root->Abs.body);
   }
   assert(false);   return nullptr; // unreachable
 }
@@ -62,7 +62,7 @@ ulc *evalApplyByValue(Strategy *self, ulc *f, ulc *a1) {
     case VAR: case APP:  return app(f2, a1);
     case ABS: {
       auto a2 = applyStrategy(self, a1);
-      auto r = subst(a2, f2->body.Abs.name, f2->body.Abs.body);
+      auto r = subst(a2, f2->Abs.name, f2->Abs.body);
       return applyStrategy(self, r);
     }
   }
@@ -97,9 +97,15 @@ struct Strategy CallByValue = {
 
 
 
-\section{Как писать интерпретатор на Си?}
+\subsection{Как писать интерпретатор на Си?}
+
 \begin{frame}{Дэмка на С++ (1/5): представление выражений}
+Сделано на несколько наивном С++ потому что вам знаком синтаксис.\\
+Но вообще, почти всё почти всегда стоит писать на функциональных языках :)
+
 \cast
+
+\blfootnote{\url{https://github.com/Kakadu/kakadu.github.io/tree/master/papers/lambda2023/cpp}}
 \end{frame}
 
 \begin{frame}{Дэмка на С++ (2/5): объявление стратегии}

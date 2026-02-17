@@ -58,16 +58,16 @@
 %    \tableofcontents[currentsection,currentsubsection]
 %  \end{frame}
 %}
-%\AtBeginSubsection[]
-%{
-%  \begin{frame}<beamer>%[allowframebreaks]
-%    \frametitle{Оглавление}
-%    \tableofcontents[currentsection,currentsubsection]
-%  \end{frame}
-%}
+\AtBeginSubsection[]
+{
+  \begin{frame}<beamer>%[allowframebreaks]
+    \frametitle{Оглавление}
+    \tableofcontents[currentsection,currentsubsection]
+  \end{frame}
+}
 
 \newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}
-\setcounter{tocdepth}{2}  % part,chapters,sections
+\setcounter{tocdepth}{3}  % part,chapters,sections
 
 %\makeatletter
 %\renewcommand\addcontentsline[3]{%
