@@ -1,4 +1,6 @@
 
+\subsection{Бывают различные стратегии}
+
 \newcommand{\lazy}{\xarr{lazy}}
 \newcommand{\strict}{\xarr{strict}}
 
@@ -35,6 +37,8 @@ $\tr{\lam{x}{\lam{y}{y}}}\tb{\App{\lam{x}{xx}}{\lam{x}{xx}}} \lazy (\lambda y. y
 \lstinline[language=c]=(c>0) ? f() : g() =
 \end{frame}
 
+
+\subsection{Аккуратный способ задавать стратегии}
 
 \begin{frame}[fragile]{Правила вывода в исчислении}
 Пусть дан некоторый язык L, c помощью которого записываются $P_i$ и $C$.\\

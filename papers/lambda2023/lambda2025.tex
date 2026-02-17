@@ -46,28 +46,32 @@
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-\title[Введение в лямбда-исчисление]{Введение в лямбда-исчисление}
-\author{Косарев Дмитрий}
+\title{Введение в лямбда-исчисление}
+\author{Косарев Дмитрий Сергеевич}
 \date{\DTMDate{2026-02-18}}
 
-\AtBeginSection[]
-{
-  \begin{frame}<beamer>%[allowframebreaks]
-    \frametitle{Оглавление}
-    \tableofcontents[currentsection,currentsubsection]
-  \end{frame}
-}
-\AtBeginSubsection[]
-{
-  \begin{frame}<beamer>%[allowframebreaks]
-    \frametitle{Оглавление}
-    \tableofcontents[currentsection,currentsubsection]
-  \end{frame}
-}
+%\AtBeginSection[]
+%{
+%  \begin{frame}<beamer>%[allowframebreaks]
+%    \frametitle{Оглавление}
+%    \tableofcontents[currentsection,currentsubsection]
+%  \end{frame}
+%}
+%\AtBeginSubsection[]
+%{
+%  \begin{frame}<beamer>%[allowframebreaks]
+%    \frametitle{Оглавление}
+%    \tableofcontents[currentsection,currentsubsection]
+%  \end{frame}
+%}
 
 \newcommand{\verbatimfont}[1]{\def\verbatim@font{#1}}
 \setcounter{tocdepth}{2}  % part,chapters,sections
 
+%\makeatletter
+%\renewcommand\addcontentsline[3]{%
+%  \addtocontents{#1}{\protect\contentsline{#2}{#3}{\thepage}}}
+%\makeatother
 
 \begin{document}
 \maketitle
@@ -82,14 +86,14 @@
 \everymath{\displaystyle}
 
 % Uncomment these lines for an automatically generated outline.
-%\begin{frame}{Оглавление}
-%  \tableofcontents
-%\end{frame}
+\begin{frame}{Оглавление}
+  \tableofcontents
+\end{frame}
 
 
 
 
-\section*{Введение}
+\section{Введение}
 \input{02intro.tex}
 
 \begin{frame}%[allowframebreaks]
@@ -99,6 +103,7 @@
 \printbibliography
 \end{frame}
 
+\section{Вопросы к экзамену  }
 
 \begin{frame}{Вопросы к экзамену  }
 \begin{enumerate}
@@ -118,7 +123,7 @@
 
 \input{01implementation.tex}
 
-\section{Capture avoiding substitution}
+\subsection{Capture avoiding substitution}
 \label{sec:CAS}
 
 \begin{frame}{Осуществление подстановки (1/2)}

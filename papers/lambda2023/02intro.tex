@@ -8,16 +8,16 @@
 
 
 \begin{frame}{Введение: $\lambda$-исчисление}
-  \begin{figure}
+  \begin{columns}[T]
     \centering
-    \begin{subfigure}[t]{0.45\textwidth}
+    \begin{column}{0.45\textwidth}
       \begin{minipage}{0.7\textwidth}
       \includegraphics[width=1\textwidth]{220px-Alonzo_Church.jpg}\\
             Алонзо Чёрч (1903--1995)
       \end{minipage}
-    \end{subfigure}
-    \begin{subfigure}[t]{0.45\textwidth}
-      \vspace{-5em}   % TODO: dirty hack!
+    \end{column}
+    \begin{column}{0.5\textwidth}
+     % \vspace{-5em}   % TODO: dirty hack!
   Алонзо Чёрч в 1935   открыл $\lambda$-исчисление
 \vspace{1em}
 
@@ -30,8 +30,8 @@
 В принципе, могло быть изобретено уже в 1910-х г.г.
 \footnotetext{Изображение из \href{https://en.wikipedia.org/wiki/Alonzo\_Church}{Википедии}}
 
-    \end{subfigure}
-  \end{figure}
+    \end{column}
+  \end{columns}
 \end{frame}
 
 \begin{frame}{Для формализации алгоритмов}
@@ -47,9 +47,9 @@ $\lambda$-исчисление можно использовать как фор
 
 \begin{frame}{Проблемы неформального определения}
 
-\begin{figure}[ht]
-  \begin{subfigure}[t]{.55\textwidth}
-     \vspace{-15em}
+\begin{columns}[T]
+  \begin{column}{.55\textwidth}
+     %\vspace{-15em}
      Зависимо от естественного языка\\
 
      \vspace{1em}
@@ -61,15 +61,15 @@ $\lambda$-исчисление можно использовать как фор
      \end{itemize}
 \footnotetext{Изображение из \href{https://en.wikipedia.org/wiki/Pierre\_de\_Fermat}{Википедии}}
 
-  \end{subfigure}
+  \end{column}
 \hspace{1cm}
-  \begin{subfigure}[t]{.35\textwidth}
+  \begin{column}{.35\textwidth}
     \includegraphics[width=.95\textwidth]{Pierre_de_Fermat3.jpeg}\\
     \centering
     %Pierre de Fermat \\(1601--1665)
     Quel est mon nom? \\(1601--1665)
-  \end{subfigure}
-\end{figure}
+  \end{column}
+\end{columns}
 
 \end{frame}
 
@@ -97,7 +97,7 @@ $\lambda$-исчисление можно использовать как фор
  			\begin{minipage}{0.7\textwidth}
  				\includegraphics[width=1\textwidth]{800px-Bertrand_Russell_transparent_bg.png}\\
  				\centering
- 				Bertrand~Russell \\(1872--1970)
+ 				Бертран~Рассел \\(1872--1970)
  			\end{minipage}
  		\end{subfigure}
  	\end{figure}
@@ -128,6 +128,7 @@ $\lambda$-исчисление можно использовать как фор
 
 \end{frame}
 
+\section{Определение}
 
 \begin{frame}{$\lambda$-исчисление}
 Процессом вычислений является переписывание программы ($\lambda$-выражения, $\lambda$-терма) на бесконечном листе бумаги
@@ -265,7 +266,7 @@ lim_{\textcolor{red}{n}\rightarrow\infty}\ u_n
 
 
 \begin{frame}[fragile]{Подстановка}
-\framesubtitle{Тут бывают грабли, см. \ref{sec:CAS}}
+\framesubtitle{Тут бывают грабли, см. разд.~\ref{sec:CAS}}
  \begin{figure}[t]
    \begin{subfigure}[t]{0.45\textwidth}
    \vspace{-5em}
@@ -357,6 +358,8 @@ lim_{\textcolor{red}{n}\rightarrow\infty}\ u_n
     \end{itemize}
   %\end{itemize}
 \end{frame}
+
+\section{Нумералы Чёрча}
 
 \begin{frame}{Историческое напоминание: числа Пеано}
 \begin{figure}[ht]
@@ -661,9 +664,9 @@ F\equiv \lam{x}{\lam{y}{y}}\equiv snd \equiv 0
 \only<1>{
 Вариант 1: условие $c$ уже известно
 \begin{align*}
-  & c\ \ \texttt{th}\ \ \texttt{el}\\
-  & T\ \ \texttt{th}\ \ \texttt{el} \arrbeta \texttt{th} \\
-  & F\ \ \texttt{th}\ \ \texttt{el} \arrbeta \texttt{el}
+  & \app{\app{c\ }{th}}{el}\\
+  & \app{\app{c\ }{th}}{el} \arrbeta th \\
+  & \app{\app{c\ }{th}}{el} \arrbeta el
 \end{align*}
 
 }
@@ -718,6 +721,8 @@ F\equiv \lam{x}{\lam{y}{y}}\equiv snd \equiv 0
   \end{figure}
 \end{frame}
 \end{comment}
+
+\section{Рекурсия}
 
 \newcommand\Y{\ensuremath{Y}}
 \begin{frame}{Рекурсия через комбинатор неподвижной точки}
