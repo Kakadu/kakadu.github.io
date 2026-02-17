@@ -1,6 +1,6 @@
 #include "lambda.h"
+
 #include <cstring>
-#include <memory>
 #include <cassert>
 #include <ostream>
 
@@ -9,11 +9,11 @@
 enum Tag { VAR, APP, ABS };
 struct ulc {
     Tag tag;
-    union body {
-        struct Var { char* name; } Var;
-        struct App { ulc* f; ulc* arg; } App;
-        struct Abs { char* name; ulc* body; } Abs;
-    } body;
+    union {
+        struct { char* name; } Var;
+        struct { ulc* f; ulc* arg; } App;
+        struct { char* name; ulc* body; } Abs;
+    };
 };
 
 // TODO: Add memory managment
@@ -22,20 +22,20 @@ struct ulc {
 inline struct ulc* var(char *name) {
     assert(name);
     assert(strlen(name) != 0);
-    return new ulc { .tag = VAR, .body = { .Var = { .name = name } } };
+    return new ulc { VAR, { .Var = { .name = name } } };
 }
 
 inline struct ulc* app(struct ulc *f, struct ulc *arg) {
     assert(f);
     assert(arg);
-    return new ulc { .tag = APP, .body = { .App = { .f = f, .arg = arg } } };
+    return new ulc { APP, { .App = { .f = f, .arg = arg } } };
 }
 
 inline struct ulc* abs(char* name, struct ulc *body) {
     assert(name);
     assert(strlen(name) != 0);
     assert(body);
-    return new ulc { .tag = ABS, .body = { .Abs = { .name = name, .body = body } } };
+    return new ulc { ABS, { .Abs = { .name = name, .body = body } } };
 }
 
 struct ulc *subst(struct ulc *what, char* name, struct ulc *where) {
@@ -43,26 +43,24 @@ struct ulc *subst(struct ulc *what, char* name, struct ulc *where) {
     assert(name);
     assert(strlen(name) != 0);
     assert(where);
-    //printf("name = %s, where = ", name);
     trace(where);
     switch (where->tag) {
     case VAR: {
-        if (strcmp(name, where->body.Var.name) == 0)
+        if (strcmp(name, where->Var.name) == 0)
             return what;
         else return where;
     }
     case APP: {
-        auto f = subst(what, name, where->body.App.f);
-        auto arg = subst(what, name, where->body.App.arg);
+        auto f = subst(what, name, where->App.f);
+        auto arg = subst(what, name, where->App.arg);
         return app(f, arg);
     }
     case ABS: {
-        if (strcmp(name, where->body.Abs.name) == 0)
+        if (strcmp(name, where->Abs.name) == 0)
             return where;
         else {
-            auto body = subst(what, name, where->body.Abs.body);
-            auto name2 = where->body.Abs.name;
-            //printf("new body:");
+            auto body = subst(what, name, where->Abs.body);
+            auto name2 = where->Abs.name;
             trace(body);
             return abs(name2, body);
         }
@@ -81,11 +79,11 @@ struct Strategy {
 struct ulc* applyStrategy(Strategy *self, struct ulc *root) {
     switch (root->tag) {
     case VAR:
-        return self->onvar(self, root->body.Var.name);
+        return self->onvar(self, root->Var.name);
     case APP:
-        return self->onApp(self, root->body.App.f, root->body.App.arg);
+        return self->onApp(self, root->App.f, root->App.arg);
     case ABS:
-        return self->onAbs(self, root->body.Abs.name, root->body.Abs.body);
+        return self->onAbs(self, root->Abs.name, root->Abs.body);
     }
     assert(false);
     return nullptr;
@@ -116,7 +114,7 @@ struct ulc *evalApplyByValue(Strategy *strat, struct ulc *f, struct ulc *arg) {
     case APP: return app(f2, arg);
     case ABS: {
         auto arg2 = applyStrategy(strat, arg);
-        auto rez = subst(arg2, f2->body.Abs.name, f2->body.Abs.body);
+        auto rez = subst(arg2, f2->Abs.name, f2->Abs.body);
         return applyStrategy(strat, rez);
     }
     }
@@ -133,18 +131,18 @@ struct Strategy CallByValue = {
 void pp(std::ostream& out, struct ulc *root) {
     switch (root->tag) {
     case VAR:
-        out << root->body.Var.name;
+        out << root->Var.name;
         break;
     case APP:
         out << "(";
-        pp(out, root->body.App.f);
+        pp(out, root->App.f);
         out << " ";
-        pp(out, root->body.App.arg);
+        pp(out, root->App.arg);
         out << ")";
         break;
     case ABS:
-        out << "(λ" << root->body.Abs.name << " -> ";
-        pp(out, root->body.Abs.body);
+        out << "(λ" << root->Abs.name << " -> ";
+        pp(out, root->Abs.body);
         out << ")";
         break;
     }
