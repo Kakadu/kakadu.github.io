@@ -396,15 +396,21 @@ for (int i=0; i<N; i++)
 \end{lstlisting}
 }
 
+\def\Z{\ensuremath{\mathbb{0}}}
+\def\I{\ensuremath{\mathbb{1}}}
+\def\II{\ensuremath{\mathbb{2}}}
+\def\IV{\ensuremath{\mathbb{4}}}
+
+
 \begin{frame}{Представление чисел (нумералы Чёрча). Сложение}
 
 \begin{columns}[T]
     \begin{column}{0.35\textwidth}
-$ 0 \sim \lam{f}{\lam{x}{\ x}}$
+$ \Z \sim \lam{f}{\lam{x}{\ x}}$
 
-$ 1 \sim \lam{f}{\lam{x}{\ f\ x}}$
+$ \I \sim \lam{f}{\lam{x}{\ f\ x}}$
 
-$ 2 \sim \lam{f}{\lam{x}{\ f\ (f\ x)}}$
+$ \II \sim \lam{f}{\lam{x}{\ f\ (f\ x)}}$
 
   и т.д.
     \end{column}
@@ -427,23 +433,22 @@ add \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{m\ f\ }{\app{n\ f\ }{x}}}}}}\
 \end{align*}}
 \end{frame}
 
-
-\begin{frame}{Вычисление (т.е. редукция, упрощение) 2+2}
+\begin{frame}{Вычисление (т.е. редукция, упрощение) \II+\II}
 \def\betaarr{\longrightarrow\!\!\beta}
 \def\numTWO{\ensuremath{\lam{f}{\lam{x}{f(f\ x)}}}}
 \vspace{-2em}
 {\Large
   \begin{align}
-    \App{\lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{m\ f\ }{\app{n\ f\ }{x}} }}}}}{2} 2 & \longrightarrow \\
-    \Redex{\lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{m\ f\ }{\app{n\ f\ }{x}} }}}}}{2} 2 & \betaarr \\
-    \redex{\lam{n}{\lam{f}{\lam{x}{\app{2\ f\ }{\app{n\ f\ }{x}}){}}}}} {2} & \betaarr \\
-    \lam{f}{\lam{x}{ \app{2\ f\ }{\app{2\ f\ }{x}}}}   & \longrightarrow \\
-    \lam{f}{\lam{x}{ \App{\Redex{\numTWO}{f}\ }{\app{2\ f\ }{x}}}} & \betaarr \\
-    \lam{f}{\lam{x}{ \App{\lam{x}{f (f x)} \ \ }{\app{2\ f\ }{x}}}} & \longrightarrow \\
+    \App{\lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{m\ f\ }{\app{n\ f\ }{x}} }}}}}{\II} \II & \longrightarrow \\
+    \Redex{\lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{m\ f\ }{\app{n\ f\ }{x}} }}}}}{\II} \II & \betaarr \\
+    \redex{\lam{n}{\lam{f}{\lam{x}{\app{\II\ f\ }{\app{n\ f\ }{x}}){}}}}} {\II} & \betaarr \\
+    \lam{f}{\lam{x}{ \app{\II\ f\ }{\app{\II\ f\ }{x}}}}   & \longrightarrow \\
+    \lam{f}{\lam{x}{ \App{\Redex{\numTWO}{f}\ }{\app{\II\ f\ }{x}}}} & \betaarr \\
+    \lam{f}{\lam{x}{ \App{\lam{x}{f (f x)} \ \ }{\app{\II\ f\ }{x}}}} & \longrightarrow \\
     \lam{f}{\lam{x}{ \app{\lam{x}{f (f x)}} {\app{\App{\Redex{\numTWO}{f}}{x}}}}} & \betaarr \\
     \lam{f}{\lam{x}{ \App{\lam{x}{f (f x)}  } {\Redex{\lam{x}{f (f x)} }{x}}}} & \betaarr \\
     \lam{f}{\lam{x}{ \redex{\Lam{x}{f (f x)}}{\App{f}{\app{f}{x}}}}} & \betaarr \\
-    \lam{f}{\lam{x}{ f (f (f (f x)))}} & \equiv 4
+    \lam{f}{\lam{x}{ f (f (f (f x)))}} & \equiv \IV
   \end{align}}
 \end{frame}
 
@@ -471,22 +476,22 @@ $A \into B$ и $A \into C$,
 \end{frame}
 
 \begin{frame}{Представление чисел (нумералы Чёрча). Умножение}
-\begin{figure}[t]
-    \begin{subfigure}[t]{0.35\textwidth}
-$ 0 \sim \lam{f}{\lam{x}{\ x}}$
+\begin{columns}[T]
+    \begin{column}{0.35\textwidth}
+$ \Z \sim \lam{f}{\lam{x}{\ x}}$
 
-$ 1 \sim \lam{f}{\lam{x}{\ f\ x}}$
+$ \I \sim \lam{f}{\lam{x}{\ f\ x}}$
 
-$ 2 \sim \lam{f}{\lam{x}{\ f\ (f\ x)}}$
+$ \II \sim \lam{f}{\lam{x}{\ f\ (f\ x)}}$
 
   и т.д.
-    \end{subfigure}
-    \begin{subfigure}[t]{0.55\textwidth}
-    \begin{minipage}{\textwidth}
-    \numeralIsFor
-    \end{minipage}
-    \end{subfigure}
-\end{figure}
+    \end{column}
+    \begin{column}{0.55\textwidth}
+%    \begin{minipage}{\textwidth}
+%    \numeralIsFor
+%    \end{minipage}
+    \end{column}
+\end{columns}
 
   \vspace{1cm}
 
@@ -523,7 +528,7 @@ mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}
 %  \end{align}
 %\end{frame}
 
-\begin{frame}[plain]{Вычисление \\(т.е. редукция, упрощение) \\2$\times$2 длинно}
+\begin{frame}[plain]{Вычисление \\(т.е. редукция, упрощение) \\$\II\times\II$ длинно}
 \def\betaarr{\longrightarrow\!\!\beta}
 \def\numTWO{\ensuremath{\lam{f}{\lam{x}{f(f\ x)}}}}
 \setcounter{equation}{0}
@@ -535,19 +540,19 @@ mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}
         \vspace{-8em}
 
         {  \begin{align}
-          \apppl{\app{\lam{m}{\lam{n}{\lam{z}{\lam{x}{(m \app{n}{z} x)}}}}}{2}}{2} & \longrightarrow \\
-          \Apppl{\Redex{\lam{m}{\lam{n}{\lam{z}{\lam{x}{(m \app{n}{z} x)}}}}}{2}}{2} & \betaarr \\
-          \Redex{\lam{n}{\lam{z}{\lam{x}{(2 \app{n}{z} x)}}}}{2} & \betaarr \\
-          \lam{z}{\lam{x}{\app{\app{2}{\app{2}{z}}}{x}}} & \longrightarrow \\
-          \lam{z}{\lam{x}{\App{\Redex{\numTWO}{\app{2}{z}}}{x}}} & \betaarr \\
-          \lam{z}{\lam{x}{\Redex{\lam{x}{(2 z (\app{2}{z} x))}}{x}}} & \betaarr \\
-          \lam{z}{\lam{x}{\App{\app{2}{z}}{(\app{2}{z} x)}}} & \longrightarrow \\
-          \lam{z}{\lam{x}{\app{\Redex{\numTWO}{z}}{(\app{2}{z} x)}}} & \betaarr \\
-          \lam{z}{\lam{x}{\redex{\lam{x}{\app{z}{\app{z}{x}}}}{(\app{2}{z} x)}}} & \betaarr \\
-          \lam{z}{\lam{x}{\app{z}{\app{z}{\App{\app{2}{z}}{x}}}}} & \longrightarrow \\
+          \apppl{\app{\lam{m}{\lam{n}{\lam{z}{\lam{x}{(m \app{n}{z} x)}}}}}{\II}}{\II} & \longrightarrow \\
+          \Apppl{\Redex{\lam{m}{\lam{n}{\lam{z}{\lam{x}{(m \app{n}{z} x)}}}}}{\II}}{\II} & \betaarr \\
+          \Redex{\lam{n}{\lam{z}{\lam{x}{(\II \app{n}{z} x)}}}}{\II} & \betaarr \\
+          \lam{z}{\lam{x}{\app{\app{\II}{\app{\II}{z}}}{x}}} & \longrightarrow \\
+          \lam{z}{\lam{x}{\App{\Redex{\numTWO}{\app{\II}{z}}}{x}}} & \betaarr \\
+          \lam{z}{\lam{x}{\Redex{\lam{x}{(2 z (\app{\II}{z} x))}}{x}}} & \betaarr \\
+          \lam{z}{\lam{x}{\App{\app{\II}{z}}{(\app{\II}{z} x)}}} & \longrightarrow \\
+          \lam{z}{\lam{x}{\app{\Redex{\numTWO}{z}}{(\app{\II}{z} x)}}} & \betaarr \\
+          \lam{z}{\lam{x}{\redex{\lam{x}{\app{z}{\app{z}{x}}}}{(\app{\II}{z} x)}}} & \betaarr \\
+          \lam{z}{\lam{x}{\app{z}{\app{z}{\App{\app{\II}{z}}{x}}}}} & \longrightarrow \\
           \lam{z}{\lam{x}{\app{z}{\app{z}{\App{\Redex{\numTWO}{z}}{x}}}}} & \betaarr \\
           \lam{z}{\lam{x}{\app{z}{\App{z}{\Redex{\lam{x}{\app{z}{\app{z}{x}}}}{x}}}}} & \betaarr \\
-          \lam{z}{\lam{x}{\app{z}{\app{z}{\app{z}{\app{z}{x}}}}}} & \equiv 4
+          \lam{z}{\lam{x}{\app{z}{\app{z}{\app{z}{\app{z}{x}}}}}} & \equiv \IV
         \end{align}}
   \end{subfigure}
 \end{figure}
@@ -560,7 +565,7 @@ mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}
 \end{definition}
 Например:
 \begin{itemize}
-\item $\lam{z}{\lam{x}{\app{z}{\app{z}{\app{z}{\app{z}{x}}}}}}$ и $\lam{f}{\lam{x}{\app{f}{\app{f}{\app{f}{\app{f}{x}}}}}}$ эквивалентны 4
+\item $\lam{z}{\lam{x}{\app{z}{\app{z}{\app{z}{\app{z}{x}}}}}}$ и $\lam{f}{\lam{x}{\app{f}{\app{f}{\app{f}{\app{f}{x}}}}}}$ эквивалентны \IV{}
 \end{itemize}
 \begin{definition}[Эквивалентность с точки зрения наблюдателя]
 Объекты ведут себя одинаково, если на них подействовать одинаково
@@ -658,7 +663,7 @@ mul \equiv &\ \lam{m}{\lam{n}{\lam{f}{\lam{x}{\app{\app{m}{\app{n\ f}}{\ x}}}}}}
 Хотим определить функцию $ite$ от трех аргументов $c, th, el$, которая работает в синтаксисе Си как $c\ ?\ th\ :\ el$
 \[
 T\equiv\lam{x}{\lam{y}{x}} \equiv f\!st \qquad \qquad \qquad \qquad
-F\equiv \lam{x}{\lam{y}{y}}\equiv snd \equiv 0
+F\equiv \lam{x}{\lam{y}{y}}\equiv snd \equiv \Z{}
 \]
 
 \only<1>{
@@ -724,6 +729,16 @@ F\equiv \lam{x}{\lam{y}{y}}\equiv snd \equiv 0
 
 \section{Рекурсия}
 
+\begin{frame}{Напоминание из алгебры}
+\begin{definition}[Неподвижная точка оператора $R$]
+такой аргумент $x$, что $Rx = x $
+\end{definition}
+\vspace{2em}
+Пример. Мы ищем все достижимые клетки-локации в лабиринте. Оператор $R$ будет делать делать шаг из всех достижимых на данном этапе клеток во все возможные стороны.\\
+Неподвижной точкой будет множество достижимых клеток, такое что других достижимых нет.
+\end{frame}
+
+
 \newcommand\Y{\ensuremath{Y}}
 \begin{frame}{Рекурсия через комбинатор неподвижной точки}
 \framesubtitle{англ. FIXed point combinator}
@@ -757,7 +772,7 @@ YR &\equiv     \redex{\Yimpl}{R} \arrbeta \redex{\lam{x}{R(x\ x)}}{\lam{x}{R(x\ 
 \def\Yfac{\ensuremath{\app{\Y}{f\!ac_o}}}
 \vspace{-1.6em}
 
-\newcommand{\FAC}{\ensuremath{\lam{\self}{\lam{n}{ \ite{n<2}{1}{n \times \self(n-1)}}}}}
+\newcommand{\FAC}{\ensuremath{\lam{\self}{\lam{n}{ \ite{n<\II{}}{\I{}}{n \times \self(n-\I)}}}}}
 %Основное свойство
 \[
 \Y R = R (\Y R)
@@ -768,14 +783,14 @@ YR &\equiv     \redex{\Yimpl}{R} \arrbeta \redex{\lam{x}{R(x\ x)}}{\lam{x}{R(x\ 
 Факториал: $f\!ac_o \equiv \FAC$\\
 
 \begin{align*}
-  \Yfac\ 2 & \equiv \\
-  \redex{\Y}{\FAC}\ 2 & \longrightarrow\\
-  \redex{\FAC}{\Yfac}\ 2 & \longrightarrow\\
-  \redex{(\lambda n . \ite{n<2}{1}{n \times \Yfac (n-1)})}{2} & \arrmany \\
-  2 \times \Yfac (2-1) & \betaarr \\
-  2 \times (\Yfac 1) & \arrmany \\
-  2 \times \ite{1<2}{1}{n \times (\Y\ f\!ac\ (1-1))} & \arrmany \\
-  2 \times 1 & \arrmany 2
+  \Yfac\ \II{} & \equiv \\
+  \redex{\Y}{\FAC}\ \II{} & \arrmany\\
+  \redex{\FAC}{\Yfac}\ \II{}  & \longrightarrow\\
+  \redex{(\lambda n . \ite{n<\II{} }{\I{}}{n \times \Yfac (n-\I{})})}{\II{} } & \arrmany \\
+  \II{}  \times \Yfac (\II{} - \I{}) & \betaarr \\
+  \II{}  \times (\Yfac \I{}) & \arrmany \\
+  \II{}  \times \ite{\I{}<\II{}}{\I{}}{n \times (\Y\ f\!ac\ (\I{}-\I{}))} & \arrmany \\
+  \II{}  \times \I{} & \arrmany \II{}
 \end{align*}
  \end{frame}
 
